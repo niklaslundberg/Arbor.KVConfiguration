@@ -1,31 +1,39 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Arbor.KVConfiguration.Core;
-
-namespace Arbor.KVConfiguration.JsonConfiguration
+﻿namespace Arbor.KVConfiguration.JsonConfiguration
 {
+    using System;
+    using System.Collections.Generic;
+
+    using Arbor.KVConfiguration.Core;
+
     public class JsonKeyValueConfiguration : IKeyValueConfiguration
     {
         private readonly string _fileFullPath;
+
+        private IKeyValueConfiguration _inMemoryKeyValueConfiguration;
 
         public JsonKeyValueConfiguration(string fileFullPath)
         {
             _fileFullPath = fileFullPath;
         }
 
-        public string this[string key] => ValueOrDefault(key);
+
+        public IReadOnlyCollection<string> AllKeys => _inMemoryKeyValueConfiguration.AllKeys;
+
+        public IReadOnlyCollection<KeyValuePair<string, string>> AllValues => _inMemoryKeyValueConfiguration.AllValues;
+
+        public IReadOnlyCollection<KeyValuePair<string, IReadOnlyCollection<string>>> AllWithMultipleValues
+            => _inMemoryKeyValueConfiguration.AllWithMultipleValues;
+
+        public string this[string key] => _inMemoryKeyValueConfiguration[key];
 
         public string ValueOrDefault(string key)
         {
-            return ValueOrDefault(key, "");
+            return _inMemoryKeyValueConfiguration.ValueOrDefault(key);
         }
 
         public string ValueOrDefault(string key, string defaultValue)
         {
-            throw new NotImplementedException();
+            return _inMemoryKeyValueConfiguration.ValueOrDefault(defaultValue);
         }
     }
 }

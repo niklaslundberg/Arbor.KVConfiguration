@@ -15,10 +15,12 @@ namespace Arbor.KVConfiguration.Schema.Json
             {
                 throw new ArgumentNullException(nameof(keys));
             }
+
             if (string.IsNullOrWhiteSpace(version))
             {
                 throw new ArgumentException("Argument is null or whitespace", nameof(version));
             }
+
             Version = version;
             Keys = keys;
         }

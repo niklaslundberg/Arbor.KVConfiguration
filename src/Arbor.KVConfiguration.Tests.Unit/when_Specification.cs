@@ -1,43 +1,73 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Arbor.KVConfiguration.Schema.Json;
-
-using Machine.Specifications;
-using Machine.Specifications.Model;
-
-namespace Arbor.KVConfiguration.Tests.Unit
+﻿namespace Arbor.KVConfiguration.Tests.Unit
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using Arbor.KVConfiguration.Schema;
+    using Arbor.KVConfiguration.Schema.Json;
+
+    using Machine.Specifications;
+    using Machine.Specifications.Model;
+
     [Subject(typeof(Subject))]
     public class when_Specification
     {
+        private static Configuration configuration;
+
+        private static string json;
+
+        private static Configuration restored_configuration;
+
+        private static ConfigurationSerializer serializer;
+
         Establish context = () =>
-            { configuration = new Configuration("1.0", new List<KeyValue>()
-                                                           {
-                                                               new KeyValue("a", "1", null),
-                                                               new KeyValue("b", "2", null),
-                                                           });
+            {
+                configuration = new Configuration(
+                    "1.0",
+                    new List<KeyValue>
+                        {
+                            new KeyValue(
+                                "a",
+                                "1",
+                                new Metadata(
+                                "a",
+                                "A",
+                                "A description",
+                                typeof(string),
+                                "ATest",
+                                "ATestFullName",
+                                typeof(when_Specification),
+                                0,
+                                "1.txt",
+                                true,
+                                "A default",
+                                "A note",
+                                new[] { "A example" },
+                                new[] { "A tag" })),
+                            new KeyValue("b", "2", null),
+                        });
 
                 serializer = new ConfigurationSerializer();
-            };
-
-        Because of = () =>
-            {
                 json = serializer.Serialize(configuration);
             };
+
+        Because of = () => { restored_configuration = serializer.Deserialize(json); };
 
         It should_Behaviour = () =>
             {
                 Console.WriteLine(json);
+                restored_configuration.Keys.Count.ShouldEqual(2);
             };
 
-        private static Configuration configuration;
+        It should_Behaviour2 = () => { restored_configuration.Keys.Last().Key.ShouldEqual("b"); };
 
-        private static ConfigurationSerializer serializer;
+        It should_Behaviour3 = () => { restored_configuration.Keys.First().Key.ShouldEqual("a"); };
 
-        private static string json;
+        It should_Behaviour4 = () => { restored_configuration.Keys.First().Value.ShouldEqual("1"); };
+
+        It should_Behaviour5 = () => { restored_configuration.Keys.Last().Value.ShouldEqual("2"); };
+
+        It should_Behaviour6 = () => { restored_configuration.Keys.First().Metadata.ShouldNotBeNull(); };
     }
 }

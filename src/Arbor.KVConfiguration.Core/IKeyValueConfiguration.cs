@@ -12,5 +12,9 @@ namespace Arbor.KVConfiguration.Core
 
         string ValueOrDefault(string key);
         string ValueOrDefault(string key, string defaultValue);
+
+        IReadOnlyCollection<string> AllKeys { get; }
+        IReadOnlyCollection<KeyValuePair<string, string>> AllValues { get; }
+        IReadOnlyCollection<KeyValuePair<string, IReadOnlyCollection<string>>> AllWithMultipleValues { get; }
     }
 }

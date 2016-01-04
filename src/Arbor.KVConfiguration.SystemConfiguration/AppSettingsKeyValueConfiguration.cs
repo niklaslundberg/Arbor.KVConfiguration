@@ -1,28 +1,36 @@
-﻿using System.Configuration;
-
-using Arbor.KVConfiguration.Core;
-
-namespace Arbor.KVConfiguration.SystemConfiguration
+﻿namespace Arbor.KVConfiguration.SystemConfiguration
 {
+    using System.Collections.Generic;
+    using System.Configuration;
+
+    using Arbor.KVConfiguration.Core;
+
     public class AppSettingsKeyValueConfiguration : IKeyValueConfiguration
     {
-        public string this[string key] => ConfigurationManager.AppSettings.Get(key);
+        private readonly InMemoryKeyValueConfiguration _inMemoryKeyValueConfiguration;
+
+        public AppSettingsKeyValueConfiguration()
+        {
+            _inMemoryKeyValueConfiguration = new InMemoryKeyValueConfiguration(ConfigurationManager.AppSettings);
+        }
+
+        public IReadOnlyCollection<string> AllKeys => _inMemoryKeyValueConfiguration.AllKeys;
+
+        public IReadOnlyCollection<KeyValuePair<string, string>> AllValues => _inMemoryKeyValueConfiguration.AllValues;
+
+        public IReadOnlyCollection<KeyValuePair<string, IReadOnlyCollection<string>>> AllWithMultipleValues
+            => _inMemoryKeyValueConfiguration.AllWithMultipleValues;
+
+        public string this[string key] => _inMemoryKeyValueConfiguration[key];
 
         public string ValueOrDefault(string key)
         {
-            return ValueOrDefault(key, "");
+            return _inMemoryKeyValueConfiguration.ValueOrDefault(key);
         }
 
         public string ValueOrDefault(string key, string defaultValue)
         {
-            string value = this[key];
-
-            if (string.IsNullOrWhiteSpace(value))
-            {
-                return defaultValue;
-            }
-
-            return value;
+            return _inMemoryKeyValueConfiguration.ValueOrDefault(defaultValue);
         }
     }
 }
