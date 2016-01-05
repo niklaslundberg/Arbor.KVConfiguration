@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using System.Web.Mvc;
 
+using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.SystemConfiguration;
 
 using Autofac;
@@ -18,6 +19,10 @@ namespace Arbor.KVConfiguration.Samples.Web
             RegisterConfiguration(builder);
             IContainer container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+
+            IKeyValueConfiguration keyValueConfiguration = container.Resolve<IKeyValueConfiguration>();
+
+            KVConfigurationManager.Initialize(keyValueConfiguration);
         }
 
         private static void RegisterConfiguration(ContainerBuilder builder)
