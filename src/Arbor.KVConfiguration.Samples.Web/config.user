@@ -1,0 +1,15 @@
+﻿{
+"version":"1.0",
+"keys": [
+	{
+		"key":"ATestKey",
+		"value": "A custom a value"
+		
+	},
+	{
+		"key":"AUserOnlyTestKey",
+		"value": "A custom user only value"
+		
+	}
+]
+}
