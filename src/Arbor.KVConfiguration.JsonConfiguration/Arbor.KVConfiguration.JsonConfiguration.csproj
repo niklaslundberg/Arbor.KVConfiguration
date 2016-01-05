@@ -53,6 +53,10 @@
       <Project>{86C8D4E6-C68D-428E-87CC-B3B636DEB19B}</Project>
       <Name>Arbor.KVConfiguration.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Arbor.KVConfiguration.Schema.Json\Arbor.KVConfiguration.Schema.Json.csproj">
+      <Project>{6E2974DE-E95F-4378-A1C7-B4964D0E3D73}</Project>
+      <Name>Arbor.KVConfiguration.Schema.Json</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Arbor.KVConfiguration.Schema\Arbor.KVConfiguration.Schema.csproj">
       <Project>{A1D40132-87C2-4FA3-AAD5-C4514EE361EC}</Project>
       <Name>Arbor.KVConfiguration.Schema</Name>

@@ -1,27 +1,36 @@
-﻿namespace Arbor.KVConfiguration.JsonConfiguration
+﻿using System.Collections.Generic;
+using System.Collections.Specialized;
+
+using Arbor.KVConfiguration.Core;
+using Arbor.KVConfiguration.Schema;
+
+namespace Arbor.KVConfiguration.JsonConfiguration
 {
-    using System;
-    using System.Collections.Generic;
-
-    using Arbor.KVConfiguration.Core;
-
     public class JsonKeyValueConfiguration : IKeyValueConfiguration
     {
-        private readonly string _fileFullPath;
-
-        private IKeyValueConfiguration _inMemoryKeyValueConfiguration;
+        private readonly IKeyValueConfiguration _inMemoryKeyValueConfiguration;
 
         public JsonKeyValueConfiguration(string fileFullPath)
         {
-            _fileFullPath = fileFullPath;
-        }
+            var jsonFileReader = new JsonFileReader(fileFullPath);
+            IReadOnlyCollection<KeyValueConfigurationItem> keyValueConfigurationItems =
+                jsonFileReader.ReadConfiguration();
 
+            var nameValueCollection = new NameValueCollection();
+
+            foreach (KeyValueConfigurationItem keyValueConfigurationItem in keyValueConfigurationItems)
+            {
+                nameValueCollection.Add(keyValueConfigurationItem.Key, keyValueConfigurationItem.Value);
+            }
+
+            _inMemoryKeyValueConfiguration = new InMemoryKeyValueConfiguration(nameValueCollection);
+        }
 
         public IReadOnlyCollection<string> AllKeys => _inMemoryKeyValueConfiguration.AllKeys;
 
-        public IReadOnlyCollection<KeyValuePair<string, string>> AllValues => _inMemoryKeyValueConfiguration.AllValues;
+        public IReadOnlyCollection<StringPair> AllValues => _inMemoryKeyValueConfiguration.AllValues;
 
-        public IReadOnlyCollection<KeyValuePair<string, IReadOnlyCollection<string>>> AllWithMultipleValues
+        public IReadOnlyCollection<MultipleValuesStringPair> AllWithMultipleValues
             => _inMemoryKeyValueConfiguration.AllWithMultipleValues;
 
         public string this[string key] => _inMemoryKeyValueConfiguration[key];

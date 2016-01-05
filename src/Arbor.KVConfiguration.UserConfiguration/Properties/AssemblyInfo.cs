@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Arbor.KVConfiguration.Schema")]
+[assembly: AssemblyTitle("Arbor.KVConfiguration.UserConfiguration")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Arbor.KVConfiguration.Schema")]
+[assembly: AssemblyProduct("Arbor.KVConfiguration.UserConfiguration")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("a1d40132-87c2-4fa3-aad5-c4514ee361ec")]
+[assembly: Guid("74c44061-e904-4338-a775-ae8857a53ae8")]
 
 // Version information for an assembly consists of the following four values:
 //      Major Version

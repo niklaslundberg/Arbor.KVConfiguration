@@ -1,26 +1,26 @@
-﻿namespace Arbor.KVConfiguration.Schema
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
+namespace Arbor.KVConfiguration.Schema
+{
     public class Metadata
     {
         public Metadata(
-            string key,
-            string memberName,
-            string description,
-            Type valueType,
-            string partInvariantName,
-            string partFullName,
-            Type containingClass,
-            int sourceLine,
-            string sourceFile,
-            bool isRequired = true,
-            string defaultValue = "",
-            string notes = "",
-            IEnumerable<string> examples = null,
+            string key, 
+            string memberName, 
+            string description, 
+            Type valueType, 
+            string partInvariantName, 
+            string partFullName, 
+            Type containingClass, 
+            int sourceLine, 
+            string sourceFile, 
+            bool isRequired = true, 
+            string defaultValue = "", 
+            string notes = "", 
+            IEnumerable<string> examples = null, 
             IEnumerable<string> tags = null)
         {
             Key = key;

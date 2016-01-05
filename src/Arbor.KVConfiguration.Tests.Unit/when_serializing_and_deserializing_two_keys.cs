@@ -1,17 +1,16 @@
-﻿namespace Arbor.KVConfiguration.Tests.Unit
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+using Arbor.KVConfiguration.Schema;
+using Arbor.KVConfiguration.Schema.Json;
+
+using Machine.Specifications;
+
+namespace Arbor.KVConfiguration.Tests.Unit
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-
-    using Arbor.KVConfiguration.Schema;
-    using Arbor.KVConfiguration.Schema.Json;
-
-    using Machine.Specifications;
-    using Machine.Specifications.Model;
-
-    [Subject(typeof(Subject))]
-    public class when_Specification
+    [Subject(typeof(ConfigurationSerializer))]
+    public class when_serializing_and_deserializing_two_keys
     {
         private static Configuration configuration;
 
@@ -37,7 +36,7 @@
                                 typeof(string),
                                 "ATest",
                                 "ATestFullName",
-                                typeof(when_Specification),
+                                typeof(when_serializing_and_deserializing_two_keys),
                                 0,
                                 "1.txt",
                                 true,
@@ -45,7 +44,7 @@
                                 "A note",
                                 new[] { "A example" },
                                 new[] { "A tag" })),
-                            new KeyValue("b", "2", null),
+                            new KeyValue("b", "2", null)
                         });
 
                 serializer = new ConfigurationSerializer();
@@ -54,20 +53,21 @@
 
         Because of = () => { restored_configuration = serializer.Deserialize(json); };
 
-        It should_Behaviour = () =>
+        It should_have_first_correct_key = () => { restored_configuration.Keys.First().Key.ShouldEqual("a"); };
+
+        It should_have_first_correct_value = () => { restored_configuration.Keys.First().Value.ShouldEqual("1"); };
+
+        It should_have_last_correct_key = () => { restored_configuration.Keys.Last().Key.ShouldEqual("b"); };
+
+        It should_have_last_correct_value = () => { restored_configuration.Keys.Last().Value.ShouldEqual("2"); };
+
+        It should_have_metadata_for_the_first_item =
+            () => { restored_configuration.Keys.First().Metadata.ShouldNotBeNull(); };
+
+        It should_have_two_keys = () =>
             {
                 Console.WriteLine(json);
                 restored_configuration.Keys.Count.ShouldEqual(2);
             };
-
-        It should_Behaviour2 = () => { restored_configuration.Keys.Last().Key.ShouldEqual("b"); };
-
-        It should_Behaviour3 = () => { restored_configuration.Keys.First().Key.ShouldEqual("a"); };
-
-        It should_Behaviour4 = () => { restored_configuration.Keys.First().Value.ShouldEqual("1"); };
-
-        It should_Behaviour5 = () => { restored_configuration.Keys.Last().Value.ShouldEqual("2"); };
-
-        It should_Behaviour6 = () => { restored_configuration.Keys.First().Metadata.ShouldNotBeNull(); };
     }
 }

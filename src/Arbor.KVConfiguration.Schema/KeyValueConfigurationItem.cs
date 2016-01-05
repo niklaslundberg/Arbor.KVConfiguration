@@ -1,10 +1,10 @@
-﻿namespace Arbor.KVConfiguration.Schema
+﻿using System;
+
+using JetBrains.Annotations;
+
+namespace Arbor.KVConfiguration.Schema
 {
-    using System;
-
-    using JetBrains.Annotations;
-
-    public class KeyValueConfigurationItem
+    public struct KeyValueConfigurationItem
     {
         public KeyValueConfigurationItem([NotNull] string key, [CanBeNull] string value, [CanBeNull] Metadata metadata)
         {
@@ -12,6 +12,7 @@
             {
                 throw new ArgumentNullException(nameof(key));
             }
+
             Key = key;
             Value = value;
             Metadata = metadata;

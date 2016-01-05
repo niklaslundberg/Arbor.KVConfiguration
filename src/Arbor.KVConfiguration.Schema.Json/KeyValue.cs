@@ -1,11 +1,11 @@
-﻿namespace Arbor.KVConfiguration.Schema.Json
+﻿using System;
+
+using JetBrains.Annotations;
+
+using Newtonsoft.Json;
+
+namespace Arbor.KVConfiguration.Schema.Json
 {
-    using System;
-
-    using JetBrains.Annotations;
-
-    using Newtonsoft.Json;
-
     public class KeyValue
     {
         public KeyValue([NotNull] string key, [CanBeNull] string value, [CanBeNull] Metadata metadata)

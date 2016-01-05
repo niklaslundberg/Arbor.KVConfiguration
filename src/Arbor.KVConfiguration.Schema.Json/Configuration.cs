@@ -5,10 +5,6 @@ namespace Arbor.KVConfiguration.Schema.Json
 {
     public class Configuration
     {
-        public string Version { get; }
-
-        public IReadOnlyCollection<KeyValue> Keys { get; }
-
         public Configuration(string version, IReadOnlyCollection<KeyValue> keys)
         {
             if (keys == null)
@@ -24,5 +20,9 @@ namespace Arbor.KVConfiguration.Schema.Json
             Version = version;
             Keys = keys;
         }
+
+        public IReadOnlyCollection<KeyValue> Keys { get; }
+
+        public string Version { get; }
     }
 }

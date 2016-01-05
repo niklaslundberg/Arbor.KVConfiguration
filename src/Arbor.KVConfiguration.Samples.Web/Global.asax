@@ -1,0 +1,1 @@
+﻿<%@ Application Codebehind="Global.asax.cs" Inherits="Arbor.KVConfiguration.Samples.Web.Global" Language="C#" %>
