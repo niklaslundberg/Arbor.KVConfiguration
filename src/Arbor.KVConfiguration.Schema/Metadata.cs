@@ -8,19 +8,20 @@ namespace Arbor.KVConfiguration.Schema
     public class Metadata
     {
         public Metadata(
-            string key, 
-            string memberName, 
-            string description, 
-            Type valueType, 
-            string partInvariantName, 
-            string partFullName, 
-            Type containingClass, 
-            int sourceLine, 
-            string sourceFile, 
-            bool isRequired = true, 
-            string defaultValue = "", 
-            string notes = "", 
-            IEnumerable<string> examples = null, 
+            string key,
+            string memberName,
+            string description,
+            Type valueType,
+            string partInvariantName,
+            string partFullName,
+            Type containingClass,
+            int sourceLine = -1,
+            string sourceFile = "",
+            bool isRequired = true,
+            string defaultValue = "",
+            string notes = "",
+            bool allowMultipleValues = false,
+            IEnumerable<string> examples = null,
             IEnumerable<string> tags = null)
         {
             Key = key;
@@ -35,9 +36,12 @@ namespace Arbor.KVConfiguration.Schema
             IsRequired = isRequired;
             DefaultValue = defaultValue;
             Notes = notes;
+            AllowMultipleValues = allowMultipleValues;
             Examples = new ReadOnlyCollection<string>(examples?.ToList() ?? new List<string>());
             Tags = new ReadOnlyCollection<string>(tags?.ToList() ?? new List<string>());
         }
+
+        public bool AllowMultipleValues { get; }
 
         public Type ContainingClass { get; private set; }
 

@@ -42,6 +42,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
                                 true,
                                 "A default",
                                 "A note",
+                                false,
                                 new[] { "A example" },
                                 new[] { "A tag" })),
                             new KeyValue("b", "2", null)
