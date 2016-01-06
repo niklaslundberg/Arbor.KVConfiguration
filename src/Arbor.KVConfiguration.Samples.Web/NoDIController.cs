@@ -16,9 +16,9 @@ namespace Arbor.KVConfiguration.Samples.Web
                                     {
                                         Content =
                                             string.Join(
-                                                Environment.NewLine, 
-                                                KVConfigurationManager.AppSettings.AllValues), 
-                                        ContentEncoding = Encoding.UTF8, 
+                                                Environment.NewLine,
+                                                KVConfigurationManager.AppSettings.AllValues),
+                                        ContentEncoding = Encoding.UTF8,
                                         ContentType = "text/plain"
                                     };
             return contentResult;
