@@ -2,7 +2,7 @@
 
 namespace Arbor.KVConfiguration.Schema.Json
 {
-    public class ConfigurationSerializer
+    public class JsonConfigurationSerializer
     {
         public Configuration Deserialize(string json)
         {

@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-using Arbor.KVConfiguration.Core;
-
-namespace Arbor.KVConfiguration.UserConfiguration
+namespace Arbor.KVConfiguration.Core
 {
     public class ConfigurationWithFallback : IKeyValueConfiguration
     {
