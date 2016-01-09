@@ -24,6 +24,9 @@
       <dependency id="Arbor.KVConfiguration.Core" version="[0.1.0]" />
     </dependencies>
     <references></references>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Configuration" targetFramework="net40" />
+    </frameworkAssemblies>
     <tags></tags>
   </metadata>
   <files>
