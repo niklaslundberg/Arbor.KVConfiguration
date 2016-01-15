@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExpandConfiguration.cs" />
     <Compile Include="IKeyValueConfiguration.cs" />
     <Compile Include="InMemoryKeyValueConfiguration.cs" />
     <Compile Include="KVConfigurationManager.cs" />
