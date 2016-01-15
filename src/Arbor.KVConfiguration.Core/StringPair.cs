@@ -57,13 +57,13 @@ namespace Arbor.KVConfiguration.Core
                 s.Append(Key);
             }
 
-            s.Append(", ");
+            s.Append(", \"");
             if (Value != null)
             {
                 s.Append(Value);
             }
 
-            s.Append(']');
+            s.Append("\"]");
             return s.ToString();
         }
     }
