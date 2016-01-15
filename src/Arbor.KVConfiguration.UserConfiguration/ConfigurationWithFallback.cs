@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using Arbor.KVConfiguration.Core;
@@ -35,7 +36,7 @@ namespace Arbor.KVConfiguration.UserConfiguration
             get
             {
                 var fallbackOnly =
-                    _primayConfiguration.AllWithMultipleValues.Except(_primayConfiguration.AllWithMultipleValues);
+                    _fallbackConfiguration.AllWithMultipleValues.Where(pair => !_primayConfiguration.AllKeys.Contains(pair.Key, StringComparer.InvariantCultureIgnoreCase));
 
                 return _primayConfiguration.AllWithMultipleValues.Concat(fallbackOnly).ToArray();
             }
