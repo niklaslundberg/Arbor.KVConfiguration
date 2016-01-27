@@ -64,13 +64,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SummaryExtensions.cs" />
+    <Compile Include="when_validating_a_missing_required_value.cs" />
     <Compile Include="when_serializing_and_deserializing_two_keys.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="when_validating_a_valid_required_value.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Arbor.KVConfiguration.Core\Arbor.KVConfiguration.Core.csproj">
+      <Project>{86C8D4E6-C68D-428E-87CC-B3B636DEB19B}</Project>
+      <Name>Arbor.KVConfiguration.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Arbor.KVConfiguration.JsonConfiguration\Arbor.KVConfiguration.JsonConfiguration.csproj">
+      <Project>{93AFFC22-2EAC-43B6-82F6-4CDE18AFD37F}</Project>
+      <Name>Arbor.KVConfiguration.JsonConfiguration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Arbor.KVConfiguration.Schema.Json\Arbor.KVConfiguration.Schema.Json.csproj">
       <Project>{6E2974DE-E95F-4378-A1C7-B4964D0E3D73}</Project>
       <Name>Arbor.KVConfiguration.Schema.Json</Name>

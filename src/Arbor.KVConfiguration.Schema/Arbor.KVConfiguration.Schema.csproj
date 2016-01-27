@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigurationValidationExtensions.cs" />
+    <Compile Include="ConfigurationValidator.cs" />
     <Compile Include="IConfigurationValidator.cs" />
     <Compile Include="KeyMetadata.cs" />
     <Compile Include="KeyValueConfigurationItem.cs" />

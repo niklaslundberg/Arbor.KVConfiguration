@@ -4,6 +4,8 @@ namespace Arbor.KVConfiguration.Schema
 {
     public interface IConfigurationValidator
     {
-        KeyValueConfigurationValidationResult Validate(MultipleValuesStringPair multipleValuesStringPair, KeyMetadata metadataItem);
+        KeyValueConfigurationValidationResult Validate(
+            MultipleValuesStringPair multipleValuesStringPair,
+            KeyMetadata metadataItem);
     }
 }

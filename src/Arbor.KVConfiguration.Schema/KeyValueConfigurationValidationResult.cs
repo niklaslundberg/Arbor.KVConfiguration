@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -5,19 +6,20 @@ namespace Arbor.KVConfiguration.Schema
 {
     public class KeyValueConfigurationValidationResult
     {
+
         public KeyValueConfigurationValidationResult(
             KeyMetadata keyMetadata,
-            string value,
+            IEnumerable<string> values,
             IEnumerable<ValidationError> validationErrors = null)
         {
             KeyMetadata = keyMetadata;
-            Value = value;
+            Values = values?.ToArray() ?? new string[] { };
             ValidationErrors = validationErrors?.ToArray() ?? new ValidationError[] { };
         }
 
         public KeyMetadata KeyMetadata { get; }
 
-        public string Value { get; }
+        public IReadOnlyCollection<string> Values { get; }
 
         public IReadOnlyCollection<ValidationError> ValidationErrors { get; }
 
