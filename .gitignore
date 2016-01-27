@@ -13,6 +13,7 @@ LocalData
 _NCrunch_*
 _nCrunchtemp*
 nCrunchTemp_*
+.vs
 
 #################
 ## Eclipse
