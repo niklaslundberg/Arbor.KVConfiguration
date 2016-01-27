@@ -19,6 +19,7 @@ namespace Arbor.KVConfiguration.Core
 
             Key = key;
             Values = values;
+            HasNonEmptyValue = values.Any(value => !string.IsNullOrWhiteSpace(value));
         }
 
         public bool Equals(MultipleValuesStringPair other)
@@ -53,5 +54,9 @@ namespace Arbor.KVConfiguration.Core
         {
             return !left.Equals(right);
         }
+
+        public bool HasSingleValue => Values.Count == 1;
+
+        public bool HasNonEmptyValue { get; }
     }
 }

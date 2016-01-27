@@ -4,17 +4,17 @@ namespace Arbor.KVConfiguration.Schema.Json
 {
     public class JsonConfigurationSerializer
     {
-        public Configuration Deserialize(string json)
+        public ConfigurationItems Deserialize(string json)
         {
-            Configuration configuration = JsonConvert.DeserializeObject<Configuration>(json);
+            ConfigurationItems configurationItems = JsonConvert.DeserializeObject<ConfigurationItems>(json);
 
-            return configuration;
+            return configurationItems;
         }
 
-        public string Serialize(Configuration configuration)
+        public string Serialize(ConfigurationItems configurationItems)
         {
             var json = JsonConvert.SerializeObject(
-                configuration, 
+                configurationItems, 
                 new JsonSerializerSettings { Formatting = Formatting.Indented });
 
             return json;

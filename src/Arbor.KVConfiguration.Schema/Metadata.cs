@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
+using JetBrains.Annotations;
+
 namespace Arbor.KVConfiguration.Schema
 {
     public class Metadata
     {
         public Metadata(
             string key,
-            string memberName,
-            string description,
-            Type valueType,
-            string partInvariantName,
-            string partFullName,
-            Type containingClass,
+            string valueType,
+            string memberName = "",
+            string description = "",
+            string partInvariantName = "",
+            string partFullName = "",
+            Type containingClass = null,
             int sourceLine = -1,
             string sourceFile = "",
             bool isRequired = true,
@@ -24,10 +26,20 @@ namespace Arbor.KVConfiguration.Schema
             IEnumerable<string> examples = null,
             IEnumerable<string> tags = null)
         {
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                throw new ArgumentException("Argument is null or whitespace", nameof(key));
+            }
+
+            if (string.IsNullOrWhiteSpace(valueType))
+            {
+                throw new ArgumentException("Argument is null or whitespace", nameof(valueType));
+            }
+
             Key = key;
             MemberName = memberName;
             Description = description;
-            ValueType = valueType.FullName;
+            ValueType = valueType;
             PartInvariantName = partInvariantName;
             PartFullName = partFullName;
             ContainingClass = containingClass;
@@ -70,5 +82,10 @@ namespace Arbor.KVConfiguration.Schema
         public IReadOnlyCollection<string> Tags { get; }
 
         public string ValueType { get; }
+
+        public override string ToString()
+        {
+            return $"[{nameof(Key)}: {Key}] [{nameof(ValueType)}: {ValueType}]";
+        }
     }
 }

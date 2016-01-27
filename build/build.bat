@@ -11,7 +11,7 @@ SET Arbor.X.Artifacts.CleanupBeforeBuildEnabled=true
 SET Arbor.X.Build.NetAssembly.Configuration=
 
 SET Version.Major=0
-SET Version.Minor=1
+SET Version.Minor=2
 SET Version.Patch=0
 SET Version.Build=100
 

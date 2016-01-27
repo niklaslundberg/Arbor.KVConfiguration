@@ -27,7 +27,11 @@ namespace Arbor.KVConfiguration.Samples.Web
 
         private static void RegisterConfiguration(ContainerBuilder builder)
         {
-            builder.Register(context => new UserConfiguration.UserConfiguration(new AppSettingsKeyValueConfiguration()))
+            IKeyValueConfiguration appSettingsKeyValueConfiguration = new AppSettingsKeyValueConfiguration();
+            IKeyValueConfiguration userConfiguration = new UserConfiguration.UserConfiguration(appSettingsKeyValueConfiguration);
+            IKeyValueConfiguration expanded = new ExpandConfiguration(userConfiguration);
+
+            builder.RegisterInstance(expanded)
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }
