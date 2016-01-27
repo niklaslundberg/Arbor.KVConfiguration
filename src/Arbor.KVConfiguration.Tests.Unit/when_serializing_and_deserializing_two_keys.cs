@@ -33,7 +33,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
                                 "a",
                                 "A",
                                 "A description",
-                                typeof(string),
+                                "string",
                                 "ATest",
                                 "ATestFullName",
                                 typeof(when_serializing_and_deserializing_two_keys),
