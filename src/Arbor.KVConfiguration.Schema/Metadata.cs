@@ -88,22 +88,4 @@ namespace Arbor.KVConfiguration.Schema
             return $"[{nameof(Key)}: {Key}] [{nameof(ValueType)}: {ValueType}]";
         }
     }
-
-    public struct KeyMetadata
-    {
-        public string Key { get; }
-
-        public Metadata Metadata { get; }
-
-        public KeyMetadata(string key, Metadata metadata)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentException("Argument is null or whitespace", nameof(key));
-            }
-
-            Key = key;
-            Metadata = metadata;
-        }
-    }
 }
