@@ -9,7 +9,7 @@ using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit
 {
-    [Subject(typeof(ConfigurationSerializer))]
+    [Subject(typeof(JsonConfigurationSerializer))]
     public class when_serializing_and_deserializing_two_keys
     {
         private static ConfigurationItems configurationItems;
@@ -18,7 +18,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
 
         private static ConfigurationItems restored_configuration;
 
-        private static ConfigurationSerializer serializer;
+        private static JsonConfigurationSerializer serializer;
 
         Establish context = () =>
             {
@@ -48,7 +48,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
                             new KeyValue("b", "2", null)
                         });
 
-                serializer = new ConfigurationSerializer();
+                serializer = new JsonConfigurationSerializer();
                 json = serializer.Serialize(configurationItems);
             };
 

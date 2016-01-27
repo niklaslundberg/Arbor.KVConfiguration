@@ -44,15 +44,11 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigurationValidation.cs" />
+    <Compile Include="ConfigurationValidationExtensions.cs" />
+    <Compile Include="IConfigurationValidator.cs" />
     <Compile Include="KeyMetadata.cs" />
     <Compile Include="KeyValueConfigurationItem.cs" />
     <Compile Include="KeyValueConfigurationItemExtensions.cs" />
@@ -63,6 +59,7 @@
     <Compile Include="ValidationError.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Arbor.KVConfiguration.Schema.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

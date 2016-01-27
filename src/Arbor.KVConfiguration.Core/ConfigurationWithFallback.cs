@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Arbor.KVConfiguration.Core;
-
-namespace Arbor.KVConfiguration.UserConfiguration
+namespace Arbor.KVConfiguration.Core
 {
     public class ConfigurationWithFallback : IKeyValueConfiguration
     {
@@ -13,7 +11,7 @@ namespace Arbor.KVConfiguration.UserConfiguration
         private readonly IKeyValueConfiguration _primayConfiguration;
 
         public ConfigurationWithFallback(
-            IKeyValueConfiguration primayConfiguration, 
+            IKeyValueConfiguration primayConfiguration,
             IKeyValueConfiguration fallbackConfiguration)
         {
             _primayConfiguration = primayConfiguration;
@@ -36,7 +34,9 @@ namespace Arbor.KVConfiguration.UserConfiguration
             get
             {
                 var fallbackOnly =
-                    _fallbackConfiguration.AllWithMultipleValues.Where(pair => !_primayConfiguration.AllKeys.Contains(pair.Key, StringComparer.InvariantCultureIgnoreCase));
+                    _fallbackConfiguration.AllWithMultipleValues.Where(
+                        pair =>
+                        !_primayConfiguration.AllKeys.Contains(pair.Key, StringComparer.InvariantCultureIgnoreCase));
 
                 return _primayConfiguration.AllWithMultipleValues.Concat(fallbackOnly).ToArray();
             }

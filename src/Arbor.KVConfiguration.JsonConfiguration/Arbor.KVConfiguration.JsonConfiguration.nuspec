@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Arbor.KVConfiguration.JsonConfiguration</id>
+    <version>0.0.1</version>
+    <title>Arbor.KVConfiguration.JsonConfiguration</title>
+    <authors>Niklas Lundberg</authors>
+    <owners></owners>
+    <description>
+      Key value configuration core library
+    </description>
+    <releaseNotes>
+    </releaseNotes>
+    <summary>
+      Arbor.KVConfiguration.JsonConfiguration
+    </summary>
+    <language>en-US</language>
+    <projectUrl>https://github.com/niklaslundberg/Arbor.KVConfiguration</projectUrl>
+    <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/niklaslundberg/Arbor.KVConfiguration/blob/master/LICENSE.txt</licenseUrl>
+    <copyright>Copyright Niklas Lundberg 2014 - 2016</copyright>
+    <dependencies>
+      <dependency id="Arbor.KVConfiguration.Core" version="[0.1.0]" />
+      <dependency id="Arbor.KVConfiguration.Schema" version="[0.1.0]" />
+      <dependency id="Arbor.KVConfiguration.Schema.Json" version="[0.1.0]" />
+    </dependencies>
+    <references></references>
+    <tags></tags>
+  </metadata>
+  <files>
+    <file src="bin\$configuration$\Arbor.KVConfiguration.JsonConfiguration.dll" target="lib\net45" />
+  </files>
+</package>
