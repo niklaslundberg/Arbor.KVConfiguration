@@ -66,13 +66,20 @@
   <ItemGroup>
     <Compile Include="MultipleExtensions.cs" />
     <Compile Include="SummaryExtensions.cs" />
+    <Compile Include="when_validating_0_as_int.cs" />
     <Compile Include="when_validating_a_missing_required_value.cs" />
     <Compile Include="when_serializing_and_deserializing_two_keys.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="when_validating_a_non_bool_as_bool.cs" />
     <Compile Include="when_validating_a_non_uri_as_uri.cs" />
     <Compile Include="when_validating_a_non_urn_as_urn.cs" />
     <Compile Include="when_validating_a_urn_as_urn.cs" />
     <Compile Include="when_validating_a_valid_required_value.cs" />
+    <Compile Include="when_validating_false_as_bool.cs" />
+    <Compile Include="when_validating_non_int_as_int.cs" />
+    <Compile Include="when_validating_non_timespan_as_timespan.cs" />
+    <Compile Include="when_validating_timespan_as_timespan.cs" />
+    <Compile Include="when_validating_true_as_bool.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

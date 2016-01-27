@@ -51,6 +51,36 @@ namespace Arbor.KVConfiguration.Schema
                 }
             }
 
+            if (metadataItem.Metadata.ValueType.Equals("bool", StringComparison.InvariantCultureIgnoreCase) && string.IsNullOrWhiteSpace(metadataItem.Metadata.DefaultValue))
+            {
+                bool parsedResult;
+                
+                if (!bool.TryParse(multipleValuesStringPair.Values.FirstOrDefault(), out parsedResult))
+                {
+                    validationErrors.Add(new ValidationError("Not a valid boolean value"));
+                }
+            }
+
+            if (metadataItem.Metadata.ValueType.Equals("int", StringComparison.InvariantCultureIgnoreCase) && string.IsNullOrWhiteSpace(metadataItem.Metadata.DefaultValue))
+            {
+                int parsedResult;
+
+                if (!int.TryParse(multipleValuesStringPair.Values.FirstOrDefault(), out parsedResult))
+                {
+                    validationErrors.Add(new ValidationError("Not a valid integer value"));
+                }
+            }
+
+            if (metadataItem.Metadata.ValueType.Equals("timespan", StringComparison.InvariantCultureIgnoreCase) && string.IsNullOrWhiteSpace(metadataItem.Metadata.DefaultValue))
+            {
+                TimeSpan parsedResult;
+
+                if (!TimeSpan.TryParse(multipleValuesStringPair.Values.FirstOrDefault(), out parsedResult))
+                {
+                    validationErrors.Add(new ValidationError("Not a valid timespan value"));
+                }
+            }
+
             return new KeyValueConfigurationValidationResult(
                 metadataItem,
                 multipleValuesStringPair.Values,
