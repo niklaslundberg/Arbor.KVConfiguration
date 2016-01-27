@@ -56,7 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration.cs" />
+    <Compile Include="ConfigurationItems.cs" />
     <Compile Include="ConfigurationSerializer.cs" />
     <Compile Include="KeyValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Arbor.KVConfiguration.Schema.Json
 {
-    public class Configuration
+    public class ConfigurationItems
     {
-        public Configuration(string version, IReadOnlyCollection<KeyValue> keys)
+        public ConfigurationItems(string version, IReadOnlyCollection<KeyValue> keys)
         {
             if (keys == null)
             {

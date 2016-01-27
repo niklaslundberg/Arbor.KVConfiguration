@@ -21,7 +21,7 @@ namespace Arbor.KVConfiguration.JsonConfiguration
         {
             string json = File.ReadAllText(_fileFullPath, Encoding.UTF8);
 
-            Configuration config = new ConfigurationSerializer().Deserialize(json);
+            ConfigurationItems config = new ConfigurationSerializer().Deserialize(json);
 
             return
                 config.Keys.Select(

@@ -12,17 +12,17 @@ namespace Arbor.KVConfiguration.Tests.Unit
     [Subject(typeof(ConfigurationSerializer))]
     public class when_serializing_and_deserializing_two_keys
     {
-        private static Configuration configuration;
+        private static ConfigurationItems configurationItems;
 
         private static string json;
 
-        private static Configuration restored_configuration;
+        private static ConfigurationItems restored_configuration;
 
         private static ConfigurationSerializer serializer;
 
         Establish context = () =>
             {
-                configuration = new Configuration(
+                configurationItems = new ConfigurationItems(
                     "1.0",
                     new List<KeyValue>
                         {
@@ -31,9 +31,9 @@ namespace Arbor.KVConfiguration.Tests.Unit
                                 "1",
                                 new Metadata(
                                 "a",
+                                "string",
                                 "A",
                                 "A description",
-                                "string",
                                 "ATest",
                                 "ATestFullName",
                                 typeof(when_serializing_and_deserializing_two_keys),
@@ -49,7 +49,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
                         });
 
                 serializer = new ConfigurationSerializer();
-                json = serializer.Serialize(configuration);
+                json = serializer.Serialize(configurationItems);
             };
 
         Because of = () => { restored_configuration = serializer.Deserialize(json); };
