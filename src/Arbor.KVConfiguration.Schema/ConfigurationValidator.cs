@@ -43,22 +43,24 @@ namespace Arbor.KVConfiguration.Schema
                 {
                     validationErrors.Add(new ValidationError("Invalid URN"));
                 }
-
-                Uri parsedUri;
-
-                bool parsed = Uri.TryCreate(uriString, UriKind.Absolute, out parsedUri);
-
-                if (!parsed || !parsedUri.IsAbsoluteUri
-                    || !parsedUri.Scheme.Equals("urn", StringComparison.InvariantCultureIgnoreCase))
+                else
                 {
-                    validationErrors.Add(new ValidationError("Invalid URN but valid URI"));
+                    Uri parsedUri;
+
+                    bool parsed = Uri.TryCreate(uriString, UriKind.Absolute, out parsedUri);
+
+                    if (!parsed || !parsedUri.IsAbsoluteUri
+                        || !parsedUri.Scheme.Equals("urn", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        validationErrors.Add(new ValidationError("Invalid URN but valid URI"));
+                    }
                 }
             }
 
             if (metadataItem.Metadata.ValueType.Equals("bool", StringComparison.InvariantCultureIgnoreCase) && string.IsNullOrWhiteSpace(metadataItem.Metadata.DefaultValue))
             {
                 bool parsedResult;
-                
+
                 if (!bool.TryParse(multipleValuesStringPair.Values.FirstOrDefault(), out parsedResult))
                 {
                     validationErrors.Add(new ValidationError("Not a valid boolean value"));
