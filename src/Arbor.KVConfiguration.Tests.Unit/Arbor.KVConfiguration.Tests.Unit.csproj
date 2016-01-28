@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MultipleExtensions.cs" />
+    <Compile Include="when_serializing_a_configuration_items_list.cs" />
     <Compile Include="SummaryExtensions.cs" />
     <Compile Include="when_validating_0_as_int.cs" />
     <Compile Include="when_validating_a_missing_required_value.cs" />
