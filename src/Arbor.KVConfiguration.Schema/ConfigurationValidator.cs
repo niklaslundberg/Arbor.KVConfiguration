@@ -28,8 +28,8 @@ namespace Arbor.KVConfiguration.Schema
             if (metadataItem.Metadata.ValueType.Equals("uri", StringComparison.InvariantCultureIgnoreCase)
                 && multipleValuesStringPair.HasNonEmptyValue && multipleValuesStringPair.HasSingleValue)
             {
-                Uri parsedUri;
-                if (!Uri.TryCreate(multipleValuesStringPair.Values.Single(), UriKind.RelativeOrAbsolute, out parsedUri))
+                var uriString = multipleValuesStringPair.Values.Single();
+                if (!Uri.IsWellFormedUriString(uriString, UriKind.RelativeOrAbsolute))
                 {
                     validationErrors.Add(new ValidationError("Invalid URI"));
                 }
@@ -38,13 +38,17 @@ namespace Arbor.KVConfiguration.Schema
             if (metadataItem.Metadata.ValueType.Equals("urn", StringComparison.InvariantCultureIgnoreCase)
                 && multipleValuesStringPair.HasNonEmptyValue && multipleValuesStringPair.HasSingleValue)
             {
-                Uri parsedUri;
-                if (!Uri.TryCreate(multipleValuesStringPair.Values.Single(), UriKind.RelativeOrAbsolute, out parsedUri))
+                var uriString = multipleValuesStringPair.Values.Single();
+                if (!Uri.IsWellFormedUriString(uriString, UriKind.RelativeOrAbsolute))
                 {
                     validationErrors.Add(new ValidationError("Invalid URN"));
                 }
 
-                if (!parsedUri.IsAbsoluteUri
+                Uri parsedUri;
+
+                bool parsed = Uri.TryCreate(uriString, UriKind.Absolute, out parsedUri);
+
+                if (!parsed || !parsedUri.IsAbsoluteUri
                     || !parsedUri.Scheme.Equals("urn", StringComparison.InvariantCultureIgnoreCase))
                 {
                     validationErrors.Add(new ValidationError("Invalid URN but valid URI"));
