@@ -27,7 +27,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
                                              {
                                                  new KeyValueConfigurationItem(
                                                      key: "abc",
-                                                     value: "mailto:a@example.com,b@example.com",
+                                                     value: "[]!",
                                                      metadata:
                                                      new Metadata(
                                                      key: "abc",
