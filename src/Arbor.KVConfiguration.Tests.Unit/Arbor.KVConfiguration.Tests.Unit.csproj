@@ -65,6 +65,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MultipleExtensions.cs" />
+    <Compile Include="InMemoryKeyValueConfiguration\when_getting_an_existing_value_with_implicit_default_value.cs" />
+    <Compile Include="InMemoryKeyValueConfiguration\when_getting_a_non_existing_value_with_explicit_default_value.cs" />
+    <Compile Include="InMemoryKeyValueConfiguration\when_getting_a_non_existing_value_with_implicit_default_value.cs" />
+    <Compile Include="InMemoryKeyValueConfiguration\when_getting_an_existing_value_with_specific_default_value.cs" />
     <Compile Include="when_serializing_a_configuration_items_list.cs" />
     <Compile Include="SummaryExtensions.cs" />
     <Compile Include="when_validating_0_as_int.cs" />
