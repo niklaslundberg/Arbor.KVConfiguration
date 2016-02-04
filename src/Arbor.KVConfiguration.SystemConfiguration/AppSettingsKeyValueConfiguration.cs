@@ -30,7 +30,7 @@ namespace Arbor.KVConfiguration.SystemConfiguration
 
         public string ValueOrDefault(string key, string defaultValue)
         {
-            return _inMemoryKeyValueConfiguration.ValueOrDefault(defaultValue);
+            return _inMemoryKeyValueConfiguration.ValueOrDefault(key, defaultValue);
         }
     }
 }
