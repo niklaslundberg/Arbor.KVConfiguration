@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 
+using JetBrains.Annotations;
+
 namespace Arbor.KVConfiguration.Core
 {
     public interface IKeyValueConfiguration
@@ -10,10 +12,10 @@ namespace Arbor.KVConfiguration.Core
 
         IReadOnlyCollection<MultipleValuesStringPair> AllWithMultipleValues { get; }
 
-        string this[string key] { get; }
+        string this[[CanBeNull] string key] { get; }
 
-        string ValueOrDefault(string key);
+        string ValueOrDefault([CanBeNull] string key);
 
-        string ValueOrDefault(string key, string defaultValue);
+        string ValueOrDefault([CanBeNull] string key, [CanBeNull] string defaultValue);
     }
 }

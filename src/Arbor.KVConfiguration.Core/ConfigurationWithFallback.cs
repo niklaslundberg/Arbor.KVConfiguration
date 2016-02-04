@@ -36,7 +36,7 @@ namespace Arbor.KVConfiguration.Core
                 var fallbackOnly =
                     _fallbackConfiguration.AllWithMultipleValues.Where(
                         pair =>
-                        !_primayConfiguration.AllKeys.Contains(pair.Key, StringComparer.InvariantCultureIgnoreCase));
+                        !_primayConfiguration.AllKeys.Contains(pair.Key, StringComparer.OrdinalIgnoreCase));
 
                 return _primayConfiguration.AllWithMultipleValues.Concat(fallbackOnly).ToArray();
             }
