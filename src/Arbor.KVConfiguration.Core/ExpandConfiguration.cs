@@ -2,15 +2,22 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 
+using JetBrains.Annotations;
+
 namespace Arbor.KVConfiguration.Core
 {
     public class ExpandConfiguration : IKeyValueConfiguration
     {
         private readonly IKeyValueConfiguration _inMemoryKeyValueConfiguration;
 
-        public ExpandConfiguration(IKeyValueConfiguration keyValueConfiguration)
+        public ExpandConfiguration([NotNull] IKeyValueConfiguration keyValueConfiguration)
         {
-            NameValueCollection collection = new NameValueCollection(keyValueConfiguration.AllKeys.Count);
+            if (keyValueConfiguration == null)
+            {
+                throw new ArgumentNullException(nameof(keyValueConfiguration));
+            }
+
+            var collection = new NameValueCollection(keyValueConfiguration.AllKeys.Count);
 
             foreach (MultipleValuesStringPair multipleValuesStringPair in keyValueConfiguration.AllWithMultipleValues)
             {
@@ -32,15 +39,5 @@ namespace Arbor.KVConfiguration.Core
             => _inMemoryKeyValueConfiguration.AllWithMultipleValues;
 
         public string this[string key] => _inMemoryKeyValueConfiguration[key];
-
-        public string ValueOrDefault(string key)
-        {
-            return _inMemoryKeyValueConfiguration.ValueOrDefault(key);
-        }
-
-        public string ValueOrDefault(string key, string defaultValue)
-        {
-            return _inMemoryKeyValueConfiguration.ValueOrDefault(defaultValue);
-        }
     }
 }

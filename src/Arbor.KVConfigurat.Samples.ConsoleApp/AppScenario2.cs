@@ -12,24 +12,23 @@ namespace Arbor.KVConfigurat.Samples.ConsoleApp
     {
         public void Execute()
         {
-            NameValueCollection collection = new NameValueCollection
-                                                 {
-                                                     { string.Empty, string.Empty },
-                                                     { null, null },
-                                                     { null, string.Empty },
-                                                     { string.Empty, null },
-                                                     { "\t", "\t" },
-                                                     { "urn:test:key", "a-test-value" },
-                                                     { "urn:test:KEY", "second-test-value" },
-                                                     { "urn:another-key", "another-test-value" },
-                                                 };
+            var collection = new NameValueCollection
+                                 {
+                                     { string.Empty, string.Empty },
+                                     { null, null },
+                                     { null, string.Empty },
+                                     { string.Empty, null },
+                                     { "\t", "\t" },
+                                     { "urn:test:key", "a-test-value" },
+                                     { "urn:test:KEY", "second-test-value" },
+                                     { "urn:another-key", "another-test-value" }
+                                 };
 
             IKeyValueConfiguration appSettingsKeyValueConfiguration = new InMemoryKeyValueConfiguration(collection);
 
             KVConfigurationManager.Initialize(appSettingsKeyValueConfiguration);
 
-            var goodKeys = new List<string>()
-                               {
+            var goodKeys = new List<string> {
                                    "a-non-existing-key",
                                    "urn:test:key",
                                    "urn:TEST:key",
@@ -40,7 +39,7 @@ namespace Arbor.KVConfigurat.Samples.ConsoleApp
             var keys = Specials.Special.ToList();
             keys.AddRange(goodKeys.Select(goodKey => new KeyValuePair<string, string>(goodKey, goodKey)));
 
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
 
             foreach (var pair in keys)
             {

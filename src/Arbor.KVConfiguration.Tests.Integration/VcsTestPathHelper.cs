@@ -7,7 +7,7 @@ using Arbor.Aesculus.Core;
 
 namespace Arbor.KVConfiguration.Tests.Integration
 {
-    internal class VcsTestPathHelper
+    internal static class VcsTestPathHelper
     {
         public static string FindVcsRootPath()
         {
@@ -26,6 +26,7 @@ namespace Arbor.KVConfiguration.Tests.Integration
                 if (!string.IsNullOrWhiteSpace(originalSolutionPath))
                 {
                     DirectoryInfo parent = new DirectoryInfo(originalSolutionPath).Parent;
+                    // ReSharper disable once PossibleNullReferenceException
                     return VcsPathHelper.FindVcsRootPath(parent.FullName);
                 }
             }

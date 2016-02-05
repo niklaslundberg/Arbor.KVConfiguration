@@ -17,7 +17,7 @@ namespace Arbor.KVConfiguration.Schema
                 return new KeyValueConfigurationValidationResult(metadataItem, multipleValuesStringPair.Values);
             }
 
-            List<ValidationError> validationErrors = new List<ValidationError>();
+            var validationErrors = new List<ValidationError>();
 
             if (metadataItem.Metadata.IsRequired && string.IsNullOrWhiteSpace(metadataItem.Metadata.DefaultValue)
                 && !multipleValuesStringPair.HasNonEmptyValue)

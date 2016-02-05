@@ -1,4 +1,6 @@
-﻿using Machine.Specifications;
+﻿using Arbor.KVConfiguration.Core;
+
+using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Integration.AppSettingsKeyValueConfiguration
 {

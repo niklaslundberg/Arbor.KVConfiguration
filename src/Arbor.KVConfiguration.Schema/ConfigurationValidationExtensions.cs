@@ -29,7 +29,7 @@ namespace Arbor.KVConfiguration.Schema
                 throw new ArgumentNullException(nameof(multipleValuesStringPairs));
             }
 
-            List<KeyValueConfigurationValidationResult> keyValueConfigurationValidationResults = new List<KeyValueConfigurationValidationResult>();
+            var keyValueConfigurationValidationResults = new List<KeyValueConfigurationValidationResult>();
 
             foreach (MultipleValuesStringPair multipleValuesStringPair in multipleValuesStringPairs)
             {

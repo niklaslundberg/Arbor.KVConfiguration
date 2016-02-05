@@ -88,29 +88,5 @@ namespace Arbor.KVConfiguration.Core
         }
 
         public string this[string key] => GetCombinedValues(key);
-
-        public string ValueOrDefault(string key)
-        {
-            string value = GetCombinedValues(key);
-
-            if (string.IsNullOrWhiteSpace(value))
-            {
-                return string.Empty;
-            }
-
-            return value;
-        }
-
-        public string ValueOrDefault(string key, string defaultValue)
-        {
-            string value = GetCombinedValues(key);
-
-            if (string.IsNullOrWhiteSpace(value))
-            {
-                return defaultValue;
-            }
-
-            return value;
-        }
     }
 }

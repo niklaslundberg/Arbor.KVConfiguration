@@ -1,5 +1,7 @@
 ﻿using System.Collections.Specialized;
 
+using Arbor.KVConfiguration.Core;
+
 using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit.InMemoryKeyValueConfiguration
@@ -13,8 +15,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.InMemoryKeyValueConfiguration
         private Establish context = () =>
             {
                 configuration = new Core.InMemoryKeyValueConfiguration(
-                    new NameValueCollection()
-                        {
+                    new NameValueCollection {
                             { "a", "b" }
                         });
             };

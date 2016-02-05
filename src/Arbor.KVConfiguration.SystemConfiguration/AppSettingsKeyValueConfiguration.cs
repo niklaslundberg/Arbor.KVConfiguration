@@ -22,15 +22,5 @@ namespace Arbor.KVConfiguration.SystemConfiguration
             => _inMemoryKeyValueConfiguration.AllWithMultipleValues;
 
         public string this[string key] => _inMemoryKeyValueConfiguration[key];
-
-        public string ValueOrDefault(string key)
-        {
-            return _inMemoryKeyValueConfiguration.ValueOrDefault(key);
-        }
-
-        public string ValueOrDefault(string key, string defaultValue)
-        {
-            return _inMemoryKeyValueConfiguration.ValueOrDefault(key, defaultValue);
-        }
     }
 }

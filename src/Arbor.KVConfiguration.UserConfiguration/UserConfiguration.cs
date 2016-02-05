@@ -13,6 +13,11 @@ namespace Arbor.KVConfiguration.UserConfiguration
 
         public UserConfiguration(IKeyValueConfiguration fallbackConfiguration)
         {
+            if (fallbackConfiguration == null)
+            {
+                throw new ArgumentNullException(nameof(fallbackConfiguration));
+            }
+
             var file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.user");
 
             if (File.Exists(file))
@@ -34,15 +39,5 @@ namespace Arbor.KVConfiguration.UserConfiguration
             => _configuration.AllWithMultipleValues;
 
         public string this[string key] => _configuration[key];
-
-        public string ValueOrDefault(string key)
-        {
-            return _configuration.ValueOrDefault(key);
-        }
-
-        public string ValueOrDefault(string key, string defaultValue)
-        {
-            return _configuration.ValueOrDefault(key, defaultValue);
-        }
     }
 }

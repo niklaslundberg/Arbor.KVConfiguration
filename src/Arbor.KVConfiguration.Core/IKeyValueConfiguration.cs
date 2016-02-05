@@ -13,9 +13,5 @@ namespace Arbor.KVConfiguration.Core
         IReadOnlyCollection<MultipleValuesStringPair> AllWithMultipleValues { get; }
 
         string this[[CanBeNull] string key] { get; }
-
-        string ValueOrDefault([CanBeNull] string key);
-
-        string ValueOrDefault([CanBeNull] string key, [CanBeNull] string defaultValue);
     }
 }

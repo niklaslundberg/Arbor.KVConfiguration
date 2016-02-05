@@ -9,7 +9,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
     {
         public static string Print(this IEnumerable<MultipleValuesStringPair> multipleValuesStringPairs)
         {
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
 
             foreach (MultipleValuesStringPair multipleValuesStringPair in multipleValuesStringPairs)
             {
