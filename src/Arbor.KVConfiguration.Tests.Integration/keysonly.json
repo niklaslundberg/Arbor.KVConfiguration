@@ -1,12 +1,11 @@
 ﻿{
-    "urn:arbor:kvconfiguration:schema:version":  "99.0",
     "keys": [
         {
             "key": "ATestKey",
             "value": "A custom a value",
             "metadata": {
                 "key": "ATestKey",
-                "valueType": "string"
+                "valueType":  "string"
             }
         },
         {

@@ -22,7 +22,8 @@ namespace Arbor.KVConfiguration.Tests.Integration
 
                 MethodInfo method = ncrunchType?.GetMethod("GetOriginalSolutionPath");
 
-                string originalSolutionPath = method?.Invoke(null, null) as string;
+                var originalSolutionPath = method?.Invoke(null, null) as string;
+
                 if (!string.IsNullOrWhiteSpace(originalSolutionPath))
                 {
                     DirectoryInfo parent = new DirectoryInfo(originalSolutionPath).Parent;

@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+
+using JetBrains.Annotations;
+
 using Newtonsoft.Json;
 
 namespace Arbor.KVConfiguration.Schema.Json
@@ -13,19 +16,14 @@ namespace Arbor.KVConfiguration.Schema.Json
                 throw new ArgumentNullException(nameof(keys));
             }
 
-            if (string.IsNullOrWhiteSpace(version))
-            {
-                throw new ArgumentException("Argument is null or whitespace", nameof(version));
-            }
-
-            Version = version;
+            Version = string.IsNullOrWhiteSpace(version) ? JsonConstants.Version1_0 : version;
             Keys = keys;
         }
 
         [JsonProperty(Order = 1)]
         public IReadOnlyCollection<KeyValue> Keys { get; }
 
-        [JsonProperty(Order = 0)]
-        public string Version { get; }
+        [JsonProperty(Order = 0, PropertyName = JsonConstants.VersionPropertyKey)]
+        public string Version { [UsedImplicitly] get; }
     }
 }

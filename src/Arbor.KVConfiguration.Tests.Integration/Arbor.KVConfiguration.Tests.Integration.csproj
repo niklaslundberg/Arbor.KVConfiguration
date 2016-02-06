@@ -69,13 +69,18 @@
     <Compile Include="AppSettingsKeyValueConfiguration\when_getting_an_existing_value_with_specific_default_value.cs" />
     <Compile Include="AppSettingsKeyValueConfiguration\when_getting_a_non_existing_value_with_explicit_default_value.cs" />
     <Compile Include="AppSettingsKeyValueConfiguration\when_getting_a_non_existing_value_with_implicit_default_value.cs" />
+    <Compile Include="when_reading_version_from_file_with_version.cs" />
     <Compile Include="when_reading_values_from_json_file_with_metadata.cs" />
+    <Compile Include="when_reading_values_from_json_file_with_keys_only.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VcsTestPathHelper.cs" />
     <Compile Include="when_getting_metadata.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="keysonly.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

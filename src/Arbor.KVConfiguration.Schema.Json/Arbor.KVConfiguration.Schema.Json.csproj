@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="ConfigurationItems.cs" />
     <Compile Include="JsonConfigurationSerializer.cs" />
+    <Compile Include="JsonConstants.cs" />
     <Compile Include="KeyValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
