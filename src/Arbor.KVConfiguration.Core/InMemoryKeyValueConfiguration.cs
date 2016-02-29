@@ -38,7 +38,10 @@ namespace Arbor.KVConfiguration.Core
                 }
             }
 
-            _nameValueCollection = tempDictionary.ToImmutableDictionary(keyValuePair => keyValuePair.Key, keyValuePair=> keyValuePair.Value, StringComparer.OrdinalIgnoreCase);
+            _nameValueCollection = tempDictionary.ToImmutableDictionary(
+                keyValuePair => keyValuePair.Key,
+                keyValuePair => keyValuePair.Value,
+                StringComparer.OrdinalIgnoreCase);
         }
 
         public IReadOnlyCollection<string> AllKeys => _nameValueCollection.Keys.ToImmutableList();
@@ -49,32 +52,6 @@ namespace Arbor.KVConfiguration.Core
             {
                 return AllKeys.Select(key => new StringPair(key, GetCombinedValues(key))).ToImmutableList();
             }
-        }
-
-        private string GetCombinedValues(string key)
-        {
-            if (key == null)
-            {
-                return string.Empty;
-            }
-
-            if (!_nameValueCollection.ContainsKey(key))
-            {
-                return string.Empty;
-            }
-
-            var values = _nameValueCollection[key];
-            if (values.IsEmpty)
-            {
-                return string.Empty;
-            }
-
-            if (values.Count == 1)
-            {
-                return values[0];
-            }
-
-            return string.Join(",", values);
         }
 
         public IReadOnlyCollection<MultipleValuesStringPair> AllWithMultipleValues
@@ -88,5 +65,32 @@ namespace Arbor.KVConfiguration.Core
         }
 
         public string this[string key] => GetCombinedValues(key);
+
+        private string GetCombinedValues(string key)
+        {
+            if (key == null)
+            {
+                return string.Empty;
+            }
+
+            if (!_nameValueCollection.ContainsKey(key))
+            {
+                return string.Empty;
+            }
+
+            ImmutableList<string> values = _nameValueCollection[key];
+
+            if (values.IsEmpty)
+            {
+                return string.Empty;
+            }
+
+            if (values.Count == 1)
+            {
+                return values[0];
+            }
+
+            return string.Join(",", values);
+        }
     }
 }

@@ -38,6 +38,17 @@ namespace Arbor.KVConfiguration.UserConfiguration
         public IReadOnlyCollection<MultipleValuesStringPair> AllWithMultipleValues
             => _configuration.AllWithMultipleValues;
 
-        public string this[string key] => _configuration[key];
+        public string this[string key]
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(key))
+                {
+                    return string.Empty;
+                }
+
+                return _configuration[key];
+            }
+        }
     }
 }

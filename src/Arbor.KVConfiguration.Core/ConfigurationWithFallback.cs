@@ -58,7 +58,12 @@ namespace Arbor.KVConfiguration.Core
 
         private string GetValue(string key)
         {
-            var value = _primayConfiguration[key];
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                return string.Empty;
+            }
+
+            string value = _primayConfiguration[key];
 
             if (!string.IsNullOrWhiteSpace(value))
             {

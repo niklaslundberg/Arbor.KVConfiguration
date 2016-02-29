@@ -28,7 +28,8 @@ namespace Arbor.KVConfiguration.Schema
             if (metadataItem.Metadata.ValueType.Equals("uri", StringComparison.InvariantCultureIgnoreCase)
                 && multipleValuesStringPair.HasNonEmptyValue && multipleValuesStringPair.HasSingleValue)
             {
-                var uriString = multipleValuesStringPair.Values.Single();
+                string uriString = multipleValuesStringPair.Values.Single();
+
                 if (!Uri.IsWellFormedUriString(uriString, UriKind.RelativeOrAbsolute))
                 {
                     validationErrors.Add(new ValidationError("Invalid URI"));
@@ -38,7 +39,8 @@ namespace Arbor.KVConfiguration.Schema
             if (metadataItem.Metadata.ValueType.Equals("urn", StringComparison.InvariantCultureIgnoreCase)
                 && multipleValuesStringPair.HasNonEmptyValue && multipleValuesStringPair.HasSingleValue)
             {
-                var uriString = multipleValuesStringPair.Values.Single();
+                string uriString = multipleValuesStringPair.Values.Single();
+
                 if (!Uri.IsWellFormedUriString(uriString, UriKind.RelativeOrAbsolute))
                 {
                     validationErrors.Add(new ValidationError("Invalid URN"));
@@ -57,7 +59,8 @@ namespace Arbor.KVConfiguration.Schema
                 }
             }
 
-            if (metadataItem.Metadata.ValueType.Equals("bool", StringComparison.InvariantCultureIgnoreCase) && string.IsNullOrWhiteSpace(metadataItem.Metadata.DefaultValue))
+            if (metadataItem.Metadata.ValueType.Equals("bool", StringComparison.InvariantCultureIgnoreCase)
+                && string.IsNullOrWhiteSpace(metadataItem.Metadata.DefaultValue))
             {
                 bool parsedResult;
 
@@ -67,7 +70,8 @@ namespace Arbor.KVConfiguration.Schema
                 }
             }
 
-            if (metadataItem.Metadata.ValueType.Equals("int", StringComparison.InvariantCultureIgnoreCase) && string.IsNullOrWhiteSpace(metadataItem.Metadata.DefaultValue))
+            if (metadataItem.Metadata.ValueType.Equals("int", StringComparison.InvariantCultureIgnoreCase)
+                && string.IsNullOrWhiteSpace(metadataItem.Metadata.DefaultValue))
             {
                 int parsedResult;
 
@@ -77,7 +81,8 @@ namespace Arbor.KVConfiguration.Schema
                 }
             }
 
-            if (metadataItem.Metadata.ValueType.Equals("timespan", StringComparison.InvariantCultureIgnoreCase) && string.IsNullOrWhiteSpace(metadataItem.Metadata.DefaultValue))
+            if (metadataItem.Metadata.ValueType.Equals("timespan", StringComparison.InvariantCultureIgnoreCase)
+                && string.IsNullOrWhiteSpace(metadataItem.Metadata.DefaultValue))
             {
                 TimeSpan parsedResult;
 
@@ -87,10 +92,12 @@ namespace Arbor.KVConfiguration.Schema
                 }
             }
 
-            return new KeyValueConfigurationValidationResult(
+            var validationResult = new KeyValueConfigurationValidationResult(
                 metadataItem,
                 multipleValuesStringPair.Values,
                 validationErrors);
+
+            return validationResult;
         }
     }
 }

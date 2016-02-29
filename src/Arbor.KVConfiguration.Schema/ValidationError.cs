@@ -4,8 +4,6 @@ namespace Arbor.KVConfiguration.Schema
 {
     public class ValidationError
     {
-        public string ErrorMessage { get; }
-
         public ValidationError(string errorMessage)
         {
             if (string.IsNullOrWhiteSpace(errorMessage))
@@ -15,5 +13,7 @@ namespace Arbor.KVConfiguration.Schema
 
             ErrorMessage = errorMessage;
         }
+
+        public string ErrorMessage { get; }
     }
 }

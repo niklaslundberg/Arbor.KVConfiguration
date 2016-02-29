@@ -55,7 +55,7 @@
     <Compile Include="ConfigurationWithFallback.cs" />
     <Compile Include="IKeyValueConfiguration.cs" />
     <Compile Include="InMemoryKeyValueConfiguration.cs" />
-    <Compile Include="KeyValueConfigurationExtenions.cs" />
+    <Compile Include="KeyValueConfigurationExtensions.cs" />
     <Compile Include="KVConfigurationManager.cs" />
     <Compile Include="MultipleValuesStringPair.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

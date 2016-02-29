@@ -1,14 +1,12 @@
 using System;
 
+using JetBrains.Annotations;
+
 namespace Arbor.KVConfiguration.Schema
 {
     public struct KeyMetadata
     {
-        public string Key { get; }
-
-        public Metadata Metadata { get; }
-
-        public KeyMetadata(string key, Metadata metadata)
+        public KeyMetadata(string key, [CanBeNull] Metadata metadata)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
@@ -18,5 +16,9 @@ namespace Arbor.KVConfiguration.Schema
             Key = key;
             Metadata = metadata;
         }
+
+        public string Key { get; }
+
+        public Metadata Metadata { get; }
     }
 }

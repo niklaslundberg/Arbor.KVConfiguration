@@ -8,19 +8,19 @@ namespace Arbor.KVConfiguration.Core
     {
         private static readonly object _MutexLock = new object();
 
-        private static IKeyValueConfiguration appSettings;
+        private static IKeyValueConfiguration _appSettings;
 
         public static IKeyValueConfiguration AppSettings
         {
             get
             {
-                if (appSettings == null)
+                if (_appSettings == null)
                 {
                     throw new InvalidOperationException(
                         $"The {nameof(KVConfigurationManager)} has not been initialized");
                 }
 
-                return appSettings;
+                return _appSettings;
             }
         }
 
@@ -33,7 +33,7 @@ namespace Arbor.KVConfiguration.Core
 
             lock (_MutexLock)
             {
-                appSettings = keyValueConfiguration;
+                _appSettings = keyValueConfiguration;
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -13,6 +14,11 @@ namespace Arbor.KVConfiguration.JsonConfiguration
 
         public JsonFileReader(string fileFullPath)
         {
+            if (string.IsNullOrWhiteSpace(fileFullPath))
+            {
+                throw new ArgumentException("Argument is null or whitespace", nameof(fileFullPath));
+            }
+
             _fileFullPath = fileFullPath;
         }
 
@@ -22,7 +28,7 @@ namespace Arbor.KVConfiguration.JsonConfiguration
 
             ConfigurationItems config = new JsonConfigurationSerializer().Deserialize(json);
 
-           return config;
+            return config;
         }
 
         public IReadOnlyCollection<KeyValueConfigurationItem> ReadConfiguration()
