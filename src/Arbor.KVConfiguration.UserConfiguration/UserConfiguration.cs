@@ -9,6 +9,8 @@ namespace Arbor.KVConfiguration.UserConfiguration
 {
     public class UserConfiguration : IKeyValueConfiguration
     {
+        private const string ConfigUserFileName = "config.user";
+
         private readonly IKeyValueConfiguration _configuration;
 
         public UserConfiguration(IKeyValueConfiguration fallbackConfiguration)
@@ -18,14 +20,39 @@ namespace Arbor.KVConfiguration.UserConfiguration
                 throw new ArgumentNullException(nameof(fallbackConfiguration));
             }
 
-            var file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.user");
+            string fileFullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigUserFileName);
 
-            if (File.Exists(file))
+            if (File.Exists(fileFullPath))
             {
-                var jsonConfiguration = new JsonKeyValueConfiguration(file);
+                var jsonConfiguration = new JsonKeyValueConfiguration(fileFullPath);
                 _configuration = new ConfigurationWithFallback(jsonConfiguration, fallbackConfiguration);
             }
             else
+            {
+                FileInfo fileInfo = new FileInfo(fileFullPath);
+
+                string parentName = fileInfo.Directory?.Parent?.Name ?? string.Empty;
+
+                if (parentName.Equals("bin"))
+                {
+                    string projectDirectoryFullDirectoryPath = fileInfo?.Directory?.Parent?.Parent?.FullName ?? string.Empty;
+
+                    if (!string.IsNullOrWhiteSpace(projectDirectoryFullDirectoryPath))
+                    {
+                        string projectDirectoryFullFilePath = Path.Combine(
+                            projectDirectoryFullDirectoryPath,
+                            ConfigUserFileName);
+
+                        if (File.Exists(projectDirectoryFullFilePath))
+                        {
+                            var jsonConfiguration = new JsonKeyValueConfiguration(projectDirectoryFullFilePath);
+                            _configuration = new ConfigurationWithFallback(jsonConfiguration, fallbackConfiguration);
+                        }
+                    }
+                }
+            }
+
+            if (_configuration == null)
             {
                 _configuration = fallbackConfiguration;
             }
