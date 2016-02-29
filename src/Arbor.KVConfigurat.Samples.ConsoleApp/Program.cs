@@ -2,9 +2,9 @@
 
 namespace Arbor.KVConfigurat.Samples.ConsoleApp
 {
-    class Program
+    public static class Program
     {
-        static void Main(string[] args)
+        public static int Main(string[] args)
         {
             new AppScenario1().Execute();
 
@@ -15,6 +15,10 @@ namespace Arbor.KVConfigurat.Samples.ConsoleApp
             Console.WriteLine(new string('*', 50));
 
             new AppScenario3().Execute();
+
+            new AppScenario4().Execute();
+
+            return 0;
         }
     }
 }

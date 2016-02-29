@@ -28,7 +28,8 @@ namespace Arbor.KVConfigurat.Samples.ConsoleApp
 
             KVConfigurationManager.Initialize(appSettingsKeyValueConfiguration);
 
-            var goodKeys = new List<string> {
+            var goodKeys = new List<string>
+                               {
                                    "a-non-existing-key",
                                    "urn:test:key",
                                    "urn:TEST:key",

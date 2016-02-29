@@ -12,11 +12,11 @@ namespace Arbor.KVConfigurat.Samples.ConsoleApp
         public void Execute()
         {
             var collection = new NameValueCollection
-                                                 {
-                                                     { "urn:test:key", "a" },
-                                                     { "urn:another-key", "b" },
-                                                     { "urn:yet-another-key", "c" }
-                                                 };
+                                 {
+                                     { "urn:test:key", "a" },
+                                     { "urn:another-key", "b" },
+                                     { "urn:yet-another-key", "c" }
+                                 };
 
             IKeyValueConfiguration appSettingsKeyValueConfiguration = new InMemoryKeyValueConfiguration(collection);
 

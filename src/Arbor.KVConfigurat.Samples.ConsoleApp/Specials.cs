@@ -20,7 +20,7 @@ namespace Arbor.KVConfigurat.Samples.ConsoleApp
 
         public static string GetDisplayValue(string value)
         {
-            var keyValuePairs = Special
+            KeyValuePair<string, string>[] keyValuePairs = Special
                 .Where(pair => Equals(value, pair.Value))
                 .ToArray();
 
@@ -29,7 +29,7 @@ namespace Arbor.KVConfigurat.Samples.ConsoleApp
                 return value;
             }
 
-            var first = keyValuePairs.First();
+            KeyValuePair<string, string> first = keyValuePairs.First();
 
             return first.Key;
         }
