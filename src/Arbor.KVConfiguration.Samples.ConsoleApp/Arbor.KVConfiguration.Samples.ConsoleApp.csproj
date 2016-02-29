@@ -7,8 +7,8 @@
     <ProjectGuid>{BCE5FA21-6DF0-4F8C-B449-B164471A19D3}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Arbor.KVConfigurat.Samples.ConsoleApp</RootNamespace>
-    <AssemblyName>Arbor.KVConfigurat.Samples.ConsoleApp</AssemblyName>
+    <RootNamespace>Arbor.KVConfiguration.Samples.ConsoleApp</RootNamespace>
+    <AssemblyName>Arbor.KVConfiguration.Samples.ConsoleApp</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
