@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 using Arbor.KVConfiguration.Core;
 
-namespace Arbor.KVConfigurat.Samples.ConsoleApp
+namespace Arbor.KVConfiguration.Samples.ConsoleApp
 {
     public class AppScenario3
     {

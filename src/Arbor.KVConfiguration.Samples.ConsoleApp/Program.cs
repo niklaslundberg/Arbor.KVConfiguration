@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Arbor.KVConfigurat.Samples.ConsoleApp
+namespace Arbor.KVConfiguration.Samples.ConsoleApp
 {
     public static class Program
     {

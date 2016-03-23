@@ -10,11 +10,6 @@ SET Arbor.X.Build.VariableOverrideEnabled=true
 SET Arbor.X.Artifacts.CleanupBeforeBuildEnabled=true
 SET Arbor.X.Build.NetAssembly.Configuration=
 
-SET Version.Major=0
-SET Version.Minor=3
-SET Version.Patch=0
-SET Version.Build=100
-
 IF "%Arbor.X.Vcs.Branch.Name%" == "" (
 	SET Arbor.X.Vcs.Branch.Name=develop
 )

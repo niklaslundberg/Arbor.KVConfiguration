@@ -5,7 +5,7 @@ using System.Text;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.SystemConfiguration;
 
-namespace Arbor.KVConfigurat.Samples.ConsoleApp
+namespace Arbor.KVConfiguration.Samples.ConsoleApp
 {
     public class AppScenario1
     {
