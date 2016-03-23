@@ -19,6 +19,7 @@ namespace Arbor.KVConfiguration.Schema
             {
                 throw new ArgumentNullException(nameof(configurationValidator));
             }
+
             if (metadata == null)
             {
                 throw new ArgumentNullException(nameof(metadata));
@@ -29,11 +30,11 @@ namespace Arbor.KVConfiguration.Schema
                 throw new ArgumentNullException(nameof(multipleValuesStringPairs));
             }
 
-            List<KeyValueConfigurationValidationResult> keyValueConfigurationValidationResults = new List<KeyValueConfigurationValidationResult>();
+            var keyValueConfigurationValidationResults = new List<KeyValueConfigurationValidationResult>();
 
             foreach (MultipleValuesStringPair multipleValuesStringPair in multipleValuesStringPairs)
             {
-                var metadataItem =
+                KeyMetadata metadataItem =
                     metadata.SingleOrDefault(
                         item =>
                         item.Key.Equals(multipleValuesStringPair.Key, StringComparison.InvariantCultureIgnoreCase));

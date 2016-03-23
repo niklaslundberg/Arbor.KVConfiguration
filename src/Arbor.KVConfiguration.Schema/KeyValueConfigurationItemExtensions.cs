@@ -2,29 +2,43 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 
+using JetBrains.Annotations;
+
 namespace Arbor.KVConfiguration.Schema
 {
     public static class KeyValueConfigurationItemExtensions
     {
-        public static IReadOnlyCollection<KeyMetadata> GetMetadata(this IEnumerable<KeyValueConfigurationItem> items)
+        [NotNull]
+        public static IReadOnlyCollection<KeyMetadata> GetMetadata(
+            [CanBeNull] this IEnumerable<KeyValueConfigurationItem> items)
         {
             if (items == null)
             {
-                return new KeyMetadata[] { };
+                return new KeyMetadata[]
+                           {
+                           };
             }
 
-            var keyValueConfigurationItems = items as KeyValueConfigurationItem[] ?? items.ToArray();
+            KeyValueConfigurationItem[] keyValueConfigurationItems = items as KeyValueConfigurationItem[]
+                                                                     ?? items.ToArray();
 
-            var uniqueKeys = keyValueConfigurationItems.Select(item => item.Key).Distinct();
+            string[] uniqueKeys = keyValueConfigurationItems.Select(item => item.Key).Distinct().ToArray();
 
-            var ordered = keyValueConfigurationItems.Where(_ => _.Metadata != null).ToArray();
+            KeyValueConfigurationItem[] ordered = keyValueConfigurationItems.Where(_ => _.Metadata != null).ToArray();
 
-            var list =
-                uniqueKeys.Select(key => new { key, found = ordered.FirstOrDefault() })
+            List<KeyMetadata> list =
+                uniqueKeys.Select(
+                    key => new
+                               {
+                                   key,
+                                   found = ordered.FirstOrDefault()
+                               })
                     .Select(@t => new KeyMetadata(@t.key, @t.found.Metadata))
                     .ToList();
 
-            return new ReadOnlyCollection<KeyMetadata>(list);
+            ReadOnlyCollection<KeyMetadata> readOnlyKeyMetadata = new ReadOnlyCollection<KeyMetadata>(list);
+
+            return readOnlyKeyMetadata;
         }
     }
 }

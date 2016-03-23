@@ -7,7 +7,7 @@ using Arbor.Aesculus.Core;
 
 namespace Arbor.KVConfiguration.Tests.Integration
 {
-    internal class VcsTestPathHelper
+    internal static class VcsTestPathHelper
     {
         public static string FindVcsRootPath()
         {
@@ -22,10 +22,12 @@ namespace Arbor.KVConfiguration.Tests.Integration
 
                 MethodInfo method = ncrunchType?.GetMethod("GetOriginalSolutionPath");
 
-                string originalSolutionPath = method?.Invoke(null, null) as string;
+                var originalSolutionPath = method?.Invoke(null, null) as string;
+
                 if (!string.IsNullOrWhiteSpace(originalSolutionPath))
                 {
                     DirectoryInfo parent = new DirectoryInfo(originalSolutionPath).Parent;
+                    // ReSharper disable once PossibleNullReferenceException
                     return VcsPathHelper.FindVcsRootPath(parent.FullName);
                 }
             }
@@ -33,6 +35,7 @@ namespace Arbor.KVConfiguration.Tests.Integration
             catch (Exception)
 #pragma warning restore RECS0022 // A catch clause that catches System.Exception and has an empty body
             {
+                // ignored
             }
 
             return VcsPathHelper.FindVcsRootPath();

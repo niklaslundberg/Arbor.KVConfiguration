@@ -54,6 +54,10 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -65,6 +69,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MultipleExtensions.cs" />
+    <Compile Include="InMemoryKeyValueConfiguration\when_getting_an_existing_value_with_implicit_default_value.cs" />
+    <Compile Include="InMemoryKeyValueConfiguration\when_getting_a_non_existing_value_with_explicit_default_value.cs" />
+    <Compile Include="InMemoryKeyValueConfiguration\when_getting_a_non_existing_value_with_implicit_default_value.cs" />
+    <Compile Include="InMemoryKeyValueConfiguration\when_getting_an_existing_value_with_specific_default_value.cs" />
+    <Compile Include="Urn\AComplexImmutableType.cs" />
+    <Compile Include="Urn\a_multi_level_urn.cs" />
+    <Compile Include="Urn\a_one_level_urn.cs" />
+    <Compile Include="Urn\two_equal_urns.cs" />
+    <Compile Include="Urn\two_unequal_urns.cs" />
+    <Compile Include="Urn\when_getting_three_complex_instances.cs" />
+    <Compile Include="Urn\when_having_two_equal_urns.cs" />
+    <Compile Include="Urn\when_having_two_equal_urns_with_different_casing.cs" />
+    <Compile Include="Urn\when_having_two_equal_urns_with_mixed_casing.cs" />
+    <Compile Include="Urn\when_having_two_unequal_urns.cs" />
+    <Compile Include="Urn\when_parsing_minimal_urn.cs" />
+    <Compile Include="Urn\when_parsing_two_level_urn.cs" />
+    <Compile Include="when_serializing_a_configuration_items_list.cs" />
     <Compile Include="SummaryExtensions.cs" />
     <Compile Include="when_validating_0_as_int.cs" />
     <Compile Include="when_validating_a_missing_required_value.cs" />
@@ -100,6 +121,10 @@
     <ProjectReference Include="..\Arbor.KVConfiguration.Schema\Arbor.KVConfiguration.Schema.csproj">
       <Project>{a1d40132-87c2-4fa3-aad5-c4514ee361ec}</Project>
       <Name>Arbor.KVConfiguration.Schema</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Arbor.KVConfiguration.Urns\Arbor.KVConfiguration.Urns.csproj">
+      <Project>{3b57043b-09b5-4094-af1c-28e49462b482}</Project>
+      <Name>Arbor.KVConfiguration.Urns</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

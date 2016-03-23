@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using JetBrains.Annotations;
+
 namespace Arbor.KVConfiguration.Core
 {
     public class ConfigurationWithFallback : IKeyValueConfiguration
@@ -11,9 +13,19 @@ namespace Arbor.KVConfiguration.Core
         private readonly IKeyValueConfiguration _primayConfiguration;
 
         public ConfigurationWithFallback(
-            IKeyValueConfiguration primayConfiguration,
-            IKeyValueConfiguration fallbackConfiguration)
+            [NotNull] IKeyValueConfiguration primayConfiguration,
+            [NotNull] IKeyValueConfiguration fallbackConfiguration)
         {
+            if (primayConfiguration == null)
+            {
+                throw new ArgumentNullException(nameof(primayConfiguration));
+            }
+
+            if (fallbackConfiguration == null)
+            {
+                throw new ArgumentNullException(nameof(fallbackConfiguration));
+            }
+
             _primayConfiguration = primayConfiguration;
             _fallbackConfiguration = fallbackConfiguration;
         }
@@ -25,7 +37,7 @@ namespace Arbor.KVConfiguration.Core
         {
             get
             {
-                return AllKeys.Select(key => new StringPair(key, ValueOrDefault(key))).ToList();
+                return AllKeys.Select(key => new StringPair(key, GetValue(key))).ToList();
             }
         }
 
@@ -36,36 +48,29 @@ namespace Arbor.KVConfiguration.Core
                 var fallbackOnly =
                     _fallbackConfiguration.AllWithMultipleValues.Where(
                         pair =>
-                        !_primayConfiguration.AllKeys.Contains(pair.Key, StringComparer.InvariantCultureIgnoreCase));
+                        !_primayConfiguration.AllKeys.Contains(pair.Key, StringComparer.OrdinalIgnoreCase));
 
                 return _primayConfiguration.AllWithMultipleValues.Concat(fallbackOnly).ToArray();
             }
         }
 
-        public string this[string key] => ValueOrDefault(key);
+        public string this[string key] => GetValue(key);
 
-        public string ValueOrDefault(string key)
+        private string GetValue(string key)
         {
-            var value = _primayConfiguration.ValueOrDefault(key);
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                return string.Empty;
+            }
+
+            string value = _primayConfiguration[key];
 
             if (!string.IsNullOrWhiteSpace(value))
             {
                 return value;
             }
 
-            return _fallbackConfiguration.ValueOrDefault(key);
-        }
-
-        public string ValueOrDefault(string key, string defaultValue)
-        {
-            var value = _primayConfiguration.ValueOrDefault(key, defaultValue);
-
-            if (!string.IsNullOrWhiteSpace(value))
-            {
-                return value;
-            }
-
-            return _fallbackConfiguration.ValueOrDefault(key, defaultValue);
+            return _fallbackConfiguration[key];
         }
     }
 }

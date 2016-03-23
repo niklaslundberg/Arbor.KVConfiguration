@@ -1,0 +1,24 @@
+﻿{
+    "keys": [
+        {
+            "key": "ATestKey",
+            "value": "A custom a value",
+            "metadata": {
+                "key": "ATestKey",
+                "valueType":  "string"
+            }
+        },
+        {
+            "key": "releaseLabel",
+            "value": "rc",
+            "metadata": {
+                "key": "releaseLabel",
+                "valueType": "string"
+            }
+        },
+        {
+            "key": "releaseLabel",
+            "value": "1"
+        }
+    ]
+}

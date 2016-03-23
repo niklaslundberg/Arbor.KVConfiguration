@@ -9,12 +9,14 @@ namespace Arbor.KVConfiguration.Schema
             IEnumerable<KeyValueConfigurationValidationResult> keyValueConfigurationValidationResults)
         {
             KeyValueConfigurationValidationResults = keyValueConfigurationValidationResults?.ToArray()
-                                                     ?? new KeyValueConfigurationValidationResult[] { };
+                                                     ?? new KeyValueConfigurationValidationResult[]
+                                                            {
+                                                            };
         }
 
         public bool IsValid => KeyValueConfigurationValidationResults.All(_ => _.IsValid);
 
         public IReadOnlyCollection<KeyValueConfigurationValidationResult> KeyValueConfigurationValidationResults { get;
-            set; }
+        }
     }
 }

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Arbor.KVConfiguration.Urns</id>
+    <version>0.0.1</version>
+    <title>Arbor.KVConfiguration.Urns</title>
+    <authors>Niklas Lundberg</authors>
+    <owners></owners>
+    <description>
+      Extract strongly typed objects from key value configuration with URNs
+    </description>
+    <releaseNotes>
+    </releaseNotes>
+    <summary>
+      Arbor.KVConfiguration.Urns
+    </summary>
+    <language>en-US</language>
+    <projectUrl>https://github.com/niklaslundberg/Arbor.KVConfiguration</projectUrl>
+    <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/niklaslundberg/Arbor.KVConfiguration/blob/master/LICENSE.txt</licenseUrl>
+    <copyright>Copyright Niklas Lundberg 2014 - 2016</copyright>
+    <dependencies>
+      <dependency id="Arbor.KVConfiguration.Core" version="[0.3.0]" />
+      <dependency id="Newtonsoft.Json" version="[6.0.0,)" />
+    </dependencies>
+    <references></references>
+    <tags></tags>
+  </metadata>
+  <files>
+    <file src="bin\$configuration$\Arbor.KVConfiguration.Urns.dll" target="lib\net45" />
+  </files>
+</package>

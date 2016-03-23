@@ -9,7 +9,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
     {
         public static string Print(this KeyValueConfigurationValidationSummary summary)
         {
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
 
             if (summary.IsValid)
             {

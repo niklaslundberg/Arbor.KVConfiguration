@@ -16,15 +16,15 @@ namespace Arbor.KVConfiguration.Schema
             string description = "",
             string partInvariantName = "",
             string partFullName = "",
-            Type containingClass = null,
+            [CanBeNull] Type containingClass = null,
             int sourceLine = -1,
             string sourceFile = "",
             bool isRequired = true,
             string defaultValue = "",
             string notes = "",
             bool allowMultipleValues = false,
-            IEnumerable<string> examples = null,
-            IEnumerable<string> tags = null)
+            [CanBeNull] IEnumerable<string> examples = null,
+            [CanBeNull] IEnumerable<string> tags = null)
         {
             if (string.IsNullOrWhiteSpace(key))
             {

@@ -9,18 +9,50 @@ namespace Arbor.KVConfiguration.UserConfiguration
 {
     public class UserConfiguration : IKeyValueConfiguration
     {
+        private const string ConfigUserFileName = "config.user";
+
         private readonly IKeyValueConfiguration _configuration;
 
         public UserConfiguration(IKeyValueConfiguration fallbackConfiguration)
         {
-            var file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.user");
-
-            if (File.Exists(file))
+            if (fallbackConfiguration == null)
             {
-                var jsonConfiguration = new JsonKeyValueConfiguration(file);
+                throw new ArgumentNullException(nameof(fallbackConfiguration));
+            }
+
+            string fileFullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigUserFileName);
+
+            if (File.Exists(fileFullPath))
+            {
+                var jsonConfiguration = new JsonKeyValueConfiguration(fileFullPath);
                 _configuration = new ConfigurationWithFallback(jsonConfiguration, fallbackConfiguration);
             }
             else
+            {
+                FileInfo fileInfo = new FileInfo(fileFullPath);
+
+                string parentName = fileInfo.Directory?.Parent?.Name ?? string.Empty;
+
+                if (parentName.Equals("bin"))
+                {
+                    string projectDirectoryFullDirectoryPath = fileInfo?.Directory?.Parent?.Parent?.FullName ?? string.Empty;
+
+                    if (!string.IsNullOrWhiteSpace(projectDirectoryFullDirectoryPath))
+                    {
+                        string projectDirectoryFullFilePath = Path.Combine(
+                            projectDirectoryFullDirectoryPath,
+                            ConfigUserFileName);
+
+                        if (File.Exists(projectDirectoryFullFilePath))
+                        {
+                            var jsonConfiguration = new JsonKeyValueConfiguration(projectDirectoryFullFilePath);
+                            _configuration = new ConfigurationWithFallback(jsonConfiguration, fallbackConfiguration);
+                        }
+                    }
+                }
+            }
+
+            if (_configuration == null)
             {
                 _configuration = fallbackConfiguration;
             }
@@ -33,16 +65,17 @@ namespace Arbor.KVConfiguration.UserConfiguration
         public IReadOnlyCollection<MultipleValuesStringPair> AllWithMultipleValues
             => _configuration.AllWithMultipleValues;
 
-        public string this[string key] => _configuration[key];
-
-        public string ValueOrDefault(string key)
+        public string this[string key]
         {
-            return _configuration.ValueOrDefault(key);
-        }
+            get
+            {
+                if (string.IsNullOrWhiteSpace(key))
+                {
+                    return string.Empty;
+                }
 
-        public string ValueOrDefault(string key, string defaultValue)
-        {
-            return _configuration.ValueOrDefault(key, defaultValue);
+                return _configuration[key];
+            }
         }
     }
 }
