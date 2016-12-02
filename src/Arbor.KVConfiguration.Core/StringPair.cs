@@ -50,21 +50,21 @@ namespace Arbor.KVConfiguration.Core
 
         public override string ToString()
         {
-            var s = new StringBuilder(Key?.Length + Value?.Length + 4 ?? 10);
-            s.Append('[');
+            var toStringBuilder = new StringBuilder(Key?.Length + Value?.Length + 4 ?? 10);
+            toStringBuilder.Append('[');
             if (Key != null)
             {
-                s.Append(Key);
+                toStringBuilder.Append(Key);
             }
 
-            s.Append(", \"");
+            toStringBuilder.Append(", \"");
             if (Value != null)
             {
-                s.Append(Value);
+                toStringBuilder.Append(Value);
             }
 
-            s.Append("\"]");
-            return s.ToString();
+            toStringBuilder.Append("\"]");
+            return toStringBuilder.ToString();
         }
     }
 }

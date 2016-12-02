@@ -22,7 +22,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
                 KeyValueConfigurationValidationResult[] errors =
                     summary.KeyValueConfigurationValidationResults.Where(_ => !_.IsValid).ToArray();
 
-                foreach (var keyValueConfigurationValidationResult in errors)
+                foreach (KeyValueConfigurationValidationResult keyValueConfigurationValidationResult in errors)
                 {
                     builder.AppendLine("# " + keyValueConfigurationValidationResult.KeyMetadata.Key);
                     foreach (ValidationError validationError in keyValueConfigurationValidationResult.ValidationErrors)

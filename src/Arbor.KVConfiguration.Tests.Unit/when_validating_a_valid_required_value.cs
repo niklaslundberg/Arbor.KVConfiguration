@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-
 using Arbor.KVConfiguration.JsonConfiguration;
 using Arbor.KVConfiguration.Schema;
 
