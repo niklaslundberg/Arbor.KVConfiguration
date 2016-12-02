@@ -48,9 +48,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AttributeMetadataSource.cs" />
+    <Compile Include="BaseValueValidator.cs" />
+    <Compile Include="BoolValidator.cs" />
     <Compile Include="ConfigurationValidationExtensions.cs" />
     <Compile Include="ConfigurationValidator.cs" />
+    <Compile Include="ArrayExtensions.cs" />
     <Compile Include="IConfigurationValidator.cs" />
+    <Compile Include="IntValidator.cs" />
+    <Compile Include="IValueValidator.cs" />
     <Compile Include="KeyMetadata.cs" />
     <Compile Include="KeyValueConfigurationItem.cs" />
     <Compile Include="KeyValueConfigurationItemExtensions.cs" />
@@ -60,6 +65,10 @@
     <Compile Include="Metadata.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SourceKeyValueConfiguration.cs" />
+    <Compile Include="SourceReader.cs" />
+    <Compile Include="TimeSpanValidator.cs" />
+    <Compile Include="UriValidator.cs" />
+    <Compile Include="UrnValidator.cs" />
     <Compile Include="ValidationError.cs" />
   </ItemGroup>
   <ItemGroup>
