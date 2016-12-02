@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
-
 using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core
@@ -10,15 +10,15 @@ namespace Arbor.KVConfiguration.Core
     {
         private readonly IKeyValueConfiguration _fallbackConfiguration;
 
-        private readonly IKeyValueConfiguration _primayConfiguration;
+        private readonly IKeyValueConfiguration _primaryConfiguration;
 
         public ConfigurationWithFallback(
-            [NotNull] IKeyValueConfiguration primayConfiguration,
+            [NotNull] IKeyValueConfiguration primaryConfiguration,
             [NotNull] IKeyValueConfiguration fallbackConfiguration)
         {
-            if (primayConfiguration == null)
+            if (primaryConfiguration == null)
             {
-                throw new ArgumentNullException(nameof(primayConfiguration));
+                throw new ArgumentNullException(nameof(primaryConfiguration));
             }
 
             if (fallbackConfiguration == null)
@@ -26,31 +26,28 @@ namespace Arbor.KVConfiguration.Core
                 throw new ArgumentNullException(nameof(fallbackConfiguration));
             }
 
-            _primayConfiguration = primayConfiguration;
+            _primaryConfiguration = primaryConfiguration;
             _fallbackConfiguration = fallbackConfiguration;
         }
 
         public IReadOnlyCollection<string> AllKeys
-            => _primayConfiguration.AllKeys.Union(_fallbackConfiguration.AllKeys).Distinct().ToArray();
+            => _primaryConfiguration.AllKeys.Union(_fallbackConfiguration.AllKeys).Distinct().ToImmutableArray();
 
         public IReadOnlyCollection<StringPair> AllValues
         {
-            get
-            {
-                return AllKeys.Select(key => new StringPair(key, GetValue(key))).ToList();
-            }
+            get { return AllKeys.Select(key => new StringPair(key, GetValue(key))).ToImmutableArray(); }
         }
 
         public IReadOnlyCollection<MultipleValuesStringPair> AllWithMultipleValues
         {
             get
             {
-                var fallbackOnly =
-                    _fallbackConfiguration.AllWithMultipleValues.Where(
-                        pair =>
-                        !_primayConfiguration.AllKeys.Contains(pair.Key, StringComparer.OrdinalIgnoreCase));
+                IEnumerable<MultipleValuesStringPair> fallbackOnly =
+                    _fallbackConfiguration.AllWithMultipleValues
+                        .Where(pair =>
+                                !_primaryConfiguration.AllKeys.Contains(pair.Key, StringComparer.OrdinalIgnoreCase));
 
-                return _primayConfiguration.AllWithMultipleValues.Concat(fallbackOnly).ToArray();
+                return _primaryConfiguration.AllWithMultipleValues.Concat(fallbackOnly).ToImmutableArray();
             }
         }
 
@@ -63,7 +60,7 @@ namespace Arbor.KVConfiguration.Core
                 return string.Empty;
             }
 
-            string value = _primayConfiguration[key];
+            string value = _primaryConfiguration[key];
 
             if (!string.IsNullOrWhiteSpace(value))
             {
