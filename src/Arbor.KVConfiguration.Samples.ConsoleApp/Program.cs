@@ -18,6 +18,8 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
 
             new AppScenario4().Execute();
 
+            new AppScenario5().Execute();
+
             return 0;
         }
     }

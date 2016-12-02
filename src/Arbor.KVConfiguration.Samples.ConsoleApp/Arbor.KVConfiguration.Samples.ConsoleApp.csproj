@@ -32,6 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,17 +50,24 @@
     <Compile Include="AppScenario3.cs" />
     <Compile Include="AppScenario2.cs" />
     <Compile Include="AppScenario4.cs" />
+    <Compile Include="AppScenario5.cs" />
+    <Compile Include="SampleConfigurationConstants.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Specials.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Arbor.KVConfiguration.Core\Arbor.KVConfiguration.Core.csproj">
       <Project>{86C8D4E6-C68D-428E-87CC-B3B636DEB19B}</Project>
       <Name>Arbor.KVConfiguration.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Arbor.KVConfiguration.Schema\Arbor.KVConfiguration.Schema.csproj">
+      <Project>{A1D40132-87C2-4FA3-AAD5-C4514EE361EC}</Project>
+      <Name>Arbor.KVConfiguration.Schema</Name>
     </ProjectReference>
     <ProjectReference Include="..\Arbor.KVConfiguration.SystemConfiguration\Arbor.KVConfiguration.SystemConfiguration.csproj">
       <Project>{4D295C1B-59A2-4885-BD04-29FBF42566BD}</Project>

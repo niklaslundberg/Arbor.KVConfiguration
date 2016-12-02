@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 
 using Arbor.KVConfiguration.Core;
+using Arbor.KVConfiguration.Schema;
 using Arbor.KVConfiguration.SystemConfiguration;
 
 using Autofac;
@@ -27,8 +28,9 @@ namespace Arbor.KVConfiguration.Samples.Web
 
         private static void RegisterConfiguration(ContainerBuilder builder)
         {
+            IKeyValueConfiguration sourceConfiguration = new SourceKeyValueConfiguration(typeof(Bootstrapper).Assembly);
             IKeyValueConfiguration appSettingsKeyValueConfiguration = new AppSettingsKeyValueConfiguration();
-            IKeyValueConfiguration userConfiguration = new UserConfiguration.UserConfiguration(appSettingsKeyValueConfiguration);
+            IKeyValueConfiguration userConfiguration = new UserConfiguration.UserConfiguration(new ConfigurationWithFallback(appSettingsKeyValueConfiguration, sourceConfiguration));
             IKeyValueConfiguration expanded = new ExpandConfiguration(userConfiguration);
 
             builder.RegisterInstance(expanded)

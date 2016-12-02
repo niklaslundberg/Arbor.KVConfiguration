@@ -1,54 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Schema
 {
-    public class Metadata
+    [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
+    public class MetadataAttribute : Attribute
     {
-        public Metadata(
-            string key,
-            string valueType,
+        public MetadataAttribute(
+            string valueType = "",
             string memberName = "",
             string description = "",
             string partInvariantName = "",
             string partFullName = "",
             [CanBeNull] Type containingClass = null,
-            [CallerLineNumber] int sourceLine = -1,
-            string sourceFile = "",
+            [CallerLineNumber]int sourceLine = -1,
+            [CallerFilePath] string sourceFile = "",
             bool isRequired = true,
             string defaultValue = "",
             string notes = "",
             bool allowMultipleValues = false,
-            [CanBeNull] IEnumerable<string> examples = null,
-            [CanBeNull] IEnumerable<string> tags = null)
+            [CanBeNull] string[] examples = null,
+            [CanBeNull] string[] tags = null,
+            string keyType = "")
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentException("Argument is null or whitespace", nameof(key));
-            }
-
-            Key = key;
-            MemberName = memberName;
-            Description = description;
-            ValueType = valueType;
-            PartInvariantName = partInvariantName;
-            PartFullName = partFullName;
+            MemberName = memberName ?? "";
+            Description = description ?? "";
+            ValueType = valueType ?? "";
+            PartInvariantName = partInvariantName ?? "";
+            PartFullName = partFullName ?? "";
             ContainingClass = containingClass;
             SourceLine = sourceLine;
-            SourceFile = sourceFile;
+            SourceFile = sourceFile ?? "";
             IsRequired = isRequired;
-            DefaultValue = defaultValue;
-            Notes = notes;
+            DefaultValue = defaultValue ?? "";
+            Notes = notes ?? "";
             AllowMultipleValues = allowMultipleValues;
+            KeyType = keyType ?? "";
             Examples = new ReadOnlyCollection<string>(examples?.ToList() ?? new List<string>());
             Tags = new ReadOnlyCollection<string>(tags?.ToList() ?? new List<string>());
         }
 
         public bool AllowMultipleValues { get; }
+        public string KeyType { get; set; }
 
         public Type ContainingClass { get; private set; }
 
@@ -60,7 +58,6 @@ namespace Arbor.KVConfiguration.Schema
 
         public bool IsRequired { get; }
 
-        public string Key { get; }
 
         public string MemberName { get; }
 
@@ -80,7 +77,7 @@ namespace Arbor.KVConfiguration.Schema
 
         public override string ToString()
         {
-            return $"[{nameof(Key)}: {Key}] [{nameof(ValueType)}: {ValueType}]";
+            return $"[{nameof(MemberName)}: {MemberName}] [{nameof(ValueType)}: {ValueType}]";
         }
     }
 }
