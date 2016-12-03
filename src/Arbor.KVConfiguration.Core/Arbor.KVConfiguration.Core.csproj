@@ -54,8 +54,11 @@
   <ItemGroup>
     <Compile Include="ExpandConfiguration.cs" />
     <Compile Include="ConfigurationWithFallback.cs" />
+    <Compile Include="Extensions\BoolExtensions.cs" />
+    <Compile Include="Extensions\LongExtensions.cs" />
     <Compile Include="IKeyValueConfiguration.cs" />
     <Compile Include="InMemoryKeyValueConfiguration.cs" />
+    <Compile Include="Extensions\IntExtensions.cs" />
     <Compile Include="KeyValueConfigurationExtensions.cs" />
     <Compile Include="KVConfigurationManager.cs" />
     <Compile Include="MultipleValuesStringPair.cs" />
