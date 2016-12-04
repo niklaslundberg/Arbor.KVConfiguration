@@ -57,7 +57,6 @@
     <Compile Include="ConfigurationWithFallback.cs" />
     <Compile Include="Extensions\BoolExtensions.cs" />
     <Compile Include="Extensions\LongExtensions.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IKeyValueConfiguration.cs" />
     <Compile Include="InMemoryKeyValueConfiguration.cs" />
     <Compile Include="Extensions\IntExtensions.cs" />
@@ -74,9 +73,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Analyzer Include="..\packages\Microsoft.AnalyzerPowerPack.1.1.0\analyzers\dotnet\cs\Microsoft.AnalyzerPowerPack.Common.dll" />
+    <Analyzer Include="..\packages\Microsoft.AnalyzerPowerPack.1.1.0\analyzers\dotnet\cs\Microsoft.AnalyzerPowerPack.CSharp.dll" />
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
     <Analyzer Include="..\packages\RefactoringEssentials.4.4.0\analyzers\dotnet\RefactoringEssentials.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.1.20.0\analyzers\Google.Protobuf.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.1.20.0\analyzers\SonarAnalyzer.CSharp.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.1.20.0\analyzers\SonarAnalyzer.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\Newtonsoft.Json.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
     <Analyzer Include="..\packages\Wintellect.Analyzers.1.0.6.0\analyzers\dotnet\cs\Wintellect.Analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

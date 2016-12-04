@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core
 {
-    public class ExpandConfiguration : IKeyValueConfiguration
+    public sealed class ExpandConfiguration : IKeyValueConfiguration
     {
         private readonly IKeyValueConfiguration _inMemoryKeyValueConfiguration;
 

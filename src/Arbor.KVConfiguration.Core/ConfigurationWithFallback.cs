@@ -53,7 +53,6 @@ namespace Arbor.KVConfiguration.Core
 
         public string this[string key] => GetValue(key);
 
-
         private string GetValue(string key)
         {
             if (string.IsNullOrWhiteSpace(key))

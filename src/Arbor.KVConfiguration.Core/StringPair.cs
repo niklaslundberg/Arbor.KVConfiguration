@@ -5,14 +5,24 @@ namespace Arbor.KVConfiguration.Core
 {
     public struct StringPair : IEquatable<StringPair>
     {
-        public string Key { get; }
-
-        public string Value { get; }
-
         public StringPair(string key, string value)
         {
             Key = key;
             Value = value;
+        }
+
+        public string Key { get; }
+
+        public string Value { get; }
+
+        public static bool operator ==(StringPair left, StringPair right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(StringPair left, StringPair right)
+        {
+            return !left.Equals(right);
         }
 
         public bool Equals(StringPair other)
@@ -36,16 +46,6 @@ namespace Arbor.KVConfiguration.Core
             {
                 return ((Key?.GetHashCode() ?? 0) * 397) ^ (Value?.GetHashCode() ?? 0);
             }
-        }
-
-        public static bool operator ==(StringPair left, StringPair right)
-        {
-            return left.Equals(right);
-        }
-
-        public static bool operator !=(StringPair left, StringPair right)
-        {
-            return !left.Equals(right);
         }
 
         public override string ToString()

@@ -56,7 +56,6 @@
     <Compile Include="BoolValidator.cs" />
     <Compile Include="ConfigurationValidationExtensions.cs" />
     <Compile Include="ConfigurationValidator.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IConfigurationValidator.cs" />
     <Compile Include="IntValidator.cs" />
     <Compile Include="IValueValidator.cs" />

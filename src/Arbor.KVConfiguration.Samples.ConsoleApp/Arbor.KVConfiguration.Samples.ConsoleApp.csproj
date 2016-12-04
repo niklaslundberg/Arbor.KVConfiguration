@@ -55,7 +55,6 @@
     <Compile Include="AppScenario2.cs" />
     <Compile Include="AppScenario4.cs" />
     <Compile Include="AppScenario5.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="SampleConfigurationConstants.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

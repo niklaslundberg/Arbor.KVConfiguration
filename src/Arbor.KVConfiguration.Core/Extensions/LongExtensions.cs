@@ -13,6 +13,5 @@ namespace Arbor.KVConfiguration.Core.Extensions
 
             return parsedResultValue;
         }
-
     }
 }

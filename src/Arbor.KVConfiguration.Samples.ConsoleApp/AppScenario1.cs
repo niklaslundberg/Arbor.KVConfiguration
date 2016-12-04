@@ -40,7 +40,7 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
 
                 builder.AppendLine($"\t Instance: {displayValue}");
 
-                string staticValue = KVConfigurationManager.AppSettings[pair.Value];
+                string staticValue = KeyValueConfigurationManager.AppSettings[pair.Value];
 
                 string staticDisplayValue = Specials.GetDisplayValue(staticValue);
 
