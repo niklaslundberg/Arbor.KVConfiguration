@@ -10,7 +10,7 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
     {
         public void Execute()
         {
-            KVConfigurationManager.Initialize(new SourceKeyValueConfiguration(typeof(SampleConfigurationConstants).Assembly));
+            KeyValueConfigurationManager.Initialize(new SourceKeyValueConfiguration(typeof(SampleConfigurationConstants).Assembly));
 
             var attributeMetadataSource = new AttributeMetadataSource();
 
@@ -19,9 +19,9 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
 
             Console.WriteLine(JsonConvert.SerializeObject(metadataFromAssemblyTypes, Formatting.Indented));
 
-            Console.WriteLine("Contains {0} keys", KVConfigurationManager.AppSettings.AllKeys.Length);
+            Console.WriteLine("Contains {0} keys", KeyValueConfigurationManager.AppSettings.AllKeys.Length);
 
-            foreach (StringPair stringPair in KVConfigurationManager.AppSettings.AllValues)
+            foreach (StringPair stringPair in KeyValueConfigurationManager.AppSettings.AllValues)
             {
                 Console.WriteLine(stringPair);
             }

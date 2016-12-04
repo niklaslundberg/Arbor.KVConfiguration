@@ -26,7 +26,7 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
 
             IKeyValueConfiguration appSettingsKeyValueConfiguration = new InMemoryKeyValueConfiguration(collection);
 
-            KVConfigurationManager.Initialize(appSettingsKeyValueConfiguration);
+            KeyValueConfigurationManager.Initialize(appSettingsKeyValueConfiguration);
 
             var goodKeys = new List<string>
                                {
@@ -52,7 +52,7 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
 
                 builder.AppendLine($"\t Instance: {displayValue}");
 
-                string staticValue = KVConfigurationManager.AppSettings[pair.Value];
+                string staticValue = KeyValueConfigurationManager.AppSettings[pair.Value];
 
                 string staticDisplayValue = Specials.GetDisplayValue(staticValue);
 

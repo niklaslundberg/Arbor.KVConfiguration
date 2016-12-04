@@ -15,7 +15,7 @@ namespace Arbor.KVConfiguration.Samples.Web
         public ActionResult Index()
         {
             ImmutableArray<MultipleValuesStringPair> multipleValuesStringPairs =
-                KVConfigurationManager.AppSettings.AllWithMultipleValues;
+                KeyValueConfigurationManager.AppSettings.AllWithMultipleValues;
 
             string pairs = string.Join(
                 Environment.NewLine,

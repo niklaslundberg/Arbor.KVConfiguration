@@ -23,7 +23,7 @@ namespace Arbor.KVConfiguration.Samples.Web
 
             var keyValueConfiguration = container.Resolve<IKeyValueConfiguration>();
 
-            KVConfigurationManager.Initialize(keyValueConfiguration);
+            KeyValueConfigurationManager.Initialize(keyValueConfiguration);
         }
 
         private static void RegisterConfiguration(ContainerBuilder builder)

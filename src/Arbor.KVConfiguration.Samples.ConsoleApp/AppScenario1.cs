@@ -13,7 +13,7 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
         {
             IKeyValueConfiguration appSettingsKeyValueConfiguration = new AppSettingsKeyValueConfiguration();
 
-            KVConfigurationManager.Initialize(appSettingsKeyValueConfiguration);
+            KeyValueConfigurationManager.Initialize(appSettingsKeyValueConfiguration);
 
             var goodKeys = new List<string> {
                                    "a-non-existing-key",

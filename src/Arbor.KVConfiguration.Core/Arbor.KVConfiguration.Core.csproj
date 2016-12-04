@@ -62,7 +62,7 @@
     <Compile Include="InMemoryKeyValueConfiguration.cs" />
     <Compile Include="Extensions\IntExtensions.cs" />
     <Compile Include="KeyValueConfigurationExtensions.cs" />
-    <Compile Include="KVConfigurationManager.cs" />
+    <Compile Include="KeyValueConfigurationManager.cs" />
     <Compile Include="MultipleValuesStringPair.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringPair.cs" />
