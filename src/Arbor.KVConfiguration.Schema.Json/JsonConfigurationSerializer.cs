@@ -15,7 +15,7 @@ namespace Arbor.KVConfiguration.Schema.Json
                 throw new ArgumentException("Argument is null or whitespace", nameof(json));
             }
 
-            ConfigurationItems configurationItems = JsonConvert.DeserializeObject<ConfigurationItems>(json);
+            var configurationItems = JsonConvert.DeserializeObject<ConfigurationItems>(json);
 
             return configurationItems;
         }

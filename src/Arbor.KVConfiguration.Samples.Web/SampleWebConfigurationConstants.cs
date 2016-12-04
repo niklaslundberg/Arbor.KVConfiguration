@@ -1,7 +1,9 @@
-﻿using Arbor.KVConfiguration.Schema;
+﻿using System.Diagnostics.CodeAnalysis;
+using Arbor.KVConfiguration.Schema;
 
 namespace Arbor.KVConfiguration.Samples.Web
 {
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public static class SampleWebConfigurationConstants
     {
         [Metadata("urn")] public const string

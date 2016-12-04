@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Schema
 {
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
     public class Metadata
     {
         public Metadata(
@@ -17,14 +18,15 @@ namespace Arbor.KVConfiguration.Schema
             string partInvariantName = "",
             string partFullName = "",
             [CanBeNull] Type containingClass = null,
-            [CallerLineNumber] int sourceLine = -1,
+            int sourceLine = -1,
             string sourceFile = "",
             bool isRequired = true,
             string defaultValue = "",
             string notes = "",
             bool allowMultipleValues = false,
             [CanBeNull] IEnumerable<string> examples = null,
-            [CanBeNull] IEnumerable<string> tags = null)
+            [CanBeNull] IEnumerable<string> tags = null,
+            string keyType = "")
         {
             if (string.IsNullOrWhiteSpace(key))
             {
@@ -44,11 +46,13 @@ namespace Arbor.KVConfiguration.Schema
             DefaultValue = defaultValue;
             Notes = notes;
             AllowMultipleValues = allowMultipleValues;
+            KeyType = keyType;
             Examples = new ReadOnlyCollection<string>(examples?.ToList() ?? new List<string>());
             Tags = new ReadOnlyCollection<string>(tags?.ToList() ?? new List<string>());
         }
 
         public bool AllowMultipleValues { get; }
+        public string KeyType { get; }
 
         public Type ContainingClass { get; private set; }
 

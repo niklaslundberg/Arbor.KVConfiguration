@@ -14,9 +14,7 @@ namespace Arbor.KVConfiguration.Schema
         {
             if (items == null)
             {
-                return new KeyMetadata[]
-                           {
-                           };
+                return ArrayExtensions<KeyMetadata>.Empty();
             }
 
             KeyValueConfigurationItem[] keyValueConfigurationItems = items as KeyValueConfigurationItem[]
@@ -33,10 +31,10 @@ namespace Arbor.KVConfiguration.Schema
                                    key,
                                    found = ordered.FirstOrDefault()
                                })
-                    .Select(@t => new KeyMetadata(@t.key, @t.found.Metadata))
+                    .Select(item => new KeyMetadata(item.key, item.found.Metadata))
                     .ToList();
 
-            ReadOnlyCollection<KeyMetadata> readOnlyKeyMetadata = new ReadOnlyCollection<KeyMetadata>(list);
+            var readOnlyKeyMetadata = new ReadOnlyCollection<KeyMetadata>(list);
 
             return readOnlyKeyMetadata;
         }

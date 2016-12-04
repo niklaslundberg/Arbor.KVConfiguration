@@ -68,7 +68,8 @@ namespace Arbor.KVConfiguration.Schema
                             pair.Attribute.Notes,
                             pair.Attribute.AllowMultipleValues,
                             pair.Attribute.Examples,
-                            pair.Attribute.Tags))
+                            pair.Attribute.Tags,
+                            pair.Attribute.KeyType))
                 .ToArray();
 
             return metadata;

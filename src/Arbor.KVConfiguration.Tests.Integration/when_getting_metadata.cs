@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-
 using Arbor.KVConfiguration.JsonConfiguration;
 using Arbor.KVConfiguration.Schema;
-
 using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Integration
@@ -12,37 +10,37 @@ namespace Arbor.KVConfiguration.Tests.Integration
     [Subject(typeof(KeyValueConfigurationItemExtensions))]
     public class when_getting_metadata
     {
-        private static string appsettings_full_path;
+        static string appsettings_full_path;
 
-        private static IReadOnlyCollection<KeyValueConfigurationItem> key_value_configuration_items;
+        static IReadOnlyCollection<KeyValueConfigurationItem> key_value_configuration_items;
 
-        private static JsonFileReader json_file_reader;
+        static JsonFileReader json_file_reader;
 
-        private static IReadOnlyCollection<KeyMetadata> metadata;
+        static IReadOnlyCollection<KeyMetadata> metadata;
 
         Establish context = () =>
-            {
-                appsettings_full_path = Path.Combine(
-                    VcsTestPathHelper.FindVcsRootPath(),
-                    "src",
-                    "Arbor.KVConfiguration.Tests.Integration",
-                    "appsettings.json");
+        {
+            appsettings_full_path = Path.Combine(
+                VcsTestPathHelper.FindVcsRootPath(),
+                "src",
+                "Arbor.KVConfiguration.Tests.Integration",
+                "appsettings.json");
 
-                json_file_reader = new JsonFileReader(appsettings_full_path);
-                key_value_configuration_items = json_file_reader.ReadConfiguration();
-            };
+            json_file_reader = new JsonFileReader(appsettings_full_path);
+            key_value_configuration_items = json_file_reader.ReadConfiguration();
+        };
 
         Because of = () => { metadata = key_value_configuration_items.GetMetadata(); };
 
         It should_get_metadata_for_every_first_unique_key = () =>
+        {
+            foreach (KeyMetadata keyValueConfigurationItem in metadata)
             {
-                foreach (var keyValueConfigurationItem in metadata)
-                {
-                    Console.WriteLine(keyValueConfigurationItem.Key);
-                    Console.WriteLine("  " + keyValueConfigurationItem.Metadata);
-                }
+                Console.WriteLine(keyValueConfigurationItem.Key);
+                Console.WriteLine("  " + keyValueConfigurationItem.Metadata);
+            }
 
-                key_value_configuration_items.Count.ShouldEqual(3);
-            };
+            key_value_configuration_items.Count.ShouldEqual(3);
+        };
     }
 }

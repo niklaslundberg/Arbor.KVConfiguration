@@ -10,10 +10,10 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         protected static Urns.Urn urn2;
 
         Establish context = () =>
-            {
-                urn1 = new Urns.Urn("urn:ABC");
-                urn2 = new Urns.Urn("URN:abc");
-            };
+        {
+            urn1 = new Urns.Urn("urn:ABC");
+            urn2 = new Urns.Urn("URN:abc");
+        };
 
         Because of = () => { };
 

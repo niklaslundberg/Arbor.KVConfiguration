@@ -41,7 +41,7 @@ namespace Arbor.KVConfiguration.Urns
             get
             {
                 string lastOrDefault = OriginalValue.Split(
-                    new char[]
+                    new[]
                     {
                         Separator
                     },

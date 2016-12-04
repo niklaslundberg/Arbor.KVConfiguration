@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-
+using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.JsonConfiguration;
 
 using Machine.Specifications;
@@ -11,9 +11,9 @@ namespace Arbor.KVConfiguration.Tests.Integration
     [Subject(typeof(JsonFileReader))]
     public class when_reading_values_from_json_file_with_metadata
     {
-        private static string appsettings_full_path;
+        static string appsettings_full_path;
 
-        private static JsonKeyValueConfiguration json_key_value_configuration;
+        static JsonKeyValueConfiguration json_key_value_configuration;
 
         Establish context =
             () =>
@@ -29,10 +29,10 @@ namespace Arbor.KVConfiguration.Tests.Integration
 
         It should_have_three_values = () =>
             {
-                foreach (var stringPair in json_key_value_configuration.AllWithMultipleValues)
+                foreach (MultipleValuesStringPair stringPair in json_key_value_configuration.AllWithMultipleValues)
                 {
                     Console.WriteLine(stringPair.Key);
-                    foreach (var value in stringPair.Values)
+                    foreach (string value in stringPair.Values)
                     {
                         Console.WriteLine("  " + value);
                     }

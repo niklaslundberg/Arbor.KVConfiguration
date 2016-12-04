@@ -22,7 +22,7 @@ namespace Arbor.KVConfiguration.Urns
                 throw new ArgumentNullException(nameof(keyValueConfiguration));
             }
 
-            UrnAttribute urnAttribute = typeof(T).GetCustomAttribute<UrnAttribute>();
+            var urnAttribute = typeof(T).GetCustomAttribute<UrnAttribute>();
 
             if (urnAttribute == null)
             {
@@ -55,7 +55,7 @@ namespace Arbor.KVConfiguration.Urns
         {
             dynamic expando = new ExpandoObject();
 
-            IDictionary<string, object> asDictionary = (IDictionary<string, object>)expando;
+            var asDictionary = (IDictionary<string, object>)expando;
 
             foreach (Urn urn in keyValuePair)
             {
@@ -84,7 +84,7 @@ namespace Arbor.KVConfiguration.Urns
 
             string json = JsonConvert.SerializeObject(expando);
 
-            T item = JsonConvert.DeserializeObject<T>(json);
+            var item = JsonConvert.DeserializeObject<T>(json);
 
             return item;
         }

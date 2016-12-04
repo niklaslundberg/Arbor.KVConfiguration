@@ -5,7 +5,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
     [Subject(typeof(Urns.Urn))]
     public class when_parsing_minimal_urn
     {
-        private static string attempted_value;
+        static string attempted_value;
 
         protected static Urns.Urn urn;
 

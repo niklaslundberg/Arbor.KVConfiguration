@@ -11,13 +11,13 @@ namespace Arbor.KVConfiguration.Tests.Unit
     [Subject(typeof(ConfigurationValidator))]
     public class when_validating_a_non_uri_as_uri
     {
-        private static ConfigurationValidator configuration_validator;
+        static ConfigurationValidator configuration_validator;
 
-        private static JsonKeyValueConfiguration configuration;
+        static JsonKeyValueConfiguration configuration;
 
-        private static KeyValueConfigurationValidationSummary summary;
+        static KeyValueConfigurationValidationSummary summary;
 
-        private static IReadOnlyCollection<KeyMetadata> metdata;
+        static IReadOnlyCollection<KeyMetadata> metdata;
 
         Establish context = () =>
             {

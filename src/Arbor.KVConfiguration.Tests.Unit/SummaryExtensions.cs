@@ -24,11 +24,14 @@ namespace Arbor.KVConfiguration.Tests.Unit
 
                 foreach (KeyValueConfigurationValidationResult keyValueConfigurationValidationResult in errors)
                 {
-                    builder.AppendLine("# " + keyValueConfigurationValidationResult.KeyMetadata.Key);
+                    builder.AppendLine($"# {keyValueConfigurationValidationResult.KeyMetadata.Key}");
+
                     foreach (ValidationError validationError in keyValueConfigurationValidationResult.ValidationErrors)
                     {
-                        builder.AppendLine(" * " + validationError.ErrorMessage);
+                        builder.AppendLine($" * {validationError.ErrorMessage}");
                     }
+
+                    builder.AppendLine($"Value: [{string.Join(", ", keyValueConfigurationValidationResult.Values.Select(item => $"'{item}'"))}]");
                 }
             }
 

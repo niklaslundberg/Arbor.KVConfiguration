@@ -1,21 +1,19 @@
 ﻿using Arbor.KVConfiguration.Core;
-
 using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Integration.AppSettingsKeyValueConfiguration
 {
+    [Subject(typeof(SystemConfiguration.AppSettingsKeyValueConfiguration))]
     public class when_getting_a_non_existing_value_with_implicit_default_value
     {
-        private static Core.IKeyValueConfiguration configuration;
+        static IKeyValueConfiguration configuration;
 
-        private static string value;
+        static string value;
 
-        private Establish context = () => {
-            configuration = new SystemConfiguration.AppSettingsKeyValueConfiguration();
-        };
+        Establish context = () => { configuration = new SystemConfiguration.AppSettingsKeyValueConfiguration(); };
 
-        private Because of = () => { value = configuration.ValueOrDefault("d"); };
+        Because of = () => { value = configuration.ValueOrDefault("d"); };
 
-        private It return_existing_value = () => { value.ShouldEqual(""); };
+        It return_existing_value = () => { value.ShouldEqual(""); };
     }
 }

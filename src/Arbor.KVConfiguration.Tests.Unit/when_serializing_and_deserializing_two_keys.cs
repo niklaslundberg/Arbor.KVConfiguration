@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using Arbor.KVConfiguration.Schema;
 using Arbor.KVConfiguration.Schema.Json;
-
 using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit
@@ -12,45 +10,45 @@ namespace Arbor.KVConfiguration.Tests.Unit
     [Subject(typeof(JsonConfigurationSerializer))]
     public class when_serializing_and_deserializing_two_keys
     {
-        private static ConfigurationItems configurationItems;
+        static ConfigurationItems configuration_items;
 
-        private static string json;
+        static string json;
 
-        private static ConfigurationItems restored_configuration;
+        static ConfigurationItems restored_configuration;
 
-        private static JsonConfigurationSerializer serializer;
+        static JsonConfigurationSerializer serializer;
 
         Establish context = () =>
-            {
-                configurationItems = new ConfigurationItems(
-                    "1.0",
-                    new List<KeyValue>
-                        {
-                            new KeyValue(
-                                "a",
-                                "1",
-                                new Metadata(
-                                "a",
-                                "string",
-                                "A",
-                                "A description",
-                                "ATest",
-                                "ATestFullName",
-                                typeof(when_serializing_and_deserializing_two_keys),
-                                0,
-                                "1.txt",
-                                true,
-                                "A default",
-                                "A note",
-                                false,
-                                new[] { "A example" },
-                                new[] { "A tag" })),
-                            new KeyValue("b", "2", null)
-                        });
+        {
+            configuration_items = new ConfigurationItems(
+                "1.0",
+                new List<KeyValue>
+                {
+                    new KeyValue(
+                        "a",
+                        "1",
+                        new Metadata(
+                            "a",
+                            "string",
+                            "A",
+                            "A description",
+                            "ATest",
+                            "ATestFullName",
+                            typeof(when_serializing_and_deserializing_two_keys),
+                            0,
+                            "1.txt",
+                            true,
+                            "A default",
+                            "A note",
+                            false,
+                            new[] {"A example"},
+                            new[] {"A tag"})),
+                    new KeyValue("b", "2", null)
+                });
 
-                serializer = new JsonConfigurationSerializer();
-                json = serializer.Serialize(configurationItems);
-            };
+            serializer = new JsonConfigurationSerializer();
+            json = serializer.Serialize(configuration_items);
+        };
 
         Because of = () => { restored_configuration = serializer.Deserialize(json); };
 
@@ -66,9 +64,9 @@ namespace Arbor.KVConfiguration.Tests.Unit
             () => { restored_configuration.Keys.First().Metadata.ShouldNotBeNull(); };
 
         It should_have_two_keys = () =>
-            {
-                Console.WriteLine(json);
-                restored_configuration.Keys.Count.ShouldEqual(2);
-            };
+        {
+            Console.WriteLine(json);
+            restored_configuration.Keys.Count.ShouldEqual(2);
+        };
     }
 }

@@ -9,30 +9,29 @@ namespace Arbor.KVConfiguration.Tests.Unit.Schema
     [Subject(typeof(AttributeMetadataSource))]
     public class when_getting_configuration_keys_from_code
     {
-        private Establish context = () =>
-        {
+        static AttributeMetadataSource attribute_metadata_source;
+        static IReadOnlyCollection<Metadata> metadata_from_assembly_types;
 
-            _attributeMetadataSource = new AttributeMetadataSource();
+        Establish context = () => { attribute_metadata_source = new AttributeMetadataSource(); };
 
-        };
-        private Because of = () =>
-        {
-            _metadataFromAssemblyTypes = _attributeMetadataSource.GetMetadataFromAssemblyTypes(typeof(when_getting_configuration_keys_from_code).Assembly);
-        };
+        Because of =
+            () =>
+            {
+                metadata_from_assembly_types =
+                    attribute_metadata_source.GetMetadataFromAssemblyTypes(
+                        typeof(when_getting_configuration_keys_from_code).Assembly);
+            };
 
-        private It should_ = () =>
+        It should_ = () =>
         {
-            foreach (Metadata metadataFromAssemblyType in _metadataFromAssemblyTypes)
+            foreach (Metadata metadataFromAssemblyType in metadata_from_assembly_types)
             {
                 Console.WriteLine(metadataFromAssemblyType);
             }
 
-            Console.WriteLine(JsonConvert.SerializeObject(_metadataFromAssemblyTypes, Formatting.Indented));
+            Console.WriteLine(JsonConvert.SerializeObject(metadata_from_assembly_types, Formatting.Indented));
 
-            _metadataFromAssemblyTypes.ShouldNotBeEmpty();
+            metadata_from_assembly_types.ShouldNotBeEmpty();
         };
-
-        private static AttributeMetadataSource _attributeMetadataSource;
-        private static IReadOnlyCollection<Metadata> _metadataFromAssemblyTypes;
     }
 }

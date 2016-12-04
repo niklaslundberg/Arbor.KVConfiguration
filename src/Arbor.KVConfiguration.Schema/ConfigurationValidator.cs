@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using Arbor.KVConfiguration.Core;
 using JetBrains.Annotations;
 
@@ -23,12 +22,14 @@ namespace Arbor.KVConfiguration.Schema
             };
         }
 
+        [UsedImplicitly]
         public ConfigurationValidator([NotNull] IReadOnlyCollection<IValueValidator> validators)
         {
             if (validators == null)
             {
                 throw new ArgumentNullException(nameof(validators));
             }
+
             _validators = validators;
         }
 
@@ -51,12 +52,14 @@ namespace Arbor.KVConfiguration.Schema
 
             foreach (IValueValidator valueValidator in _validators)
             {
-                if (!string.IsNullOrWhiteSpace(metadataItem.Metadata.ValueType) && multipleValuesStringPair.HasNonEmptyValue && multipleValuesStringPair.HasSingleValue)
+                if (!string.IsNullOrWhiteSpace(metadataItem.Metadata.ValueType) &&
+                    multipleValuesStringPair.HasNonEmptyValue && multipleValuesStringPair.HasSingleValue)
                 {
                     if (valueValidator.CanValidate(metadataItem.Metadata.ValueType))
                     {
                         string valueToValidate = multipleValuesStringPair.Values.SingleOrDefault();
-                        validationErrors.AddRange(valueValidator.Validate(metadataItem.Metadata.ValueType, valueToValidate));
+                        validationErrors.AddRange(valueValidator.Validate(metadataItem.Metadata.ValueType,
+                            valueToValidate));
                     }
                 }
             }

@@ -1,17 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Schema
 {
     public class KeyValueConfigurationValidationSummary
     {
         public KeyValueConfigurationValidationSummary(
-            IEnumerable<KeyValueConfigurationValidationResult> keyValueConfigurationValidationResults)
+            [CanBeNull] IEnumerable<KeyValueConfigurationValidationResult> keyValueConfigurationValidationResults)
         {
             KeyValueConfigurationValidationResults = keyValueConfigurationValidationResults?.ToArray()
-                                                     ?? new KeyValueConfigurationValidationResult[]
-                                                            {
-                                                            };
+                                                     ?? ArrayExtensions<KeyValueConfigurationValidationResult>.Empty();
         }
 
         public bool IsValid => KeyValueConfigurationValidationResults.All(_ => _.IsValid);

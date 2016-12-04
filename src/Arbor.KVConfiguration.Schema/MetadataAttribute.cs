@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
@@ -17,8 +16,7 @@ namespace Arbor.KVConfiguration.Schema
             string description = "",
             string partInvariantName = "",
             string partFullName = "",
-            [CanBeNull] Type containingClass = null,
-            [CallerLineNumber]int sourceLine = -1,
+            [CallerLineNumber] int sourceLine = -1,
             [CallerFilePath] string sourceFile = "",
             bool isRequired = true,
             string defaultValue = "",
@@ -33,7 +31,6 @@ namespace Arbor.KVConfiguration.Schema
             ValueType = valueType ?? "";
             PartInvariantName = partInvariantName ?? "";
             PartFullName = partFullName ?? "";
-            ContainingClass = containingClass;
             SourceLine = sourceLine;
             SourceFile = sourceFile ?? "";
             IsRequired = isRequired;
@@ -46,9 +43,7 @@ namespace Arbor.KVConfiguration.Schema
         }
 
         public bool AllowMultipleValues { get; }
-        public string KeyType { get; set; }
-
-        public Type ContainingClass { get; private set; }
+        public string KeyType { get; }
 
         public string DefaultValue { get; }
 

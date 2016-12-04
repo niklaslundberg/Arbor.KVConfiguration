@@ -29,13 +29,13 @@ namespace Arbor.KVConfiguration.UserConfiguration
             }
             else
             {
-                FileInfo fileInfo = new FileInfo(fileFullPath);
+                var fileInfo = new FileInfo(fileFullPath);
 
                 string parentName = fileInfo.Directory?.Parent?.Name ?? string.Empty;
 
                 if (parentName.Equals("bin"))
                 {
-                    string projectDirectoryFullDirectoryPath = fileInfo?.Directory?.Parent?.Parent?.FullName ?? string.Empty;
+                    string projectDirectoryFullDirectoryPath = fileInfo.Directory?.Parent?.Parent?.FullName ?? string.Empty;
 
                     if (!string.IsNullOrWhiteSpace(projectDirectoryFullDirectoryPath))
                     {

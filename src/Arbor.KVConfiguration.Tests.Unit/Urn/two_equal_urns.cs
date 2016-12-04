@@ -1,8 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit.Urn
 {
     [Behaviors]
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
     internal class two_equal_urns
     {
         protected static Urns.Urn urn1;

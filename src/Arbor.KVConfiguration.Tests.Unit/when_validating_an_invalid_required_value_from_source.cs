@@ -10,15 +10,15 @@ namespace Arbor.KVConfiguration.Tests.Unit
     [Subject(typeof(ConfigurationValidator))]
     public class when_validating_an_invalid_required_value_from_source
     {
-        private static ConfigurationValidator configuration_validator;
+        static ConfigurationValidator configuration_validator;
 
-        private static IKeyValueConfiguration configuration;
+        static IKeyValueConfiguration configuration;
 
-        private static KeyValueConfigurationValidationSummary summary;
+        static KeyValueConfigurationValidationSummary summary;
 
-        private static IReadOnlyCollection<KeyMetadata> metdata;
+        static IReadOnlyCollection<KeyMetadata> metdata;
 
-        private Establish context = () =>
+        Establish context = () =>
         {
             configuration_validator = new ConfigurationValidator();
             configuration =
@@ -33,10 +33,10 @@ namespace Arbor.KVConfiguration.Tests.Unit
             metdata = configurationItems.GetMetadata();
         };
 
-        private Because of =
+        Because of =
             () => { summary = configuration.AllWithMultipleValues.Validate(configuration_validator, metdata); };
 
-        private It should_have_validation_errors = () =>
+        It should_have_validation_errors = () =>
         {
             Console.WriteLine(summary.Print());
 

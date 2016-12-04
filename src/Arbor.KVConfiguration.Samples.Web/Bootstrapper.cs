@@ -21,7 +21,7 @@ namespace Arbor.KVConfiguration.Samples.Web
             IContainer container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
 
-            IKeyValueConfiguration keyValueConfiguration = container.Resolve<IKeyValueConfiguration>();
+            var keyValueConfiguration = container.Resolve<IKeyValueConfiguration>();
 
             KVConfigurationManager.Initialize(keyValueConfiguration);
         }
