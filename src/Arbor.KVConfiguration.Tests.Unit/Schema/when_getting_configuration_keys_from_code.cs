@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using Arbor.KVConfiguration.Schema;
 using Machine.Specifications;

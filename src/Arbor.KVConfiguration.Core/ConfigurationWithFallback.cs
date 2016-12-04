@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core
 {
-    public class ConfigurationWithFallback : IKeyValueConfiguration
+    public sealed class ConfigurationWithFallback : IKeyValueConfiguration
     {
         private readonly IKeyValueConfiguration _fallbackConfiguration;
 
@@ -42,16 +41,18 @@ namespace Arbor.KVConfiguration.Core
         {
             get
             {
-                IEnumerable<MultipleValuesStringPair> fallbackOnly =
+                ImmutableArray<MultipleValuesStringPair> fallbackOnly =
                     _fallbackConfiguration.AllWithMultipleValues
                         .Where(pair =>
-                                !_primaryConfiguration.AllKeys.Contains(pair.Key, StringComparer.OrdinalIgnoreCase));
+                                !_primaryConfiguration.AllKeys.Contains(pair.Key, StringComparer.OrdinalIgnoreCase))
+                                .ToImmutableArray();
 
                 return _primaryConfiguration.AllWithMultipleValues.Concat(fallbackOnly).ToImmutableArray();
             }
         }
 
         public string this[string key] => GetValue(key);
+
 
         private string GetValue(string key)
         {

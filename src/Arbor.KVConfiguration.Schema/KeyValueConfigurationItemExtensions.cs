@@ -8,7 +8,6 @@ namespace Arbor.KVConfiguration.Schema
 {
     public static class KeyValueConfigurationItemExtensions
     {
-        [NotNull]
         public static ImmutableArray<KeyMetadata> GetMetadata(
             [CanBeNull] this IEnumerable<KeyValueConfigurationItem> items)
         {

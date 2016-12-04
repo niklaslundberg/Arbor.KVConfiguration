@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Schema;
 using Newtonsoft.Json;

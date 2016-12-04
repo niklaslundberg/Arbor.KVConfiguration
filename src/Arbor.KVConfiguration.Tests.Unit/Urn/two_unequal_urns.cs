@@ -3,6 +3,7 @@ using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit.Urn
 {
+    #pragma warning disable 0649
     [Behaviors]
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     internal class two_unequal_urns

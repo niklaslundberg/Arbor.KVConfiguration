@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Arbor.KVConfiguration.Core
 {
-    public class InMemoryKeyValueConfiguration : IKeyValueConfiguration
+    public sealed class InMemoryKeyValueConfiguration : IKeyValueConfiguration
     {
         private readonly ImmutableDictionary<string, ImmutableArray<string>> _nameValueCollection;
 

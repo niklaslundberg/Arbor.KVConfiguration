@@ -2,6 +2,9 @@
 
 namespace Arbor.KVConfiguration.Tests.Unit.Urn
 {
+
+#pragma warning disable 0649
+#pragma warning disable 0169
     [Subject(typeof(Urns.Urn))]
     public class when_parsing_minimal_urn
     {

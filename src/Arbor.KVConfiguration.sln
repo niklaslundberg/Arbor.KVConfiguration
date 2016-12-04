@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25029.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.Core", "Arbor.KVConfiguration.Core\Arbor.KVConfiguration.Core.csproj", "{86C8D4E6-C68D-428E-87CC-B3B636DEB19B}"
 EndProject
@@ -28,6 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\.editorconfig = ..\.editorconfig
 		..\.gitattributes = ..\.gitattributes
 		..\.gitignore = ..\.gitignore
+		Arbor.ruleset = Arbor.ruleset
 		..\LICENSE.txt = ..\LICENSE.txt
 		..\version.json = ..\version.json
 	EndProjectSection
