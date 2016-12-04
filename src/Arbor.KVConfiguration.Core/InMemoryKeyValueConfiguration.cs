@@ -8,7 +8,7 @@ namespace Arbor.KVConfiguration.Core
 {
     public class InMemoryKeyValueConfiguration : IKeyValueConfiguration
     {
-        private readonly ImmutableDictionary<string, ImmutableList<string>> _nameValueCollection;
+        private readonly ImmutableDictionary<string, ImmutableArray<string>> _nameValueCollection;
 
         public InMemoryKeyValueConfiguration(NameValueCollection nameValueCollection)
         {
@@ -17,19 +17,19 @@ namespace Arbor.KVConfiguration.Core
                 throw new ArgumentNullException(nameof(nameValueCollection));
             }
 
-            var tempDictionary = new Dictionary<string, ImmutableList<string>>(StringComparer.OrdinalIgnoreCase);
+            var tempDictionary = new Dictionary<string, ImmutableArray<string>>(StringComparer.OrdinalIgnoreCase);
 
             ImmutableList<string> keys = nameValueCollection.AllKeys.ToImmutableList();
 
             foreach (string key in keys)
             {
-                List<string> values = (nameValueCollection.GetValues(key) ?? Enumerable.Empty<string>()).ToList();
+                ImmutableArray<string> values = nameValueCollection.GetValues(key)?.ToImmutableArray() ?? ImmutableArray<string>.Empty;
 
                 if (!string.IsNullOrWhiteSpace(key))
                 {
                     if (!tempDictionary.ContainsKey(key))
                     {
-                        tempDictionary.Add(key, values.ToImmutableList());
+                        tempDictionary.Add(key, values);
                     }
                     else
                     {
@@ -44,23 +44,23 @@ namespace Arbor.KVConfiguration.Core
                 StringComparer.OrdinalIgnoreCase);
         }
 
-        public IReadOnlyCollection<string> AllKeys => _nameValueCollection.Keys.ToImmutableList();
+        public ImmutableArray<string> AllKeys => _nameValueCollection.Keys.ToImmutableArray();
 
-        public IReadOnlyCollection<StringPair> AllValues
+        public ImmutableArray<StringPair> AllValues
         {
             get
             {
-                return AllKeys.Select(key => new StringPair(key, GetCombinedValues(key))).ToImmutableList();
+                return AllKeys.Select(key => new StringPair(key, GetCombinedValues(key))).ToImmutableArray();
             }
         }
 
-        public IReadOnlyCollection<MultipleValuesStringPair> AllWithMultipleValues
+        public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues
         {
             get
             {
                 return
                     AllKeys.Select(key => new MultipleValuesStringPair(key, _nameValueCollection[key]))
-                        .ToImmutableList();
+                        .ToImmutableArray();
             }
         }
 
@@ -78,14 +78,14 @@ namespace Arbor.KVConfiguration.Core
                 return string.Empty;
             }
 
-            ImmutableList<string> values = _nameValueCollection[key];
+            ImmutableArray<string> values = _nameValueCollection[key];
 
             if (values.IsEmpty)
             {
                 return string.Empty;
             }
 
-            if (values.Count == 1)
+            if (values.Length == 1)
             {
                 return values[0];
             }

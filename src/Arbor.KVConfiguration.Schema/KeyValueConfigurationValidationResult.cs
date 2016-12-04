@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 
 namespace Arbor.KVConfiguration.Schema
@@ -11,15 +12,15 @@ namespace Arbor.KVConfiguration.Schema
             IEnumerable<ValidationError> validationErrors = null)
         {
             KeyMetadata = keyMetadata;
-            Values = values?.ToArray() ?? new string[] {};
-            ValidationErrors = validationErrors?.ToArray() ?? new ValidationError[] {};
+            Values = values?.ToImmutableArray() ?? ImmutableArray<string>.Empty;
+            ValidationErrors = validationErrors?.ToImmutableArray() ?? ImmutableArray<ValidationError>.Empty;
         }
 
         public KeyMetadata KeyMetadata { get; }
 
-        public IReadOnlyCollection<string> Values { get; }
+        public ImmutableArray<string> Values { get; }
 
-        public IReadOnlyCollection<ValidationError> ValidationErrors { get; }
+        public ImmutableArray<ValidationError> ValidationErrors { get; }
 
         public bool IsValid => !ValidationErrors.Any();
     }

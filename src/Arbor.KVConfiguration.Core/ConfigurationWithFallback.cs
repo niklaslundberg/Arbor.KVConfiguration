@@ -30,15 +30,15 @@ namespace Arbor.KVConfiguration.Core
             _fallbackConfiguration = fallbackConfiguration;
         }
 
-        public IReadOnlyCollection<string> AllKeys
+        public ImmutableArray<string> AllKeys
             => _primaryConfiguration.AllKeys.Union(_fallbackConfiguration.AllKeys).Distinct().ToImmutableArray();
 
-        public IReadOnlyCollection<StringPair> AllValues
+        public ImmutableArray<StringPair> AllValues
         {
             get { return AllKeys.Select(key => new StringPair(key, GetValue(key))).ToImmutableArray(); }
         }
 
-        public IReadOnlyCollection<MultipleValuesStringPair> AllWithMultipleValues
+        public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues
         {
             get
             {

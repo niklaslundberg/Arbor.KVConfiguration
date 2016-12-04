@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Collections.Specialized;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Schema;
@@ -16,7 +17,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
 
         static KeyValueConfigurationValidationSummary summary;
 
-        static IReadOnlyCollection<KeyMetadata> metdata;
+        static ImmutableArray<KeyMetadata> metdata;
 
         Establish context = () =>
         {
@@ -27,7 +28,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
                     {"urn:a:dummy:key:field:constant:urn-value", ""}
                 });
 
-            IReadOnlyCollection<KeyValueConfigurationItem> configurationItems =
+            ImmutableArray<KeyValueConfigurationItem> configurationItems =
                 new SourceReader().ReadConfiguration(typeof(when_validating_a_valid_required_value_from_source).Assembly);
 
             metdata = configurationItems.GetMetadata();

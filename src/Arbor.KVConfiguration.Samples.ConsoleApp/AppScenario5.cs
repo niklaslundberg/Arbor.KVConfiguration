@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Schema;
 using Newtonsoft.Json;
+using System.Collections.Immutable;
 
 namespace Arbor.KVConfiguration.Samples.ConsoleApp
 {
@@ -14,12 +15,12 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
 
             var attributeMetadataSource = new AttributeMetadataSource();
 
-            IReadOnlyCollection<Metadata> metadataFromAssemblyTypes =
+            ImmutableArray<Metadata> metadataFromAssemblyTypes =
                 attributeMetadataSource.GetMetadataFromAssemblyTypes(typeof(SampleConfigurationConstants).Assembly);
 
             Console.WriteLine(JsonConvert.SerializeObject(metadataFromAssemblyTypes, Formatting.Indented));
 
-            Console.WriteLine("Contains {0} keys", KVConfigurationManager.AppSettings.AllKeys.Count);
+            Console.WriteLine("Contains {0} keys", KVConfigurationManager.AppSettings.AllKeys.Length);
 
             foreach (StringPair stringPair in KVConfigurationManager.AppSettings.AllValues)
             {

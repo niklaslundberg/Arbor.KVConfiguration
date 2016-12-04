@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using Arbor.KVConfiguration.Schema;
 using Machine.Specifications;
 using Newtonsoft.Json;
@@ -10,7 +11,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Schema
     public class when_getting_configuration_keys_from_code
     {
         static AttributeMetadataSource attribute_metadata_source;
-        static IReadOnlyCollection<Metadata> metadata_from_assembly_types;
+        static ImmutableArray<Metadata> metadata_from_assembly_types;
 
         Establish context = () => { attribute_metadata_source = new AttributeMetadataSource(); };
 

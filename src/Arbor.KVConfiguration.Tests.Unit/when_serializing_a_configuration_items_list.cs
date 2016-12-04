@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using Arbor.KVConfiguration.Schema.Json;
 using Machine.Specifications;
 
@@ -17,13 +18,13 @@ namespace Arbor.KVConfiguration.Tests.Unit
         Establish context = () =>
         {
             serializer = new JsonConfigurationSerializer();
-            IReadOnlyCollection<KeyValue> keys = new List<KeyValue>(10)
+            ImmutableArray<KeyValue> keys = new List<KeyValue>(10)
             {
                 new KeyValue("abc", "123", null),
                 new KeyValue("def", "234", null),
                 new KeyValue("ghi", "345", null),
                 new KeyValue("ghi", "456", null)
-            };
+            }.ToImmutableArray();
             configuration_items = new ConfigurationItems("1.0", keys);
         };
 

@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 
 using Newtonsoft.Json;
+using System.Collections.Immutable;
 
 namespace Arbor.KVConfiguration.Schema.Json
 {
     public class ConfigurationItems
     {
-        public ConfigurationItems(string version, IReadOnlyCollection<KeyValue> keys)
+        public ConfigurationItems(string version, ImmutableArray<KeyValue> keys)
         {
             if (keys == null)
             {
@@ -21,7 +22,7 @@ namespace Arbor.KVConfiguration.Schema.Json
         }
 
         [JsonProperty(Order = 1)]
-        public IReadOnlyCollection<KeyValue> Keys { get; }
+        public ImmutableArray<KeyValue> Keys { get; }
 
         [JsonProperty(Order = 0, PropertyName = JsonConstants.VersionPropertyKey)]
         public string Version { [UsedImplicitly] get; }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using JetBrains.Annotations;
 
@@ -9,13 +10,13 @@ namespace Arbor.KVConfiguration.Schema
         public KeyValueConfigurationValidationSummary(
             [CanBeNull] IEnumerable<KeyValueConfigurationValidationResult> keyValueConfigurationValidationResults)
         {
-            KeyValueConfigurationValidationResults = keyValueConfigurationValidationResults?.ToArray()
-                                                     ?? ArrayExtensions<KeyValueConfigurationValidationResult>.Empty();
+            KeyValueConfigurationValidationResults = keyValueConfigurationValidationResults?.ToImmutableArray() ??
+                                                     ImmutableArray<KeyValueConfigurationValidationResult>.Empty;
         }
 
         public bool IsValid => KeyValueConfigurationValidationResults.All(_ => _.IsValid);
 
-        public IReadOnlyCollection<KeyValueConfigurationValidationResult> KeyValueConfigurationValidationResults { get;
+        public ImmutableArray<KeyValueConfigurationValidationResult> KeyValueConfigurationValidationResults { get;
         }
     }
 }

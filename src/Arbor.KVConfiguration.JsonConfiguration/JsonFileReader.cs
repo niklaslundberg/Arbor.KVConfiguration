@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Text;
 
@@ -31,7 +31,7 @@ namespace Arbor.KVConfiguration.JsonConfiguration
             return config;
         }
 
-        public IReadOnlyCollection<KeyValueConfigurationItem> ReadConfiguration()
+        public ImmutableArray<KeyValueConfigurationItem> ReadConfiguration()
         {
             return GetConfigurationItems().ReadConfiguration();
         }

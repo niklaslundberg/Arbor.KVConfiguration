@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Arbor.KVConfiguration.Core;
 using JetBrains.Annotations;
@@ -8,29 +9,29 @@ namespace Arbor.KVConfiguration.Schema
 {
     public class ConfigurationValidator : IConfigurationValidator
     {
-        private readonly IReadOnlyCollection<IValueValidator> _validators;
+        private readonly ImmutableArray<IValueValidator> _validators;
 
         public ConfigurationValidator()
         {
-            _validators = new List<IValueValidator>
+            _validators = new List<IValueValidator>(10)
             {
                 new IntValidator(),
                 new UriValidator(),
                 new UrnValidator(),
                 new BoolValidator(),
                 new TimeSpanValidator()
-            };
+            }.ToImmutableArray();
         }
 
         [UsedImplicitly]
-        public ConfigurationValidator([NotNull] IReadOnlyCollection<IValueValidator> validators)
+        public ConfigurationValidator([NotNull] IEnumerable<IValueValidator> validators)
         {
             if (validators == null)
             {
                 throw new ArgumentNullException(nameof(validators));
             }
 
-            _validators = validators;
+            _validators = validators.ToImmutableArray();
         }
 
         public KeyValueConfigurationValidationResult Validate(

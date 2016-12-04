@@ -4,6 +4,7 @@ using System.IO;
 using Arbor.KVConfiguration.JsonConfiguration;
 using Arbor.KVConfiguration.Schema;
 using Machine.Specifications;
+using System.Collections.Immutable;
 
 namespace Arbor.KVConfiguration.Tests.Integration
 {
@@ -12,11 +13,11 @@ namespace Arbor.KVConfiguration.Tests.Integration
     {
         static string appsettings_full_path;
 
-        static IReadOnlyCollection<KeyValueConfigurationItem> key_value_configuration_items;
+        static ImmutableArray<KeyValueConfigurationItem> key_value_configuration_items;
 
         static JsonFileReader json_file_reader;
 
-        static IReadOnlyCollection<KeyMetadata> metadata;
+        static ImmutableArray<KeyMetadata> metadata;
 
         Establish context = () =>
         {
@@ -40,7 +41,7 @@ namespace Arbor.KVConfiguration.Tests.Integration
                 Console.WriteLine("  " + keyValueConfigurationItem.Metadata);
             }
 
-            key_value_configuration_items.Count.ShouldEqual(3);
+            key_value_configuration_items.Length.ShouldEqual(3);
         };
     }
 }

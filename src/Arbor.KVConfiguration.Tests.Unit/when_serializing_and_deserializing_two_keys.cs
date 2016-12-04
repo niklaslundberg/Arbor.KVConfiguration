@@ -4,6 +4,7 @@ using System.Linq;
 using Arbor.KVConfiguration.Schema;
 using Arbor.KVConfiguration.Schema.Json;
 using Machine.Specifications;
+using System.Collections.Immutable;
 
 namespace Arbor.KVConfiguration.Tests.Unit
 {
@@ -20,31 +21,33 @@ namespace Arbor.KVConfiguration.Tests.Unit
 
         Establish context = () =>
         {
+            var keyValues = new List<KeyValue>(2)
+            {
+                new KeyValue(
+                    "a",
+                    "1",
+                    new Metadata(
+                        "a",
+                        "string",
+                        "A",
+                        "A description",
+                        "ATest",
+                        "ATestFullName",
+                        typeof(when_serializing_and_deserializing_two_keys),
+                        0,
+                        "1.txt",
+                        true,
+                        "A default",
+                        "A note",
+                        false,
+                        new[] {"A example"},
+                        new[] {"A tag"})),
+                new KeyValue("b", "2", null)
+            };
+
             configuration_items = new ConfigurationItems(
                 "1.0",
-                new List<KeyValue>
-                {
-                    new KeyValue(
-                        "a",
-                        "1",
-                        new Metadata(
-                            "a",
-                            "string",
-                            "A",
-                            "A description",
-                            "ATest",
-                            "ATestFullName",
-                            typeof(when_serializing_and_deserializing_two_keys),
-                            0,
-                            "1.txt",
-                            true,
-                            "A default",
-                            "A note",
-                            false,
-                            new[] {"A example"},
-                            new[] {"A tag"})),
-                    new KeyValue("b", "2", null)
-                });
+                keyValues.ToImmutableArray());
 
             serializer = new JsonConfigurationSerializer();
             json = serializer.Serialize(configuration_items);
@@ -66,7 +69,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
         It should_have_two_keys = () =>
         {
             Console.WriteLine(json);
-            restored_configuration.Keys.Count.ShouldEqual(2);
+            restored_configuration.Keys.Length.ShouldEqual(2);
         };
     }
 }

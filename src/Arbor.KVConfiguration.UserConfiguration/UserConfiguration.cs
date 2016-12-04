@@ -4,6 +4,7 @@ using System.IO;
 
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.JsonConfiguration;
+using System.Collections.Immutable;
 
 namespace Arbor.KVConfiguration.UserConfiguration
 {
@@ -58,11 +59,11 @@ namespace Arbor.KVConfiguration.UserConfiguration
             }
         }
 
-        public IReadOnlyCollection<string> AllKeys => _configuration.AllKeys;
+        public ImmutableArray<string> AllKeys => _configuration.AllKeys;
 
-        public IReadOnlyCollection<StringPair> AllValues => _configuration.AllValues;
+        public ImmutableArray<StringPair> AllValues => _configuration.AllValues;
 
-        public IReadOnlyCollection<MultipleValuesStringPair> AllWithMultipleValues
+        public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues
             => _configuration.AllWithMultipleValues;
 
         public string this[string key]

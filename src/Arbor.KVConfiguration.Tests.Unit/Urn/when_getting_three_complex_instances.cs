@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Collections.Specialized;
 using System.Linq;
 using Arbor.KVConfiguration.Core;
@@ -14,7 +15,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
     {
         static IKeyValueConfiguration configuration;
 
-        static IReadOnlyCollection<AComplexImmutableType> instances;
+        static ImmutableArray<AComplexImmutableType> instances;
 
         Establish context = () =>
         {
@@ -82,7 +83,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         {
             Console.WriteLine(JsonConvert.SerializeObject(instances, Formatting.Indented));
 
-            instances.Count.ShouldEqual(3);
+            instances.Length.ShouldEqual(3);
         };
 
         It should_return_a_non_empty_list = () => instances.ShouldNotBeEmpty();

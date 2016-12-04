@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
+using System.Collections.Immutable;
 
 namespace Arbor.KVConfiguration.Schema
 {
     public class AttributeMetadataSource
     {
-        public IReadOnlyCollection<Metadata> GetMetadataFromAssemblyTypes([NotNull] Assembly assembly)
+        public ImmutableArray<Metadata> GetMetadataFromAssemblyTypes([NotNull] Assembly assembly)
         {
             if (assembly == null)
             {
@@ -17,7 +17,7 @@ namespace Arbor.KVConfiguration.Schema
 
             if (assembly.IsDynamic)
             {
-                return ArrayExtensions<Metadata>.Empty();
+                return ImmutableArray<Metadata>.Empty;
             }
 
             FieldInfo[] publicConstantPrimitiveFields = assembly.GetTypes()
@@ -33,7 +33,7 @@ namespace Arbor.KVConfiguration.Schema
 
             if (!publicConstantPrimitiveFields.Any())
             {
-                return ArrayExtensions<Metadata>.Empty();
+                return ImmutableArray<Metadata>.Empty;
             }
 
             var configurationMetadataFields = publicConstantPrimitiveFields
@@ -48,10 +48,10 @@ namespace Arbor.KVConfiguration.Schema
 
             if (!configurationMetadataFields.Any())
             {
-                return ArrayExtensions<Metadata>.Empty();
+                return ImmutableArray<Metadata>.Empty;
             }
 
-            Metadata[] metadata = configurationMetadataFields
+            ImmutableArray<Metadata> metadata = configurationMetadataFields
                 .Select(
                     pair =>
                         new Metadata(pair.Field.GetRawConstantValue() as string ?? "INVALID_VALUE_NOT_A_STRING",
@@ -70,7 +70,7 @@ namespace Arbor.KVConfiguration.Schema
                             pair.Attribute.Examples,
                             pair.Attribute.Tags,
                             pair.Attribute.KeyType))
-                .ToArray();
+                .ToImmutableArray();
 
             return metadata;
         }

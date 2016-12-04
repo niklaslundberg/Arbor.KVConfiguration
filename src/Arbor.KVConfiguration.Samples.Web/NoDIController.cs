@@ -5,6 +5,7 @@ using System.Text;
 using System.Web.Mvc;
 
 using Arbor.KVConfiguration.Core;
+using System.Collections.Immutable;
 
 namespace Arbor.KVConfiguration.Samples.Web
 {
@@ -14,7 +15,7 @@ namespace Arbor.KVConfiguration.Samples.Web
         [Route]
         public ActionResult Index()
         {
-            IReadOnlyCollection<MultipleValuesStringPair> multipleValuesStringPairs =
+            ImmutableArray<MultipleValuesStringPair> multipleValuesStringPairs =
                 KVConfigurationManager.AppSettings.AllWithMultipleValues;
 
             string pairs = string.Join(

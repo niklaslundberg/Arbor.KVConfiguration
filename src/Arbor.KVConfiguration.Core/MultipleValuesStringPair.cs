@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 
 namespace Arbor.KVConfiguration.Core
@@ -8,9 +8,9 @@ namespace Arbor.KVConfiguration.Core
     {
         public string Key { get; }
 
-        public IReadOnlyCollection<string> Values { get; }
+        public ImmutableArray<string> Values { get; }
 
-        public MultipleValuesStringPair(string key, IReadOnlyCollection<string> values)
+        public MultipleValuesStringPair(string key, ImmutableArray<string> values)
         {
             if (values == null)
             {
@@ -24,7 +24,7 @@ namespace Arbor.KVConfiguration.Core
 
         public bool Equals(MultipleValuesStringPair other)
         {
-            return string.Equals(Key, other.Key) && (Values?.SequenceEqual(other.Values) ?? false);
+            return string.Equals(Key, other.Key) && Values.SequenceEqual(other.Values);
         }
 
         public override bool Equals(object obj)
@@ -41,7 +41,7 @@ namespace Arbor.KVConfiguration.Core
         {
             unchecked
             {
-                return ((Key?.GetHashCode() ?? 0) * 397) ^ (Values?.GetHashCode() ?? 0);
+                return ((Key?.GetHashCode() ?? 0) * 397) ^ Values.GetHashCode();
             }
         }
 
@@ -55,7 +55,7 @@ namespace Arbor.KVConfiguration.Core
             return !left.Equals(right);
         }
 
-        public bool HasSingleValue => Values.Count == 1;
+        public bool HasSingleValue => Values.Length == 1;
 
         public bool HasNonEmptyValue { get; }
     }

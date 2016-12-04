@@ -9,12 +9,13 @@ using Arbor.KVConfiguration.Core;
 using JetBrains.Annotations;
 
 using Newtonsoft.Json;
+using System.Collections.Immutable;
 
 namespace Arbor.KVConfiguration.Urns
 {
     public static class UrnKeyValueExtensions
     {
-        public static IReadOnlyCollection<T> GetInstances<T>(
+        public static ImmutableArray<T> GetInstances<T>(
             [NotNull] this IKeyValueConfiguration keyValueConfiguration)
         {
             if (keyValueConfiguration == null)
@@ -45,10 +46,10 @@ namespace Arbor.KVConfiguration.Urns
                     .Where(key => key.NamespaceParts() == expectedParts)
                     .ToLookup(urn => urn.Parent, urn => urn).ToArray();
 
-            List<T> items =
-                instanceKeys.Select(keyValuePair => GetItem<T>(keyValueConfiguration, keyValuePair)).ToList();
+            ImmutableArray<T> items =
+                instanceKeys.Select(keyValuePair => GetItem<T>(keyValueConfiguration, keyValuePair)).ToImmutableArray();
 
-            return items.AsReadOnly();
+            return items;
         }
 
         private static T GetItem<T>(IKeyValueConfiguration keyValueConfiguration, IGrouping<Urn, Urn> keyValuePair)

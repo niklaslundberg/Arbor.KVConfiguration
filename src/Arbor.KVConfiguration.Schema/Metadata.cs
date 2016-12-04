@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Schema
@@ -47,8 +46,8 @@ namespace Arbor.KVConfiguration.Schema
             Notes = notes;
             AllowMultipleValues = allowMultipleValues;
             KeyType = keyType;
-            Examples = new ReadOnlyCollection<string>(examples?.ToList() ?? new List<string>());
-            Tags = new ReadOnlyCollection<string>(tags?.ToList() ?? new List<string>());
+            Examples = examples?.ToImmutableArray() ?? ImmutableArray<string>.Empty;
+            Tags = tags?.ToImmutableArray() ?? ImmutableArray<string>.Empty;
         }
 
         public bool AllowMultipleValues { get; }
@@ -60,7 +59,7 @@ namespace Arbor.KVConfiguration.Schema
 
         public string Description { get; }
 
-        public IReadOnlyCollection<string> Examples { get; }
+        public ImmutableArray<string> Examples { get; }
 
         public bool IsRequired { get; }
 
@@ -78,7 +77,7 @@ namespace Arbor.KVConfiguration.Schema
 
         public int SourceLine { get; }
 
-        public IReadOnlyCollection<string> Tags { get; }
+        public ImmutableArray<string> Tags { get; }
 
         public string ValueType { get; }
 

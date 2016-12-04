@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Arbor.KVConfiguration.Urns;
@@ -14,7 +15,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         {
             Id = id;
             Name = name;
-            Children = children?.ToList() ?? new List<string>();
+            Children = children?.ToImmutableArray() ?? ImmutableArray<string>.Empty;
             Uri = uri;
         }
 
@@ -22,7 +23,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 
         public string Name { get; }
 
-        public IReadOnlyCollection<string> Children { get; }
+        public ImmutableArray<string> Children { get; }
 
         public Uri Uri { get; }
     }

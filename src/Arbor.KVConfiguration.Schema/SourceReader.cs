@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
@@ -9,16 +9,16 @@ namespace Arbor.KVConfiguration.Schema
     public class SourceReader
     {
 
-        public IReadOnlyCollection<KeyValueConfigurationItem> ReadConfiguration([NotNull] Assembly assembly)
+        public ImmutableArray<KeyValueConfigurationItem> ReadConfiguration([NotNull] Assembly assembly)
         {
             if (assembly == null)
             {
                 throw new ArgumentNullException(nameof(assembly));
             }
 
-            IReadOnlyCollection<Metadata> metadataFromAssemblyTypes = new AttributeMetadataSource().GetMetadataFromAssemblyTypes(assembly);
+            ImmutableArray<Metadata> metadataFromAssemblyTypes = new AttributeMetadataSource().GetMetadataFromAssemblyTypes(assembly);
 
-            KeyValueConfigurationItem[] configurationItems = metadataFromAssemblyTypes.Select(item => new KeyValueConfigurationItem(item.Key, item.DefaultValue, item)).ToArray();
+            ImmutableArray<KeyValueConfigurationItem> configurationItems = metadataFromAssemblyTypes.Select(item => new KeyValueConfigurationItem(item.Key, item.DefaultValue, item)).ToImmutableArray();
 
             return configurationItems;
         }

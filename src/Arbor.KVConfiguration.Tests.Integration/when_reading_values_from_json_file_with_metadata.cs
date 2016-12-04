@@ -48,7 +48,7 @@ namespace Arbor.KVConfiguration.Tests.Integration
                     Console.WriteLine(key);
                 }
 
-                json_key_value_configuration.AllKeys.Count.ShouldEqual(2);
+                json_key_value_configuration.AllKeys.Length.ShouldEqual(2);
             };
     }
 }

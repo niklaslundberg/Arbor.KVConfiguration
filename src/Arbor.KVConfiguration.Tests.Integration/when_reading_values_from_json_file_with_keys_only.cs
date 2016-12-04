@@ -38,7 +38,7 @@ namespace Arbor.KVConfiguration.Tests.Integration
                 Console.WriteLine(item.Value);
             }
 
-            configuration_items.Keys.Count.ShouldEqual(3);
+            configuration_items.Keys.Length.ShouldEqual(3);
         };
     }
 }

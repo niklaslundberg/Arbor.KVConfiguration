@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using Arbor.KVConfiguration.JsonConfiguration;
 using Arbor.KVConfiguration.Schema;
 using Machine.Specifications;
@@ -15,7 +16,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
 
         static KeyValueConfigurationValidationSummary summary;
 
-        static IReadOnlyCollection<KeyMetadata> metdata;
+        static ImmutableArray<KeyMetadata> metdata;
 
         Establish context = () => {
                                       configuration_validator = new ConfigurationValidator();

@@ -11,7 +11,7 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
         {
             KVConfigurationManager.Initialize(new UserConfiguration.UserConfiguration(new AppSettingsKeyValueConfiguration()));
 
-            Console.WriteLine("Contains {0} keys", KVConfigurationManager.AppSettings.AllKeys.Count);
+            Console.WriteLine("Contains {0} keys", KVConfigurationManager.AppSettings.AllKeys.Length);
 
             foreach (StringPair stringPair in KVConfigurationManager.AppSettings.AllValues)
             {
