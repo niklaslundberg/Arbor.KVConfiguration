@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Collections.Specialized;
 using System.Linq;
+using Arbor.KVConfiguration.Core.Extensions;
 
 namespace Arbor.KVConfiguration.Core
 {
     public sealed class InMemoryKeyValueConfiguration : IKeyValueConfiguration
     {
-        private readonly ImmutableDictionary<string, ImmutableArray<string>> _nameValueCollection;
+        private readonly Dictionary<string, ImmutableArray<string>> _keyValueDictionary;
 
         public InMemoryKeyValueConfiguration(NameValueCollection nameValueCollection)
         {
@@ -17,34 +18,29 @@ namespace Arbor.KVConfiguration.Core
                 throw new ArgumentNullException(nameof(nameValueCollection));
             }
 
-            var tempDictionary = new Dictionary<string, ImmutableArray<string>>(StringComparer.OrdinalIgnoreCase);
+            _keyValueDictionary = new Dictionary<string, ImmutableArray<string>>(nameValueCollection.Count + 1, StringComparer.OrdinalIgnoreCase);
 
-            ImmutableList<string> keys = nameValueCollection.AllKeys.ToImmutableList();
+            ImmutableArray<string> keys = nameValueCollection.AllKeys.ToImmutableArray();
 
             foreach (string key in keys)
             {
-                ImmutableArray<string> values = nameValueCollection.GetValues(key)?.ToImmutableArray() ?? ImmutableArray<string>.Empty;
+                ImmutableArray<string> values = nameValueCollection.GetValues(key).SafeToImmutableArray();
 
                 if (!string.IsNullOrWhiteSpace(key))
                 {
-                    if (!tempDictionary.ContainsKey(key))
+                    if (!_keyValueDictionary.ContainsKey(key))
                     {
-                        tempDictionary.Add(key, values);
+                        _keyValueDictionary.Add(key, values);
                     }
                     else
                     {
-                        tempDictionary[key] = tempDictionary[key].AddRange(values);
+                        _keyValueDictionary[key] = _keyValueDictionary[key].AddRange(values);
                     }
                 }
             }
-
-            _nameValueCollection = tempDictionary.ToImmutableDictionary(
-                keyValuePair => keyValuePair.Key,
-                keyValuePair => keyValuePair.Value,
-                StringComparer.OrdinalIgnoreCase);
         }
 
-        public ImmutableArray<string> AllKeys => _nameValueCollection.Keys.ToImmutableArray();
+        public ImmutableArray<string> AllKeys => _keyValueDictionary.Keys.ToImmutableArray();
 
         public ImmutableArray<StringPair> AllValues
         {
@@ -59,7 +55,7 @@ namespace Arbor.KVConfiguration.Core
             get
             {
                 return
-                    AllKeys.Select(key => new MultipleValuesStringPair(key, _nameValueCollection[key]))
+                    AllKeys.Select(key => new MultipleValuesStringPair(key, _keyValueDictionary[key]))
                         .ToImmutableArray();
             }
         }
@@ -73,12 +69,12 @@ namespace Arbor.KVConfiguration.Core
                 return string.Empty;
             }
 
-            if (!_nameValueCollection.ContainsKey(key))
+            if (!_keyValueDictionary.ContainsKey(key))
             {
                 return string.Empty;
             }
 
-            ImmutableArray<string> values = _nameValueCollection[key];
+            ImmutableArray<string> values = _keyValueDictionary[key];
 
             if (values.IsEmpty)
             {

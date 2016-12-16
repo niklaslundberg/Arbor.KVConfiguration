@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Immutable;
 using System.Runtime.CompilerServices;
+using Arbor.KVConfiguration.Core.Extensions;
 using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Schema
@@ -36,8 +37,8 @@ namespace Arbor.KVConfiguration.Schema
             Notes = notes ?? "";
             AllowMultipleValues = allowMultipleValues;
             KeyType = keyType ?? "";
-            Examples = examples?.ToImmutableArray() ?? ImmutableArray<string>.Empty;
-            Tags = tags?.ToImmutableArray() ?? ImmutableArray<string>.Empty;
+            Examples = examples.SafeToImmutableArray();
+            Tags = tags.SafeToImmutableArray();
         }
 
         public bool AllowMultipleValues { get; }

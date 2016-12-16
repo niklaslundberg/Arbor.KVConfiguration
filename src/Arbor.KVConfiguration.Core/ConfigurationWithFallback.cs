@@ -32,10 +32,7 @@ namespace Arbor.KVConfiguration.Core
         public ImmutableArray<string> AllKeys
             => _primaryConfiguration.AllKeys.Union(_fallbackConfiguration.AllKeys).Distinct().ToImmutableArray();
 
-        public ImmutableArray<StringPair> AllValues
-        {
-            get { return AllKeys.Select(key => new StringPair(key, GetValue(key))).ToImmutableArray(); }
-        }
+        public ImmutableArray<StringPair> AllValues => AllKeys.Select(key => new StringPair(key, GetValue(key))).ToImmutableArray();
 
         public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues
         {

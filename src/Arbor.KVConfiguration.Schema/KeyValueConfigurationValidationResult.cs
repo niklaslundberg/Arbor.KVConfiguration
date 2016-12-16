@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using Arbor.KVConfiguration.Core.Extensions;
 
 namespace Arbor.KVConfiguration.Schema
 {
@@ -12,7 +13,7 @@ namespace Arbor.KVConfiguration.Schema
             IEnumerable<ValidationError> validationErrors = null)
         {
             KeyMetadata = keyMetadata;
-            Values = values?.ToImmutableArray() ?? ImmutableArray<string>.Empty;
+            Values = values.SafeToImmutableArray();
             ValidationErrors = validationErrors?.ToImmutableArray() ?? ImmutableArray<ValidationError>.Empty;
         }
 

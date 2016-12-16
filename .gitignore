@@ -187,3 +187,5 @@ pip-log.txt
 *.nupkg
 _patchedAssemblyInfos
 *.userprefs
+*.etl
+*.vspx
