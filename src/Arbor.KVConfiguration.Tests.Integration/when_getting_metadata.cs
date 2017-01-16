@@ -37,7 +37,7 @@ namespace Arbor.KVConfiguration.Tests.Integration
             foreach (KeyMetadata keyValueConfigurationItem in metadata)
             {
                 Console.WriteLine(keyValueConfigurationItem.Key);
-                Console.WriteLine("  " + keyValueConfigurationItem.Metadata);
+                Console.WriteLine("  " + keyValueConfigurationItem.ConfigurationMetadata);
             }
 
             key_value_configuration_items.Length.ShouldEqual(3);

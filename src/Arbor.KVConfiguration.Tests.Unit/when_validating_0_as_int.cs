@@ -4,6 +4,7 @@ using Arbor.KVConfiguration.JsonConfiguration;
 using Arbor.KVConfiguration.Schema;
 using Machine.Specifications;
 using System.Collections.Immutable;
+using Arbor.KVConfiguration.Schema.Validators;
 
 namespace Arbor.KVConfiguration.Tests.Unit
 {
@@ -26,8 +27,8 @@ namespace Arbor.KVConfiguration.Tests.Unit
                                           new KeyValueConfigurationItem(
                                               key: "abc",
                                               value: "0",
-                                              metadata:
-                                                  new Metadata(
+                                              configurationMetadata:
+                                                  new ConfigurationMetadata(
                                                       key: "abc",
                                                       valueType: "int",
                                                       isRequired: false))

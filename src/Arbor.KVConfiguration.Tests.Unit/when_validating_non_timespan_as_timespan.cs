@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using Arbor.KVConfiguration.JsonConfiguration;
 using Arbor.KVConfiguration.Schema;
+using Arbor.KVConfiguration.Schema.Validators;
 using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit
@@ -24,7 +25,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
 
             var configurationItems = new List<KeyValueConfigurationItem>
             {
-                new KeyValueConfigurationItem("abc", "xyz", new Metadata("abc", "timespan",
+                new KeyValueConfigurationItem("abc", "xyz", new ConfigurationMetadata("abc", "timespan",
                     isRequired: false))
             };
 

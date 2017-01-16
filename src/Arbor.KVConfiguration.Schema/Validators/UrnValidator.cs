@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Arbor.KVConfiguration.Schema
+namespace Arbor.KVConfiguration.Schema.Validators
 {
     public class UrnValidator : BaseValueValidator
     {

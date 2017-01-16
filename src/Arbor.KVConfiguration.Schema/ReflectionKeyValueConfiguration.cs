@@ -7,18 +7,18 @@ using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Schema
 {
-    public class SourceKeyValueConfiguration : IKeyValueConfiguration
+    public class ReflectionKeyValueConfiguration : IKeyValueConfiguration
     {
         private readonly IKeyValueConfiguration _inMemoryKeyValueConfiguration;
 
-        public SourceKeyValueConfiguration([NotNull] Assembly assembly)
+        public ReflectionKeyValueConfiguration([NotNull] Assembly assembly)
         {
             if (assembly == null)
             {
                 throw new ArgumentNullException(nameof(assembly));
             }
 
-            ImmutableArray<KeyValueConfigurationItem> keyValueConfigurationItems = new SourceReader().ReadConfiguration(assembly);
+            ImmutableArray<KeyValueConfigurationItem> keyValueConfigurationItems = new ReflectionConfiguratonReader().ReadConfiguration(assembly);
 
             var nameValueCollection = new NameValueCollection();
 

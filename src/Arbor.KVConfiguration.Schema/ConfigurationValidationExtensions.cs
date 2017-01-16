@@ -4,7 +4,7 @@ using System.Collections.Immutable;
 using System.Linq;
 
 using Arbor.KVConfiguration.Core;
-
+using Arbor.KVConfiguration.Schema.Validators;
 using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Schema

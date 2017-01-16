@@ -10,7 +10,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Schema
     public class when_getting_configuration_keys_from_code
     {
         static AttributeMetadataSource attribute_metadata_source;
-        static ImmutableArray<Metadata> metadata_from_assembly_types;
+        static ImmutableArray<ConfigurationMetadata> metadata_from_assembly_types;
 
         Establish context = () => { attribute_metadata_source = new AttributeMetadataSource(); };
 
@@ -24,7 +24,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Schema
 
         It should_ = () =>
         {
-            foreach (Metadata metadataFromAssemblyType in metadata_from_assembly_types)
+            foreach (ConfigurationMetadata metadataFromAssemblyType in metadata_from_assembly_types)
             {
                 Console.WriteLine(metadataFromAssemblyType);
             }

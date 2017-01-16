@@ -8,7 +8,7 @@ namespace Arbor.KVConfiguration.Schema
 {
     public class AttributeMetadataSource
     {
-        public ImmutableArray<Metadata> GetMetadataFromAssemblyTypes([NotNull] Assembly assembly)
+        public ImmutableArray<ConfigurationMetadata> GetMetadataFromAssemblyTypes([NotNull] Assembly assembly)
         {
             if (assembly == null)
             {
@@ -17,23 +17,14 @@ namespace Arbor.KVConfiguration.Schema
 
             if (assembly.IsDynamic)
             {
-                return ImmutableArray<Metadata>.Empty;
+                return ImmutableArray<ConfigurationMetadata>.Empty;
             }
 
-            FieldInfo[] publicConstantPrimitiveFields = assembly.GetTypes()
-                .Where(type => type.IsClass && type.IsPublic && type.IsAbstract && type.IsSealed)
-                .SelectMany(type => type.GetFields())
-                .Where(
-                    field =>
-                        field.IsPublic &&
-                        (field.FieldType == typeof(string)) &&
-                        field.IsLiteral &&
-                        !field.IsInitOnly)
-                .ToArray();
+            ImmutableArray<FieldInfo> publicConstantPrimitiveFields = assembly.GetPublicConstantStringFields();
 
             if (!publicConstantPrimitiveFields.Any())
             {
-                return ImmutableArray<Metadata>.Empty;
+                return ImmutableArray<ConfigurationMetadata>.Empty;
             }
 
             var configurationMetadataFields = publicConstantPrimitiveFields
@@ -48,13 +39,13 @@ namespace Arbor.KVConfiguration.Schema
 
             if (!configurationMetadataFields.Any())
             {
-                return ImmutableArray<Metadata>.Empty;
+                return ImmutableArray<ConfigurationMetadata>.Empty;
             }
 
-            ImmutableArray<Metadata> metadata = configurationMetadataFields
+            ImmutableArray<ConfigurationMetadata> metadata = configurationMetadataFields
                 .Select(
                     pair =>
-                        new Metadata(pair.Field.GetRawConstantValue() as string ?? "INVALID_VALUE_NOT_A_STRING",
+                        new ConfigurationMetadata(pair.Field.GetRawConstantValue() as string ?? "INVALID_VALUE_NOT_A_STRING",
                             pair.Attribute.ValueType,
                             pair.Field.Name,
                             pair.Attribute.Description,

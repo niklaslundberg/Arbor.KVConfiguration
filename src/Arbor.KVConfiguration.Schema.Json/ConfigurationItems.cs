@@ -8,11 +8,11 @@ namespace Arbor.KVConfiguration.Schema.Json
     {
         public ConfigurationItems(string version, ImmutableArray<KeyValue> keys)
         {
-            Version = string.IsNullOrWhiteSpace(version) ? JsonConstants.Version1_0 : version;
+            Version = string.IsNullOrWhiteSpace(version) ? JsonSchemaConstants.Version1_0 : version;
             Keys = keys;
         }
 
-        [JsonProperty(Order = 0, PropertyName = JsonConstants.VersionPropertyKey)]
+        [JsonProperty(Order = 0, PropertyName = JsonSchemaConstants.VersionPropertyKey)]
         public string Version { [UsedImplicitly] get; }
 
         [JsonProperty(Order = 1)]

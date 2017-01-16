@@ -21,7 +21,7 @@ namespace Arbor.KVConfiguration.Schema
 
             string[] uniqueKeys = keyValueConfigurationItems.Select(item => item.Key).Distinct().ToArray();
 
-            KeyValueConfigurationItem[] ordered = keyValueConfigurationItems.Where(_ => _.Metadata != null).ToArray();
+            KeyValueConfigurationItem[] ordered = keyValueConfigurationItems.Where(_ => _.ConfigurationMetadata != null).ToArray();
 
             ImmutableArray<KeyMetadata> readOnlyKeyMetadata =
                 uniqueKeys.Select(
@@ -30,7 +30,7 @@ namespace Arbor.KVConfiguration.Schema
                                    key,
                                    found = ordered.FirstOrDefault()
                                })
-                    .Select(item => new KeyMetadata(item.key, item.found.Metadata))
+                    .Select(item => new KeyMetadata(item.key, item.found.ConfigurationMetadata))
                     .ToImmutableArray();
 
 

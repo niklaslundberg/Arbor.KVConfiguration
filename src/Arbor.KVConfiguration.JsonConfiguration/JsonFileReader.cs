@@ -19,6 +19,11 @@ namespace Arbor.KVConfiguration.JsonConfiguration
                 throw new ArgumentException("Argument is null or whitespace", nameof(fileFullPath));
             }
 
+            if (!File.Exists(fileFullPath))
+            {
+                throw new FileNotFoundException("The file does not exist", fileFullPath);
+            }
+
             _fileFullPath = fileFullPath;
         }
 

@@ -6,7 +6,7 @@ namespace Arbor.KVConfiguration.Schema
 {
     public struct KeyValueConfigurationItem
     {
-        public KeyValueConfigurationItem([NotNull] string key, [CanBeNull] string value, [CanBeNull] Metadata metadata)
+        public KeyValueConfigurationItem([NotNull] string key, [CanBeNull] string value, [CanBeNull] ConfigurationMetadata configurationMetadata)
         {
             if (key == null)
             {
@@ -15,12 +15,12 @@ namespace Arbor.KVConfiguration.Schema
 
             Key = key;
             Value = value;
-            Metadata = metadata;
+            ConfigurationMetadata = configurationMetadata;
         }
 
         public string Key { get; }
 
-        public Metadata Metadata { get; }
+        public ConfigurationMetadata ConfigurationMetadata { get; }
 
         public string Value { get; }
     }

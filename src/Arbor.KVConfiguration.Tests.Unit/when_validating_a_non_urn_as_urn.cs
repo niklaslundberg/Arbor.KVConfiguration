@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using Arbor.KVConfiguration.JsonConfiguration;
 using Arbor.KVConfiguration.Schema;
-
+using Arbor.KVConfiguration.Schema.Validators;
 using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit
@@ -28,8 +28,8 @@ namespace Arbor.KVConfiguration.Tests.Unit
                                                  new KeyValueConfigurationItem(
                                                      key: "abc",
                                                      value: "http://example.org",
-                                                     metadata:
-                                                     new Metadata(
+                                                     configurationMetadata:
+                                                     new ConfigurationMetadata(
                                                      key: "abc",
                                                      valueType: "urn",
                                                      isRequired: false))

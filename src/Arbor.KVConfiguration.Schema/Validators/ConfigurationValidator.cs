@@ -5,7 +5,7 @@ using System.Linq;
 using Arbor.KVConfiguration.Core;
 using JetBrains.Annotations;
 
-namespace Arbor.KVConfiguration.Schema
+namespace Arbor.KVConfiguration.Schema.Validators
 {
     public class ConfigurationValidator : IConfigurationValidator
     {
@@ -38,14 +38,14 @@ namespace Arbor.KVConfiguration.Schema
             MultipleValuesStringPair multipleValuesStringPair,
             KeyMetadata metadataItem)
         {
-            if (metadataItem.Metadata == null)
+            if (metadataItem.ConfigurationMetadata == null)
             {
                 return new KeyValueConfigurationValidationResult(metadataItem, multipleValuesStringPair.Values);
             }
 
             var validationErrors = new List<ValidationError>();
 
-            if (metadataItem.Metadata.IsRequired && string.IsNullOrWhiteSpace(metadataItem.Metadata.DefaultValue)
+            if (metadataItem.ConfigurationMetadata.IsRequired && string.IsNullOrWhiteSpace(metadataItem.ConfigurationMetadata.DefaultValue)
                 && !multipleValuesStringPair.HasNonEmptyValue)
             {
                 validationErrors.Add(new ValidationError("Required value is missing"));
@@ -53,13 +53,13 @@ namespace Arbor.KVConfiguration.Schema
 
             foreach (IValueValidator valueValidator in _validators)
             {
-                if (!string.IsNullOrWhiteSpace(metadataItem.Metadata.ValueType) &&
+                if (!string.IsNullOrWhiteSpace(metadataItem.ConfigurationMetadata.ValueType) &&
                     multipleValuesStringPair.HasNonEmptyValue && multipleValuesStringPair.HasSingleValue)
                 {
-                    if (valueValidator.CanValidate(metadataItem.Metadata.ValueType))
+                    if (valueValidator.CanValidate(metadataItem.ConfigurationMetadata.ValueType))
                     {
                         string valueToValidate = multipleValuesStringPair.Values.SingleOrDefault();
-                        validationErrors.AddRange(valueValidator.Validate(metadataItem.Metadata.ValueType,
+                        validationErrors.AddRange(valueValidator.Validate(metadataItem.ConfigurationMetadata.ValueType,
                             valueToValidate));
                     }
                 }

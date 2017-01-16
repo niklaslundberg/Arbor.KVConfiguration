@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Tests.Unit
 {
-    public static class MultipleExtensions
+    internal static class MultipleExtensions
     {
         public static string Print([NotNull] this IEnumerable<MultipleValuesStringPair> multipleValuesStringPairs)
         {

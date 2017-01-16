@@ -26,7 +26,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
                 new KeyValue(
                     "a",
                     "1",
-                    new Metadata(
+                    new ConfigurationMetadata(
                         "a",
                         "string",
                         "A",
@@ -64,7 +64,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
         It should_have_last_correct_value = () => { restored_configuration.Keys.Last().Value.ShouldEqual("2"); };
 
         It should_have_metadata_for_the_first_item =
-            () => { restored_configuration.Keys.First().Metadata.ShouldNotBeNull(); };
+            () => { restored_configuration.Keys.First().ConfigurationMetadata.ShouldNotBeNull(); };
 
         It should_have_two_keys = () =>
         {

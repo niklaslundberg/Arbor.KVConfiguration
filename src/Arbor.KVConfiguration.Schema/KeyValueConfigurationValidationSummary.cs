@@ -16,7 +16,6 @@ namespace Arbor.KVConfiguration.Schema
 
         public bool IsValid => KeyValueConfigurationValidationResults.All(_ => _.IsValid);
 
-        public ImmutableArray<KeyValueConfigurationValidationResult> KeyValueConfigurationValidationResults { get;
-        }
+        public ImmutableArray<KeyValueConfigurationValidationResult> KeyValueConfigurationValidationResults { get; }
     }
 }

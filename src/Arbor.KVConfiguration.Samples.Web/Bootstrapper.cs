@@ -28,7 +28,7 @@ namespace Arbor.KVConfiguration.Samples.Web
 
         private static void RegisterConfiguration(ContainerBuilder builder)
         {
-            IKeyValueConfiguration sourceConfiguration = new SourceKeyValueConfiguration(typeof(Bootstrapper).Assembly);
+            IKeyValueConfiguration sourceConfiguration = new ReflectionKeyValueConfiguration(typeof(Bootstrapper).Assembly);
             IKeyValueConfiguration appSettingsKeyValueConfiguration = new AppSettingsKeyValueConfiguration();
             IKeyValueConfiguration userConfiguration = new UserConfiguration.UserConfiguration(new ConfigurationWithFallback(appSettingsKeyValueConfiguration, sourceConfiguration));
             IKeyValueConfiguration expanded = new ExpandConfiguration(userConfiguration);

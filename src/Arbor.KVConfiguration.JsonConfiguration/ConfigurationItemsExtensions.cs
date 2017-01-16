@@ -19,7 +19,7 @@ namespace Arbor.KVConfiguration.JsonConfiguration
 
             ImmutableArray<KeyValueConfigurationItem> keyValueConfigurationItems = configurationItems.Keys
                 .Select(
-                    keyValue => new KeyValueConfigurationItem(keyValue.Key, keyValue.Value, keyValue.Metadata))
+                    keyValue => new KeyValueConfigurationItem(keyValue.Key, keyValue.Value, keyValue.ConfigurationMetadata))
                 .ToImmutableArray();
 
             return keyValueConfigurationItems;

@@ -2,10 +2,11 @@ using System.Linq;
 using System.Text;
 
 using Arbor.KVConfiguration.Schema;
+using Arbor.KVConfiguration.Schema.Validators;
 
 namespace Arbor.KVConfiguration.Tests.Unit
 {
-    public static class SummaryExtensions
+    internal static class SummaryExtensions
     {
         public static string Print(this KeyValueConfigurationValidationSummary summary)
         {
