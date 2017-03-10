@@ -23,7 +23,7 @@
     <dependencies>
       <dependency id="Arbor.KVConfiguration.Core" version="[0.4.1,0.6.0)" />
       <dependency id="Arbor.KVConfiguration.JsonConfiguration" version="[0.4.1,0.6.0)" />
-      <dependency id="Arbor.KVConfiguration.Schema" version="[0.4.1,0.6.0)]" />
+      <dependency id="Arbor.KVConfiguration.Schema" version="[0.4.1,0.6.0]" />
     </dependencies>
     <references></references>
     <tags></tags>
