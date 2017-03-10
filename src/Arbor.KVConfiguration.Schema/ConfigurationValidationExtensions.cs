@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 
 using Arbor.KVConfiguration.Core;
-
+using Arbor.KVConfiguration.Schema.Validators;
 using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Schema
@@ -11,23 +12,13 @@ namespace Arbor.KVConfiguration.Schema
     public static class ConfigurationValidationExtensions
     {
         public static KeyValueConfigurationValidationSummary Validate(
-            [NotNull] this IReadOnlyCollection<MultipleValuesStringPair> multipleValuesStringPairs,
+            this ImmutableArray<MultipleValuesStringPair> multipleValuesStringPairs,
             [NotNull] IConfigurationValidator configurationValidator,
-            [NotNull] IReadOnlyCollection<KeyMetadata> metadata)
+            ImmutableArray<KeyMetadata> metadata)
         {
             if (configurationValidator == null)
             {
                 throw new ArgumentNullException(nameof(configurationValidator));
-            }
-
-            if (metadata == null)
-            {
-                throw new ArgumentNullException(nameof(metadata));
-            }
-
-            if (multipleValuesStringPairs == null)
-            {
-                throw new ArgumentNullException(nameof(multipleValuesStringPairs));
             }
 
             var keyValueConfigurationValidationResults = new List<KeyValueConfigurationValidationResult>();

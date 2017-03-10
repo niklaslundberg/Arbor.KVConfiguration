@@ -1,34 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using Arbor.KVConfiguration.Schema.Json;
 using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit
 {
+    [Subject(typeof(JsonConfigurationSerializer))]
     public class when_serializing_a_configuration_items_list
     {
-        private static JsonConfigurationSerializer _serializer;
+        static JsonConfigurationSerializer serializer;
 
-        private static ConfigurationItems configurationItems;
+        static ConfigurationItems configuration_items;
 
-        private static string _serialized;
+        static string serialized;
 
-        private Establish context = () =>
+        Establish context = () =>
         {
-            _serializer = new JsonConfigurationSerializer();
-            IReadOnlyCollection<KeyValue> keys = new List<KeyValue>(10)
+            serializer = new JsonConfigurationSerializer();
+            ImmutableArray<KeyValue> keys = new List<KeyValue>(10)
             {
                 new KeyValue("abc", "123", null),
                 new KeyValue("def", "234", null),
                 new KeyValue("ghi", "345", null),
                 new KeyValue("ghi", "456", null)
-            };
-            configurationItems = new ConfigurationItems("1.0", keys);
+            }.ToImmutableArray();
+            configuration_items = new ConfigurationItems("1.0", keys);
         };
 
-        private Because of = () => { _serialized = _serializer.Serialize(configurationItems); };
+        Because of = () => { serialized = serializer.Serialize(configuration_items); };
 
-        private It should_have_serialized_with_version_first_then_properties_in_order =
-            () => { Console.WriteLine(_serialized); };
+        It should_have_serialized_with_version_first_then_properties_in_order =
+            () => { Console.WriteLine(serialized); };
     }
 }

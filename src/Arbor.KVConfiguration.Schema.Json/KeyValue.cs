@@ -8,7 +8,7 @@ namespace Arbor.KVConfiguration.Schema.Json
 {
     public class KeyValue
     {
-        public KeyValue([NotNull] string key, [CanBeNull] string value, [CanBeNull] Metadata metadata)
+        public KeyValue([NotNull] string key, [CanBeNull] string value, [CanBeNull] ConfigurationMetadata configurationMetadata)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
@@ -17,21 +17,21 @@ namespace Arbor.KVConfiguration.Schema.Json
 
             Key = key;
             Value = value;
-            Metadata = metadata;
+            ConfigurationMetadata = configurationMetadata;
         }
 
         [JsonProperty(Order = 0)]
         public string Key { get; }
 
         [JsonProperty(Order = 2)]
-        public Metadata Metadata { get; }
+        public ConfigurationMetadata ConfigurationMetadata { get; }
 
         [JsonProperty(Order = 1)]
         public string Value { get; }
 
         public bool ShouldSerializeMetadata()
         {
-            return Metadata != null;
+            return ConfigurationMetadata != null;
         }
     }
 }

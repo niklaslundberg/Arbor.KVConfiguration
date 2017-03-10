@@ -2,10 +2,11 @@ using System.Linq;
 using System.Text;
 
 using Arbor.KVConfiguration.Schema;
+using Arbor.KVConfiguration.Schema.Validators;
 
 namespace Arbor.KVConfiguration.Tests.Unit
 {
-    public static class SummaryExtensions
+    internal static class SummaryExtensions
     {
         public static string Print(this KeyValueConfigurationValidationSummary summary)
         {
@@ -22,13 +23,16 @@ namespace Arbor.KVConfiguration.Tests.Unit
                 KeyValueConfigurationValidationResult[] errors =
                     summary.KeyValueConfigurationValidationResults.Where(_ => !_.IsValid).ToArray();
 
-                foreach (var keyValueConfigurationValidationResult in errors)
+                foreach (KeyValueConfigurationValidationResult keyValueConfigurationValidationResult in errors)
                 {
-                    builder.AppendLine("# " + keyValueConfigurationValidationResult.KeyMetadata.Key);
+                    builder.AppendLine($"# {keyValueConfigurationValidationResult.KeyMetadata.Key}");
+
                     foreach (ValidationError validationError in keyValueConfigurationValidationResult.ValidationErrors)
                     {
-                        builder.AppendLine(" * " + validationError.ErrorMessage);
+                        builder.AppendLine($" * {validationError.ErrorMessage}");
                     }
+
+                    builder.AppendLine($"Value: [{string.Join(", ", keyValueConfigurationValidationResult.Values.Select(item => $"'{item}'"))}]");
                 }
             }
 

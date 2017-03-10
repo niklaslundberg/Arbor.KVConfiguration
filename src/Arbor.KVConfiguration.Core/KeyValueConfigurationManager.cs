@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core
 {
-    public static class KVConfigurationManager
+    public static class KeyValueConfigurationManager
     {
         private static readonly object _MutexLock = new object();
 
@@ -17,7 +17,7 @@ namespace Arbor.KVConfiguration.Core
                 if (_appSettings == null)
                 {
                     throw new InvalidOperationException(
-                        $"The {nameof(KVConfigurationManager)} has not been initialized");
+                        $"The {nameof(KeyValueConfigurationManager)} has not been initialized");
                 }
 
                 return _appSettings;

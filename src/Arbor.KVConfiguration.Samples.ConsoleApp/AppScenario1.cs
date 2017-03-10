@@ -13,7 +13,7 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
         {
             IKeyValueConfiguration appSettingsKeyValueConfiguration = new AppSettingsKeyValueConfiguration();
 
-            KVConfigurationManager.Initialize(appSettingsKeyValueConfiguration);
+            KeyValueConfigurationManager.Initialize(appSettingsKeyValueConfiguration);
 
             var goodKeys = new List<string> {
                                    "a-non-existing-key",
@@ -21,7 +21,7 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
                                    "urn:TEST:key"
                                };
 
-            var keys = Specials.Special;
+            Dictionary<string, string> keys = Specials.Special;
 
             foreach (string goodKey in goodKeys)
             {
@@ -30,19 +30,19 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
 
             var builder = new StringBuilder();
 
-            foreach (var pair in keys)
+            foreach (KeyValuePair<string, string> pair in keys)
             {
                 builder.AppendLine($"Key: {pair.Key}");
 
                 string value = appSettingsKeyValueConfiguration.ValueOrDefault(pair.Value);
 
-                var displayValue = Specials.GetDisplayValue(value);
+                string displayValue = Specials.GetDisplayValue(value);
 
                 builder.AppendLine($"\t Instance: {displayValue}");
 
-                var staticValue = KVConfigurationManager.AppSettings[pair.Value];
+                string staticValue = KeyValueConfigurationManager.AppSettings[pair.Value];
 
-                var staticDisplayValue = Specials.GetDisplayValue(staticValue);
+                string staticDisplayValue = Specials.GetDisplayValue(staticValue);
 
                 builder.AppendLine($"\t Static: {staticDisplayValue}");
             }

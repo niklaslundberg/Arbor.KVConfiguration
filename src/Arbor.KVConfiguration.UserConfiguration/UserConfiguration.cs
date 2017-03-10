@@ -1,9 +1,9 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.JsonConfiguration;
+using System.Collections.Immutable;
 
 namespace Arbor.KVConfiguration.UserConfiguration
 {
@@ -29,13 +29,13 @@ namespace Arbor.KVConfiguration.UserConfiguration
             }
             else
             {
-                FileInfo fileInfo = new FileInfo(fileFullPath);
+                var fileInfo = new FileInfo(fileFullPath);
 
                 string parentName = fileInfo.Directory?.Parent?.Name ?? string.Empty;
 
                 if (parentName.Equals("bin"))
                 {
-                    string projectDirectoryFullDirectoryPath = fileInfo?.Directory?.Parent?.Parent?.FullName ?? string.Empty;
+                    string projectDirectoryFullDirectoryPath = fileInfo.Directory?.Parent?.Parent?.FullName ?? string.Empty;
 
                     if (!string.IsNullOrWhiteSpace(projectDirectoryFullDirectoryPath))
                     {
@@ -58,11 +58,11 @@ namespace Arbor.KVConfiguration.UserConfiguration
             }
         }
 
-        public IReadOnlyCollection<string> AllKeys => _configuration.AllKeys;
+        public ImmutableArray<string> AllKeys => _configuration.AllKeys;
 
-        public IReadOnlyCollection<StringPair> AllValues => _configuration.AllValues;
+        public ImmutableArray<StringPair> AllValues => _configuration.AllValues;
 
-        public IReadOnlyCollection<MultipleValuesStringPair> AllWithMultipleValues
+        public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues
             => _configuration.AllWithMultipleValues;
 
         public string this[string key]

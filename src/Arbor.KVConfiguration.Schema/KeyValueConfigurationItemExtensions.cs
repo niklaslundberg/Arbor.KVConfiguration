@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Collections.Immutable;
 using System.Linq;
 
 using JetBrains.Annotations;
@@ -8,15 +8,12 @@ namespace Arbor.KVConfiguration.Schema
 {
     public static class KeyValueConfigurationItemExtensions
     {
-        [NotNull]
-        public static IReadOnlyCollection<KeyMetadata> GetMetadata(
+        public static ImmutableArray<KeyMetadata> GetMetadata(
             [CanBeNull] this IEnumerable<KeyValueConfigurationItem> items)
         {
             if (items == null)
             {
-                return new KeyMetadata[]
-                           {
-                           };
+                return ImmutableArray<KeyMetadata>.Empty;
             }
 
             KeyValueConfigurationItem[] keyValueConfigurationItems = items as KeyValueConfigurationItem[]
@@ -24,19 +21,18 @@ namespace Arbor.KVConfiguration.Schema
 
             string[] uniqueKeys = keyValueConfigurationItems.Select(item => item.Key).Distinct().ToArray();
 
-            KeyValueConfigurationItem[] ordered = keyValueConfigurationItems.Where(_ => _.Metadata != null).ToArray();
+            KeyValueConfigurationItem[] ordered = keyValueConfigurationItems.Where(_ => _.ConfigurationMetadata != null).ToArray();
 
-            List<KeyMetadata> list =
+            ImmutableArray<KeyMetadata> readOnlyKeyMetadata =
                 uniqueKeys.Select(
                     key => new
                                {
                                    key,
                                    found = ordered.FirstOrDefault()
                                })
-                    .Select(@t => new KeyMetadata(@t.key, @t.found.Metadata))
-                    .ToList();
+                    .Select(item => new KeyMetadata(item.key, item.found.ConfigurationMetadata))
+                    .ToImmutableArray();
 
-            ReadOnlyCollection<KeyMetadata> readOnlyKeyMetadata = new ReadOnlyCollection<KeyMetadata>(list);
 
             return readOnlyKeyMetadata;
         }

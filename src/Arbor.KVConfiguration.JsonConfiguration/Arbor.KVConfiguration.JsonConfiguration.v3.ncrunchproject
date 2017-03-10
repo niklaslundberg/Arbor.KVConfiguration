@@ -1,0 +1,9 @@
+﻿<ProjectConfiguration>
+  <Settings>
+    <AdditionalFilesToIncludeForProject>
+      <Value>..\packages\Microsoft.Net.Compilers.1.3.2\**.*</Value>
+    </AdditionalFilesToIncludeForProject>
+    <HiddenComponentWarnings />
+    <PreviouslyBuiltSuccessfully>True</PreviouslyBuiltSuccessfully>
+  </Settings>
+</ProjectConfiguration>

@@ -1,5 +1,4 @@
 ﻿using System;
-
 using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core
@@ -8,8 +7,8 @@ namespace Arbor.KVConfiguration.Core
     {
         public static string ValueOrDefault(
             [NotNull] this IKeyValueConfiguration keyValueConfiguration,
-            string key,
-            string defaultValue = "")
+            [CanBeNull] string key,
+            [CanBeNull] string defaultValue = "")
         {
             if (keyValueConfiguration == null)
             {

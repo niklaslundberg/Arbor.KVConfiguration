@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.Text;
 
@@ -19,6 +19,11 @@ namespace Arbor.KVConfiguration.JsonConfiguration
                 throw new ArgumentException("Argument is null or whitespace", nameof(fileFullPath));
             }
 
+            if (!File.Exists(fileFullPath))
+            {
+                throw new FileNotFoundException("The file does not exist", fileFullPath);
+            }
+
             _fileFullPath = fileFullPath;
         }
 
@@ -31,7 +36,7 @@ namespace Arbor.KVConfiguration.JsonConfiguration
             return config;
         }
 
-        public IReadOnlyCollection<KeyValueConfigurationItem> ReadConfiguration()
+        public ImmutableArray<KeyValueConfigurationItem> ReadConfiguration()
         {
             return GetConfigurationItems().ReadConfiguration();
         }

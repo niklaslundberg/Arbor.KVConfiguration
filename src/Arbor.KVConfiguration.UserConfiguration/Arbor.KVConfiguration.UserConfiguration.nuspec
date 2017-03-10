@@ -19,16 +19,16 @@
     <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <licenseUrl>https://github.com/niklaslundberg/Arbor.KVConfiguration/blob/master/LICENSE.txt</licenseUrl>
-    <copyright>Copyright Niklas Lundberg 2014 - 2016</copyright>
+    <copyright>Copyright Niklas Lundberg 2014 - 2017</copyright>
     <dependencies>
-      <dependency id="Arbor.KVConfiguration.Core" version="[0.4.1]" />
-      <dependency id="Arbor.KVConfiguration.JsonConfiguration" version="[0.4.1]" />
-      <dependency id="Arbor.KVConfiguration.Schema" version="[0.4.1]" />
+      <dependency id="Arbor.KVConfiguration.Core" version="[0.4.1,0.6.0)" />
+      <dependency id="Arbor.KVConfiguration.JsonConfiguration" version="[0.4.1,0.6.0)" />
+      <dependency id="Arbor.KVConfiguration.Schema" version="[0.4.1,0.6.0]" />
     </dependencies>
     <references></references>
     <tags></tags>
   </metadata>
   <files>
-    <file src="bin\$configuration$\Arbor.KVConfiguration.UserConfiguration.dll" target="lib\net45" />
+    <file src="bin\$configuration$\Arbor.KVConfiguration.UserConfiguration.dll" target="lib\net461" />
   </files>
 </package>

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Arbor.KVConfiguration.Samples.ConsoleApp
 {
+    [SuppressMessage("ReSharper", "UnusedParameter.Global")]
     public static class Program
     {
         public static int Main(string[] args)
@@ -17,6 +19,8 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
             new AppScenario3().Execute();
 
             new AppScenario4().Execute();
+
+            new AppScenario5().Execute();
 
             return 0;
         }

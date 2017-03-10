@@ -2,10 +2,12 @@ using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit.Urn
 {
+#pragma warning disable 0649
+#pragma warning disable 0169
     [Subject(typeof(Urns.Urn))]
     public class when_parsing_two_level_urn
     {
-        private static string attempted_value;
+        static string attempted_value;
 
         protected static Urns.Urn urn;
 

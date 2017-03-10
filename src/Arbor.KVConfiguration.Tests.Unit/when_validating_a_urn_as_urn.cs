@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-
+using System.Collections.Immutable;
 using Arbor.KVConfiguration.JsonConfiguration;
 using Arbor.KVConfiguration.Schema;
-
+using Arbor.KVConfiguration.Schema.Validators;
 using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit
@@ -11,13 +11,13 @@ namespace Arbor.KVConfiguration.Tests.Unit
     [Subject(typeof(ConfigurationValidator))]
     public class when_validating_a_urn_as_urn
     {
-        private static ConfigurationValidator configuration_validator;
+        static ConfigurationValidator configuration_validator;
 
-        private static JsonKeyValueConfiguration configuration;
+        static JsonKeyValueConfiguration configuration;
 
-        private static KeyValueConfigurationValidationSummary summary;
+        static KeyValueConfigurationValidationSummary summary;
 
-        private static IReadOnlyCollection<KeyMetadata> metdata;
+        static ImmutableArray<KeyMetadata> metdata;
 
         Establish context = () => {
                                       configuration_validator = new ConfigurationValidator();
@@ -27,8 +27,8 @@ namespace Arbor.KVConfiguration.Tests.Unit
                                                                        new KeyValueConfigurationItem(
                                                                            key: "abc",
                                                                            value: "urn:xyz",
-                                                                           metadata:
-                                                                           new Metadata(
+                                                                           configurationMetadata:
+                                                                           new ConfigurationMetadata(
                                                                            key: "abc",
                                                                            valueType: "urn",
                                                                            isRequired: false))

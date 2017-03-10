@@ -22,7 +22,7 @@ namespace Arbor.KVConfiguration.Tests.Integration
 
                 MethodInfo method = ncrunchType?.GetMethod("GetOriginalSolutionPath");
 
-                var originalSolutionPath = method?.Invoke(null, null) as string;
+                string originalSolutionPath = method?.Invoke(null, null) as string;
 
                 if (!string.IsNullOrWhiteSpace(originalSolutionPath))
                 {

@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-
+using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
+using Arbor.KVConfiguration.Core.Extensions;
 using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Schema
 {
-    public class Metadata
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global", Justification = "Used by reflection")]
+    public class ConfigurationMetadata
     {
-        public Metadata(
+        public ConfigurationMetadata(
             string key,
             string valueType,
             string memberName = "",
@@ -24,16 +25,12 @@ namespace Arbor.KVConfiguration.Schema
             string notes = "",
             bool allowMultipleValues = false,
             [CanBeNull] IEnumerable<string> examples = null,
-            [CanBeNull] IEnumerable<string> tags = null)
+            [CanBeNull] IEnumerable<string> tags = null,
+            string keyType = "")
         {
             if (string.IsNullOrWhiteSpace(key))
             {
                 throw new ArgumentException("Argument is null or whitespace", nameof(key));
-            }
-
-            if (string.IsNullOrWhiteSpace(valueType))
-            {
-                throw new ArgumentException("Argument is null or whitespace", nameof(valueType));
             }
 
             Key = key;
@@ -49,11 +46,13 @@ namespace Arbor.KVConfiguration.Schema
             DefaultValue = defaultValue;
             Notes = notes;
             AllowMultipleValues = allowMultipleValues;
-            Examples = new ReadOnlyCollection<string>(examples?.ToList() ?? new List<string>());
-            Tags = new ReadOnlyCollection<string>(tags?.ToList() ?? new List<string>());
+            KeyType = keyType;
+            Examples = examples.SafeToImmutableArray();
+            Tags = tags.SafeToImmutableArray();
         }
 
         public bool AllowMultipleValues { get; }
+        public string KeyType { get; }
 
         public Type ContainingClass { get; private set; }
 
@@ -61,7 +60,7 @@ namespace Arbor.KVConfiguration.Schema
 
         public string Description { get; }
 
-        public IReadOnlyCollection<string> Examples { get; }
+        public ImmutableArray<string> Examples { get; }
 
         public bool IsRequired { get; }
 
@@ -79,7 +78,7 @@ namespace Arbor.KVConfiguration.Schema
 
         public int SourceLine { get; }
 
-        public IReadOnlyCollection<string> Tags { get; }
+        public ImmutableArray<string> Tags { get; }
 
         public string ValueType { get; }
 

@@ -1,20 +1,17 @@
 using System;
-using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core
 {
     public struct MultipleValuesStringPair : IEquatable<MultipleValuesStringPair>
     {
-        public string Key { get; }
-
-        public IReadOnlyCollection<string> Values { get; }
-
-        public MultipleValuesStringPair(string key, IReadOnlyCollection<string> values)
+        public MultipleValuesStringPair([NotNull] string key, ImmutableArray<string> values)
         {
-            if (values == null)
+            if (key == null)
             {
-                throw new ArgumentNullException(nameof(values));
+                throw new ArgumentNullException(nameof(key));
             }
 
             Key = key;
@@ -22,9 +19,27 @@ namespace Arbor.KVConfiguration.Core
             HasNonEmptyValue = values.Any(value => !string.IsNullOrWhiteSpace(value));
         }
 
+        public string Key { get; }
+
+        public ImmutableArray<string> Values { get; }
+
+        public bool HasNonEmptyValue { get; }
+
+        public bool HasSingleValue => Values.Length == 1;
+
+        public static bool operator ==(MultipleValuesStringPair left, MultipleValuesStringPair right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(MultipleValuesStringPair left, MultipleValuesStringPair right)
+        {
+            return !left.Equals(right);
+        }
+
         public bool Equals(MultipleValuesStringPair other)
         {
-            return string.Equals(Key, other.Key) && (Values?.SequenceEqual(other.Values) ?? false);
+            return string.Equals(Key, other.Key) && Values.SequenceEqual(other.Values);
         }
 
         public override bool Equals(object obj)
@@ -41,22 +56,8 @@ namespace Arbor.KVConfiguration.Core
         {
             unchecked
             {
-                return ((Key?.GetHashCode() ?? 0) * 397) ^ (Values?.GetHashCode() ?? 0);
+                return ((Key?.GetHashCode() ?? 0) * 397) ^ Values.GetHashCode();
             }
         }
-
-        public static bool operator ==(MultipleValuesStringPair left, MultipleValuesStringPair right)
-        {
-            return left.Equals(right);
-        }
-
-        public static bool operator !=(MultipleValuesStringPair left, MultipleValuesStringPair right)
-        {
-            return !left.Equals(right);
-        }
-
-        public bool HasSingleValue => Values.Count == 1;
-
-        public bool HasNonEmptyValue { get; }
     }
 }

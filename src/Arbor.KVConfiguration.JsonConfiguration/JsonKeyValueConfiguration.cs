@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Collections.Specialized;
 using System.IO;
 
@@ -36,16 +37,16 @@ namespace Arbor.KVConfiguration.JsonConfiguration
         {
         }
 
-        public IReadOnlyCollection<string> AllKeys => _inMemoryKeyValueConfiguration.AllKeys;
+        public ImmutableArray<string> AllKeys => _inMemoryKeyValueConfiguration.AllKeys;
 
-        public IReadOnlyCollection<StringPair> AllValues => _inMemoryKeyValueConfiguration.AllValues;
+        public ImmutableArray<StringPair> AllValues => _inMemoryKeyValueConfiguration.AllValues;
 
-        public IReadOnlyCollection<MultipleValuesStringPair> AllWithMultipleValues
+        public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues
             => _inMemoryKeyValueConfiguration.AllWithMultipleValues;
 
         public string this[string key] => _inMemoryKeyValueConfiguration[key];
 
-        private static IReadOnlyCollection<KeyValueConfigurationItem> ReadJsonFile(string fileFullPath)
+        private static ImmutableArray<KeyValueConfigurationItem> ReadJsonFile(string fileFullPath)
         {
             if (string.IsNullOrWhiteSpace(fileFullPath))
             {
@@ -59,7 +60,7 @@ namespace Arbor.KVConfiguration.JsonConfiguration
 
             var jsonFileReader = new JsonFileReader(fileFullPath);
 
-            IReadOnlyCollection<KeyValueConfigurationItem> keyValueConfigurationItems =
+            ImmutableArray<KeyValueConfigurationItem> keyValueConfigurationItems =
                 jsonFileReader.ReadConfiguration();
 
             return keyValueConfigurationItems;

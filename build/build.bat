@@ -14,6 +14,7 @@ IF "%Arbor.X.Vcs.Branch.Name%" == "" (
 	SET Arbor.X.Vcs.Branch.Name=develop
 )
 
+SET Arbor.X.MSBuild.NuGetRestore.Enabled=true
 SET Arbor.X.NuGet.ReinstallArborPackageEnabled=true
 SET Arbor.X.NuGet.VersionUpdateEnabled=false
 SET Arbor.X.Artifacts.PdbArtifacts.Enabled=true

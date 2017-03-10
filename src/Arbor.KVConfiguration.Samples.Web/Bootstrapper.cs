@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 
 using Arbor.KVConfiguration.Core;
+using Arbor.KVConfiguration.Schema;
 using Arbor.KVConfiguration.SystemConfiguration;
 
 using Autofac;
@@ -20,15 +21,16 @@ namespace Arbor.KVConfiguration.Samples.Web
             IContainer container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
 
-            IKeyValueConfiguration keyValueConfiguration = container.Resolve<IKeyValueConfiguration>();
+            var keyValueConfiguration = container.Resolve<IKeyValueConfiguration>();
 
-            KVConfigurationManager.Initialize(keyValueConfiguration);
+            KeyValueConfigurationManager.Initialize(keyValueConfiguration);
         }
 
         private static void RegisterConfiguration(ContainerBuilder builder)
         {
+            IKeyValueConfiguration sourceConfiguration = new ReflectionKeyValueConfiguration(typeof(Bootstrapper).Assembly);
             IKeyValueConfiguration appSettingsKeyValueConfiguration = new AppSettingsKeyValueConfiguration();
-            IKeyValueConfiguration userConfiguration = new UserConfiguration.UserConfiguration(appSettingsKeyValueConfiguration);
+            IKeyValueConfiguration userConfiguration = new UserConfiguration.UserConfiguration(new ConfigurationWithFallback(appSettingsKeyValueConfiguration, sourceConfiguration));
             IKeyValueConfiguration expanded = new ExpandConfiguration(userConfiguration);
 
             builder.RegisterInstance(expanded)

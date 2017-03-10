@@ -2,7 +2,7 @@
 
 namespace Arbor.KVConfiguration.Schema.Json
 {
-    public static class JsonConstants
+    public static class JsonSchemaConstants
     {
         public const string VersionPropertyKey = "urn:arbor:kvconfiguration:schema:version";
 

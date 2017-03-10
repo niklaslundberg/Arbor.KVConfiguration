@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Collections.Specialized;
 
 using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core
 {
-    public class ExpandConfiguration : IKeyValueConfiguration
+    public sealed class ExpandConfiguration : IKeyValueConfiguration
     {
         private readonly IKeyValueConfiguration _inMemoryKeyValueConfiguration;
 
@@ -17,7 +17,7 @@ namespace Arbor.KVConfiguration.Core
                 throw new ArgumentNullException(nameof(keyValueConfiguration));
             }
 
-            var collection = new NameValueCollection(keyValueConfiguration.AllKeys.Count);
+            var collection = new NameValueCollection(keyValueConfiguration.AllKeys.Length);
 
             foreach (MultipleValuesStringPair multipleValuesStringPair in keyValueConfiguration.AllWithMultipleValues)
             {
@@ -31,11 +31,11 @@ namespace Arbor.KVConfiguration.Core
             _inMemoryKeyValueConfiguration = new InMemoryKeyValueConfiguration(collection);
         }
 
-        public IReadOnlyCollection<string> AllKeys => _inMemoryKeyValueConfiguration.AllKeys;
+        public ImmutableArray<string> AllKeys => _inMemoryKeyValueConfiguration.AllKeys;
 
-        public IReadOnlyCollection<StringPair> AllValues => _inMemoryKeyValueConfiguration.AllValues;
+        public ImmutableArray<StringPair> AllValues => _inMemoryKeyValueConfiguration.AllValues;
 
-        public IReadOnlyCollection<MultipleValuesStringPair> AllWithMultipleValues
+        public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues
             => _inMemoryKeyValueConfiguration.AllWithMultipleValues;
 
         public string this[string key] => _inMemoryKeyValueConfiguration[key];
