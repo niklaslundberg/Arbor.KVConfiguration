@@ -1,10 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.Core", "Arbor.KVConfiguration.Core\Arbor.KVConfiguration.Core.csproj", "{86C8D4E6-C68D-428E-87CC-B3B636DEB19B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.SystemConfiguration", "Arbor.KVConfiguration.SystemConfiguration\Arbor.KVConfiguration.SystemConfiguration.csproj", "{4D295C1B-59A2-4885-BD04-29FBF42566BD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.JsonConfiguration", "Arbor.KVConfiguration.JsonConfiguration\Arbor.KVConfiguration.JsonConfiguration.csproj", "{93AFFC22-2EAC-43B6-82F6-4CDE18AFD37F}"
@@ -44,16 +42,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.Sampl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.Urns", "Arbor.KVConfiguration.Urns\Arbor.KVConfiguration.Urns.csproj", "{3B57043B-09B5-4094-AF1C-28E49462B482}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.Core", "Arbor.KVConfiguration.Core\Arbor.KVConfiguration.Core.csproj", "{2F4A010F-702D-4268-97FD-DF6C31FEC41E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{86C8D4E6-C68D-428E-87CC-B3B636DEB19B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{86C8D4E6-C68D-428E-87CC-B3B636DEB19B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{86C8D4E6-C68D-428E-87CC-B3B636DEB19B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{86C8D4E6-C68D-428E-87CC-B3B636DEB19B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4D295C1B-59A2-4885-BD04-29FBF42566BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4D295C1B-59A2-4885-BD04-29FBF42566BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D295C1B-59A2-4885-BD04-29FBF42566BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -94,6 +90,10 @@ Global
 		{3B57043B-09B5-4094-AF1C-28E49462B482}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B57043B-09B5-4094-AF1C-28E49462B482}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B57043B-09B5-4094-AF1C-28E49462B482}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F4A010F-702D-4268-97FD-DF6C31FEC41E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F4A010F-702D-4268-97FD-DF6C31FEC41E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F4A010F-702D-4268-97FD-DF6C31FEC41E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F4A010F-702D-4268-97FD-DF6C31FEC41E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
