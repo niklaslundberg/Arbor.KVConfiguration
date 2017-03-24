@@ -1,0 +1,27 @@
+using System;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+
+namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
+{
+    public static class OptionsServiceCollectionExtensions
+    {
+        /// <summary>
+        /// Adds services required for using options.
+        /// </summary>
+        /// <param name="services">The <see cref="IServiceCollection"/> to add the services to.</param>
+        /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
+        public static IServiceCollection AddKeyValueOptions(this IServiceCollection services)
+        {
+            if (services == null)
+            {
+                throw new ArgumentNullException(nameof(services));
+            }
+
+
+            services.TryAdd(ServiceDescriptor.Singleton(typeof(IConfigureConfigurationValue<>),
+                typeof(ConfigureFromConfigurationOptions<>)));
+            return services;
+        }
+    }
+}

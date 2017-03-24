@@ -11,7 +11,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Arbor.KVConfiguration.Tests.Unit</RootNamespace>
     <AssemblyName>Arbor.KVConfiguration.Tests.Unit</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -127,7 +127,7 @@
       <Name>Arbor.KVConfiguration.Schema</Name>
     </ProjectReference>
     <ProjectReference Include="..\Arbor.KVConfiguration.Urns\Arbor.KVConfiguration.Urns.csproj">
-      <Project>{3b57043b-09b5-4094-af1c-28e49462b482}</Project>
+      <Project>{0b8054d4-d1d9-4e1a-b34e-6df79edaa79f}</Project>
       <Name>Arbor.KVConfiguration.Urns</Name>
     </ProjectReference>
   </ItemGroup>

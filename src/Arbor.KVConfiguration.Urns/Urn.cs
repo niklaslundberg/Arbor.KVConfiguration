@@ -91,7 +91,7 @@ namespace Arbor.KVConfiguration.Urns
             {
                 return true;
             }
-            return string.Equals(OriginalValue, other.OriginalValue, StringComparison.InvariantCultureIgnoreCase);
+            return string.Equals(OriginalValue, other.OriginalValue, StringComparison.OrdinalIgnoreCase);
         }
 
         public override bool Equals(object obj)
@@ -113,7 +113,7 @@ namespace Arbor.KVConfiguration.Urns
 
         public override int GetHashCode()
         {
-            return OriginalValue != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(OriginalValue) : 0;
+            return OriginalValue != null ? StringComparer.OrdinalIgnoreCase.GetHashCode(OriginalValue) : 0;
         }
 
         public static bool operator ==(Urn left, Urn right)
