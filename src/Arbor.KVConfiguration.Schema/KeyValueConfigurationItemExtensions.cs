@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-
 using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Schema
@@ -21,18 +20,18 @@ namespace Arbor.KVConfiguration.Schema
 
             string[] uniqueKeys = keyValueConfigurationItems.Select(item => item.Key).Distinct().ToArray();
 
-            KeyValueConfigurationItem[] ordered = keyValueConfigurationItems.Where(_ => _.ConfigurationMetadata != null).ToArray();
+            KeyValueConfigurationItem[] ordered = keyValueConfigurationItems.Where(_ => _.ConfigurationMetadata != null)
+                .ToArray();
 
             ImmutableArray<KeyMetadata> readOnlyKeyMetadata =
                 uniqueKeys.Select(
-                    key => new
-                               {
-                                   key,
-                                   found = ordered.FirstOrDefault()
-                               })
+                        key => new
+                        {
+                            key,
+                            found = ordered.FirstOrDefault()
+                        })
                     .Select(item => new KeyMetadata(item.key, item.found.ConfigurationMetadata))
                     .ToImmutableArray();
-
 
             return readOnlyKeyMetadata;
         }

@@ -1,15 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Dynamic;
 using System.Linq;
 using System.Reflection;
-
 using Arbor.KVConfiguration.Core;
-
 using JetBrains.Annotations;
-
 using Newtonsoft.Json;
-using System.Collections.Immutable;
 
 namespace Arbor.KVConfiguration.Urns
 {
@@ -18,7 +15,7 @@ namespace Arbor.KVConfiguration.Urns
         public static T GetInstance<T>(
             [NotNull] this IKeyValueConfiguration keyValueConfiguration)
         {
-            var instances = GetInstances<T>(keyValueConfiguration);
+            ImmutableArray<T> instances = GetInstances<T>(keyValueConfiguration);
 
             if (instances.Length > 1)
             {
@@ -32,7 +29,6 @@ namespace Arbor.KVConfiguration.Urns
 
             return instances.Single();
         }
-
 
         public static ImmutableArray<T> GetInstances<T>(
             [NotNull] this IKeyValueConfiguration keyValueConfiguration)
@@ -61,7 +57,7 @@ namespace Arbor.KVConfiguration.Urns
                     .Select(key => new Urn(key))
                     .Where(
                         urn =>
-                        urn.OriginalValue.StartsWith(urn.OriginalValue, StringComparison.OrdinalIgnoreCase))
+                            urn.OriginalValue.StartsWith(urn.OriginalValue, StringComparison.OrdinalIgnoreCase))
                     .Where(key => key.NamespaceParts() == expectedParts)
                     .ToLookup(urn => urn.Parent, urn => urn).ToArray();
 
@@ -83,9 +79,9 @@ namespace Arbor.KVConfiguration.Urns
                     keyValueConfiguration.AllWithMultipleValues
                         .Where(
                             multipleValuesStringPair =>
-                            multipleValuesStringPair.Key.Equals(
-                                urn.OriginalValue,
-                                StringComparison.OrdinalIgnoreCase))
+                                multipleValuesStringPair.Key.Equals(
+                                    urn.OriginalValue,
+                                    StringComparison.OrdinalIgnoreCase))
                         .SelectMany(s => s.Values)
                         .ToArray();
 

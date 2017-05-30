@@ -54,7 +54,7 @@ namespace Arbor.KVConfiguration.Schema
         public bool AllowMultipleValues { get; }
         public string KeyType { get; }
 
-        public Type ContainingClass { get; private set; }
+        public Type ContainingClass { get; }
 
         public string DefaultValue { get; }
 

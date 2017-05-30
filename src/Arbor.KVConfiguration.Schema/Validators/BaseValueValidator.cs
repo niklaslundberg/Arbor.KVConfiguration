@@ -5,7 +5,6 @@ namespace Arbor.KVConfiguration.Schema.Validators
 {
     public abstract class BaseValueValidator : IValueValidator
     {
-        protected abstract IEnumerable<ValidationError> DoValidate(string type, string value);
         public abstract bool CanValidate(string type);
 
         public IEnumerable<ValidationError> Validate(string type, string value)
@@ -18,5 +17,7 @@ namespace Arbor.KVConfiguration.Schema.Validators
 
             return DoValidate(type, value);
         }
+
+        protected abstract IEnumerable<ValidationError> DoValidate(string type, string value);
     }
 }

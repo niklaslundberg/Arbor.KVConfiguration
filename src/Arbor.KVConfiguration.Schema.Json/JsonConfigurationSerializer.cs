@@ -1,8 +1,7 @@
 ﻿using System;
-using static System.String;
-
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using static System.String;
 
 namespace Arbor.KVConfiguration.Schema.Json
 {
@@ -25,10 +24,10 @@ namespace Arbor.KVConfiguration.Schema.Json
             string json = JsonConvert.SerializeObject(
                 configurationItems,
                 new JsonSerializerSettings
-                    {
-                        Formatting = Formatting.Indented,
-                        ContractResolver = new CamelCasePropertyNamesContractResolver()
-                    });
+                {
+                    Formatting = Formatting.Indented,
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                });
 
             return json;
         }

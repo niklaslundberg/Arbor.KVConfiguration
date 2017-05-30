@@ -9,8 +9,8 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
     {
         protected static Urns.Urn urn;
 
-        It should_have_original_value = () => urn.OriginalValue.ShouldNotBeEmpty();
+        private It should_have_original_value = () => urn.OriginalValue.ShouldNotBeEmpty();
 
-        It should_not_have_a_parent = () => Catch.Exception(() => urn.Parent).ShouldNotBeNull();
+        private It should_not_have_a_parent = () => Catch.Exception(() => urn.Parent).ShouldNotBeNull();
     }
 }

@@ -1,12 +1,14 @@
 ﻿using System;
-
 using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Schema
 {
     public struct KeyValueConfigurationItem
     {
-        public KeyValueConfigurationItem([NotNull] string key, [CanBeNull] string value, [CanBeNull] ConfigurationMetadata configurationMetadata)
+        public KeyValueConfigurationItem(
+            [NotNull] string key,
+            [CanBeNull] string value,
+            [CanBeNull] ConfigurationMetadata configurationMetadata)
         {
             Key = key ?? throw new ArgumentNullException(nameof(key));
             Value = value;

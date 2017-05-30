@@ -1,4 +1,5 @@
 using System;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -11,14 +12,21 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
         /// Adds services required for using options.
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection"/> to add the services to.</param>
+        /// <param name="configuration"></param>
         /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
-        public static IServiceCollection AddKeyValueOptions(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddKeyValueOptions(
+            this IServiceCollection services,
+            [NotNull] IConfiguration configuration)
         {
             if (services == null)
             {
                 throw new ArgumentNullException(nameof(services));
             }
 
+            if (configuration == null)
+            {
+                throw new ArgumentNullException(nameof(configuration));
+            }
 
             services.TryAdd(ServiceDescriptor.Singleton(typeof(IConfigureConfigurationValue<>),
                 typeof(ConfigureFromConfigurationOptions<>)));
@@ -26,7 +34,7 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
             services.TryAdd(ServiceDescriptor.Singleton(typeof(IConfigurationValue<>),
                 typeof(UrnOpenGenericsManager<>)));
 
-            services.TryAddSingleton<IConfiguration>(configuration);
+            services.TryAddSingleton(configuration);
             return services;
         }
     }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Collections.Specialized;
 using System.Linq;
@@ -14,7 +15,8 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
         {
             var nameValueCollection = new NameValueCollection();
 
-            foreach (var configurationSection in config.AsEnumerable().Where(pair => !string.IsNullOrWhiteSpace(pair.Key) && !string.IsNullOrWhiteSpace(pair.Value)))
+            foreach (KeyValuePair<string, string> configurationSection in config.AsEnumerable()
+                .Where(pair => !string.IsNullOrWhiteSpace(pair.Key) && !string.IsNullOrWhiteSpace(pair.Value)))
             {
                 nameValueCollection.Add(configurationSection.Key, configurationSection.Value);
             }

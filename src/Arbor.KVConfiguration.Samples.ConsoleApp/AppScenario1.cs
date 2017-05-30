@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.SystemConfiguration;
 
@@ -15,11 +14,12 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
 
             KeyValueConfigurationManager.Initialize(appSettingsKeyValueConfiguration);
 
-            var goodKeys = new List<string> {
-                                   "a-non-existing-key",
-                                   "urn:test:key",
-                                   "urn:TEST:key"
-                               };
+            var goodKeys = new List<string>
+            {
+                "a-non-existing-key",
+                "urn:test:key",
+                "urn:TEST:key"
+            };
 
             Dictionary<string, string> keys = Specials.Special;
 

@@ -11,33 +11,36 @@ namespace Arbor.KVConfiguration.Tests.Unit
     [Subject(typeof(ConfigurationValidator))]
     public class when_validating_a_valid_required_value_from_source_with_defaults
     {
-        static ConfigurationValidator configuration_validator;
+        private static ConfigurationValidator configuration_validator;
 
-        static IKeyValueConfiguration configuration;
+        private static IKeyValueConfiguration configuration;
 
-        static KeyValueConfigurationValidationSummary summary;
+        private static KeyValueConfigurationValidationSummary summary;
 
-        static ImmutableArray<KeyMetadata> metdata;
+        private static ImmutableArray<KeyMetadata> metdata;
 
-        Establish context = () =>
+        private Establish context = () =>
         {
             configuration_validator = new ConfigurationValidator();
             configuration =
-                new Core.InMemoryKeyValueConfiguration(new NameValueCollection()
+                new Core.InMemoryKeyValueConfiguration(new NameValueCollection
                 {
-                    {"urn:a:dummy:key:field:constant:urn-value", "a-required-value-fulfilled"}
+                    { "urn:a:dummy:key:field:constant:urn-value", "a-required-value-fulfilled" }
                 });
 
             ImmutableArray<KeyValueConfigurationItem> configurationItems =
-                new ReflectionConfiguratonReader().ReadConfiguration(typeof(when_validating_a_valid_required_value_from_source).Assembly);
+                new ReflectionConfiguratonReader().ReadConfiguration(
+                    typeof(when_validating_a_valid_required_value_from_source).Assembly);
 
             metdata = configurationItems.GetMetadata();
-
         };
 
-        Because of = () => { summary = configuration.AllWithMultipleValues.Validate(configuration_validator, metdata); };
+        private Because of = () =>
+        {
+            summary = configuration.AllWithMultipleValues.Validate(configuration_validator, metdata);
+        };
 
-        It should_have_no_validation_errors = () =>
+        private It should_have_no_validation_errors = () =>
         {
             Console.WriteLine(summary.Print());
 

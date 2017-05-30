@@ -11,42 +11,46 @@ namespace Arbor.KVConfiguration.Tests.Unit
     [Subject(typeof(ConfigurationValidator))]
     public class when_validating_a_urn_as_urn
     {
-        static ConfigurationValidator configuration_validator;
+        private static ConfigurationValidator configuration_validator;
 
-        static JsonKeyValueConfiguration configuration;
+        private static JsonKeyValueConfiguration configuration;
 
-        static KeyValueConfigurationValidationSummary summary;
+        private static KeyValueConfigurationValidationSummary summary;
 
-        static ImmutableArray<KeyMetadata> metdata;
+        private static ImmutableArray<KeyMetadata> metdata;
 
-        Establish context = () => {
-                                      configuration_validator = new ConfigurationValidator();
+        private Establish context = () =>
+        {
+            configuration_validator = new ConfigurationValidator();
 
-                                      var configurationItems = new List<KeyValueConfigurationItem>
-                                                                   {
-                                                                       new KeyValueConfigurationItem(
-                                                                           key: "abc",
-                                                                           value: "urn:xyz",
-                                                                           configurationMetadata:
-                                                                           new ConfigurationMetadata(
-                                                                           key: "abc",
-                                                                           valueType: "urn",
-                                                                           isRequired: false))
-                                                                   };
+            var configurationItems = new List<KeyValueConfigurationItem>
+            {
+                new KeyValueConfigurationItem(
+                    "abc",
+                    "urn:xyz",
+                    new ConfigurationMetadata(
+                        "abc",
+                        "urn",
+                        isRequired: false))
+            };
 
-                                      metdata = configurationItems.GetMetadata();
+            metdata = configurationItems.GetMetadata();
 
-                                      configuration = new JsonKeyValueConfiguration(configurationItems);
+            configuration = new JsonKeyValueConfiguration(configurationItems);
         };
 
-        Because of = () => { summary = configuration.AllWithMultipleValues.Validate(configuration_validator, metdata); };
+        private Because of = () =>
+        {
+            summary = configuration.AllWithMultipleValues.Validate(configuration_validator, metdata);
+        };
 
-        It should_have_no_validation_errors = () => {
-                                                        Console.WriteLine(configuration.AllWithMultipleValues.Print());
+        private It should_have_no_validation_errors = () =>
+        {
+            Console.WriteLine(configuration.AllWithMultipleValues.Print());
 
-                                                        Console.WriteLine(summary.Print());
+            Console.WriteLine(summary.Print());
 
-                                                        summary.IsValid.ShouldBeTrue();
+            summary.IsValid.ShouldBeTrue();
         };
     }
 }

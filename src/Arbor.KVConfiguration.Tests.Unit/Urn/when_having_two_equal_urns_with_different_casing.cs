@@ -11,14 +11,14 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 
         protected static Urns.Urn urn2;
 
-        Establish context = () =>
+        private Establish context = () =>
         {
             urn1 = new Urns.Urn("urn:abc");
             urn2 = new Urns.Urn("URN:ABC");
         };
 
-        Because of = () => { };
+        private Because of = () => { };
 
-        Behaves_like<two_equal_urns> two_equal_urns;
+        private Behaves_like<two_equal_urns> two_equal_urns;
     }
 }

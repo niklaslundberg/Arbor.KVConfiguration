@@ -18,7 +18,9 @@ namespace Arbor.KVConfiguration.Core
                 throw new ArgumentNullException(nameof(nameValueCollection));
             }
 
-            _keyValueDictionary = new Dictionary<string, ImmutableArray<string>>(nameValueCollection.Count + 1, StringComparer.OrdinalIgnoreCase);
+            _keyValueDictionary =
+                new Dictionary<string, ImmutableArray<string>>(nameValueCollection.Count + 1,
+                    StringComparer.OrdinalIgnoreCase);
 
             ImmutableArray<string> keys = nameValueCollection.AllKeys.ToImmutableArray();
 
@@ -46,10 +48,7 @@ namespace Arbor.KVConfiguration.Core
 
         public ImmutableArray<StringPair> AllValues
         {
-            get
-            {
-                return AllKeys.Select(key => new StringPair(key, GetCombinedValues(key))).ToImmutableArray();
-            }
+            get { return AllKeys.Select(key => new StringPair(key, GetCombinedValues(key))).ToImmutableArray(); }
         }
 
         public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues

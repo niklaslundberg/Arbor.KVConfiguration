@@ -1,9 +1,8 @@
 using System;
+using System.Collections.Immutable;
 using System.IO;
-
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.JsonConfiguration;
-using System.Collections.Immutable;
 
 namespace Arbor.KVConfiguration.UserConfiguration
 {
@@ -35,7 +34,8 @@ namespace Arbor.KVConfiguration.UserConfiguration
 
                 if (parentName.Equals("bin"))
                 {
-                    string projectDirectoryFullDirectoryPath = fileInfo.Directory?.Parent?.Parent?.FullName ?? string.Empty;
+                    string projectDirectoryFullDirectoryPath =
+                        fileInfo.Directory?.Parent?.Parent?.FullName ?? string.Empty;
 
                     if (!string.IsNullOrWhiteSpace(projectDirectoryFullDirectoryPath))
                     {

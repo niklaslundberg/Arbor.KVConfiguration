@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
-using System.Collections.Immutable;
 
 namespace Arbor.KVConfiguration.Schema
 {
@@ -45,7 +45,8 @@ namespace Arbor.KVConfiguration.Schema
             ImmutableArray<ConfigurationMetadata> metadata = configurationMetadataFields
                 .Select(
                     pair =>
-                        new ConfigurationMetadata(pair.Field.GetRawConstantValue() as string ?? "INVALID_VALUE_NOT_A_STRING",
+                        new ConfigurationMetadata(pair.Field.GetRawConstantValue() as string ??
+                                                  "INVALID_VALUE_NOT_A_STRING",
                             pair.Attribute.ValueType,
                             pair.Field.Name,
                             pair.Attribute.Description,

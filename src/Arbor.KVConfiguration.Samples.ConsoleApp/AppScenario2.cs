@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
-
 using Arbor.KVConfiguration.Core;
 
 namespace Arbor.KVConfiguration.Samples.ConsoleApp
@@ -13,29 +12,29 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
         public void Execute()
         {
             var collection = new NameValueCollection
-                                 {
-                                     { string.Empty, string.Empty },
-                                     { null, null },
-                                     { null, string.Empty },
-                                     { string.Empty, null },
-                                     { "\t", "\t" },
-                                     { "urn:test:key", "a-test-value" },
-                                     { "urn:test:KEY", "second-test-value" },
-                                     { "urn:another-key", "another-test-value" }
-                                 };
+            {
+                { string.Empty, string.Empty },
+                { null, null },
+                { null, string.Empty },
+                { string.Empty, null },
+                { "\t", "\t" },
+                { "urn:test:key", "a-test-value" },
+                { "urn:test:KEY", "second-test-value" },
+                { "urn:another-key", "another-test-value" }
+            };
 
             IKeyValueConfiguration appSettingsKeyValueConfiguration = new InMemoryKeyValueConfiguration(collection);
 
             KeyValueConfigurationManager.Initialize(appSettingsKeyValueConfiguration);
 
             var goodKeys = new List<string>
-                               {
-                                   "a-non-existing-key",
-                                   "urn:test:key",
-                                   "urn:TEST:key",
-                                   "urn:test:KEY",
-                                   "urn:another-key"
-                               };
+            {
+                "a-non-existing-key",
+                "urn:test:key",
+                "urn:TEST:key",
+                "urn:test:KEY",
+                "urn:another-key"
+            };
 
             List<KeyValuePair<string, string>> keys = Specials.Special.ToList();
             keys.AddRange(goodKeys.Select(goodKey => new KeyValuePair<string, string>(goodKey, goodKey)));

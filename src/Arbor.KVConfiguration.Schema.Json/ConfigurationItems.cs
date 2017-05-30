@@ -13,7 +13,11 @@ namespace Arbor.KVConfiguration.Schema.Json
         }
 
         [JsonProperty(Order = 0, PropertyName = JsonSchemaConstants.VersionPropertyKey)]
-        public string Version { [UsedImplicitly] get; }
+        public string Version
+        {
+            [UsedImplicitly]
+            get;
+        }
 
         [JsonProperty(Order = 1)]
         public ImmutableArray<KeyValue> Keys { get; }

@@ -1,14 +1,15 @@
 ﻿using System;
-
 using JetBrains.Annotations;
-
 using Newtonsoft.Json;
 
 namespace Arbor.KVConfiguration.Schema.Json
 {
     public class KeyValue
     {
-        public KeyValue([NotNull] string key, [CanBeNull] string value, [CanBeNull] ConfigurationMetadata configurationMetadata)
+        public KeyValue(
+            [NotNull] string key,
+            [CanBeNull] string value,
+            [CanBeNull] ConfigurationMetadata configurationMetadata)
         {
             if (string.IsNullOrWhiteSpace(key))
             {

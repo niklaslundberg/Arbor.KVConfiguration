@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Schema
 {
-    [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Field)]
     public class MetadataAttribute : Attribute
     {
         public MetadataAttribute(
@@ -51,7 +51,6 @@ namespace Arbor.KVConfiguration.Schema
         public ImmutableArray<string> Examples { get; }
 
         public bool IsRequired { get; }
-
 
         public string MemberName { get; }
 

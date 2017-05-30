@@ -1,5 +1,4 @@
 ﻿using Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns;
-using Arbor.KVConfiguration.Urns;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Arbor.KVConfiguration.Samples.AspNetCore.Controllers

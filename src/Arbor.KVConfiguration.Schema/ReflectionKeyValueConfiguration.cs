@@ -18,7 +18,8 @@ namespace Arbor.KVConfiguration.Schema
                 throw new ArgumentNullException(nameof(assembly));
             }
 
-            ImmutableArray<KeyValueConfigurationItem> keyValueConfigurationItems = new ReflectionConfiguratonReader().ReadConfiguration(assembly);
+            ImmutableArray<KeyValueConfigurationItem> keyValueConfigurationItems =
+                new ReflectionConfiguratonReader().ReadConfiguration(assembly);
 
             var nameValueCollection = new NameValueCollection();
 
@@ -29,6 +30,7 @@ namespace Arbor.KVConfiguration.Schema
 
             _inMemoryKeyValueConfiguration = new InMemoryKeyValueConfiguration(nameValueCollection);
         }
+
         public ImmutableArray<string> AllKeys => _inMemoryKeyValueConfiguration.AllKeys;
 
         public ImmutableArray<StringPair> AllValues => _inMemoryKeyValueConfiguration.AllValues;

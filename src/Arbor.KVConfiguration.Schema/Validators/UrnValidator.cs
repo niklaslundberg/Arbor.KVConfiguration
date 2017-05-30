@@ -28,7 +28,6 @@ namespace Arbor.KVConfiguration.Schema.Validators
                     yield return new ValidationError("Invalid URN but valid URI");
                 }
             }
-
         }
     }
 }

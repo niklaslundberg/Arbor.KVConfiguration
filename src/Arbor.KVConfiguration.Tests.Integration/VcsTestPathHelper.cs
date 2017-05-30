@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-
 using Arbor.Aesculus.Core;
 
 namespace Arbor.KVConfiguration.Tests.Integration
@@ -18,7 +17,8 @@ namespace Arbor.KVConfiguration.Tests.Integration
                 Type ncrunchType =
                     ncrunchAssembly.GetTypes()
                         .FirstOrDefault(
-                            type => type.Name.Equals("NCrunchEnvironment", StringComparison.InvariantCultureIgnoreCase));
+                            type => type.Name.Equals("NCrunchEnvironment",
+                                StringComparison.InvariantCultureIgnoreCase));
 
                 MethodInfo method = ncrunchType?.GetMethod("GetOriginalSolutionPath");
 

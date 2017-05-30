@@ -2,7 +2,7 @@ using System;
 
 namespace Arbor.KVConfiguration.Urns
 {
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     public class UrnAttribute : Attribute
     {
         public UrnAttribute(string urn)

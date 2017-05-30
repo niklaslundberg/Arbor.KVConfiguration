@@ -15,14 +15,17 @@ namespace Arbor.KVConfiguration.Core
             [NotNull] IKeyValueConfiguration primaryConfiguration,
             [NotNull] IKeyValueConfiguration fallbackConfiguration)
         {
-            _primaryConfiguration = primaryConfiguration ?? throw new ArgumentNullException(nameof(primaryConfiguration));
-            _fallbackConfiguration = fallbackConfiguration ?? throw new ArgumentNullException(nameof(fallbackConfiguration));
+            _primaryConfiguration = primaryConfiguration ??
+                                    throw new ArgumentNullException(nameof(primaryConfiguration));
+            _fallbackConfiguration = fallbackConfiguration ??
+                                     throw new ArgumentNullException(nameof(fallbackConfiguration));
         }
 
         public ImmutableArray<string> AllKeys
             => _primaryConfiguration.AllKeys.Union(_fallbackConfiguration.AllKeys).Distinct().ToImmutableArray();
 
-        public ImmutableArray<StringPair> AllValues => AllKeys.Select(key => new StringPair(key, GetValue(key))).ToImmutableArray();
+        public ImmutableArray<StringPair> AllValues => AllKeys.Select(key => new StringPair(key, GetValue(key)))
+            .ToImmutableArray();
 
         public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues
         {
@@ -31,8 +34,8 @@ namespace Arbor.KVConfiguration.Core
                 ImmutableArray<MultipleValuesStringPair> fallbackOnly =
                     _fallbackConfiguration.AllWithMultipleValues
                         .Where(pair =>
-                                !_primaryConfiguration.AllKeys.Contains(pair.Key, StringComparer.OrdinalIgnoreCase))
-                                .ToImmutableArray();
+                            !_primaryConfiguration.AllKeys.Contains(pair.Key, StringComparer.OrdinalIgnoreCase))
+                        .ToImmutableArray();
 
                 return _primaryConfiguration.AllWithMultipleValues.Concat(fallbackOnly).ToImmutableArray();
             }

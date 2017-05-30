@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Immutable;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Schema;
 using Newtonsoft.Json;
-using System.Collections.Immutable;
 
 namespace Arbor.KVConfiguration.Samples.ConsoleApp
 {
@@ -10,7 +10,8 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
     {
         public void Execute()
         {
-            KeyValueConfigurationManager.Initialize(new ReflectionKeyValueConfiguration(typeof(SampleConfigurationConstants).Assembly));
+            KeyValueConfigurationManager.Initialize(
+                new ReflectionKeyValueConfiguration(typeof(SampleConfigurationConstants).Assembly));
 
             var attributeMetadataSource = new AttributeMetadataSource();
 

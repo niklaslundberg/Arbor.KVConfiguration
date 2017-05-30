@@ -40,7 +40,8 @@ namespace Arbor.KVConfiguration.Schema.Validators
 
             var validationErrors = new List<ValidationError>();
 
-            if (metadataItem.ConfigurationMetadata.IsRequired && string.IsNullOrWhiteSpace(metadataItem.ConfigurationMetadata.DefaultValue)
+            if (metadataItem.ConfigurationMetadata.IsRequired &&
+                string.IsNullOrWhiteSpace(metadataItem.ConfigurationMetadata.DefaultValue)
                 && !multipleValuesStringPair.HasNonEmptyValue)
             {
                 validationErrors.Add(new ValidationError("Required value is missing"));

@@ -7,7 +7,8 @@ namespace Arbor.KVConfiguration.Schema.Json
         public const string VersionPropertyKey = "urn:arbor:kvconfiguration:schema:version";
 
         // ReSharper disable InconsistentNaming
-        [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1310:FieldNamesMustNotContainUnderscore",
+        [SuppressMessage("StyleCop.CSharp.NamingRules",
+            "SA1310:FieldNamesMustNotContainUnderscore",
             Justification = "Reviewed. Suppression is OK here.")]
         public const string Version1_0 = "1.0";
 

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Immutable;
 using System.Configuration;
-
 using Arbor.KVConfiguration.Core;
 
 namespace Arbor.KVConfiguration.SystemConfiguration

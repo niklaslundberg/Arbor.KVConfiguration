@@ -1,7 +1,6 @@
 using System;
 using System.Text;
 using System.Web.Mvc;
-
 using Arbor.KVConfiguration.Core;
 
 namespace Arbor.KVConfiguration.Samples.Web
@@ -20,14 +19,14 @@ namespace Arbor.KVConfiguration.Samples.Web
         public ActionResult Index()
         {
             var contentResult = new ContentResult
-                                    {
-                                        Content =
-                                            string.Join(
-                                                Environment.NewLine,
-                                                _keyValueConfiguration.AllValues),
-                                        ContentEncoding = Encoding.UTF8,
-                                        ContentType = "text/plain"
-                                    };
+            {
+                Content =
+                    string.Join(
+                        Environment.NewLine,
+                        _keyValueConfiguration.AllValues),
+                ContentEncoding = Encoding.UTF8,
+                ContentType = "text/plain"
+            };
             return contentResult;
         }
     }

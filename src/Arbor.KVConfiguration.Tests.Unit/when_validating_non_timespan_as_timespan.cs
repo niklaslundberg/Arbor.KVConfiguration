@@ -8,25 +8,28 @@ using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit
 {
-    [Subject(typeof (ConfigurationValidator))]
+    [Subject(typeof(ConfigurationValidator))]
     public class when_validating_non_timespan_as_timespan
     {
-        static ConfigurationValidator configuration_validator;
+        private static ConfigurationValidator configuration_validator;
 
-        static JsonKeyValueConfiguration configuration;
+        private static JsonKeyValueConfiguration configuration;
 
-        static KeyValueConfigurationValidationSummary summary;
+        private static KeyValueConfigurationValidationSummary summary;
 
-        static ImmutableArray<KeyMetadata> metdata;
+        private static ImmutableArray<KeyMetadata> metdata;
 
-        Establish context = () =>
+        private Establish context = () =>
         {
             configuration_validator = new ConfigurationValidator();
 
             var configurationItems = new List<KeyValueConfigurationItem>
             {
-                new KeyValueConfigurationItem("abc", "xyz", new ConfigurationMetadata("abc", "timespan",
-                    isRequired: false))
+                new KeyValueConfigurationItem("abc",
+                    "xyz",
+                    new ConfigurationMetadata("abc",
+                        "timespan",
+                        isRequired: false))
             };
 
             metdata = configurationItems.GetMetadata();
@@ -34,10 +37,10 @@ namespace Arbor.KVConfiguration.Tests.Unit
             configuration = new JsonKeyValueConfiguration(configurationItems);
         };
 
-        Because of =
+        private Because of =
             () => { summary = configuration.AllWithMultipleValues.Validate(configuration_validator, metdata); };
 
-        It should_have_validation_errors = () =>
+        private It should_have_validation_errors = () =>
         {
             Console.WriteLine(configuration.AllWithMultipleValues.Print());
 

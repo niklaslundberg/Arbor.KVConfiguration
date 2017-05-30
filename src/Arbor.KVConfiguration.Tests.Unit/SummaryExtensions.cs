@@ -1,6 +1,5 @@
 using System.Linq;
 using System.Text;
-
 using Arbor.KVConfiguration.Schema;
 using Arbor.KVConfiguration.Schema.Validators;
 
@@ -32,7 +31,8 @@ namespace Arbor.KVConfiguration.Tests.Unit
                         builder.AppendLine($" * {validationError.ErrorMessage}");
                     }
 
-                    builder.AppendLine($"Value: [{string.Join(", ", keyValueConfigurationValidationResult.Values.Select(item => $"'{item}'"))}]");
+                    builder.AppendLine(
+                        $"Value: [{string.Join(", ", keyValueConfigurationValidationResult.Values.Select(item => $"'{item}'"))}]");
                 }
             }
 

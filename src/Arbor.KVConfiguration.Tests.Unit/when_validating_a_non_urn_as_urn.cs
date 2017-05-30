@@ -11,44 +11,46 @@ namespace Arbor.KVConfiguration.Tests.Unit
     [Subject(typeof(ConfigurationValidator))]
     public class when_validating_a_non_urn_as_urn
     {
-        static ConfigurationValidator configuration_validator;
+        private static ConfigurationValidator configuration_validator;
 
-        static JsonKeyValueConfiguration configuration;
+        private static JsonKeyValueConfiguration configuration;
 
-        static KeyValueConfigurationValidationSummary summary;
+        private static KeyValueConfigurationValidationSummary summary;
 
-        static ImmutableArray<KeyMetadata> metdata;
+        private static ImmutableArray<KeyMetadata> metdata;
 
-        Establish context = () =>
+        private Establish context = () =>
+        {
+            configuration_validator = new ConfigurationValidator();
+
+            var configurationItems = new List<KeyValueConfigurationItem>
             {
-                configuration_validator = new ConfigurationValidator();
-
-                var configurationItems = new List<KeyValueConfigurationItem>
-                                             {
-                                                 new KeyValueConfigurationItem(
-                                                     key: "abc",
-                                                     value: "http://example.org",
-                                                     configurationMetadata:
-                                                     new ConfigurationMetadata(
-                                                     key: "abc",
-                                                     valueType: "urn",
-                                                     isRequired: false))
-                                             };
-
-                metdata = configurationItems.GetMetadata();
-
-                configuration = new JsonKeyValueConfiguration(configurationItems);
+                new KeyValueConfigurationItem(
+                    "abc",
+                    "http://example.org",
+                    new ConfigurationMetadata(
+                        "abc",
+                        "urn",
+                        isRequired: false))
             };
 
-        Because of = () => { summary = configuration.AllWithMultipleValues.Validate(configuration_validator, metdata); };
+            metdata = configurationItems.GetMetadata();
 
-        It should_have_validation_errors = () =>
-            {
-                Console.WriteLine(configuration.AllWithMultipleValues.Print());
+            configuration = new JsonKeyValueConfiguration(configurationItems);
+        };
 
-                Console.WriteLine(summary.Print());
+        private Because of = () =>
+        {
+            summary = configuration.AllWithMultipleValues.Validate(configuration_validator, metdata);
+        };
 
-                summary.IsValid.ShouldBeFalse();
-            };
+        private It should_have_validation_errors = () =>
+        {
+            Console.WriteLine(configuration.AllWithMultipleValues.Print());
+
+            Console.WriteLine(summary.Print());
+
+            summary.IsValid.ShouldBeFalse();
+        };
     }
 }
