@@ -31,7 +31,7 @@ SET Arbor.X.ShowDefinedVariablesEnabled=false
 SET Arbor.X.Tools.External.MSBuild.Verbosity=minimal
 SET Arbor.X.NuGet.Package.AllowManifestReWriteEnabled=false
 
-SET Arbor.X.Tools.External.MSBuild.CodeAnalysis.Enabled=true
+SET Arbor.X.Tools.External.MSBuild.CodeAnalysis.Enabled=false
 
 CALL "%~dp0\Build.exe"
 
