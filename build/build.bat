@@ -49,7 +49,4 @@ SET Arbor.X.VariableOverrideEnabled=
 SET Arbor.X.Artifacts.CleanupBeforeBuildEnabled=
 SET Arbor.X.Build.NetAssembly.Configuration=
 
-SET Version.Major=
-SET Version.Minor=
-SET Version.Patch=
-SET Version.Build=
+EXIT /B %ERRORLEVEL%
