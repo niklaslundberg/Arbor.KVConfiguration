@@ -6,7 +6,8 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
     /// Configures an option instance by using ConfigurationBinder.Bind against an IConfiguration.
     /// </summary>
     /// <typeparam name="TOptions">The type of options to bind.</typeparam>
-    public class ConfigureFromConfigurationOptions<TOptions> : IConfigureConfigurationValue<TOptions> where TOptions : class
+    public class ConfigureFromConfigurationOptions<TOptions> : IConfigureConfigurationValue<TOptions>
+        where TOptions : class
     {
         private readonly IConfiguration _configuration;
 
@@ -17,7 +18,7 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
 
         public TOptions Configure()
         {
-           return  KVConfigurationBinder.Bind<TOptions>(_configuration);
+            return KeyValueConfigurationBinder.Bind<TOptions>(_configuration);
         }
     }
 }

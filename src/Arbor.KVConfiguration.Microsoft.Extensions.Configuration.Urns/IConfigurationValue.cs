@@ -1,7 +1,7 @@
 ﻿namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
 {
-    public interface IConfigurationValue<TOptions> where TOptions : class
+    public interface IConfigurationValue<out TOptions> where TOptions : class
     {
-
+        TOptions Value { get; }
     }
 }

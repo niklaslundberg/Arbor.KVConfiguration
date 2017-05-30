@@ -38,9 +38,11 @@ namespace Arbor.KVConfiguration.Core
                     }
                 }
             }
+
+            AllKeys = _keyValueDictionary.Keys.ToImmutableArray();
         }
 
-        public ImmutableArray<string> AllKeys => _keyValueDictionary.Keys.ToImmutableArray();
+        public ImmutableArray<string> AllKeys { get; }
 
         public ImmutableArray<StringPair> AllValues
         {

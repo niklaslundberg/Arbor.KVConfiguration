@@ -1,4 +1,5 @@
 using System;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -11,7 +12,7 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection"/> to add the services to.</param>
         /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
-        public static IServiceCollection AddKeyValueOptions(this IServiceCollection services)
+        public static IServiceCollection AddKeyValueOptions(this IServiceCollection services, IConfiguration configuration)
         {
             if (services == null)
             {
@@ -21,6 +22,11 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
 
             services.TryAdd(ServiceDescriptor.Singleton(typeof(IConfigureConfigurationValue<>),
                 typeof(ConfigureFromConfigurationOptions<>)));
+
+            services.TryAdd(ServiceDescriptor.Singleton(typeof(IConfigurationValue<>),
+                typeof(UrnOpenGenericsManager<>)));
+
+            services.TryAddSingleton<IConfiguration>(configuration);
             return services;
         }
     }

@@ -26,12 +26,7 @@ namespace Arbor.KVConfiguration.Schema.Validators
         [UsedImplicitly]
         public ConfigurationValidator([NotNull] IEnumerable<IValueValidator> validators)
         {
-            if (validators == null)
-            {
-                throw new ArgumentNullException(nameof(validators));
-            }
-
-            _validators = validators.ToImmutableArray();
+            _validators = validators?.ToImmutableArray() ?? throw new ArgumentNullException(nameof(validators));
         }
 
         public KeyValueConfigurationValidationResult Validate(

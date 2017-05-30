@@ -8,12 +8,7 @@ namespace Arbor.KVConfiguration.Schema
     {
         public KeyValueConfigurationItem([NotNull] string key, [CanBeNull] string value, [CanBeNull] ConfigurationMetadata configurationMetadata)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-
-            Key = key;
+            Key = key ?? throw new ArgumentNullException(nameof(key));
             Value = value;
             ConfigurationMetadata = configurationMetadata;
         }

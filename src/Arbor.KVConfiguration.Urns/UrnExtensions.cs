@@ -17,8 +17,7 @@ namespace Arbor.KVConfiguration.Urns
 
         public static bool IsUrn(this string value)
         {
-            Urn urn;
-            return Urn.TryParse(value, out urn);
+            return Urn.TryParse(value, out Urn urn);
         }
     }
 }

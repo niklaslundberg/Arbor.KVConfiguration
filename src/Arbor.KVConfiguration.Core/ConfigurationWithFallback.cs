@@ -15,18 +15,8 @@ namespace Arbor.KVConfiguration.Core
             [NotNull] IKeyValueConfiguration primaryConfiguration,
             [NotNull] IKeyValueConfiguration fallbackConfiguration)
         {
-            if (primaryConfiguration == null)
-            {
-                throw new ArgumentNullException(nameof(primaryConfiguration));
-            }
-
-            if (fallbackConfiguration == null)
-            {
-                throw new ArgumentNullException(nameof(fallbackConfiguration));
-            }
-
-            _primaryConfiguration = primaryConfiguration;
-            _fallbackConfiguration = fallbackConfiguration;
+            _primaryConfiguration = primaryConfiguration ?? throw new ArgumentNullException(nameof(primaryConfiguration));
+            _fallbackConfiguration = fallbackConfiguration ?? throw new ArgumentNullException(nameof(fallbackConfiguration));
         }
 
         public ImmutableArray<string> AllKeys

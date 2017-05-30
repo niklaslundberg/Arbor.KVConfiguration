@@ -9,12 +9,7 @@ namespace Arbor.KVConfiguration.Core
     {
         public MultipleValuesStringPair([NotNull] string key, ImmutableArray<string> values)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-
-            Key = key;
+            Key = key ?? throw new ArgumentNullException(nameof(key));
             Values = values;
             HasNonEmptyValue = values.Any(value => !string.IsNullOrWhiteSpace(value));
         }

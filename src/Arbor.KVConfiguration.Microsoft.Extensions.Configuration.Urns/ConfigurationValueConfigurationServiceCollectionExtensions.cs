@@ -29,7 +29,8 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
                 throw new ArgumentNullException(nameof(config));
             }
 
-            return services.AddSingleton<IConfigureConfigurationValue<TOptions>>(new ConfigureFromConfigurationOptions<TOptions>(config));
+            return services.AddSingleton<IConfigureConfigurationValue<TOptions>>(
+                new ConfigureFromConfigurationOptions<TOptions>(config));
         }
     }
 }

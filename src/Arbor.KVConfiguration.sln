@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+VisualStudioVersion = 15.0.26430.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.SystemConfiguration", "Arbor.KVConfiguration.SystemConfiguration\Arbor.KVConfiguration.SystemConfiguration.csproj", "{4D295C1B-59A2-4885-BD04-29FBF42566BD}"
 EndProject
@@ -45,6 +45,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns", "Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns\Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns.csproj", "{C0854317-DE02-44A0-A7C3-9EAAE8EEE845}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.Urns", "Arbor.KVConfiguration.Urns\Arbor.KVConfiguration.Urns.csproj", "{0B8054D4-D1D9-4E1A-B34E-6DF79EDAA79F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.Samples.AspNetCore", "Arbor.KVConfiguration.Samples.AspNetCore\Arbor.KVConfiguration.Samples.AspNetCore.csproj", "{A44BA046-82AB-4D52-A583-8B579C956E01}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -100,6 +102,10 @@ Global
 		{0B8054D4-D1D9-4E1A-B34E-6DF79EDAA79F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B8054D4-D1D9-4E1A-B34E-6DF79EDAA79F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B8054D4-D1D9-4E1A-B34E-6DF79EDAA79F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A44BA046-82AB-4D52-A583-8B579C956E01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A44BA046-82AB-4D52-A583-8B579C956E01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A44BA046-82AB-4D52-A583-8B579C956E01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A44BA046-82AB-4D52-A583-8B579C956E01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -109,5 +115,6 @@ Global
 		{2EC5BE65-4351-4844-A333-3F9F5D2B3823} = {D5A28CBE-A2A3-4F3A-BBF1-3B1016FE2A96}
 		{9E9CF7F4-AAE5-4B57-882C-B88C5F8BCF0E} = {615EC7DF-A967-463D-A633-A7CEB29F1502}
 		{BCE5FA21-6DF0-4F8C-B449-B164471A19D3} = {D5A28CBE-A2A3-4F3A-BBF1-3B1016FE2A96}
+		{A44BA046-82AB-4D52-A583-8B579C956E01} = {D5A28CBE-A2A3-4F3A-BBF1-3B1016FE2A96}
 	EndGlobalSection
 EndGlobal
