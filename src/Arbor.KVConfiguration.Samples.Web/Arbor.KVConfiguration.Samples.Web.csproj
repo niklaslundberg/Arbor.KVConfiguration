@@ -44,6 +44,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Arbor.KVConfiguration.Schema, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Bin\Arbor.KVConfiguration.Schema.dll</HintPath>
+    </Reference>
     <Reference Include="Autofac, Version=4.6.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.4.6.0\lib\net45\Autofac.dll</HintPath>
     </Reference>
@@ -144,10 +148,6 @@
     <ProjectReference Include="..\Arbor.KVConfiguration.Schema.Json\Arbor.KVConfiguration.Schema.Json.csproj">
       <Project>{6e2974de-e95f-4378-a1c7-b4964d0e3d73}</Project>
       <Name>Arbor.KVConfiguration.Schema.Json</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Arbor.KVConfiguration.Schema\Arbor.KVConfiguration.Schema.csproj">
-      <Project>{a1d40132-87c2-4fa3-aad5-c4514ee361ec}</Project>
-      <Name>Arbor.KVConfiguration.Schema</Name>
     </ProjectReference>
     <ProjectReference Include="..\Arbor.KVConfiguration.SystemConfiguration\Arbor.KVConfiguration.SystemConfiguration.csproj">
       <Project>{4d295c1b-59a2-4885-bd04-29fbf42566bd}</Project>

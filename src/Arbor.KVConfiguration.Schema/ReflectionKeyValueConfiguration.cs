@@ -19,7 +19,7 @@ namespace Arbor.KVConfiguration.Schema
             }
 
             ImmutableArray<KeyValueConfigurationItem> keyValueConfigurationItems =
-                new ReflectionConfiguratonReader().ReadConfiguration(assembly);
+                ReflectionConfiguratonReader.ReadConfiguration(assembly);
 
             var nameValueCollection = new NameValueCollection();
 

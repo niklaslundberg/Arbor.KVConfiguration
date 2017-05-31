@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.Syste
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.JsonConfiguration", "Arbor.KVConfiguration.JsonConfiguration\Arbor.KVConfiguration.JsonConfiguration.csproj", "{93AFFC22-2EAC-43B6-82F6-4CDE18AFD37F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.Schema", "Arbor.KVConfiguration.Schema\Arbor.KVConfiguration.Schema.csproj", "{A1D40132-87C2-4FA3-AAD5-C4514EE361EC}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.Schema.Json", "Arbor.KVConfiguration.Schema.Json\Arbor.KVConfiguration.Schema.Json.csproj", "{6E2974DE-E95F-4378-A1C7-B4964D0E3D73}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.Tests.Unit", "Arbor.KVConfiguration.Tests.Unit\Arbor.KVConfiguration.Tests.Unit.csproj", "{C28525A2-EE18-491F-9054-58237214403F}"
@@ -48,6 +46,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.Urns"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.Samples.AspNetCore", "Arbor.KVConfiguration.Samples.AspNetCore\Arbor.KVConfiguration.Samples.AspNetCore.csproj", "{A44BA046-82AB-4D52-A583-8B579C956E01}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arbor.KVConfiguration.Schema", "Arbor.KVConfiguration.Schema\Arbor.KVConfiguration.Schema.csproj", "{478302F9-508B-4F44-A259-870D5D734099}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,10 +62,6 @@ Global
 		{93AFFC22-2EAC-43B6-82F6-4CDE18AFD37F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93AFFC22-2EAC-43B6-82F6-4CDE18AFD37F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93AFFC22-2EAC-43B6-82F6-4CDE18AFD37F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A1D40132-87C2-4FA3-AAD5-C4514EE361EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A1D40132-87C2-4FA3-AAD5-C4514EE361EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A1D40132-87C2-4FA3-AAD5-C4514EE361EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A1D40132-87C2-4FA3-AAD5-C4514EE361EC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6E2974DE-E95F-4378-A1C7-B4964D0E3D73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6E2974DE-E95F-4378-A1C7-B4964D0E3D73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E2974DE-E95F-4378-A1C7-B4964D0E3D73}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -106,6 +102,10 @@ Global
 		{A44BA046-82AB-4D52-A583-8B579C956E01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A44BA046-82AB-4D52-A583-8B579C956E01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A44BA046-82AB-4D52-A583-8B579C956E01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{478302F9-508B-4F44-A259-870D5D734099}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{478302F9-508B-4F44-A259-870D5D734099}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{478302F9-508B-4F44-A259-870D5D734099}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{478302F9-508B-4F44-A259-870D5D734099}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

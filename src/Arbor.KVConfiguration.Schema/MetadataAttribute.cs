@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 namespace Arbor.KVConfiguration.Schema
 {
     [AttributeUsage(AttributeTargets.Field)]
-    public class MetadataAttribute : Attribute
+    public sealed class MetadataAttribute : Attribute
     {
         public MetadataAttribute(
             string valueType = "",

@@ -6,9 +6,9 @@ using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Schema
 {
-    public class ReflectionConfiguratonReader
+    public static class ReflectionConfiguratonReader
     {
-        public ImmutableArray<KeyValueConfigurationItem> ReadConfiguration([NotNull] Assembly assembly)
+        public static ImmutableArray<KeyValueConfigurationItem> ReadConfiguration([NotNull] Assembly assembly)
         {
             if (assembly == null)
             {
@@ -16,7 +16,7 @@ namespace Arbor.KVConfiguration.Schema
             }
 
             ImmutableArray<ConfigurationMetadata> metadataFromAssemblyTypes =
-                new AttributeMetadataSource().GetMetadataFromAssemblyTypes(assembly);
+                AttributeMetadataSource.GetMetadataFromAssemblyTypes(assembly);
 
             ImmutableArray<KeyValueConfigurationItem> configurationItems =
                 metadataFromAssemblyTypes

@@ -7,7 +7,7 @@ namespace Arbor.KVConfiguration.Schema.Validators
     {
         public override bool CanValidate(string type)
         {
-            return string.Equals("timespan", type, StringComparison.InvariantCultureIgnoreCase);
+            return string.Equals("timespan", type, StringComparison.OrdinalIgnoreCase);
         }
 
         protected override IEnumerable<ValidationError> DoValidate(string type, string value)

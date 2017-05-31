@@ -92,4 +92,7 @@
     <Rule Id="Wintellect012" Action="None" />
     <Rule Id="Wintellect013" Action="None" />
   </Rules>
+  <Rules AnalyzerId="CC" RuleNamespace="CodeCracker.CSharp">
+    <Rule Id="CC0001" Action="None" />
+  </Rules>
 </RuleSet>

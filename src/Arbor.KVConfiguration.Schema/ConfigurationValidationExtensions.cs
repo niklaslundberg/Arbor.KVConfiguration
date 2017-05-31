@@ -27,7 +27,7 @@ namespace Arbor.KVConfiguration.Schema
                 KeyMetadata metadataItem =
                     metadata.SingleOrDefault(
                         item =>
-                            item.Key.Equals(multipleValuesStringPair.Key, StringComparison.InvariantCultureIgnoreCase));
+                            item.Key.Equals(multipleValuesStringPair.Key, StringComparison.OrdinalIgnoreCase));
 
                 KeyValueConfigurationValidationResult validationResult =
                     configurationValidator.Validate(multipleValuesStringPair, metadataItem);

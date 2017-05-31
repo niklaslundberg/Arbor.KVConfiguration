@@ -15,9 +15,9 @@ namespace Arbor.KVConfiguration.Schema
                 throw new ArgumentNullException(nameof(assembly));
             }
 
-            ImmutableArray<FieldInfo> fields = assembly.GetTypes()
+            ImmutableArray<FieldInfo> fields = assembly.DefinedTypes
                 .Where(type => type.IsClass && type.IsPublic && type.IsAbstract && type.IsSealed)
-                .SelectMany(type => type.GetFields())
+                .SelectMany(type => type.DeclaredFields)
                 .Where(field => field.IsPublicConstantStringField()
                 ).ToImmutableArray();
 

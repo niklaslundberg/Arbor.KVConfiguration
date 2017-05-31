@@ -66,7 +66,7 @@
       <Name>Arbor.KVConfiguration.JsonConfiguration</Name>
     </ProjectReference>
     <ProjectReference Include="..\Arbor.KVConfiguration.Schema\Arbor.KVConfiguration.Schema.csproj">
-      <Project>{a1d40132-87c2-4fa3-aad5-c4514ee361ec}</Project>
+      <Project>{478302f9-508b-4f44-a259-870d5d734099}</Project>
       <Name>Arbor.KVConfiguration.Schema</Name>
     </ProjectReference>
   </ItemGroup>

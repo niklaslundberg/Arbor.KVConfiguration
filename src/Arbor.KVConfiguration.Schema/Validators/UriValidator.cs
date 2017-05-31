@@ -7,7 +7,7 @@ namespace Arbor.KVConfiguration.Schema.Validators
     {
         public override bool CanValidate(string type)
         {
-            return string.Equals("uri", type, StringComparison.InvariantCultureIgnoreCase);
+            return string.Equals("uri", type, StringComparison.OrdinalIgnoreCase);
         }
 
         protected override IEnumerable<ValidationError> DoValidate(string type, string value)

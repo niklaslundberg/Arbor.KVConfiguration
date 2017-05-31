@@ -6,9 +6,9 @@ using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Schema
 {
-    public class AttributeMetadataSource
+    public static class AttributeMetadataSource
     {
-        public ImmutableArray<ConfigurationMetadata> GetMetadataFromAssemblyTypes([NotNull] Assembly assembly)
+        public static ImmutableArray<ConfigurationMetadata> GetMetadataFromAssemblyTypes([NotNull] Assembly assembly)
         {
             if (assembly == null)
             {
@@ -45,7 +45,7 @@ namespace Arbor.KVConfiguration.Schema
             ImmutableArray<ConfigurationMetadata> metadata = configurationMetadataFields
                 .Select(
                     pair =>
-                        new ConfigurationMetadata(pair.Field.GetRawConstantValue() as string ??
+                        new ConfigurationMetadata(pair.Field.GetValue(null) as string ??
                                                   "INVALID_VALUE_NOT_A_STRING",
                             pair.Attribute.ValueType,
                             pair.Field.Name,

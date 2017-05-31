@@ -36,6 +36,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Arbor.KVConfiguration.Schema, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Arbor.KVConfiguration.Samples.Web\Bin\Arbor.KVConfiguration.Schema.dll</HintPath>
+    </Reference>
     <Reference Include="JetBrains.Annotations, Version=10.4.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
       <HintPath>..\packages\JetBrains.Annotations.10.4.0\lib\net\JetBrains.Annotations.dll</HintPath>
     </Reference>
@@ -78,10 +82,6 @@
     <ProjectReference Include="..\Arbor.KVConfiguration.Core\Arbor.KVConfiguration.Core.csproj">
       <Project>{2f4a010f-702d-4268-97fd-df6c31fec41e}</Project>
       <Name>Arbor.KVConfiguration.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Arbor.KVConfiguration.Schema\Arbor.KVConfiguration.Schema.csproj">
-      <Project>{A1D40132-87C2-4FA3-AAD5-C4514EE361EC}</Project>
-      <Name>Arbor.KVConfiguration.Schema</Name>
     </ProjectReference>
     <ProjectReference Include="..\Arbor.KVConfiguration.SystemConfiguration\Arbor.KVConfiguration.SystemConfiguration.csproj">
       <Project>{4D295C1B-59A2-4885-BD04-29FBF42566BD}</Project>
