@@ -27,6 +27,7 @@
     <tags></tags>
   </metadata>
   <files>
-    <file src="bin\$configuration$\Arbor.KVConfiguration.Schema.dll" target="lib\net461" />
+    <file src="bin\$configuration$\netstandard1.4\Arbor.KVConfiguration.Schema.dll" target="lib\netstandard1.4" />
+    <file src="bin\$configuration$\net461\Arbor.KVConfiguration.Schema.dll" target="lib\net461" />
   </files>
 </package>
