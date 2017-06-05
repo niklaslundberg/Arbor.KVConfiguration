@@ -7,16 +7,30 @@ namespace Arbor.KVConfiguration.Core
 {
     public struct MultipleValuesStringPair : IEquatable<MultipleValuesStringPair>
     {
+
+        private readonly ImmutableArray<string> _values;
+
         public MultipleValuesStringPair([NotNull] string key, ImmutableArray<string> values)
         {
             Key = key ?? throw new ArgumentNullException(nameof(key));
-            Values = values;
+            _values = values;
             HasNonEmptyValue = values.Any(value => !string.IsNullOrWhiteSpace(value));
         }
 
         public string Key { get; }
 
-        public ImmutableArray<string> Values { get; }
+        public ImmutableArray<string> Values
+        {
+            get
+            {
+                if (_values.IsDefault)
+                {
+                    return ImmutableArray<string>.Empty;
+                }
+
+                return _values;
+            }
+        }
 
         public bool HasNonEmptyValue { get; }
 
