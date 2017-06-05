@@ -12,11 +12,9 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
         {
             KeyValueConfigurationManager.Initialize(
                 new ReflectionKeyValueConfiguration(typeof(SampleConfigurationConstants).Assembly));
-
-            var attributeMetadataSource = new AttributeMetadataSource();
-
+            
             ImmutableArray<ConfigurationMetadata> metadataFromAssemblyTypes =
-                attributeMetadataSource.GetMetadataFromAssemblyTypes(typeof(SampleConfigurationConstants).Assembly);
+                AttributeMetadataSource.GetMetadataFromAssemblyTypes(typeof(SampleConfigurationConstants).Assembly);
 
             Console.WriteLine(JsonConvert.SerializeObject(metadataFromAssemblyTypes, Formatting.Indented));
 
