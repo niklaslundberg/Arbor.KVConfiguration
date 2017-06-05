@@ -9,16 +9,15 @@ namespace Arbor.KVConfiguration.Tests.Unit.Schema
     [Subject(typeof(AttributeMetadataSource))]
     public class when_getting_configuration_keys_from_code
     {
-        private static AttributeMetadataSource attribute_metadata_source;
         private static ImmutableArray<ConfigurationMetadata> metadata_from_assembly_types;
 
-        private Establish context = () => { attribute_metadata_source = new AttributeMetadataSource(); };
+        private Establish context = () => {  };
 
         private Because of =
             () =>
             {
                 metadata_from_assembly_types =
-                    attribute_metadata_source.GetMetadataFromAssemblyTypes(
+                    AttributeMetadataSource.GetMetadataFromAssemblyTypes(
                         typeof(when_getting_configuration_keys_from_code).Assembly);
             };
 

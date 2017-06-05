@@ -35,10 +35,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Arbor.KVConfiguration.Schema, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Arbor.KVConfiguration.Samples.Web\Bin\Arbor.KVConfiguration.Schema.dll</HintPath>
-    </Reference>
     <Reference Include="JetBrains.Annotations, Version=10.4.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
       <HintPath>..\packages\JetBrains.Annotations.10.4.0\lib\net\JetBrains.Annotations.dll</HintPath>
     </Reference>
@@ -115,26 +111,30 @@
     <Compile Include="when_validating_true_as_bool.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Arbor.KVConfiguration.Core\Arbor.KVConfiguration.Core.csproj">
       <Project>{2f4a010f-702d-4268-97fd-df6c31fec41e}</Project>
       <Name>Arbor.KVConfiguration.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Arbor.KVConfiguration.JsonConfiguration\Arbor.KVConfiguration.JsonConfiguration.csproj">
-      <Project>{93AFFC22-2EAC-43B6-82F6-4CDE18AFD37F}</Project>
+      <Project>{93affc22-2eac-43b6-82f6-4cde18afd37f}</Project>
       <Name>Arbor.KVConfiguration.JsonConfiguration</Name>
     </ProjectReference>
     <ProjectReference Include="..\Arbor.KVConfiguration.Schema.Json\Arbor.KVConfiguration.Schema.Json.csproj">
-      <Project>{6E2974DE-E95F-4378-A1C7-B4964D0E3D73}</Project>
+      <Project>{6e2974de-e95f-4378-a1c7-b4964d0e3d73}</Project>
       <Name>Arbor.KVConfiguration.Schema.Json</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Arbor.KVConfiguration.Schema\Arbor.KVConfiguration.Schema.csproj">
+      <Project>{478302f9-508b-4f44-a259-870d5d734099}</Project>
+      <Name>Arbor.KVConfiguration.Schema</Name>
     </ProjectReference>
     <ProjectReference Include="..\Arbor.KVConfiguration.Urns\Arbor.KVConfiguration.Urns.csproj">
       <Project>{0b8054d4-d1d9-4e1a-b34e-6df79edaa79f}</Project>
       <Name>Arbor.KVConfiguration.Urns</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

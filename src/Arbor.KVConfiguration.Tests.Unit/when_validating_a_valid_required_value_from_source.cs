@@ -29,7 +29,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
                 });
 
             ImmutableArray<KeyValueConfigurationItem> configurationItems =
-                new ReflectionConfiguratonReader().ReadConfiguration(
+                ReflectionConfiguratonReader.ReadConfiguration(
                     typeof(when_validating_a_valid_required_value_from_source).Assembly);
 
             metdata = configurationItems.GetMetadata();
