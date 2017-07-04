@@ -22,7 +22,7 @@ namespace Arbor.KVConfiguration.Tests.Integration
         {
             appsettings_full_path = Path.Combine(
                 VcsTestPathHelper.FindVcsRootPath(),
-                "src",
+                "test",
                 "Arbor.KVConfiguration.Tests.Integration",
                 "appsettings.json");
 
