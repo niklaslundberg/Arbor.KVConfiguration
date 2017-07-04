@@ -29,12 +29,13 @@ namespace Arbor.KVConfiguration.Samples.AspNetCore
 
             services.AddKeyValueOptions(Configuration);
             //Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
-            //    .ConfigurationValueConfigurationServiceCollectionExtensions.Configure<MySample>(services, Configuration);
+            //    .ConfigurationValueConfigurationServiceCollectionExtensions.Configure<MySampleConfiguration>(services, Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 

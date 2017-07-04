@@ -35,6 +35,10 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
                 typeof(UrnOpenGenericsManager<>)));
 
             services.TryAddSingleton(configuration);
+
+            
+
+
             return services;
         }
     }

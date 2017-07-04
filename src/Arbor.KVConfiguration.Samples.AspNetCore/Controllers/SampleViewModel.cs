@@ -2,11 +2,11 @@
 {
     public class SampleViewModel
     {
-        public SampleViewModel(MySample mySample)
+        public SampleViewModel(MySampleConfiguration mySampleConfiguration)
         {
-            MySample = mySample;
+            MySampleConfiguration = mySampleConfiguration;
         }
 
-        public MySample MySample { get; }
+        public MySampleConfiguration MySampleConfiguration { get; }
     }
 }

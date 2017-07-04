@@ -51,6 +51,7 @@ namespace Arbor.KVConfiguration.Urns
                 {
                     throw new InvalidOperationException("Could not get subNamespace from urn '" + OriginalValue + "'");
                 }
+
                 return lastOrDefault;
             }
         }
@@ -145,14 +146,17 @@ namespace Arbor.KVConfiguration.Urns
             {
                 return false;
             }
+
             if (ReferenceEquals(this, obj))
             {
                 return true;
             }
+
             if (obj.GetType() != GetType())
             {
                 return false;
             }
+
             return Equals((Urn)obj);
         }
 

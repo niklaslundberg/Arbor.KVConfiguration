@@ -5,16 +5,16 @@ namespace Arbor.KVConfiguration.Samples.AspNetCore.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly MySample _mySample;
+        private readonly MySampleConfiguration _mySampleConfiguration;
 
-        public HomeController(IConfigurationValue<MySample> mySample)
+        public HomeController(IConfigurationValue<MySampleConfiguration> mySample)
         {
-            _mySample = mySample.Value;
+            _mySampleConfiguration = mySample.Value;
         }
 
         public IActionResult Index()
         {
-            return View(new SampleViewModel(_mySample));
+            return View(new SampleViewModel(_mySampleConfiguration));
         }
 
         public IActionResult Error()

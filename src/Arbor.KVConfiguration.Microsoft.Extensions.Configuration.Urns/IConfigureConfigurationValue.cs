@@ -4,7 +4,7 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
     /// Represents something that configures the TOptions type.
     /// </summary>
     /// <typeparam name="TOptions"></typeparam>
-    public interface IConfigureConfigurationValue<TOptions> where TOptions : class
+    public interface IConfigureConfigurationValue<out TOptions> where TOptions : class
     {
         /// <summary>
         /// Invoked to configure a TOptions instance.
