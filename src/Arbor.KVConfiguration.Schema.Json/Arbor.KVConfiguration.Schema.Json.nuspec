@@ -21,7 +21,7 @@
     <licenseUrl>https://github.com/niklaslundberg/Arbor.KVConfiguration/blob/master/LICENSE.txt</licenseUrl>
     <copyright>Copyright Niklas Lundberg 2014 - 2017</copyright>
     <dependencies>
-      <dependency id="Arbor.KVConfiguration.Schema" version="[0.4.1,0.6.0)" />
+      <dependency id="Arbor.KVConfiguration.Schema" version="[0.4.1,0.7.0)" />
       <dependency id="Newtonsoft.Json" version="[6.0.0,)" />
     </dependencies>
     <references></references>

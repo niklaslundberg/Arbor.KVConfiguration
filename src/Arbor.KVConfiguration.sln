@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.12
+VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.SystemConfiguration", "Arbor.KVConfiguration.SystemConfiguration\Arbor.KVConfiguration.SystemConfiguration.csproj", "{4D295C1B-59A2-4885-BD04-29FBF42566BD}"
 EndProject
@@ -9,17 +9,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.JsonC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.Schema.Json", "Arbor.KVConfiguration.Schema.Json\Arbor.KVConfiguration.Schema.Json.csproj", "{6E2974DE-E95F-4378-A1C7-B4964D0E3D73}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.Tests.Unit", "Arbor.KVConfiguration.Tests.Unit\Arbor.KVConfiguration.Tests.Unit.csproj", "{C28525A2-EE18-491F-9054-58237214403F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.Samples.Web", "Arbor.KVConfiguration.Samples.Web\Arbor.KVConfiguration.Samples.Web.csproj", "{2EC5BE65-4351-4844-A333-3F9F5D2B3823}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.UserConfiguration", "Arbor.KVConfiguration.UserConfiguration\Arbor.KVConfiguration.UserConfiguration.csproj", "{74C44061-E904-4338-A775-AE8857A53AE8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{D5A28CBE-A2A3-4F3A-BBF1-3B1016FE2A96}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{615EC7DF-A967-463D-A633-A7CEB29F1502}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E4810AEC-9736-426D-A723-ED2E90C8DD0F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution Items", "_Solution Items", "{E4810AEC-9736-426D-A723-ED2E90C8DD0F}"
 	ProjectSection(SolutionItems) = preProject
 		..\.editorconfig = ..\.editorconfig
 		..\.gitattributes = ..\.gitattributes
@@ -34,19 +30,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{053568CA
 		..\build\build.bat = ..\build\build.bat
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.Tests.Integration", "Arbor.KVConfiguration.Tests.Integration\Arbor.KVConfiguration.Tests.Integration.csproj", "{9E9CF7F4-AAE5-4B57-882C-B88C5F8BCF0E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arbor.KVConfiguration.Core", "Arbor.KVConfiguration.Core\Arbor.KVConfiguration.Core.csproj", "{2F4A010F-702D-4268-97FD-DF6C31FEC41E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.Samples.ConsoleApp", "Arbor.KVConfiguration.Samples.ConsoleApp\Arbor.KVConfiguration.Samples.ConsoleApp.csproj", "{BCE5FA21-6DF0-4F8C-B449-B164471A19D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns", "Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns\Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns.csproj", "{C0854317-DE02-44A0-A7C3-9EAAE8EEE845}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.Core", "Arbor.KVConfiguration.Core\Arbor.KVConfiguration.Core.csproj", "{2F4A010F-702D-4268-97FD-DF6C31FEC41E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns", "Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns\Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns.csproj", "{C0854317-DE02-44A0-A7C3-9EAAE8EEE845}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.Urns", "Arbor.KVConfiguration.Urns\Arbor.KVConfiguration.Urns.csproj", "{0B8054D4-D1D9-4E1A-B34E-6DF79EDAA79F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.Samples.AspNetCore", "Arbor.KVConfiguration.Samples.AspNetCore\Arbor.KVConfiguration.Samples.AspNetCore.csproj", "{A44BA046-82AB-4D52-A583-8B579C956E01}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arbor.KVConfiguration.Urns", "Arbor.KVConfiguration.Urns\Arbor.KVConfiguration.Urns.csproj", "{0B8054D4-D1D9-4E1A-B34E-6DF79EDAA79F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arbor.KVConfiguration.Schema", "Arbor.KVConfiguration.Schema\Arbor.KVConfiguration.Schema.csproj", "{478302F9-508B-4F44-A259-870D5D734099}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{B6593404-264C-4DCA-8E3B-BAA7A13F1489}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arbor.KVConfiguration.Samples.AspNetCore", "..\samples\Arbor.KVConfiguration.Samples.AspNetCore\Arbor.KVConfiguration.Samples.AspNetCore.csproj", "{88868310-100E-4E69-9175-8DAB7362F341}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.Samples.Web", "..\samples\Arbor.KVConfiguration.Samples.Web\Arbor.KVConfiguration.Samples.Web.csproj", "{2EC5BE65-4351-4844-A333-3F9F5D2B3823}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arbor.KVConfiguration.Tests.Integration", "..\test\Arbor.KVConfiguration.Tests.Integration\Arbor.KVConfiguration.Tests.Integration.csproj", "{1674333B-1957-4B0B-80D8-1017D51D791D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arbor.KVConfiguration.Tests.Unit", "..\test\Arbor.KVConfiguration.Tests.Unit\Arbor.KVConfiguration.Tests.Unit.csproj", "{14E727FB-01F8-4B3F-889F-615FBCD20A94}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arbor.KVConfiguration.Samples.ConsoleApp", "..\samples\Arbor.KVConfiguration.Samples.ConsoleApp\Arbor.KVConfiguration.Samples.ConsoleApp.csproj", "{99112E01-CF81-41B5-8D24-AA70CCB6B808}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -66,26 +68,10 @@ Global
 		{6E2974DE-E95F-4378-A1C7-B4964D0E3D73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E2974DE-E95F-4378-A1C7-B4964D0E3D73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E2974DE-E95F-4378-A1C7-B4964D0E3D73}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C28525A2-EE18-491F-9054-58237214403F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C28525A2-EE18-491F-9054-58237214403F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C28525A2-EE18-491F-9054-58237214403F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C28525A2-EE18-491F-9054-58237214403F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2EC5BE65-4351-4844-A333-3F9F5D2B3823}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2EC5BE65-4351-4844-A333-3F9F5D2B3823}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2EC5BE65-4351-4844-A333-3F9F5D2B3823}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2EC5BE65-4351-4844-A333-3F9F5D2B3823}.Release|Any CPU.Build.0 = Release|Any CPU
 		{74C44061-E904-4338-A775-AE8857A53AE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{74C44061-E904-4338-A775-AE8857A53AE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74C44061-E904-4338-A775-AE8857A53AE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74C44061-E904-4338-A775-AE8857A53AE8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9E9CF7F4-AAE5-4B57-882C-B88C5F8BCF0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9E9CF7F4-AAE5-4B57-882C-B88C5F8BCF0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9E9CF7F4-AAE5-4B57-882C-B88C5F8BCF0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9E9CF7F4-AAE5-4B57-882C-B88C5F8BCF0E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BCE5FA21-6DF0-4F8C-B449-B164471A19D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BCE5FA21-6DF0-4F8C-B449-B164471A19D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BCE5FA21-6DF0-4F8C-B449-B164471A19D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BCE5FA21-6DF0-4F8C-B449-B164471A19D3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2F4A010F-702D-4268-97FD-DF6C31FEC41E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2F4A010F-702D-4268-97FD-DF6C31FEC41E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F4A010F-702D-4268-97FD-DF6C31FEC41E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -98,23 +84,50 @@ Global
 		{0B8054D4-D1D9-4E1A-B34E-6DF79EDAA79F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B8054D4-D1D9-4E1A-B34E-6DF79EDAA79F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B8054D4-D1D9-4E1A-B34E-6DF79EDAA79F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A44BA046-82AB-4D52-A583-8B579C956E01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A44BA046-82AB-4D52-A583-8B579C956E01}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A44BA046-82AB-4D52-A583-8B579C956E01}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A44BA046-82AB-4D52-A583-8B579C956E01}.Release|Any CPU.Build.0 = Release|Any CPU
 		{478302F9-508B-4F44-A259-870D5D734099}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{478302F9-508B-4F44-A259-870D5D734099}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{478302F9-508B-4F44-A259-870D5D734099}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{478302F9-508B-4F44-A259-870D5D734099}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88868310-100E-4E69-9175-8DAB7362F341}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88868310-100E-4E69-9175-8DAB7362F341}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88868310-100E-4E69-9175-8DAB7362F341}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88868310-100E-4E69-9175-8DAB7362F341}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EC5BE65-4351-4844-A333-3F9F5D2B3823}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EC5BE65-4351-4844-A333-3F9F5D2B3823}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EC5BE65-4351-4844-A333-3F9F5D2B3823}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EC5BE65-4351-4844-A333-3F9F5D2B3823}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1674333B-1957-4B0B-80D8-1017D51D791D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1674333B-1957-4B0B-80D8-1017D51D791D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1674333B-1957-4B0B-80D8-1017D51D791D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1674333B-1957-4B0B-80D8-1017D51D791D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14E727FB-01F8-4B3F-889F-615FBCD20A94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14E727FB-01F8-4B3F-889F-615FBCD20A94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14E727FB-01F8-4B3F-889F-615FBCD20A94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14E727FB-01F8-4B3F-889F-615FBCD20A94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99112E01-CF81-41B5-8D24-AA70CCB6B808}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99112E01-CF81-41B5-8D24-AA70CCB6B808}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99112E01-CF81-41B5-8D24-AA70CCB6B808}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99112E01-CF81-41B5-8D24-AA70CCB6B808}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{C28525A2-EE18-491F-9054-58237214403F} = {615EC7DF-A967-463D-A633-A7CEB29F1502}
+		{4D295C1B-59A2-4885-BD04-29FBF42566BD} = {B6593404-264C-4DCA-8E3B-BAA7A13F1489}
+		{93AFFC22-2EAC-43B6-82F6-4CDE18AFD37F} = {B6593404-264C-4DCA-8E3B-BAA7A13F1489}
+		{6E2974DE-E95F-4378-A1C7-B4964D0E3D73} = {B6593404-264C-4DCA-8E3B-BAA7A13F1489}
+		{74C44061-E904-4338-A775-AE8857A53AE8} = {B6593404-264C-4DCA-8E3B-BAA7A13F1489}
+		{2F4A010F-702D-4268-97FD-DF6C31FEC41E} = {B6593404-264C-4DCA-8E3B-BAA7A13F1489}
+		{C0854317-DE02-44A0-A7C3-9EAAE8EEE845} = {B6593404-264C-4DCA-8E3B-BAA7A13F1489}
+		{0B8054D4-D1D9-4E1A-B34E-6DF79EDAA79F} = {B6593404-264C-4DCA-8E3B-BAA7A13F1489}
+		{478302F9-508B-4F44-A259-870D5D734099} = {B6593404-264C-4DCA-8E3B-BAA7A13F1489}
+		{88868310-100E-4E69-9175-8DAB7362F341} = {D5A28CBE-A2A3-4F3A-BBF1-3B1016FE2A96}
 		{2EC5BE65-4351-4844-A333-3F9F5D2B3823} = {D5A28CBE-A2A3-4F3A-BBF1-3B1016FE2A96}
-		{9E9CF7F4-AAE5-4B57-882C-B88C5F8BCF0E} = {615EC7DF-A967-463D-A633-A7CEB29F1502}
-		{BCE5FA21-6DF0-4F8C-B449-B164471A19D3} = {D5A28CBE-A2A3-4F3A-BBF1-3B1016FE2A96}
-		{A44BA046-82AB-4D52-A583-8B579C956E01} = {D5A28CBE-A2A3-4F3A-BBF1-3B1016FE2A96}
+		{1674333B-1957-4B0B-80D8-1017D51D791D} = {615EC7DF-A967-463D-A633-A7CEB29F1502}
+		{14E727FB-01F8-4B3F-889F-615FBCD20A94} = {615EC7DF-A967-463D-A633-A7CEB29F1502}
+		{99112E01-CF81-41B5-8D24-AA70CCB6B808} = {D5A28CBE-A2A3-4F3A-BBF1-3B1016FE2A96}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A402AF7E-9579-4861-92CB-6C4E5C33D4CF}
 	EndGlobalSection
 EndGlobal
