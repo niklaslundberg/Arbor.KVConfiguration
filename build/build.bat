@@ -18,12 +18,12 @@ SET Arbor.X.MSBuild.NuGetRestore.Enabled=true
 SET Arbor.X.NuGet.ReinstallArborPackageEnabled=true
 SET Arbor.X.NuGet.VersionUpdateEnabled=false
 SET Arbor.X.Artifacts.PdbArtifacts.Enabled=true
-SET Arbor.X.NuGet.Package.CreateNuGetWebPackages.Enabled=true
+SET Arbor.X.NuGet.Package.CreateNuGetWebPackages.Enabled=false
 
 SET Arbor.X.Build.NetAssembly.MetadataEnabled=true
 SET Arbor.X.Build.NetAssembly.Description=Key value configuration
 SET Arbor.X.Build.NetAssembly.Company=Niklas Lundberg
-SET Arbor.X.Build.NetAssembly.Copyright=© Niklas Lundberg 2014-2016
+SET Arbor.X.Build.NetAssembly.Copyright=© Niklas Lundberg 2014-2017
 SET Arbor.X.Build.NetAssembly.Trademark=Arbor.KVConfiguration
 SET Arbor.X.Build.NetAssembly.Product=Arbor.KVConfiguration
 SET Arbor.X.ShowAvailableVariablesEnabled=false
