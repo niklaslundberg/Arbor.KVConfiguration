@@ -1,4 +1,7 @@
-﻿using System.Reflection;
+﻿using System.Collections.Immutable;
+using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
 using System.Web.Mvc;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Schema;
@@ -26,17 +29,36 @@ namespace Arbor.KVConfiguration.Samples.Web
 
         private static void RegisterConfiguration(ContainerBuilder builder)
         {
-            IKeyValueConfiguration sourceConfiguration =
-                new ReflectionKeyValueConfiguration(typeof(Bootstrapper).Assembly);
-            IKeyValueConfiguration appSettingsKeyValueConfiguration = new AppSettingsKeyValueConfiguration();
-            IKeyValueConfiguration userConfiguration =
-                new UserConfiguration.UserConfiguration(
-                    new ConfigurationWithFallback(appSettingsKeyValueConfiguration, sourceConfiguration));
-            IKeyValueConfiguration expanded = new ExpandConfiguration(userConfiguration);
+            IKeyValueConfiguration keyValueConfiguration = KeyValueConfigurationManager
+                .Add(new ReflectionKeyValueConfiguration(typeof(Bootstrapper).Assembly))
+                .Add(new AppSettingsKeyValueConfiguration())
+                .Add(new UserConfiguration.UserConfiguration())
+                .DecorateWith(new ExpandKeyValueConfigurationDecorator())
+                .DecorateWith(new AddSuffixDecorator("!"))
+                .Build(message => Debug.WriteLine(message));
 
-            builder.RegisterInstance(expanded)
+            builder.RegisterInstance(keyValueConfiguration)
                 .AsImplementedInterfaces()
                 .SingleInstance();
         }
+    }
+
+
+
+    internal class AddSuffixDecorator : DecoratorBase
+    {
+        private readonly string _suffix;
+
+        public AddSuffixDecorator(string suffix)
+        {
+            _suffix = suffix;
+        }
+        
+
+        public override string GetValue(string value)
+        {
+            return $"{value}{_suffix}";
+        }
+        
     }
 }

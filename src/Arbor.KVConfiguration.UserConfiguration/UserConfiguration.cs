@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Immutable;
+using System.Collections.Specialized;
 using System.IO;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.JsonConfiguration;
@@ -12,19 +13,14 @@ namespace Arbor.KVConfiguration.UserConfiguration
 
         private readonly IKeyValueConfiguration _configuration;
 
-        public UserConfiguration(IKeyValueConfiguration fallbackConfiguration)
+        public UserConfiguration()
         {
-            if (fallbackConfiguration == null)
-            {
-                throw new ArgumentNullException(nameof(fallbackConfiguration));
-            }
-
             string fileFullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigUserFileName);
 
             if (File.Exists(fileFullPath))
             {
                 var jsonConfiguration = new JsonKeyValueConfiguration(fileFullPath);
-                _configuration = new ConfigurationWithFallback(jsonConfiguration, fallbackConfiguration);
+                _configuration = jsonConfiguration;
             }
             else
             {
@@ -46,7 +42,7 @@ namespace Arbor.KVConfiguration.UserConfiguration
                         if (File.Exists(projectDirectoryFullFilePath))
                         {
                             var jsonConfiguration = new JsonKeyValueConfiguration(projectDirectoryFullFilePath);
-                            _configuration = new ConfigurationWithFallback(jsonConfiguration, fallbackConfiguration);
+                            _configuration = jsonConfiguration;
                         }
                     }
                 }
@@ -54,7 +50,7 @@ namespace Arbor.KVConfiguration.UserConfiguration
 
             if (_configuration == null)
             {
-                _configuration = fallbackConfiguration;
+                _configuration = new InMemoryKeyValueConfiguration(new NameValueCollection());
             }
         }
 

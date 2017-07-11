@@ -7,7 +7,7 @@ namespace Arbor.KVConfiguration.Core
     {
         public static string ValueOrDefault(
             [NotNull] this IKeyValueConfiguration keyValueConfiguration,
-            [CanBeNull] string key,
+            [NotNull] string key,
             [CanBeNull] string defaultValue = "")
         {
             if (keyValueConfiguration == null)
@@ -17,7 +17,7 @@ namespace Arbor.KVConfiguration.Core
 
             if (string.IsNullOrWhiteSpace(key))
             {
-                return defaultValue;
+                throw new ArgumentNullException(nameof(key));
             }
 
             string value = keyValueConfiguration[key];

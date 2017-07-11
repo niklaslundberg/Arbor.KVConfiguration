@@ -7,6 +7,11 @@ namespace Arbor.KVConfiguration.Core.Extensions
     {
         public static ImmutableArray<T> SafeToImmutableArray<T>(this IEnumerable<T> enumerable)
         {
+            if (enumerable is ImmutableArray<T> array)
+            {
+                return array;
+            }
+
             return enumerable?.ToImmutableArray() ?? ImmutableArray<T>.Empty;
         }
     }
