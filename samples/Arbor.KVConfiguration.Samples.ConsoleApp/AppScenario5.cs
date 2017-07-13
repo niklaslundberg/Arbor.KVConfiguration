@@ -10,8 +10,7 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
     {
         public void Execute()
         {
-            KeyValueConfigurationManager.Initialize(
-                new ReflectionKeyValueConfiguration(typeof(SampleConfigurationConstants).Assembly));
+            KeyValueConfigurationManager.Add(new ReflectionKeyValueConfiguration(typeof(SampleConfigurationConstants).Assembly)).Build();
             
             ImmutableArray<ConfigurationMetadata> metadataFromAssemblyTypes =
                 AttributeMetadataSource.GetMetadataFromAssemblyTypes(typeof(SampleConfigurationConstants).Assembly);

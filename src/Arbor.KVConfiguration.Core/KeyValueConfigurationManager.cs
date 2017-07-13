@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Immutable;
 using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core
@@ -7,9 +8,9 @@ namespace Arbor.KVConfiguration.Core
     {
         private static readonly object _MutexLock = new object();
 
-        private static IKeyValueConfiguration _appSettings;
+        private static MultiSourceKeyValueConfiguration _appSettings;
 
-        public static IKeyValueConfiguration AppSettings
+        public static MultiSourceKeyValueConfiguration AppSettings
         {
             get
             {
@@ -23,7 +24,7 @@ namespace Arbor.KVConfiguration.Core
             }
         }
 
-        public static IKeyValueConfiguration Build(
+        public static MultiSourceKeyValueConfiguration Build(
             [NotNull] this AppSettingsBuilder appSettingsBuild,
             Action<string> logAction = null)
         {
@@ -31,10 +32,13 @@ namespace Arbor.KVConfiguration.Core
             {
                 throw new ArgumentNullException(nameof(appSettingsBuild));
             }
-            return new MultiSourceKeyValueConfiguration(new DecoratorDelegate(appSettingsBuild), logAction);
+
+            var multiSourceKeyValueConfiguration = new MultiSourceKeyValueConfiguration(new DecoratorDelegate(appSettingsBuild), logAction);
+
+            return Initialize(multiSourceKeyValueConfiguration, logAction);
         }
 
-        public static IKeyValueConfiguration Build(
+        public static MultiSourceKeyValueConfiguration Build(
             [NotNull] this AppSettingsDecoratorBuilder appSettingsBuild,
             Action<string> logAction = null)
         {
@@ -43,7 +47,9 @@ namespace Arbor.KVConfiguration.Core
                 throw new ArgumentNullException(nameof(appSettingsBuild));
             }
 
-            return new MultiSourceKeyValueConfiguration(appSettingsBuild, logAction);
+            var multiSourceKeyValueConfiguration = new MultiSourceKeyValueConfiguration(appSettingsBuild, logAction);
+
+            return Initialize(multiSourceKeyValueConfiguration);
         }
 
         public static AppSettingsBuilder Add([NotNull] IKeyValueConfiguration keyValueConfiguration)
@@ -107,7 +113,7 @@ namespace Arbor.KVConfiguration.Core
             return new AppSettingsDecoratorBuilder(builder, decorator);
         }
 
-        public static void Initialize([NotNull] IKeyValueConfiguration keyValueConfiguration)
+        private static MultiSourceKeyValueConfiguration Initialize([NotNull] IKeyValueConfiguration keyValueConfiguration, Action<string> logAction = null)
         {
             if (keyValueConfiguration == null)
             {
@@ -128,8 +134,20 @@ namespace Arbor.KVConfiguration.Core
                         $"The {nameof(KeyValueConfigurationManager)} is already initialized");
                 }
 
-                _appSettings = keyValueConfiguration;
+                if (keyValueConfiguration is MultiSourceKeyValueConfiguration multiSourceKeyValueConfiguration)
+                {
+                    _appSettings = multiSourceKeyValueConfiguration;
+                }
+                else
+                {
+
+                    _appSettings =
+                        new MultiSourceKeyValueConfiguration(
+                            new DecoratorDelegate(new AppSettingsBuilder(keyValueConfiguration, null)), logAction);
+                }
             }
+
+            return _appSettings;
         }
     }
 }

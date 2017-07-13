@@ -19,7 +19,7 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
 
             IKeyValueConfiguration appSettingsKeyValueConfiguration = new InMemoryKeyValueConfiguration(collection);
 
-            KeyValueConfigurationManager.Initialize(appSettingsKeyValueConfiguration);
+            KeyValueConfigurationManager.Add(appSettingsKeyValueConfiguration).Build();
 
             bool succeeded = true;
 

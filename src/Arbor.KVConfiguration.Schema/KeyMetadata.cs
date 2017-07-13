@@ -5,7 +5,7 @@ namespace Arbor.KVConfiguration.Schema
 {
     public struct KeyMetadata
     {
-        public KeyMetadata(string key, [CanBeNull] ConfigurationMetadata configurationMetadata)
+        public KeyMetadata([NotNull] string key, [CanBeNull] ConfigurationMetadata configurationMetadata)
         {
             if (string.IsNullOrWhiteSpace(key))
             {

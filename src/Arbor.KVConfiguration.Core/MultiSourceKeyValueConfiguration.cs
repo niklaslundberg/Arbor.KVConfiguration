@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using Arbor.KVConfiguration.Schema;
 using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core
 {
-    public class MultiSourceKeyValueConfiguration : IKeyValueConfiguration
+    public class MultiSourceKeyValueConfiguration : IKeyValueConfigurationWithMetadata
     {
         private readonly AppSettingsDecoratorBuilder _appSettingsDecoratorBuilder;
         private readonly Action<string> _logAction;
@@ -28,7 +29,7 @@ namespace Arbor.KVConfiguration.Core
             get
             {
                 IEnumerable<StringPair> stringPairs = AllKeys.Select(key => new StringPair(key,
-                    GetValue(_appSettingsDecoratorBuilder.AppSettingsBuilder, key, _logAction)));
+                    GetValue(_appSettingsDecoratorBuilder.AppSettingsBuilder, key, _logAction).Item2));
                 ImmutableArray<StringPair> immutableArray =
                     stringPairs.Select(pair => new StringPair(pair.Key,
                         DecorateValue(_appSettingsDecoratorBuilder, pair.Value))).ToImmutableArray();
@@ -55,7 +56,26 @@ namespace Arbor.KVConfiguration.Core
         }
 
         public string this[string key] => DecorateValue(_appSettingsDecoratorBuilder,
-            GetValue(_appSettingsDecoratorBuilder.AppSettingsBuilder, key, _logAction));
+            GetValue(_appSettingsDecoratorBuilder.AppSettingsBuilder, key, _logAction).Item2);
+
+        public ImmutableArray<KeyValueConfigurationItem> ConfigurationItems
+        {
+            get { return GetConfigurationItems(_appSettingsDecoratorBuilder.AppSettingsBuilder).ToImmutableArray(); }
+        }
+
+        public IKeyValueConfiguration ConfiguratorFor(string key, Action<string> logAction = null)
+        {
+            (IKeyValueConfiguration, string) tuple =
+                GetValue(_appSettingsDecoratorBuilder.AppSettingsBuilder, key, logAction);
+
+            if (tuple.Item1 is NoConfiguration || tuple.Item1 is null)
+            {
+                return GetConfiguratorDefining(_appSettingsDecoratorBuilder.AppSettingsBuilder, key);
+                ;
+            }
+
+            return tuple.Item1;
+        }
 
         private static string[] GetAllKeys(AppSettingsBuilder appSettingsBuilder)
         {
@@ -92,20 +112,23 @@ namespace Arbor.KVConfiguration.Core
             return decorator.Decorator.GetValue(decorated ?? value);
         }
 
-        private static string GetValue(AppSettingsBuilder appSettingsBuilder, string key, Action<string> logAction)
+        private static (IKeyValueConfiguration, string) GetValue(
+            AppSettingsBuilder appSettingsBuilder,
+            string key,
+            Action<string> logAction)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                return "";
+                return new ValueTuple<IKeyValueConfiguration, string>(new NoConfiguration(), "");
             }
 
             if (appSettingsBuilder == null)
             {
-                return "";
+                return new ValueTuple<IKeyValueConfiguration, string>(new NoConfiguration(), "");
             }
 
-            string value =
-                appSettingsBuilder.KeyValueConfiguration[key];
+            string value = appSettingsBuilder.KeyValueConfiguration[key];
+
             if (string.IsNullOrWhiteSpace(value))
             {
                 logAction?.Invoke(
@@ -117,7 +140,11 @@ namespace Arbor.KVConfiguration.Core
             logAction?.Invoke(
                 $"The current source {appSettingsBuilder.KeyValueConfiguration.GetType().Name} has a value for key '{key}': '{value}'");
 
-            return value;
+            (IKeyValueConfiguration, string) valueTuple = (appSettingsBuilder.KeyValueConfiguration, value);
+
+            logAction?.Invoke($"For key '{key}', configuration source '{valueTuple.Item1.GetType().Name}' is used");
+
+            return valueTuple;
         }
 
         private static ImmutableArray<StringPair> GetValues(
@@ -151,6 +178,21 @@ namespace Arbor.KVConfiguration.Core
             return values;
         }
 
+        private IKeyValueConfiguration GetConfiguratorDefining(AppSettingsBuilder appSettingsBuilder, string key)
+        {
+            if (appSettingsBuilder == null)
+            {
+                return new NoConfiguration();
+            }
+
+            if (appSettingsBuilder.KeyValueConfiguration.AllKeys.Contains(key, StringComparer.OrdinalIgnoreCase))
+            {
+                return appSettingsBuilder.KeyValueConfiguration;
+            }
+
+            return GetConfiguratorDefining(appSettingsBuilder.Previous, key);
+        }
+
         private ImmutableArray<MultipleValuesStringPair> GetMultipleValues(AppSettingsBuilder appSettingsBuilder)
         {
             if (appSettingsBuilder == null)
@@ -171,7 +213,7 @@ namespace Arbor.KVConfiguration.Core
 
             string FormatValue(MultipleValuesStringPair pair)
             {
-                return $"\'{pair.Key}\'{string.Join("; ", pair.Values.Select(theValue => $"'{theValue}'"))}";
+                return $"\'{pair.Key}\': [{string.Join("; ", pair.Values.Select(theValue => $"'{theValue}'"))}]";
             }
 
             string join = string.Join(", ", values.Select(FormatValue));
@@ -180,6 +222,28 @@ namespace Arbor.KVConfiguration.Core
                 $"The current source {appSettingsBuilder.KeyValueConfiguration.GetType().Name} has values: {join}");
 
             return values;
+        }
+
+        private List<KeyValueConfigurationItem> GetConfigurationItems(AppSettingsBuilder appSettingsBuilder)
+        {
+            var configurationItems = new List<KeyValueConfigurationItem>();
+
+            if (appSettingsBuilder.Previous != null)
+            {
+                configurationItems.AddRange(GetConfigurationItems(appSettingsBuilder.Previous));
+            }
+
+            if (appSettingsBuilder.KeyValueConfiguration is IKeyValueConfigurationWithMetadata
+                keyValueConfigurationWithMetadata)
+            {
+                configurationItems.AddRange(keyValueConfigurationWithMetadata.ConfigurationItems);
+            }
+            else
+            {
+                configurationItems.AddRange(appSettingsBuilder.KeyValueConfiguration.GetKeyValueConfigurationItems());
+            }
+
+            return configurationItems;
         }
     }
 }

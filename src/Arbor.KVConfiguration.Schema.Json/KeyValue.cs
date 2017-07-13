@@ -30,6 +30,7 @@ namespace Arbor.KVConfiguration.Schema.Json
         [JsonProperty(Order = 1)]
         public string Value { get; }
 
+        [UsedImplicitly]
         public bool ShouldSerializeMetadata()
         {
             return ConfigurationMetadata != null;

@@ -12,7 +12,7 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
         {
             IKeyValueConfiguration appSettingsKeyValueConfiguration = new AppSettingsKeyValueConfiguration();
 
-            KeyValueConfigurationManager.Initialize(appSettingsKeyValueConfiguration);
+            KeyValueConfigurationManager.Add(appSettingsKeyValueConfiguration).Build();
 
             var goodKeys = new List<string>
             {

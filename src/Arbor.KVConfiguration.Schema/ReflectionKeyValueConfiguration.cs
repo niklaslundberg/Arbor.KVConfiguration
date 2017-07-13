@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Schema
 {
-    public class ReflectionKeyValueConfiguration : IKeyValueConfiguration
+    public class ReflectionKeyValueConfiguration : IKeyValueConfigurationWithMetadata
     {
         private readonly IKeyValueConfiguration _inMemoryKeyValueConfiguration;
 
@@ -29,6 +29,7 @@ namespace Arbor.KVConfiguration.Schema
             }
 
             _inMemoryKeyValueConfiguration = new InMemoryKeyValueConfiguration(nameValueCollection);
+            ConfigurationItems = keyValueConfigurationItems;
         }
 
         public ImmutableArray<string> AllKeys => _inMemoryKeyValueConfiguration.AllKeys;
@@ -39,5 +40,7 @@ namespace Arbor.KVConfiguration.Schema
             => _inMemoryKeyValueConfiguration.AllWithMultipleValues;
 
         public string this[string key] => _inMemoryKeyValueConfiguration[key];
+
+        public ImmutableArray<KeyValueConfigurationItem> ConfigurationItems { get; }
     }
 }

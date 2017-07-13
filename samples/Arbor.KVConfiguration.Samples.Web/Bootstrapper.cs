@@ -1,9 +1,9 @@
-﻿using System.Collections.Immutable;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Reflection;
+using System.Web.Hosting;
 using System.Web.Mvc;
 using Arbor.KVConfiguration.Core;
+using Arbor.KVConfiguration.JsonConfiguration;
 using Arbor.KVConfiguration.Schema;
 using Arbor.KVConfiguration.SystemConfiguration;
 using Autofac;
@@ -21,29 +21,25 @@ namespace Arbor.KVConfiguration.Samples.Web
             RegisterConfiguration(builder);
             IContainer container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
-
-            var keyValueConfiguration = container.Resolve<IKeyValueConfiguration>();
-
-            KeyValueConfigurationManager.Initialize(keyValueConfiguration);
         }
 
         private static void RegisterConfiguration(ContainerBuilder builder)
         {
-            IKeyValueConfiguration keyValueConfiguration = KeyValueConfigurationManager
+            MultiSourceKeyValueConfiguration keyValueConfiguration = KeyValueConfigurationManager
                 .Add(new ReflectionKeyValueConfiguration(typeof(Bootstrapper).Assembly))
                 .Add(new AppSettingsKeyValueConfiguration())
                 .Add(new UserConfiguration.UserConfiguration())
+                .Add(new JsonKeyValueConfiguration(HostingEnvironment.MapPath("~/appsettings.json")))
                 .DecorateWith(new ExpandKeyValueConfigurationDecorator())
                 .DecorateWith(new AddSuffixDecorator("!"))
                 .Build(message => Debug.WriteLine(message));
 
             builder.RegisterInstance(keyValueConfiguration)
                 .AsImplementedInterfaces()
+                .AsSelf()
                 .SingleInstance();
         }
     }
-
-
 
     internal class AddSuffixDecorator : DecoratorBase
     {
@@ -53,12 +49,10 @@ namespace Arbor.KVConfiguration.Samples.Web
         {
             _suffix = suffix;
         }
-        
 
         public override string GetValue(string value)
         {
             return $"{value}{_suffix}";
         }
-        
     }
 }

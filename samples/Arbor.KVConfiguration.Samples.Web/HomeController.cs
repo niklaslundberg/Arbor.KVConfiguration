@@ -1,8 +1,9 @@
-using System;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using Arbor.KVConfiguration.Core;
+using Arbor.KVConfiguration.Schema;
 using Newtonsoft.Json;
 
 namespace Arbor.KVConfiguration.Samples.Web
@@ -21,14 +22,35 @@ namespace Arbor.KVConfiguration.Samples.Web
         [Route]
         public ActionResult Index()
         {
-            StringPair[] valuePerKey = _keyValueConfiguration.AllKeys.Select(key => new StringPair(key, _keyValueConfiguration[key])).ToArray();
+            StringPair[] valuePerKey = _keyValueConfiguration.AllKeys
+                .Select(key => new StringPair(key, _keyValueConfiguration[key])).ToArray();
+
+            object sourceForKey = new { };
+            ImmutableArray<KeyValueConfigurationItem> configurationItems;
+            if (_keyValueConfiguration is MultiSourceKeyValueConfiguration multiSourceKeyValueConfiguration)
+            {
+                sourceForKey = multiSourceKeyValueConfiguration.AllKeys.Select(key => new
+                {
+                    key,
+                    source = multiSourceKeyValueConfiguration
+                        .ConfiguratorFor(key).GetType().Name
+                }).ToImmutableArray();
+
+                configurationItems = multiSourceKeyValueConfiguration.ConfigurationItems;
+            }
+            else
+            {
+                configurationItems = _keyValueConfiguration.GetKeyValueConfigurationItems();
+            }
 
             var data = new
             {
                 _keyValueConfiguration.AllKeys,
                 valuePerKey,
                 _keyValueConfiguration.AllValues,
-                _keyValueConfiguration.AllWithMultipleValues
+                _keyValueConfiguration.AllWithMultipleValues,
+                ConfigurationItems = configurationItems,
+                sourceForKey
             };
 
             var contentResult = new ContentResult
