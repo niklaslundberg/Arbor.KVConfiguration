@@ -3,7 +3,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Arbor.KVConfiguration.Schema
+namespace Arbor.KVConfiguration.Core.Metadata
 {
     public static class KeyValueConfigurationItemExtensions
     {

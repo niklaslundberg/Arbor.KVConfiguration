@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using Arbor.KVConfiguration.Core.Extensions;
 using JetBrains.Annotations;
 
-namespace Arbor.KVConfiguration.Schema
+namespace Arbor.KVConfiguration.Core.Metadata
 {
     [AttributeUsage(AttributeTargets.Field)]
     public sealed class MetadataAttribute : Attribute
@@ -42,6 +42,7 @@ namespace Arbor.KVConfiguration.Schema
         }
 
         public bool AllowMultipleValues { get; }
+
         public string KeyType { get; }
 
         public string DefaultValue { get; }

@@ -2,11 +2,13 @@
 using System.Collections.Immutable;
 using System.Linq;
 using System.Reflection;
+using Arbor.KVConfiguration.Core.Extensions.ReflectionExtensions;
+using Arbor.KVConfiguration.Core.Metadata;
 using JetBrains.Annotations;
 
-namespace Arbor.KVConfiguration.Schema
+namespace Arbor.KVConfiguration.Core
 {
-    public static class ReflectionConfiguratonReader
+    internal static class ReflectionConfiguratonReader
     {
         public static ImmutableArray<KeyValueConfigurationItem> ReadConfiguration([NotNull] Assembly assembly)
         {
@@ -15,8 +17,7 @@ namespace Arbor.KVConfiguration.Schema
                 throw new ArgumentNullException(nameof(assembly));
             }
 
-            ImmutableArray<ConfigurationMetadata> metadataFromAssemblyTypes =
-                AttributeMetadataSource.GetMetadataFromAssemblyTypes(assembly);
+            ImmutableArray<ConfigurationMetadata> metadataFromAssemblyTypes = assembly.GetMetadataFromAssemblyTypes();
 
             ImmutableArray<KeyValueConfigurationItem> configurationItems =
                 metadataFromAssemblyTypes

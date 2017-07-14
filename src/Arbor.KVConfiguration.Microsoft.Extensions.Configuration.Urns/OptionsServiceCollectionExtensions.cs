@@ -36,9 +36,6 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
 
             services.TryAddSingleton(configuration);
 
-            
-
-
             return services;
         }
     }

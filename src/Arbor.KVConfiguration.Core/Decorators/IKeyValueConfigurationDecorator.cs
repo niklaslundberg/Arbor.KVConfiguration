@@ -1,7 +1,7 @@
 ﻿using System.Collections.Immutable;
 using JetBrains.Annotations;
 
-namespace Arbor.KVConfiguration.Core
+namespace Arbor.KVConfiguration.Core.Decorators
 {
     public interface IKeyValueConfigurationDecorator
     {

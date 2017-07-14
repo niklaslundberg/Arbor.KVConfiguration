@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Immutable;
 using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Schema.Validators
@@ -7,6 +7,6 @@ namespace Arbor.KVConfiguration.Schema.Validators
     {
         bool CanValidate([NotNull] string type);
 
-        IEnumerable<ValidationError> Validate([NotNull] string type, [CanBeNull] string value);
+        ImmutableArray<ValidationError> Validate([NotNull] string type, [CanBeNull] string value);
     }
 }

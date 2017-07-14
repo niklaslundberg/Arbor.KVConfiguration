@@ -2,10 +2,10 @@
 using System.Collections.Immutable;
 using System.Collections.Specialized;
 using System.Reflection;
-using Arbor.KVConfiguration.Core;
+using Arbor.KVConfiguration.Core.Metadata;
 using JetBrains.Annotations;
 
-namespace Arbor.KVConfiguration.Schema
+namespace Arbor.KVConfiguration.Core
 {
     public class ReflectionKeyValueConfiguration : IKeyValueConfigurationWithMetadata
     {

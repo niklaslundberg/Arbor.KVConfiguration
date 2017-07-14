@@ -7,7 +7,6 @@ namespace Arbor.KVConfiguration.Core
 {
     public struct MultipleValuesStringPair : IEquatable<MultipleValuesStringPair>
     {
-
         private readonly ImmutableArray<string> _values;
 
         public MultipleValuesStringPair([NotNull] string key, ImmutableArray<string> values)
@@ -48,7 +47,8 @@ namespace Arbor.KVConfiguration.Core
 
         public bool Equals(MultipleValuesStringPair other)
         {
-            return string.Equals(Key, other.Key) && Values.SequenceEqual(other.Values);
+            return string.Equals(Key, other.Key, StringComparison.OrdinalIgnoreCase) &&
+                   Values.SequenceEqual(other.Values, StringComparer.OrdinalIgnoreCase);
         }
 
         public override bool Equals(object obj)

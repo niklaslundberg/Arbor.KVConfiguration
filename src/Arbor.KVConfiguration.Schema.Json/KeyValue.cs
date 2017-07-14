@@ -1,4 +1,5 @@
 ﻿using System;
+using Arbor.KVConfiguration.Core.Metadata;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 

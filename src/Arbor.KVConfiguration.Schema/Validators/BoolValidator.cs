@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace Arbor.KVConfiguration.Schema.Validators
 {
@@ -10,14 +10,14 @@ namespace Arbor.KVConfiguration.Schema.Validators
             return string.Equals("bool", type, StringComparison.OrdinalIgnoreCase);
         }
 
-        protected override IEnumerable<ValidationError> DoValidate(string type, string value)
+        protected override ImmutableArray<ValidationError> DoValidate(string type, string value)
         {
-            bool parsedResult;
-
-            if (!bool.TryParse(value, out parsedResult))
+            if (!bool.TryParse(value, out bool parsedResult))
             {
-                yield return new ValidationError("Not a valid boolean value");
+                return new ValidationError("Not a valid boolean value").ValueToImmutableArray();
             }
+
+            return ImmutableArray<ValidationError>.Empty;
         }
     }
 }

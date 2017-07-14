@@ -1,7 +1,7 @@
 ﻿using System.Collections.Immutable;
-using Arbor.KVConfiguration.Core;
+using Arbor.KVConfiguration.Core.Metadata;
 
-namespace Arbor.KVConfiguration.Schema
+namespace Arbor.KVConfiguration.Core
 {
     public interface IKeyValueConfigurationWithMetadata : IKeyValueConfiguration
     {

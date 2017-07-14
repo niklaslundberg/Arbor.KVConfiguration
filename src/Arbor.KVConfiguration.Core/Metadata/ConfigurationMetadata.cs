@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using Arbor.KVConfiguration.Core.Extensions;
 using JetBrains.Annotations;
 
-namespace Arbor.KVConfiguration.Schema
+namespace Arbor.KVConfiguration.Core.Metadata
 {
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global", Justification = "Used by reflection")]
     public class ConfigurationMetadata
@@ -17,7 +17,7 @@ namespace Arbor.KVConfiguration.Schema
             string description = "",
             string partInvariantName = "",
             string partFullName = "",
-            [CanBeNull] Type containingClass = null,
+            [CanBeNull] Type containingType = null,
             int sourceLine = -1,
             string sourceFile = "",
             bool isRequired = true,
@@ -39,7 +39,7 @@ namespace Arbor.KVConfiguration.Schema
             ValueType = valueType;
             PartInvariantName = partInvariantName;
             PartFullName = partFullName;
-            ContainingClass = containingClass;
+            ContainingType = containingType;
             SourceLine = sourceLine;
             SourceFile = sourceFile;
             IsRequired = isRequired;
@@ -52,9 +52,10 @@ namespace Arbor.KVConfiguration.Schema
         }
 
         public bool AllowMultipleValues { get; }
+
         public string KeyType { get; }
 
-        public Type ContainingClass { get; }
+        public Type ContainingType { get; }
 
         public string DefaultValue { get; }
 

@@ -5,9 +5,12 @@ namespace Arbor.KVConfiguration.Core
 {
     public class AppSettingsBuilder
     {
-        public AppSettingsBuilder([NotNull] IKeyValueConfiguration keyValueConfiguration, [CanBeNull] AppSettingsBuilder previous)
+        public AppSettingsBuilder(
+            [NotNull] IKeyValueConfiguration keyValueConfiguration,
+            [CanBeNull] AppSettingsBuilder previous)
         {
-            KeyValueConfiguration = keyValueConfiguration ?? throw new ArgumentNullException(nameof(keyValueConfiguration));
+            KeyValueConfiguration = keyValueConfiguration ??
+                                    throw new ArgumentNullException(nameof(keyValueConfiguration));
             Previous = previous;
         }
 

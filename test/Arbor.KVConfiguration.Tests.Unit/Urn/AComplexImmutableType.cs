@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
-using Arbor.KVConfiguration.Core.Extensions;
 using Arbor.KVConfiguration.Urns;
 
 namespace Arbor.KVConfiguration.Tests.Unit.Urn
@@ -15,7 +14,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         {
             Id = id;
             Name = name;
-            Children = children.SafeToImmutableArray();
+            Children = children?.ToImmutableArray() ?? ImmutableArray<string>.Empty;
             Uri = uri;
         }
 

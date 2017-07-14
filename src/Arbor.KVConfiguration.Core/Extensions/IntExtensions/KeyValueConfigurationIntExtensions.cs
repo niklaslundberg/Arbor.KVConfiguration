@@ -1,13 +1,14 @@
 using System;
+using JetBrains.Annotations;
 
-namespace Arbor.KVConfiguration.Core.Extensions
+namespace Arbor.KVConfiguration.Core.Extensions.LongExtensions
 {
-    public static class LongExtensions
+    public static class KeyValueConfigurationIntExtensions
     {
-        public static long ValueOrDefault(
-            this IKeyValueConfiguration keyValueConfiguration,
-            string key,
-            long defaultValue)
+        public static int ValueOrDefault(
+            [NotNull] this IKeyValueConfiguration keyValueConfiguration,
+            [NotNull] string key,
+            int defaultValue = default(int))
         {
             if (keyValueConfiguration == null)
             {
@@ -21,9 +22,7 @@ namespace Arbor.KVConfiguration.Core.Extensions
 
             string value = keyValueConfiguration[key];
 
-            long parsedResultValue;
-
-            if (!long.TryParse(value, out parsedResultValue))
+            if (!int.TryParse(value, out int parsedResultValue))
             {
                 return defaultValue;
             }

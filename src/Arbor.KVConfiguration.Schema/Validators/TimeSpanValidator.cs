@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace Arbor.KVConfiguration.Schema.Validators
 {
@@ -10,14 +10,16 @@ namespace Arbor.KVConfiguration.Schema.Validators
             return string.Equals("timespan", type, StringComparison.OrdinalIgnoreCase);
         }
 
-        protected override IEnumerable<ValidationError> DoValidate(string type, string value)
+        protected override ImmutableArray<ValidationError> DoValidate(string type, string value)
         {
             TimeSpan parsedResult;
 
             if (!TimeSpan.TryParse(value, out parsedResult))
             {
-                yield return new ValidationError("Not a valid timespan value");
+                return new ValidationError("Not a valid timespan value").ValueToImmutableArray();
             }
+
+            return ImmutableArray<ValidationError>.Empty;
         }
     }
 }

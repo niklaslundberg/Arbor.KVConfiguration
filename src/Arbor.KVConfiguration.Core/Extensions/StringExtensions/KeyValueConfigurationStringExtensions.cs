@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using JetBrains.Annotations;
 
-namespace Arbor.KVConfiguration.Core
+namespace Arbor.KVConfiguration.Core.Extensions.StringExtensions
 {
-    public static class KeyValueConfigurationExtensions
+    public static class KeyValueConfigurationStringExtensions
     {
         public static string ValueOrDefault(
             [NotNull] this IKeyValueConfiguration keyValueConfiguration,

@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Arbor.KVConfiguration.Schema;
+using Arbor.KVConfiguration.Core.Decorators;
+using Arbor.KVConfiguration.Core.Metadata;
+using Arbor.KVConfiguration.Core.Metadata.Extensions;
 using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core
@@ -58,10 +60,8 @@ namespace Arbor.KVConfiguration.Core
         public string this[string key] => DecorateValue(_appSettingsDecoratorBuilder,
             GetValue(_appSettingsDecoratorBuilder.AppSettingsBuilder, key, _logAction).Item2);
 
-        public ImmutableArray<KeyValueConfigurationItem> ConfigurationItems
-        {
-            get { return GetConfigurationItems(_appSettingsDecoratorBuilder.AppSettingsBuilder).ToImmutableArray(); }
-        }
+        public ImmutableArray<KeyValueConfigurationItem> ConfigurationItems => GetConfigurationItems(
+            _appSettingsDecoratorBuilder.AppSettingsBuilder).ToImmutableArray();
 
         public IKeyValueConfiguration ConfiguratorFor(string key, Action<string> logAction = null)
         {
@@ -71,7 +71,6 @@ namespace Arbor.KVConfiguration.Core
             if (tuple.Item1 is NoConfiguration || tuple.Item1 is null)
             {
                 return GetConfiguratorDefining(_appSettingsDecoratorBuilder.AppSettingsBuilder, key);
-                ;
             }
 
             return tuple.Item1;

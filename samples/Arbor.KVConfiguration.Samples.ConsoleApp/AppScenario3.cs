@@ -30,7 +30,7 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
                 {
                     Console.WriteLine("Loop index {0} on thread {1}", index, Thread.CurrentThread.ManagedThreadId);
 
-                    string a = KeyValueConfigurationManager.AppSettings["urn:test:key"];
+                    string a = StaticKeyValueConfigurationManager.AppSettings["urn:test:key"];
 
                     if (a != "a")
                     {
@@ -38,14 +38,14 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
                         succeeded = false;
                     }
 
-                    string b = KeyValueConfigurationManager.AppSettings["urn:another-key"];
+                    string b = StaticKeyValueConfigurationManager.AppSettings["urn:another-key"];
                     if (b != "b")
                     {
                         Console.WriteLine("WRONG b in index {0}, value {1}", index, b);
                         succeeded = false;
                     }
 
-                    string c = KeyValueConfigurationManager.AppSettings["urn:yet-another-key"];
+                    string c = StaticKeyValueConfigurationManager.AppSettings["urn:yet-another-key"];
                     if (c != "c")
                     {
                         Console.WriteLine("WRONG c in index {0}, value {1}", index, c);

@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigurationItemsExtensions.cs" />
+    <Compile Include="ImmutabilityExtensions.cs" />
     <Compile Include="JsonFileReader.cs" />
     <Compile Include="JsonKeyValueConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

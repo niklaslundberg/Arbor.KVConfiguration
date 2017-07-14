@@ -3,7 +3,8 @@ using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using Arbor.KVConfiguration.Core;
-using Arbor.KVConfiguration.Schema;
+using Arbor.KVConfiguration.Core.Metadata;
+using Arbor.KVConfiguration.Core.Metadata.Extensions;
 using Newtonsoft.Json;
 
 namespace Arbor.KVConfiguration.Samples.Web

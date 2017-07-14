@@ -4,8 +4,7 @@ using System.Collections.Immutable;
 using System.Collections.Specialized;
 using System.IO;
 using Arbor.KVConfiguration.Core;
-using Arbor.KVConfiguration.Core.Extensions;
-using Arbor.KVConfiguration.Schema;
+using Arbor.KVConfiguration.Core.Metadata;
 using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.JsonConfiguration

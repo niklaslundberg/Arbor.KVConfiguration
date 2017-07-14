@@ -2,13 +2,43 @@
 using System.Collections.Immutable;
 using System.Linq;
 using System.Reflection;
+using Arbor.KVConfiguration.Core.Metadata;
 using JetBrains.Annotations;
 
-namespace Arbor.KVConfiguration.Schema
+namespace Arbor.KVConfiguration.Core.Extensions.ReflectionExtensions
 {
-    public static class AttributeMetadataSource
+    public static class ReflectionAttributeMetadataExtensions
     {
-        public static ImmutableArray<ConfigurationMetadata> GetMetadataFromAssemblyTypes([NotNull] Assembly assembly)
+        public static ImmutableArray<ConfigurationMetadata> GetMetadataType(
+            [NotNull] this TypeInfo typeInfo)
+        {
+            if (typeInfo == null)
+            {
+                throw new ArgumentNullException(nameof(typeInfo));
+            }
+
+            if (!typeInfo.IsPublicStaticClass())
+            {
+                return ImmutableArray<ConfigurationMetadata>.Empty;
+            }
+
+            return GetMetadataFromFields(typeInfo.GetPublicConstantStringFields());
+        }
+
+        public static ImmutableArray<ConfigurationMetadata> GetMetadataTypes(
+            this ImmutableArray<TypeInfo> types)
+        {
+            if (types.IsDefaultOrEmpty)
+            {
+                return ImmutableArray<ConfigurationMetadata>.Empty;
+            }
+
+            return GetMetadataFromFields(types.SelectMany(type => type.GetPublicConstantStringFields())
+                .ToImmutableArray());
+        }
+
+        public static ImmutableArray<ConfigurationMetadata> GetMetadataFromAssemblyTypes(
+            [NotNull] this Assembly assembly)
         {
             if (assembly == null)
             {
@@ -22,12 +52,17 @@ namespace Arbor.KVConfiguration.Schema
 
             ImmutableArray<FieldInfo> publicConstantPrimitiveFields = assembly.GetPublicConstantStringFields();
 
-            if (!publicConstantPrimitiveFields.Any())
+            return GetMetadataFromFields(publicConstantPrimitiveFields);
+        }
+
+        private static ImmutableArray<ConfigurationMetadata> GetMetadataFromFields(ImmutableArray<FieldInfo> fields)
+        {
+            if (fields.IsDefaultOrEmpty)
             {
                 return ImmutableArray<ConfigurationMetadata>.Empty;
             }
 
-            var configurationMetadataFields = publicConstantPrimitiveFields
+            var configurationMetadataFields = fields
                 .Select(
                     field => new
                     {

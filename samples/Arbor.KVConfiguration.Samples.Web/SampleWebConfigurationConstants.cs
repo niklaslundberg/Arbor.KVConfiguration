@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using Arbor.KVConfiguration.Schema;
+using Arbor.KVConfiguration.Core.Metadata;
 
 namespace Arbor.KVConfiguration.Samples.Web
 {

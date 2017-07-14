@@ -2,7 +2,7 @@
 using System.Collections.Immutable;
 using System.IO;
 using System.Text;
-using Arbor.KVConfiguration.Schema;
+using Arbor.KVConfiguration.Core.Metadata;
 using Arbor.KVConfiguration.Schema.Json;
 
 namespace Arbor.KVConfiguration.JsonConfiguration

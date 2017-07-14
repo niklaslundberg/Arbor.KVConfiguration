@@ -2,6 +2,7 @@ using System;
 using System.Collections.Immutable;
 using System.Collections.Specialized;
 using Arbor.KVConfiguration.Core;
+using Arbor.KVConfiguration.Core.Metadata;
 using Arbor.KVConfiguration.Schema;
 using Arbor.KVConfiguration.Schema.Validators;
 using Machine.Specifications;
@@ -29,8 +30,8 @@ namespace Arbor.KVConfiguration.Tests.Unit
                 });
 
             ImmutableArray<KeyValueConfigurationItem> configurationItems =
-                ReflectionConfiguratonReader.ReadConfiguration(
-                    typeof(when_validating_a_valid_required_value_from_source).Assembly);
+                new ReflectionKeyValueConfiguration(
+                    typeof(when_validating_a_valid_required_value_from_source).Assembly).ConfigurationItems;
 
             metdata = configurationItems.GetMetadata();
         };

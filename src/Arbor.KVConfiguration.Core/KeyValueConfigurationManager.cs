@@ -1,29 +1,11 @@
 ﻿using System;
-using System.Collections.Immutable;
+using Arbor.KVConfiguration.Core.Decorators;
 using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core
 {
     public static class KeyValueConfigurationManager
     {
-        private static readonly object _MutexLock = new object();
-
-        private static MultiSourceKeyValueConfiguration _appSettings;
-
-        public static MultiSourceKeyValueConfiguration AppSettings
-        {
-            get
-            {
-                if (_appSettings == null)
-                {
-                    throw new InvalidOperationException(
-                        $"The {nameof(KeyValueConfigurationManager)} has not been initialized");
-                }
-
-                return _appSettings;
-            }
-        }
-
         public static MultiSourceKeyValueConfiguration Build(
             [NotNull] this AppSettingsBuilder appSettingsBuild,
             Action<string> logAction = null)
@@ -33,7 +15,8 @@ namespace Arbor.KVConfiguration.Core
                 throw new ArgumentNullException(nameof(appSettingsBuild));
             }
 
-            var multiSourceKeyValueConfiguration = new MultiSourceKeyValueConfiguration(new DecoratorDelegate(appSettingsBuild), logAction);
+            var multiSourceKeyValueConfiguration =
+                new MultiSourceKeyValueConfiguration(new DecoratorDelegator(appSettingsBuild), logAction);
 
             return Initialize(multiSourceKeyValueConfiguration, logAction);
         }
@@ -113,41 +96,24 @@ namespace Arbor.KVConfiguration.Core
             return new AppSettingsDecoratorBuilder(builder, decorator);
         }
 
-        private static MultiSourceKeyValueConfiguration Initialize([NotNull] IKeyValueConfiguration keyValueConfiguration, Action<string> logAction = null)
+        private static MultiSourceKeyValueConfiguration Initialize(
+            [NotNull] IKeyValueConfiguration keyValueConfiguration,
+            Action<string> logAction = null)
         {
             if (keyValueConfiguration == null)
             {
                 throw new ArgumentNullException(nameof(keyValueConfiguration));
             }
 
-            if (_appSettings != null)
+            if (keyValueConfiguration is MultiSourceKeyValueConfiguration multiSourceKeyValueConfiguration)
             {
-                throw new InvalidOperationException(
-                    $"The {nameof(KeyValueConfigurationManager)} is already initialized");
+                return multiSourceKeyValueConfiguration;
             }
 
-            lock (_MutexLock)
-            {
-                if (_appSettings != null)
-                {
-                    throw new InvalidOperationException(
-                        $"The {nameof(KeyValueConfigurationManager)} is already initialized");
-                }
-
-                if (keyValueConfiguration is MultiSourceKeyValueConfiguration multiSourceKeyValueConfiguration)
-                {
-                    _appSettings = multiSourceKeyValueConfiguration;
-                }
-                else
-                {
-
-                    _appSettings =
-                        new MultiSourceKeyValueConfiguration(
-                            new DecoratorDelegate(new AppSettingsBuilder(keyValueConfiguration, null)), logAction);
-                }
-            }
-
-            return _appSettings;
+            return
+                new MultiSourceKeyValueConfiguration(
+                    new DecoratorDelegator(new AppSettingsBuilder(keyValueConfiguration, null)),
+                    logAction);
         }
     }
 }

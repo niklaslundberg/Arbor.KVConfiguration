@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Immutable;
 using Arbor.KVConfiguration.Core;
-using Arbor.KVConfiguration.Schema;
+using Arbor.KVConfiguration.Core.Extensions.ReflectionExtensions;
+using Arbor.KVConfiguration.Core.Metadata;
 using Newtonsoft.Json;
 
 namespace Arbor.KVConfiguration.Samples.ConsoleApp
@@ -10,16 +11,17 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
     {
         public void Execute()
         {
-            KeyValueConfigurationManager.Add(new ReflectionKeyValueConfiguration(typeof(SampleConfigurationConstants).Assembly)).Build();
-            
+            KeyValueConfigurationManager
+                .Add(new ReflectionKeyValueConfiguration(typeof(SampleConfigurationConstants).Assembly)).Build();
+
             ImmutableArray<ConfigurationMetadata> metadataFromAssemblyTypes =
-                AttributeMetadataSource.GetMetadataFromAssemblyTypes(typeof(SampleConfigurationConstants).Assembly);
+                typeof(SampleConfigurationConstants).Assembly.GetMetadataFromAssemblyTypes();
 
             Console.WriteLine(JsonConvert.SerializeObject(metadataFromAssemblyTypes, Formatting.Indented));
 
-            Console.WriteLine("Contains {0} keys", KeyValueConfigurationManager.AppSettings.AllKeys.Length);
+            Console.WriteLine("Contains {0} keys", StaticKeyValueConfigurationManager.AppSettings.AllKeys.Length);
 
-            foreach (StringPair stringPair in KeyValueConfigurationManager.AppSettings.AllValues)
+            foreach (StringPair stringPair in StaticKeyValueConfigurationManager.AppSettings.AllValues)
             {
                 Console.WriteLine(stringPair);
             }

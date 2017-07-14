@@ -3,7 +3,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Arbor.KVConfiguration.Core
+namespace Arbor.KVConfiguration.Core.Decorators
 {
     public abstract class DecoratorBase : IKeyValueConfigurationDecorator
     {
@@ -26,7 +26,7 @@ namespace Arbor.KVConfiguration.Core
                 throw new ArgumentNullException(nameof(keyValueConfiguration));
             }
 
-            return ImmutableArrayExtensions.Select(keyValueConfiguration.AllValues, item => new StringPair(item.Key, GetValue(item.Value)))
+            return keyValueConfiguration.AllValues.Select(item => new StringPair(item.Key, GetValue(item.Value)))
                 .ToImmutableArray();
         }
 
@@ -39,7 +39,7 @@ namespace Arbor.KVConfiguration.Core
             }
 
             return keyValueConfiguration.AllWithMultipleValues.Select(item => new MultipleValuesStringPair(item.Key,
-                    item.Values.Select<string, string>(GetValue).ToImmutableArray()))
+                    item.Values.Select(GetValue).ToImmutableArray()))
                 .ToImmutableArray();
         }
     }

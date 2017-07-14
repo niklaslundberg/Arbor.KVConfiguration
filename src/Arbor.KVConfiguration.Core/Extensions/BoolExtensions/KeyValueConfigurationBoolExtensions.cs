@@ -1,11 +1,14 @@
 using System;
 using JetBrains.Annotations;
 
-namespace Arbor.KVConfiguration.Core.Extensions
+namespace Arbor.KVConfiguration.Core.Extensions.BoolExtensions
 {
-    public static class BoolExtensions
+    public static class KeyValueConfigurationBoolExtensions
     {
-        public static bool ValueOrDefault([NotNull] this IKeyValueConfiguration keyValueConfiguration, string key, bool defaultValue = default(bool))
+        public static bool ValueOrDefault(
+            [NotNull] this IKeyValueConfiguration keyValueConfiguration,
+            [NotNull] string key,
+            bool defaultValue = default(bool))
         {
             if (keyValueConfiguration == null)
             {
@@ -18,7 +21,6 @@ namespace Arbor.KVConfiguration.Core.Extensions
             }
 
             string value = keyValueConfiguration[key];
-
 
             if (!bool.TryParse(value, out bool parsedResultValue))
             {

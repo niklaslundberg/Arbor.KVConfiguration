@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using Arbor.KVConfiguration.Core;
+using Arbor.KVConfiguration.Core.Extensions.StringExtensions;
 
 namespace Arbor.KVConfiguration.Samples.ConsoleApp
 {
@@ -51,7 +52,7 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
 
                 builder.AppendLine($"\t Instance: {displayValue}");
 
-                string staticValue = KeyValueConfigurationManager.AppSettings[pair.Value];
+                string staticValue = StaticKeyValueConfigurationManager.AppSettings[pair.Value];
 
                 string staticDisplayValue = Specials.GetDisplayValue(staticValue);
 

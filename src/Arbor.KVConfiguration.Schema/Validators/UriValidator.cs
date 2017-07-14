@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace Arbor.KVConfiguration.Schema.Validators
 {
@@ -10,7 +10,7 @@ namespace Arbor.KVConfiguration.Schema.Validators
             return string.Equals("uri", type, StringComparison.OrdinalIgnoreCase);
         }
 
-        protected override IEnumerable<ValidationError> DoValidate(string type, string value)
+        protected override ImmutableArray<ValidationError> DoValidate(string type, string value)
         {
             if (!CanValidate(type))
             {
@@ -20,8 +20,10 @@ namespace Arbor.KVConfiguration.Schema.Validators
 
             if (!Uri.IsWellFormedUriString(value, UriKind.RelativeOrAbsolute))
             {
-                yield return new ValidationError("Invalid URI");
+                return new ValidationError("Invalid URI").ValueToImmutableArray();
             }
+
+            return ImmutableArray<ValidationError>.Empty;
         }
     }
 }

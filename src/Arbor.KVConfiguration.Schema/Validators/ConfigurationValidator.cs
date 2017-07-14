@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using Arbor.KVConfiguration.Core;
+using Arbor.KVConfiguration.Core.Metadata;
 using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Schema.Validators

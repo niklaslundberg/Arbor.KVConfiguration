@@ -3,8 +3,8 @@ using System.Reflection;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using Arbor.KVConfiguration.Core;
+using Arbor.KVConfiguration.Core.Decorators;
 using Arbor.KVConfiguration.JsonConfiguration;
-using Arbor.KVConfiguration.Schema;
 using Arbor.KVConfiguration.SystemConfiguration;
 using Autofac;
 using Autofac.Integration.Mvc;
@@ -38,21 +38,6 @@ namespace Arbor.KVConfiguration.Samples.Web
                 .AsImplementedInterfaces()
                 .AsSelf()
                 .SingleInstance();
-        }
-    }
-
-    internal class AddSuffixDecorator : DecoratorBase
-    {
-        private readonly string _suffix;
-
-        public AddSuffixDecorator(string suffix)
-        {
-            _suffix = suffix;
-        }
-
-        public override string GetValue(string value)
-        {
-            return $"{value}{_suffix}";
         }
     }
 }

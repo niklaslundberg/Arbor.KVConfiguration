@@ -2,7 +2,7 @@
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace Arbor.KVConfiguration.Core
+namespace Arbor.KVConfiguration.Core.Decorators
 {
     public sealed class ExpandKeyValueConfigurationDecorator : IKeyValueConfigurationDecorator
     {
