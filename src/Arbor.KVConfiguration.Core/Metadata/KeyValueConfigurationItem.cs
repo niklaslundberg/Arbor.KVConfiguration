@@ -20,5 +20,10 @@ namespace Arbor.KVConfiguration.Core.Metadata
         public ConfigurationMetadata ConfigurationMetadata { get; }
 
         public string Value { get; }
+
+        public override string ToString()
+        {
+            return $"{nameof(Key)}: {Key}, {nameof(Value)}: {Value}, {nameof(ConfigurationMetadata)}: {ConfigurationMetadata}";
+        }
     }
 }
