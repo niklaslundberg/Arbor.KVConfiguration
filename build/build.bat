@@ -9,6 +9,7 @@ SET Arbor.X.Vcs.Branch.Name.Version.OverrideEnabled=false
 SET Arbor.X.Build.VariableOverrideEnabled=true
 SET Arbor.X.Artifacts.CleanupBeforeBuildEnabled=true
 SET Arbor.X.Build.NetAssembly.Configuration=
+SET Arbor.X.Tools.External.MSBuild.AllowPrerelease.Enabled=true
 
 IF "%Arbor.X.Vcs.Branch.Name%" == "" (
 	SET Arbor.X.Vcs.Branch.Name=develop
