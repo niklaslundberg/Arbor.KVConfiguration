@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="15.0">
-  <Import Project="..\..\src\packages\Microsoft.Net.Compilers.2.3.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\..\src\packages\Microsoft.Net.Compilers.2.3.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="..\..\src\packages\Microsoft.Net.Compilers.2.3.1\build\Microsoft.Net.Compilers.props" Condition="Exists('..\..\src\packages\Microsoft.Net.Compilers.2.3.1\build\Microsoft.Net.Compilers.props')" />
   <Import Project="..\..\src\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\..\src\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -80,23 +80,19 @@
       <Name>Arbor.KVConfiguration.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Arbor.KVConfiguration.JsonConfiguration\Arbor.KVConfiguration.JsonConfiguration.csproj">
-      <Project>{93affc22-2eac-43b6-82f6-4cde18afd37f}</Project>
+      <Project>{AAE5A0AF-94A2-47CA-9DE8-902E6144E3DD}</Project>
       <Name>Arbor.KVConfiguration.JsonConfiguration</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Arbor.KVConfiguration.Schema.Json\Arbor.KVConfiguration.Schema.Json.csproj">
-      <Project>{6e2974de-e95f-4378-a1c7-b4964d0e3d73}</Project>
-      <Name>Arbor.KVConfiguration.Schema.Json</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Arbor.KVConfiguration.Schema\Arbor.KVConfiguration.Schema.csproj">
       <Project>{478302f9-508b-4f44-a259-870d5d734099}</Project>
       <Name>Arbor.KVConfiguration.Schema</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Arbor.KVConfiguration.SystemConfiguration\Arbor.KVConfiguration.SystemConfiguration.csproj">
-      <Project>{4d295c1b-59a2-4885-bd04-29fbf42566bd}</Project>
+      <Project>{D5C74FE0-2817-4213-A8A4-66EF48EFC4AD}</Project>
       <Name>Arbor.KVConfiguration.SystemConfiguration</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Arbor.KVConfiguration.UserConfiguration\Arbor.KVConfiguration.UserConfiguration.csproj">
-      <Project>{74c44061-e904-4338-a775-ae8857a53ae8}</Project>
+      <Project>{600B426D-4CE5-49BE-9FB5-4C0845160475}</Project>
       <Name>Arbor.KVConfiguration.UserConfiguration</Name>
     </ProjectReference>
   </ItemGroup>
@@ -107,8 +103,8 @@
     <Reference Include="Autofac.Integration.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\..\src\packages\Autofac.Mvc5.4.0.2\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="JetBrains.Annotations, Version=10.4.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
-      <HintPath>..\..\src\packages\JetBrains.Annotations.10.4.0\lib\net\JetBrains.Annotations.dll</HintPath>
+    <Reference Include="JetBrains.Annotations, Version=11.0.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\..\src\packages\JetBrains.Annotations.11.0.0\lib\net20\JetBrains.Annotations.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\src\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
@@ -180,6 +176,6 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\..\src\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\src\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.5\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
-    <Error Condition="!Exists('..\..\src\packages\Microsoft.Net.Compilers.2.3.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\src\packages\Microsoft.Net.Compilers.2.3.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\..\src\packages\Microsoft.Net.Compilers.2.3.1\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\src\packages\Microsoft.Net.Compilers.2.3.1\build\Microsoft.Net.Compilers.props'))" />
   </Target>
 </Project>

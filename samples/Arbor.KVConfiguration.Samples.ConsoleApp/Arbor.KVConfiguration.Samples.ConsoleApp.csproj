@@ -9,7 +9,6 @@
     <ProjectReference Include="..\..\src\Arbor.KVConfiguration.Core\Arbor.KVConfiguration.Core.csproj" />
     <ProjectReference Include="..\..\src\Arbor.KVConfiguration.Schema\Arbor.KVConfiguration.Schema.csproj" />
     <ProjectReference Include="..\..\src\Arbor.KVConfiguration.SystemConfiguration\Arbor.KVConfiguration.SystemConfiguration.csproj" />
-    <ProjectReference Include="..\..\src\Arbor.KVConfiguration.UserConfiguration\Arbor.KVConfiguration.UserConfiguration.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,8 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Net.Compilers" Version="2.3.0" />
+    <PackageReference Include="JetBrains.Annotations" Version="11.0.0" />
+    <PackageReference Include="Microsoft.Net.Compilers" Version="2.3.1" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="System.Collections.Immutable" Version="1.3.1" />
     <PackageReference Include="System.ValueTuple" Version="4.3.1" />
   </ItemGroup>
 

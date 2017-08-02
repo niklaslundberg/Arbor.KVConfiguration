@@ -8,6 +8,7 @@ using Arbor.KVConfiguration.JsonConfiguration;
 using Arbor.KVConfiguration.SystemConfiguration;
 using Autofac;
 using Autofac.Integration.Mvc;
+using Arbor.KVConfiguration.UserConfiguration;
 
 namespace Arbor.KVConfiguration.Samples.Web
 {
