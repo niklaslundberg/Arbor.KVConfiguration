@@ -22,7 +22,7 @@ namespace Arbor.KVConfiguration.Core
             }
         }
 
-        private static IKeyValueConfiguration Initialize([NotNull] IKeyValueConfiguration keyValueConfiguration)
+        public static IKeyValueConfiguration Initialize([NotNull] IKeyValueConfiguration keyValueConfiguration)
         {
             if (keyValueConfiguration == null)
             {
