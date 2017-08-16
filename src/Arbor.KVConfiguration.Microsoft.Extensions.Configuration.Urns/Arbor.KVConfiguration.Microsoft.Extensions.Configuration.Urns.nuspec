@@ -23,6 +23,8 @@
     <dependencies>
       <dependency id="Arbor.KVConfiguration.Core" version="[$version$]" />
       <dependency id="Arbor.KVConfiguration.Urns" version="[$version$]" />
+      <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="[2.0.0,3.0.0)" />
+      <dependency id="Microsoft.Extensions.Configuration.Abstractions" version="[2.0.0,3.0.0)" />
     </dependencies>
     <references></references>
     <tags></tags>
