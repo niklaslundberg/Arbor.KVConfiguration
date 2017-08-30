@@ -1,12 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
+using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core.Extensions
 {
-    public static class ImmutabilityExtensions
+    internal static class ImmutabilityExtensions
     {
-        public static ImmutableArray<T> SafeToImmutableArray<T>(this IEnumerable<T> enumerable)
+        internal static ImmutableArray<T> SafeToImmutableArray<T>([CanBeNull] this IEnumerable<T> enumerable)
         {
+            if (enumerable is ImmutableArray<T> array)
+            {
+                return array;
+            }
+
             return enumerable?.ToImmutableArray() ?? ImmutableArray<T>.Empty;
         }
     }

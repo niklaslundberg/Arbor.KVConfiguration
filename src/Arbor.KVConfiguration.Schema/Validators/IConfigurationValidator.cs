@@ -1,4 +1,5 @@
 ﻿using Arbor.KVConfiguration.Core;
+using Arbor.KVConfiguration.Core.Metadata;
 
 namespace Arbor.KVConfiguration.Schema.Validators
 {

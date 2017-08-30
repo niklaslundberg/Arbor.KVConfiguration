@@ -51,6 +51,7 @@ namespace Arbor.KVConfiguration.Urns
                 {
                     throw new InvalidOperationException("Could not get subNamespace from urn '" + OriginalValue + "'");
                 }
+
                 return lastOrDefault;
             }
         }
@@ -79,41 +80,6 @@ namespace Arbor.KVConfiguration.Urns
 
                 return new Urn(parent);
             }
-        }
-
-        public bool Equals(Urn other)
-        {
-            if (ReferenceEquals(null, other))
-            {
-                return false;
-            }
-            if (ReferenceEquals(this, other))
-            {
-                return true;
-            }
-            return string.Equals(OriginalValue, other.OriginalValue, StringComparison.InvariantCultureIgnoreCase);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-            if (obj.GetType() != GetType())
-            {
-                return false;
-            }
-            return Equals((Urn) obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return OriginalValue != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(OriginalValue) : 0;
         }
 
         public static bool operator ==(Urn left, Urn right)
@@ -159,6 +125,44 @@ namespace Arbor.KVConfiguration.Urns
             result = new Urn(trimmed);
 
             return true;
+        }
+
+        public bool Equals(Urn other)
+        {
+            if (ReferenceEquals(null, other))
+            {
+                return false;
+            }
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+            return string.Equals(OriginalValue, other.OriginalValue, StringComparison.OrdinalIgnoreCase);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            return Equals((Urn)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return OriginalValue != null ? StringComparer.OrdinalIgnoreCase.GetHashCode(OriginalValue) : 0;
         }
 
         private static bool IsWellFormedUriString(string originalValue)

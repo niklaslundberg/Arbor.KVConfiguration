@@ -1,20 +1,35 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Dynamic;
 using System.Linq;
 using System.Reflection;
-
 using Arbor.KVConfiguration.Core;
-
 using JetBrains.Annotations;
-
 using Newtonsoft.Json;
-using System.Collections.Immutable;
 
 namespace Arbor.KVConfiguration.Urns
 {
     public static class UrnKeyValueExtensions
     {
+        public static T GetInstance<T>(
+            [NotNull] this IKeyValueConfiguration keyValueConfiguration)
+        {
+            ImmutableArray<T> instances = GetInstances<T>(keyValueConfiguration);
+
+            if (instances.Length > 1)
+            {
+                throw new InvalidOperationException($"Found multiple {typeof(T)}, expected 0 or 1");
+            }
+
+            if (!instances.Any())
+            {
+                return default(T);
+            }
+
+            return instances.Single();
+        }
+
         public static ImmutableArray<T> GetInstances<T>(
             [NotNull] this IKeyValueConfiguration keyValueConfiguration)
         {
@@ -23,7 +38,7 @@ namespace Arbor.KVConfiguration.Urns
                 throw new ArgumentNullException(nameof(keyValueConfiguration));
             }
 
-            var urnAttribute = typeof(T).GetCustomAttribute<UrnAttribute>();
+            var urnAttribute = typeof(T).GetTypeInfo().GetCustomAttribute<UrnAttribute>();
 
             if (urnAttribute == null)
             {
@@ -42,7 +57,7 @@ namespace Arbor.KVConfiguration.Urns
                     .Select(key => new Urn(key))
                     .Where(
                         urn =>
-                        urn.OriginalValue.StartsWith(urn.OriginalValue, StringComparison.InvariantCultureIgnoreCase))
+                            urn.OriginalValue.StartsWith(urn.OriginalValue, StringComparison.OrdinalIgnoreCase))
                     .Where(key => key.NamespaceParts() == expectedParts)
                     .ToLookup(urn => urn.Parent, urn => urn).ToArray();
 
@@ -64,9 +79,9 @@ namespace Arbor.KVConfiguration.Urns
                     keyValueConfiguration.AllWithMultipleValues
                         .Where(
                             multipleValuesStringPair =>
-                            multipleValuesStringPair.Key.Equals(
-                                urn.OriginalValue,
-                                StringComparison.InvariantCultureIgnoreCase))
+                                multipleValuesStringPair.Key.Equals(
+                                    urn.OriginalValue,
+                                    StringComparison.OrdinalIgnoreCase))
                         .SelectMany(s => s.Values)
                         .ToArray();
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using Arbor.KVConfiguration.Core;
+using Arbor.KVConfiguration.Core.Metadata;
 using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Schema.Validators
@@ -26,12 +27,7 @@ namespace Arbor.KVConfiguration.Schema.Validators
         [UsedImplicitly]
         public ConfigurationValidator([NotNull] IEnumerable<IValueValidator> validators)
         {
-            if (validators == null)
-            {
-                throw new ArgumentNullException(nameof(validators));
-            }
-
-            _validators = validators.ToImmutableArray();
+            _validators = validators?.ToImmutableArray() ?? throw new ArgumentNullException(nameof(validators));
         }
 
         public KeyValueConfigurationValidationResult Validate(
@@ -45,7 +41,8 @@ namespace Arbor.KVConfiguration.Schema.Validators
 
             var validationErrors = new List<ValidationError>();
 
-            if (metadataItem.ConfigurationMetadata.IsRequired && string.IsNullOrWhiteSpace(metadataItem.ConfigurationMetadata.DefaultValue)
+            if (metadataItem.ConfigurationMetadata.IsRequired &&
+                string.IsNullOrWhiteSpace(metadataItem.ConfigurationMetadata.DefaultValue)
                 && !multipleValuesStringPair.HasNonEmptyValue)
             {
                 validationErrors.Add(new ValidationError("Required value is missing"));

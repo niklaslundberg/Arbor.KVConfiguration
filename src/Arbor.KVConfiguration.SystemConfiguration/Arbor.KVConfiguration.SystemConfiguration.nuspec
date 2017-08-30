@@ -21,7 +21,7 @@
     <licenseUrl>https://github.com/niklaslundberg/Arbor.KVConfiguration/blob/master/LICENSE.txt</licenseUrl>
     <copyright>Copyright Niklas Lundberg 2014 - 2017</copyright>
     <dependencies>
-      <dependency id="Arbor.KVConfiguration.Core" version="[0.4.1,0.6.0)" />
+      <dependency id="Arbor.KVConfiguration.Core" version="[$version$]" />
     </dependencies>
     <references></references>
     <frameworkAssemblies>
@@ -30,6 +30,6 @@
     <tags></tags>
   </metadata>
   <files>
-    <file src="bin\$configuration$\Arbor.KVConfiguration.SystemConfiguration.dll" target="lib\net461" />
+    <file src="bin\$configuration$\net461\Arbor.KVConfiguration.SystemConfiguration.dll" target="lib\net461" />
   </files>
 </package>

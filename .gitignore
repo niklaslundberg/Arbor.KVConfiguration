@@ -14,6 +14,8 @@ _NCrunch_*
 _nCrunchtemp*
 nCrunchTemp_*
 .vs
+.idea
+UpgradeLog*.htm
 
 #################
 ## Eclipse
@@ -189,3 +191,4 @@ _patchedAssemblyInfos
 *.userprefs
 *.etl
 *.vspx
+*.ncrunchproject

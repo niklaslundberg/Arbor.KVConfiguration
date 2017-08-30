@@ -27,7 +27,8 @@ namespace Arbor.KVConfiguration.Core
 
         public bool Equals(StringPair other)
         {
-            return string.Equals(Key, other.Key) && string.Equals(Value, other.Value);
+            return string.Equals(Key, other.Key, StringComparison.OrdinalIgnoreCase) &&
+                   string.Equals(Value, other.Value, StringComparison.OrdinalIgnoreCase);
         }
 
         public override bool Equals(object obj)

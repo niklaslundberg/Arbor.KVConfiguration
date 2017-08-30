@@ -1,9 +1,0 @@
-﻿{
-    "version":"1.0",
-    "keys": [
-        {
-            "key": "urn:test-single:key",
-            "value": "a single value replaced in config.user"
-        }
-    ]
-}

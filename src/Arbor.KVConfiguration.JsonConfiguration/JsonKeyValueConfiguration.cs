@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Collections.Specialized;
 using System.IO;
-
 using Arbor.KVConfiguration.Core;
-using Arbor.KVConfiguration.Schema;
-
+using Arbor.KVConfiguration.Core.Metadata;
 using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.JsonConfiguration
 {
-    public class JsonKeyValueConfiguration : IKeyValueConfiguration
+    public class JsonKeyValueConfiguration : IKeyValueConfigurationWithMetadata
     {
         private readonly IKeyValueConfiguration _inMemoryKeyValueConfiguration;
 
@@ -22,14 +20,18 @@ namespace Arbor.KVConfiguration.JsonConfiguration
                 throw new ArgumentNullException(nameof(keyValueConfigurationItems));
             }
 
+            ImmutableArray<KeyValueConfigurationItem> items = keyValueConfigurationItems.SafeToImmutableArray();
+
             var nameValueCollection = new NameValueCollection();
 
-            foreach (KeyValueConfigurationItem keyValueConfigurationItem in keyValueConfigurationItems)
+            foreach (KeyValueConfigurationItem keyValueConfigurationItem in items)
             {
                 nameValueCollection.Add(keyValueConfigurationItem.Key, keyValueConfigurationItem.Value);
             }
 
             _inMemoryKeyValueConfiguration = new InMemoryKeyValueConfiguration(nameValueCollection);
+
+            ConfigurationItems = items;
         }
 
         public JsonKeyValueConfiguration(string fileFullPath)
@@ -45,6 +47,8 @@ namespace Arbor.KVConfiguration.JsonConfiguration
             => _inMemoryKeyValueConfiguration.AllWithMultipleValues;
 
         public string this[string key] => _inMemoryKeyValueConfiguration[key];
+
+        public ImmutableArray<KeyValueConfigurationItem> ConfigurationItems { get; }
 
         private static ImmutableArray<KeyValueConfigurationItem> ReadJsonFile(string fileFullPath)
         {

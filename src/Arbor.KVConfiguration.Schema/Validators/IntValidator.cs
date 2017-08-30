@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.Immutable;
 
 namespace Arbor.KVConfiguration.Schema.Validators
 {
@@ -7,16 +7,17 @@ namespace Arbor.KVConfiguration.Schema.Validators
     {
         public override bool CanValidate(string type)
         {
-            return string.Equals("int", type, StringComparison.InvariantCultureIgnoreCase);
+            return string.Equals("int", type, StringComparison.OrdinalIgnoreCase);
         }
 
-        protected override IEnumerable<ValidationError> DoValidate(string type, string value)
+        protected override ImmutableArray<ValidationError> DoValidate(string type, string value)
         {
-            int parsedResult;
-            if (!int.TryParse(value, out parsedResult))
+            if (!int.TryParse(value, out int parsedResult))
             {
-                yield return new ValidationError("Not a valid integer value");
+                return new ValidationError("Not a valid integer value").ValueToImmutableArray();
             }
+
+            return ImmutableArray<ValidationError>.Empty;
         }
     }
 }

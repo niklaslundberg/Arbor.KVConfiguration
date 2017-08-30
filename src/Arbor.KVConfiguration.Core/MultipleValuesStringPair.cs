@@ -7,21 +7,29 @@ namespace Arbor.KVConfiguration.Core
 {
     public struct MultipleValuesStringPair : IEquatable<MultipleValuesStringPair>
     {
+        private readonly ImmutableArray<string> _values;
+
         public MultipleValuesStringPair([NotNull] string key, ImmutableArray<string> values)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-
-            Key = key;
-            Values = values;
+            Key = key ?? throw new ArgumentNullException(nameof(key));
+            _values = values;
             HasNonEmptyValue = values.Any(value => !string.IsNullOrWhiteSpace(value));
         }
 
         public string Key { get; }
 
-        public ImmutableArray<string> Values { get; }
+        public ImmutableArray<string> Values
+        {
+            get
+            {
+                if (_values.IsDefault)
+                {
+                    return ImmutableArray<string>.Empty;
+                }
+
+                return _values;
+            }
+        }
 
         public bool HasNonEmptyValue { get; }
 
@@ -39,7 +47,8 @@ namespace Arbor.KVConfiguration.Core
 
         public bool Equals(MultipleValuesStringPair other)
         {
-            return string.Equals(Key, other.Key) && Values.SequenceEqual(other.Values);
+            return string.Equals(Key, other.Key, StringComparison.OrdinalIgnoreCase) &&
+                   Values.SequenceEqual(other.Values, StringComparer.OrdinalIgnoreCase);
         }
 
         public override bool Equals(object obj)
