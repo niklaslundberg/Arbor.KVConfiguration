@@ -35,6 +35,11 @@ namespace Arbor.KVConfiguration.Core
             return Initialize(multiSourceKeyValueConfiguration);
         }
 
+        /// <summary>
+        /// Add new configuration, last one wins
+        /// </summary>
+        /// <param name="keyValueConfiguration"></param>
+        /// <returns></returns>
         public static AppSettingsBuilder Add([NotNull] IKeyValueConfiguration keyValueConfiguration)
         {
             if (keyValueConfiguration == null)
@@ -45,6 +50,12 @@ namespace Arbor.KVConfiguration.Core
             return new AppSettingsBuilder(keyValueConfiguration, null);
         }
 
+        /// <summary>
+        /// Add new configuration, last one wins
+        /// </summary>
+        /// <param name="appSettingsBuilder"></param>
+        /// <param name="keyValueConfiguration"></param>
+        /// <returns></returns>
         public static AppSettingsBuilder Add(
             [NotNull] this AppSettingsBuilder appSettingsBuilder,
             [NotNull] IKeyValueConfiguration keyValueConfiguration)
