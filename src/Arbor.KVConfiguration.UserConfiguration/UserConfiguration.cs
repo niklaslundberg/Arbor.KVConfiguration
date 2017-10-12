@@ -13,9 +13,9 @@ namespace Arbor.KVConfiguration.UserConfiguration
 
         private readonly IKeyValueConfiguration _configuration;
 
-        public UserConfiguration()
+        public UserConfiguration(string basePath = null)
         {
-            string fileFullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ConfigUserFileName);
+            string fileFullPath = Path.Combine(basePath ?? AppDomain.CurrentDomain.BaseDirectory, ConfigUserFileName);
 
             if (File.Exists(fileFullPath))
             {
