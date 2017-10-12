@@ -1,7 +1,7 @@
 using System;
 using JetBrains.Annotations;
 
-namespace Arbor.KVConfiguration.Core.Extensions.LongExtensions
+namespace Arbor.KVConfiguration.Core.Extensions.IntExtensions
 {
     public static class KeyValueConfigurationIntExtensions
     {
