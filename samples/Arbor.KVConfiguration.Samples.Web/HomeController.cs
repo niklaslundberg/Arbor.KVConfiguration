@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
@@ -44,6 +45,8 @@ namespace Arbor.KVConfiguration.Samples.Web
                 configurationItems = _keyValueConfiguration.GetKeyValueConfigurationItems();
             }
 
+            var appData = ConfigurationManager.AppSettings.AllKeys.Select(key => new {Key=key,Value=ConfigurationManager.AppSettings[key] }).ToArray();
+
             var data = new
             {
                 _keyValueConfiguration.AllKeys,
@@ -51,7 +54,10 @@ namespace Arbor.KVConfiguration.Samples.Web
                 _keyValueConfiguration.AllValues,
                 _keyValueConfiguration.AllWithMultipleValues,
                 ConfigurationItems = configurationItems,
-                sourceForKey
+                sourceForKey,
+                AppDataNonExistingKey = ConfigurationManager.AppSettings["non-existing-key"],
+                AppDataExistingKey = ConfigurationManager.AppSettings["ATestKey"],
+                appData
             };
 
             var contentResult = new ContentResult
