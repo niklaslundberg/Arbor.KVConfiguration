@@ -2,7 +2,7 @@
 using System.IO;
 using Arbor.KVConfiguration.Core;
 
-namespace Arbor.KVConfiguration.SystemConfiguration.Providers
+namespace Arbor.KVConfiguration.SystemConfiguration.Providers.Json
 {
     public class JsonKeyValueConfigurationBuilder : KeyValueConfigurationBuilder
     {
