@@ -32,6 +32,6 @@
     <tags></tags>
   </metadata>
   <files>
-    <file src="bin\$configuration$\net471\Arbor.KVConfiguration.SystemConfiguration.dll" target="lib\net471" />
+    <file src="bin\$configuration$\net471\Arbor.KVConfiguration.SystemConfiguration.Providers.Json.dll" target="lib\net471" />
   </files>
 </package>

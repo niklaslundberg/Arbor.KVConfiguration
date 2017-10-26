@@ -30,6 +30,6 @@
     <tags></tags>
   </metadata>
   <files>
-    <file src="bin\$configuration$\net471\Arbor.KVConfiguration.SystemConfiguration.dll" target="lib\net471" />
+    <file src="bin\$configuration$\net471\Arbor.KVConfiguration.SystemConfiguration.Providers.dll" target="lib\net471" />
   </files>
 </package>
