@@ -15,7 +15,7 @@ namespace Arbor.KVConfiguration.Core.Extensions
                 throw new ArgumentNullException(nameof(type));
             }
 
-            return type.IsClass && type.IsPublic && type.IsAbstract && type.IsSealed;
+            return type.IsClass && (type.IsPublic || type.IsNestedPublic) && type.IsAbstract && type.IsSealed;
         }
 
         internal static ImmutableArray<FieldInfo> GetPublicConstantStringFields([NotNull] this Assembly assembly)
