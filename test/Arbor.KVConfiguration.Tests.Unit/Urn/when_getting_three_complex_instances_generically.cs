@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 namespace Arbor.KVConfiguration.Tests.Unit.Urn
 {
     [Subject(typeof(UrnKeyValueExtensions))]
-    public class when_getting_three_complex_instances
+    public class when_getting_three_complex_instances_generically
     {
         private static IKeyValueConfiguration configuration;
 

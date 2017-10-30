@@ -30,19 +30,60 @@ namespace Arbor.KVConfiguration.Urns
             return instances.Single();
         }
 
-        public static ImmutableArray<T> GetInstances<T>(
-            [NotNull] this IKeyValueConfiguration keyValueConfiguration)
+        public static object GetInstance(
+            [NotNull] this IKeyValueConfiguration keyValueConfiguration,
+            [NotNull] Type type)
         {
             if (keyValueConfiguration == null)
             {
                 throw new ArgumentNullException(nameof(keyValueConfiguration));
             }
 
-            var urnAttribute = typeof(T).GetTypeInfo().GetCustomAttribute<UrnAttribute>();
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            ImmutableArray<object> instances = GetInstances(keyValueConfiguration, type);
+
+            if (instances.Length > 1)
+            {
+                throw new InvalidOperationException($"Found multiple {type}, expected 0 or 1");
+            }
+
+            if (!instances.Any())
+            {
+                return default;
+            }
+
+            return instances.Single();
+        }
+
+        public static ImmutableArray<T> GetInstances<T>(
+            [NotNull] this IKeyValueConfiguration keyValueConfiguration)
+        {
+            return GetInstances(keyValueConfiguration, typeof(T)).OfType<T>().ToImmutableArray();
+        }
+
+        public static ImmutableArray<object> GetInstances(
+            [NotNull] this IKeyValueConfiguration keyValueConfiguration,
+            [NotNull] Type type)
+        {
+            if (keyValueConfiguration == null)
+            {
+                throw new ArgumentNullException(nameof(keyValueConfiguration));
+            }
+
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            var urnAttribute = type.GetCustomAttribute<UrnAttribute>();
 
             if (urnAttribute == null)
             {
-                throw new ArgumentException($"Found no {nameof(Urn).ToUpper()} for type {typeof(T)}");
+                throw new ArgumentException($"Found no {nameof(Urn).ToUpper()} for type {type}");
             }
 
             Urn typeUrn = urnAttribute.Urn;
@@ -61,13 +102,14 @@ namespace Arbor.KVConfiguration.Urns
                     .Where(key => key.NamespaceParts() == expectedParts)
                     .ToLookup(urn => urn.Parent, urn => urn).ToArray();
 
-            ImmutableArray<T> items =
-                instanceKeys.Select(keyValuePair => GetItem<T>(keyValueConfiguration, keyValuePair)).ToImmutableArray();
+            ImmutableArray<object> items = instanceKeys
+                .Select(keyValuePair => GetItem(keyValueConfiguration, keyValuePair, type))
+                .ToImmutableArray();
 
             return items;
         }
 
-        private static T GetItem<T>(IKeyValueConfiguration keyValueConfiguration, IGrouping<Urn, Urn> keyValuePair)
+        private static object GetItem(IKeyValueConfiguration keyValueConfiguration, IGrouping<Urn, Urn> keyValuePair, Type type)
         {
             dynamic expando = new ExpandoObject();
 
@@ -100,7 +142,7 @@ namespace Arbor.KVConfiguration.Urns
 
             string json = JsonConvert.SerializeObject(expando);
 
-            var item = JsonConvert.DeserializeObject<T>(json);
+            object item = JsonConvert.DeserializeObject(json, type);
 
             return item;
         }

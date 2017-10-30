@@ -34,8 +34,8 @@ namespace Arbor.KVConfiguration.JsonConfiguration
             ConfigurationItems = items;
         }
 
-        public JsonKeyValueConfiguration(string fileFullPath)
-            : this(ReadJsonFile(fileFullPath))
+        public JsonKeyValueConfiguration(string fileFullPath, bool throwWhenNotExists = true)
+            : this(ReadJsonFile(fileFullPath, throwWhenNotExists))
         {
         }
 
@@ -50,7 +50,9 @@ namespace Arbor.KVConfiguration.JsonConfiguration
 
         public ImmutableArray<KeyValueConfigurationItem> ConfigurationItems { get; }
 
-        private static ImmutableArray<KeyValueConfigurationItem> ReadJsonFile(string fileFullPath)
+        private static ImmutableArray<KeyValueConfigurationItem> ReadJsonFile(
+            string fileFullPath,
+            bool throwWhenNotExists)
         {
             if (string.IsNullOrWhiteSpace(fileFullPath))
             {
@@ -59,7 +61,12 @@ namespace Arbor.KVConfiguration.JsonConfiguration
 
             if (!File.Exists(fileFullPath))
             {
-                throw new ArgumentException($"The file '{fileFullPath}' does not exist", nameof(fileFullPath));
+                if (throwWhenNotExists)
+                {
+                    throw new ArgumentException($"The file '{fileFullPath}' does not exist", nameof(fileFullPath));
+                }
+
+                return ImmutableArray<KeyValueConfigurationItem>.Empty;
             }
 
             var jsonFileReader = new JsonFileReader(fileFullPath);
