@@ -22,6 +22,8 @@ namespace Arbor.KVConfiguration.Core
             }
         }
 
+        public static bool IsInitialized => _appSettings != null;
+
         public static IKeyValueConfiguration Initialize([NotNull] IKeyValueConfiguration keyValueConfiguration)
         {
             if (keyValueConfiguration == null)

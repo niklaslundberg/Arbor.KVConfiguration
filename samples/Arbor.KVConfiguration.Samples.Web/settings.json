@@ -1,0 +1,12 @@
+﻿{
+    "keys": [
+        {
+            "key": "urn:arbor:kvconfiguration:system-configuration:providers:initialize-class",
+            "value": "Arbor.KVConfiguration.Samples.Web.ConfigurationInitializer"
+        },
+        {
+            "key": "urn:arbor:kvconfiguration:system-configuration:providers:initialize-method",
+            "value": "EnsureConfigurationIsInitialized"
+        }
+    ]
+}

@@ -1,0 +1,42 @@
+﻿using System.Collections.Immutable;
+using System.Linq;
+using Arbor.KVConfiguration.Core;
+using Arbor.KVConfiguration.Core.Metadata;
+using Machine.Specifications;
+
+namespace Arbor.KVConfiguration.Tests.Unit
+{
+    [Subject(typeof(ReflectionKeyValueConfiguration))]
+    public class when_getting_reflected_constants_in_nested_classes
+    {
+        private Establish context = () =>
+        {
+            _reflectionKeyValueConfiguration =
+                new ReflectionKeyValueConfiguration(typeof(ClassWithNestedClasses).Assembly);
+        };
+
+        private Because of = () =>
+        {
+            configuration_items = _reflectionKeyValueConfiguration.ConfigurationItems;
+        };
+
+        private It should_find_plain_key = () =>
+        {
+            configuration_items.FirstOrDefault(x => x.Key == ClassWithNestedClasses.PlainKey).Value.ShouldNotBeNull();;
+        };
+
+        private It should_find_nested_key = () =>
+        {
+            configuration_items.FirstOrDefault(x => x.Key == ClassWithNestedClasses.NestedA.NestedKeyA).Value.ShouldNotBeNull();;
+        };
+
+        private It should_find_second_nested_key = () =>
+        {
+            configuration_items.FirstOrDefault(x => x.Key == ClassWithNestedClasses.NestedB.NestedKeyB).Value.ShouldNotBeNull();;
+        };
+
+        private static ReflectionKeyValueConfiguration _reflectionKeyValueConfiguration;
+
+        private static ImmutableArray<KeyValueConfigurationItem> configuration_items;
+    }
+}

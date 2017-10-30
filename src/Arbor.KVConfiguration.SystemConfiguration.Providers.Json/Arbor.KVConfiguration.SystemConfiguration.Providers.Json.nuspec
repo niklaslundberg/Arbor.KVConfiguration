@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Arbor.KVConfiguration.SystemConfiguration</id>
+    <id>Arbor.KVConfiguration.SystemConfiguration.Providers.Json</id>
     <version>0.0.1</version>
-    <title>Arbor.KVConfiguration.SystemConfiguration</title>
+    <title>Arbor.KVConfiguration.SystemConfiguration.ProvidersJson</title>
     <authors>Niklas Lundberg</authors>
     <owners></owners>
     <description>
@@ -12,7 +12,7 @@
     <releaseNotes>
     </releaseNotes>
     <summary>
-      Arbor.KVConfiguration.SystemConfiguration
+      Arbor.KVConfiguration.SystemConfiguration.ProvidersJson
     </summary>
     <language>en-US</language>
     <projectUrl>https://github.com/niklaslundberg/Arbor.KVConfiguration</projectUrl>
@@ -22,15 +22,16 @@
     <copyright>Copyright Niklas Lundberg 2014 - 2017</copyright>
     <dependencies>
       <dependency id="Arbor.KVConfiguration.Core" version="[$version$]" />
+      <dependency id="Arbor.KVConfiguration.SystemConfiguration.Providers" version="[$version$]" />
+      <dependency id="Arbor.KVConfiguration.JsonConfiguration" version="[$version$]" />
     </dependencies>
     <references></references>
     <frameworkAssemblies>
-      <frameworkAssembly assemblyName="System.Configuration" targetFramework="net40" />
+      <frameworkAssembly assemblyName="System.Configuration" targetFramework="net471" />
     </frameworkAssemblies>
     <tags></tags>
   </metadata>
   <files>
-    <file src="bin\$configuration$\net461\Arbor.KVConfiguration.SystemConfiguration.dll" target="lib\net461" />
-    <file src="bin\$configuration$\net471\Arbor.KVConfiguration.SystemConfiguration.dll" target="lib\net471" />
+    <file src="bin\$configuration$\net471\Arbor.KVConfiguration.SystemConfiguration.Providers.Json.dll" target="lib\net471" />
   </files>
 </package>
