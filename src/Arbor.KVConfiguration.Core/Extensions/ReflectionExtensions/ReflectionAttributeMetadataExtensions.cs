@@ -10,23 +10,23 @@ namespace Arbor.KVConfiguration.Core.Extensions.ReflectionExtensions
     public static class ReflectionAttributeMetadataExtensions
     {
         public static ImmutableArray<ConfigurationMetadata> GetMetadataType(
-            [NotNull] this TypeInfo typeInfo)
+            [NotNull] this Type type)
         {
-            if (typeInfo == null)
+            if (type == null)
             {
-                throw new ArgumentNullException(nameof(typeInfo));
+                throw new ArgumentNullException(nameof(type));
             }
 
-            if (!typeInfo.IsPublicStaticClass())
+            if (!type.IsPublicStaticClass())
             {
                 return ImmutableArray<ConfigurationMetadata>.Empty;
             }
 
-            return GetMetadataFromFields(typeInfo.GetPublicConstantStringFields());
+            return GetMetadataFromFields(type.GetPublicConstantStringFields());
         }
 
         public static ImmutableArray<ConfigurationMetadata> GetMetadataTypes(
-            this ImmutableArray<TypeInfo> types)
+            this ImmutableArray<Type> types)
         {
             if (types.IsDefaultOrEmpty)
             {

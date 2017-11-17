@@ -8,7 +8,7 @@ namespace Arbor.KVConfiguration.Core.Extensions
 {
     internal static class TypeExtensions
     {
-        internal static bool IsPublicStaticClass([NotNull] this TypeInfo type)
+        internal static bool IsPublicStaticClass([NotNull] this Type type)
         {
             if (type == null)
             {
@@ -25,28 +25,45 @@ namespace Arbor.KVConfiguration.Core.Extensions
                 throw new ArgumentNullException(nameof(assembly));
             }
 
-            ImmutableArray<FieldInfo> fields = assembly.DefinedTypes
+            ImmutableArray<FieldInfo> fields = assembly.GetLoadableTypes()
                 .Where(IsPublicStaticClass)
-                .SelectMany(type => type.DeclaredFields)
+                .SelectMany(type => type.GetFields())
                 .Where(field => field.IsPublicConstantStringField())
                 .ToImmutableArray();
 
             return fields;
         }
 
-        internal static ImmutableArray<FieldInfo> GetPublicConstantStringFields([NotNull] this TypeInfo type)
+        internal static ImmutableArray<Type> GetLoadableTypes([NotNull] this Assembly assembly)
+        {
+            if (assembly == null)
+            {
+                throw new ArgumentNullException(nameof(assembly));
+            }
+
+            try
+            {
+                return assembly.GetTypes().ToImmutableArray();
+            }
+            catch (ReflectionTypeLoadException ex)
+            {
+                return ex.Types.Where(type => type != null).ToImmutableArray();
+            }
+        }
+
+        internal static ImmutableArray<FieldInfo> GetPublicConstantStringFields([NotNull] this Type type)
         {
             if (type == null)
             {
                 throw new ArgumentNullException(nameof(type));
             }
 
-            if (!(IsPublicStaticClass(type)))
+            if (!IsPublicStaticClass(type))
             {
                 return ImmutableArray<FieldInfo>.Empty;
             }
 
-            ImmutableArray<FieldInfo> publicConstantStringFields = type.DeclaredFields
+            ImmutableArray<FieldInfo> publicConstantStringFields = type.GetFields()
                 .Where(field => field.IsPublicConstantStringField())
                 .ToImmutableArray();
 

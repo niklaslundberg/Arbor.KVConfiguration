@@ -24,7 +24,7 @@ namespace Arbor.KVConfiguration.Urns
 
             if (!instances.Any())
             {
-                return default(T);
+                return default;
             }
 
             return instances.Single();
