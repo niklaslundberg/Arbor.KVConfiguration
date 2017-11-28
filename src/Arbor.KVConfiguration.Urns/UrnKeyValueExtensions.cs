@@ -118,13 +118,12 @@ namespace Arbor.KVConfiguration.Urns
             foreach (Urn urn in keyValuePair)
             {
                 string[] values =
-                    keyValueConfiguration.AllWithMultipleValues
-                        .Where(
-                            multipleValuesStringPair =>
-                                multipleValuesStringPair.Key.Equals(
-                                    urn.OriginalValue,
-                                    StringComparison.OrdinalIgnoreCase))
-                        .SelectMany(s => s.Values)
+                    keyValueConfiguration.AllValues
+                        .Where(stringPair =>
+                            stringPair.Key.Equals(
+                                urn.OriginalValue,
+                                StringComparison.OrdinalIgnoreCase))
+                        .Select(stringPair => stringPair.Value)
                         .ToArray();
 
                 string normalizedPropertyName = urn.Name.Replace("-", string.Empty);
