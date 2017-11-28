@@ -142,7 +142,16 @@ namespace Arbor.KVConfiguration.Urns
 
             string json = JsonConvert.SerializeObject(expando);
 
-            object item = JsonConvert.DeserializeObject(json, type);
+            object item;
+
+            try
+            {
+                item = JsonConvert.DeserializeObject(json, type);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException($"Could not deserialize json '{json}' to target type {type.FullName}", ex);
+            }
 
             return item;
         }
