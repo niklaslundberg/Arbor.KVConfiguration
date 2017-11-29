@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using Arbor.KVConfiguration.Core;
 using JetBrains.Annotations;
+using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
 
 namespace Arbor.KVConfiguration.Urns
@@ -104,39 +105,93 @@ namespace Arbor.KVConfiguration.Urns
 
             ImmutableArray<object> items = instanceKeys
                 .Select(keyValuePair => GetItem(keyValueConfiguration, keyValuePair, type))
+                .Where(instance => instance != null)
                 .ToImmutableArray();
 
             return items;
         }
 
-        private static object GetItem(IKeyValueConfiguration keyValueConfiguration, IGrouping<Urn, Urn> keyValuePair, Type type)
+        private static object GetItem(
+            IKeyValueConfiguration keyValueConfiguration,
+            IGrouping<Urn, Urn> keyValuePair,
+            Type type)
         {
             dynamic expando = new ExpandoObject();
 
+            Console.WriteLine($"Creating type {type.FullName}, urn {keyValuePair.Key}");
+
+            Urn instanceUri = keyValuePair.Key;
+
             var asDictionary = (IDictionary<string, object>)expando;
 
-            foreach (Urn urn in keyValuePair)
-            {
-                string[] values =
-                    keyValueConfiguration.AllValues
-                        .Where(stringPair =>
-                            stringPair.Key.Equals(
-                                urn.OriginalValue,
-                                StringComparison.OrdinalIgnoreCase))
-                        .Select(stringPair => stringPair.Value)
-                        .ToArray();
-
-                string normalizedPropertyName = urn.Name.Replace("-", string.Empty);
-
-                if (values.Length == 1)
+            Urn[] allKeys = keyValueConfiguration.AllKeys
+                .Select(key =>
                 {
-                    string singleValue = values.Single();
-                    asDictionary.Add(normalizedPropertyName, singleValue);
+                    if (!Urn.TryParse(key, out Urn urn))
+                    {
+                        return null;
+                    }
+
+                    return urn;
+                })
+                .ToArray();
+
+           Urn[] filteredKeys = allKeys
+                .Where(urnKey =>
+                    urnKey.IsInHierarchy(instanceUri))
+                .ToArray();
+
+            foreach (Urn itemValue in filteredKeys)
+            {
+                Console.WriteLine($"Found key {itemValue}");
+
+                string normalizedPropertyName = itemValue.Name.Replace("-", string.Empty);
+
+                string[] values = keyValueConfiguration.AllWithMultipleValues
+                    .Select(t =>
+                    {
+                        if (!Urn.TryParse(t.Key, out Urn urn))
+                        {
+                            return null;
+                        }
+
+                        return new { Urn = urn, Pair = t };
+                    })
+                    .Where(urn => urn != null)
+                    .Where(urn => urn.Urn == itemValue)
+                    .SelectMany(s => s.Pair.Values)
+                    .ToArray();
+
+                if (values.Length == 0)
+                {
+                    if (!asDictionary.ContainsKey(normalizedPropertyName))
+                    {
+                        asDictionary.Add(normalizedPropertyName, "");
+                    }
+
+                    Console.WriteLine("\tNo value");
+                }
+                else if (values.Length == 1)
+                {
+                    string value = values.Single();
+                    asDictionary.Add(normalizedPropertyName, value);
+
+                    Console.WriteLine($"\tSingle value: {value}");
                 }
                 else
                 {
-                    asDictionary.Add(normalizedPropertyName, values);
+                    foreach (var value in values)
+                    {
+                        Console.WriteLine($"\tMultiple value: {value}");
+                    }
+
+                    asDictionary.Add(normalizedPropertyName, values.Select(s => s).ToArray());
                 }
+            }
+
+            if (asDictionary.Values.All(value => value is string text && string.IsNullOrWhiteSpace(text)))
+            {
+                return null;
             }
 
             string json = JsonConvert.SerializeObject(expando);
@@ -149,7 +204,9 @@ namespace Arbor.KVConfiguration.Urns
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException($"Could not deserialize json '{json}' to target type {type.FullName}", ex);
+                throw new InvalidOperationException(
+                    $"Could not deserialize json '{json}' to target type {type.FullName}",
+                    ex);
             }
 
             return item;

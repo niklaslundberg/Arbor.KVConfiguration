@@ -45,7 +45,7 @@ namespace Arbor.KVConfiguration.Core
             get
             {
                 ImmutableArray<MultipleValuesStringPair> values =
-                    GetMultipleValues(_appSettingsDecoratorBuilder.AppSettingsBuilder);
+                    GetMultipleValues(_appSettingsDecoratorBuilder.AppSettingsBuilder, AllKeys);
 
                 ImmutableArray<MultipleValuesStringPair> multipleValuesStringPairs = values
                     .Select(item => new MultipleValuesStringPair(item.Key,
@@ -192,22 +192,30 @@ namespace Arbor.KVConfiguration.Core
             return GetConfiguratorDefining(appSettingsBuilder.Previous, key);
         }
 
-        private ImmutableArray<MultipleValuesStringPair> GetMultipleValues(AppSettingsBuilder appSettingsBuilder)
+        private ImmutableArray<MultipleValuesStringPair> GetMultipleValues(AppSettingsBuilder appSettingsBuilder, ImmutableArray<string> keysLeft)
         {
             if (appSettingsBuilder == null)
             {
                 return ImmutableArray<MultipleValuesStringPair>.Empty;
             }
 
-            ImmutableArray<MultipleValuesStringPair> values =
-                appSettingsBuilder.KeyValueConfiguration.AllWithMultipleValues;
+            List<MultipleValuesStringPair> values =
+                appSettingsBuilder.KeyValueConfiguration.AllWithMultipleValues
+                .Where(item => keysLeft.Any(keyLeft => keyLeft.Equals(item.Key, StringComparison.OrdinalIgnoreCase)))
+                .ToList();
 
-            if (values.IsDefaultOrEmpty)
+            if (values.Count == 0)
             {
                 _logAction?.Invoke(
                     $"The current source {appSettingsBuilder.KeyValueConfiguration.GetType().Name} does not have any values for multiple values");
 
-                return GetMultipleValues(appSettingsBuilder.Previous);
+                return GetMultipleValues(appSettingsBuilder.Previous, keysLeft);
+            }
+
+            ImmutableArray<string> keysLeftAfterValues = keysLeft.Except(values.Select(t => t.Key)).ToImmutableArray();
+            if (keysLeftAfterValues.Any())
+            {
+                values.AddRange(GetMultipleValues(appSettingsBuilder.Previous, keysLeftAfterValues));
             }
 
             string FormatValue(MultipleValuesStringPair pair)
@@ -220,7 +228,7 @@ namespace Arbor.KVConfiguration.Core
             _logAction?.Invoke(
                 $"The current source {appSettingsBuilder.KeyValueConfiguration.GetType().Name} has values: {join}");
 
-            return values;
+            return values.ToImmutableArray();
         }
 
         private List<KeyValueConfigurationItem> GetConfigurationItems(AppSettingsBuilder appSettingsBuilder)
