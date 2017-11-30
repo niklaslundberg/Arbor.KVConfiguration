@@ -134,6 +134,7 @@ namespace Arbor.KVConfiguration.Urns
 
                     return urn;
                 })
+                .Where(urn => urn != null)
                 .ToArray();
 
            Urn[] filteredKeys = allKeys
@@ -180,7 +181,7 @@ namespace Arbor.KVConfiguration.Urns
                 }
                 else
                 {
-                    foreach (var value in values)
+                    foreach (string value in values)
                     {
                         Console.WriteLine($"\tMultiple value: {value}");
                     }
