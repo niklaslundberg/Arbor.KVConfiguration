@@ -43,8 +43,8 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 
         private Because of = () => { instances = configuration.GetInstances<AComplexImmutableType>(); };
 
-        private It should_a_non_null_list
-            = () => instances.ShouldNotBeNull();
+        private It should_be_a_non_empty_list
+            = () => instances.ShouldNotBeEmpty();
 
         private It should_have_instance1_children1 =
             () => { instances.OrderBy(i => i.Id).First().Children.ShouldContain("myChild1.1", "myChild1.2"); };
