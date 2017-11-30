@@ -102,5 +102,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         };
 
         private It should_return_a_non_empty_list = () => instances.ShouldNotBeEmpty();
+
+        private It should_return_three_instances = () => instances.Length.ShouldEqual(3);
     }
 }

@@ -99,11 +99,12 @@ namespace Arbor.KVConfiguration.Urns
                     .Select(key => new Urn(key))
                     .Where(
                         urn =>
-                            urn.OriginalValue.StartsWith(urn.OriginalValue, StringComparison.OrdinalIgnoreCase))
+                            urn.IsInHierarchy(typeUrn))
                     .Where(key => key.NamespaceParts() == expectedParts)
                     .ToLookup(urn => urn.Parent, urn => urn).ToArray();
 
             ImmutableArray<object> items = instanceKeys
+                .OrderBy(key => key.Key.ToString())
                 .Select(keyValuePair => GetItem(keyValueConfiguration, keyValuePair, type))
                 .Where(instance => instance != null)
                 .ToImmutableArray();
@@ -190,7 +191,12 @@ namespace Arbor.KVConfiguration.Urns
                 }
             }
 
-            if (asDictionary.Values.All(value => value is string text && string.IsNullOrWhiteSpace(text)))
+            if (asDictionary.Keys.Count == 0)
+            {
+                return null;
+            }
+
+            if (asDictionary.Values.All(value => value is null || (value is string text && string.IsNullOrWhiteSpace(text))))
             {
                 return null;
             }
