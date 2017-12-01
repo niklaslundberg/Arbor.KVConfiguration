@@ -201,7 +201,8 @@ namespace Arbor.KVConfiguration.Core
 
             List<MultipleValuesStringPair> values =
                 appSettingsBuilder.KeyValueConfiguration.AllWithMultipleValues
-                .Where(item => keysLeft.Any(keyLeft => keyLeft.Equals(item.Key, StringComparison.OrdinalIgnoreCase)))
+                .Where(multipleValuesStringPair => keysLeft.Any(keyLeft => keyLeft.Equals(multipleValuesStringPair.Key, StringComparison.OrdinalIgnoreCase)))
+                .Where(multipleValuesStringPair => multipleValuesStringPair.HasNonEmptyValue)
                 .ToList();
 
             if (values.Count == 0)
