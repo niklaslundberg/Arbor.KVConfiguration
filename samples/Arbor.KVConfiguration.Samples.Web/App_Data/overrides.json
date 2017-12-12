@@ -1,0 +1,8 @@
+﻿{
+    "keys": [
+        {
+            "key": "user:TestConnection",
+            "value": "OverridedConnectionStringValue"
+        }
+    ]
+}

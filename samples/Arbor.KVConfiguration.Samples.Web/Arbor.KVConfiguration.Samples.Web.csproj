@@ -51,6 +51,7 @@
   <ItemGroup>
     <Content Include="appsettings.json" />
     <Content Include="settings.json" />
+    <Content Include="App_Data\overrides.json" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -62,7 +63,9 @@
   <ItemGroup>
     <Content Include="config.user" />
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddSuffixDecorator.cs" />
@@ -88,6 +91,10 @@
     <ProjectReference Include="..\..\src\Arbor.KVConfiguration.Schema\Arbor.KVConfiguration.Schema.csproj">
       <Project>{478302f9-508b-4f44-a259-870d5d734099}</Project>
       <Name>Arbor.KVConfiguration.Schema</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Arbor.KVConfiguration.SystemConfiguration.Providers.Json\Arbor.KVConfiguration.SystemConfiguration.Providers.Json.csproj">
+      <Project>{e2c090b7-148e-4d97-8f20-1ec1e0087b1f}</Project>
+      <Name>Arbor.KVConfiguration.SystemConfiguration.Providers.Json</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Arbor.KVConfiguration.SystemConfiguration.Providers\Arbor.KVConfiguration.SystemConfiguration.Providers.csproj">
       <Project>{a5e524c1-fbd8-49e5-9980-ee978d06d4ab}</Project>
@@ -126,10 +133,6 @@
     <Reference Include="System" />
     <Reference Include="System.Collections.Immutable, Version=1.2.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\src\packages\System.Collections.Immutable.1.4.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Collections.Specialized">
-      <HintPath>..\..\src\packages\System.Collections.Specialized.4.3.0\lib\net46\System.Collections.Specialized.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />

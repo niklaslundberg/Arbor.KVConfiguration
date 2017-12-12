@@ -57,7 +57,11 @@ namespace Arbor.KVConfiguration.Samples.Web
                 sourceForKey,
                 AppDataNonExistingKey = ConfigurationManager.AppSettings["non-existing-key"],
                 AppDataExistingKey = ConfigurationManager.AppSettings["ATestKey"],
-                appData
+                appData,
+                ConnectionStrings = ConfigurationManager.ConnectionStrings
+                    .OfType<ConnectionStringSettings>()
+                    .Select(c => new { c.Name, c.ConnectionString })
+                    .ToArray()
             };
 
             var contentResult = new ContentResult
