@@ -35,6 +35,11 @@ namespace Arbor.KVConfiguration.SystemConfiguration.Providers
 
             string value = GetKeyValueConfiguration()[key];
 
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return null;
+            }
+
             return value;
         }
 
