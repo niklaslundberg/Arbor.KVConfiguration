@@ -14,6 +14,8 @@ namespace Arbor.KVConfiguration.Core
         private readonly AppSettingsDecoratorBuilder _appSettingsDecoratorBuilder;
         private readonly Action<string> _logAction;
 
+        private const string Arrow = "-->";
+
         public MultiSourceKeyValueConfiguration(
             [NotNull] AppSettingsDecoratorBuilder appSettingsDecoratorBuilder,
             Action<string> logAction = null)
@@ -21,6 +23,49 @@ namespace Arbor.KVConfiguration.Core
             _appSettingsDecoratorBuilder = appSettingsDecoratorBuilder ??
                                            throw new ArgumentNullException(nameof(appSettingsDecoratorBuilder));
             _logAction = logAction;
+
+            string decorators = BuildDecoratorsAsString(_appSettingsDecoratorBuilder);
+
+            SourceChain = "source chain: " + BuildChainAsString(_appSettingsDecoratorBuilder.AppSettingsBuilder) + (string.IsNullOrWhiteSpace(decorators) ? string.Empty : ", decorators: " + decorators);
+        }
+
+        private string BuildDecoratorsAsString(AppSettingsDecoratorBuilder appSettingsDecoratorBuilder)
+        {
+            if (appSettingsDecoratorBuilder is null || appSettingsDecoratorBuilder.Decorator is null)
+            {
+                return string.Empty;
+            }
+
+            if (appSettingsDecoratorBuilder.Decorator is NullDecorator)
+            {
+                return string.Empty;
+            }
+
+            string result = appSettingsDecoratorBuilder.Decorator.ToString();
+
+            if (appSettingsDecoratorBuilder.Previous != null)
+            {
+                result += Arrow + BuildDecoratorsAsString(appSettingsDecoratorBuilder.Previous);
+            }
+
+            return result;
+        }
+
+        private string BuildChainAsString(AppSettingsBuilder builder)
+        {
+            if (builder is null || builder.KeyValueConfiguration is null)
+            {
+                return string.Empty;
+            }
+
+            string result = builder.KeyValueConfiguration.ToString();
+
+            if (builder.Previous != null)
+            {
+                result += Arrow + BuildChainAsString(builder.Previous);
+            }
+
+            return result;
         }
 
         public ImmutableArray<string> AllKeys => GetAllKeys(_appSettingsDecoratorBuilder.AppSettingsBuilder)
@@ -62,6 +107,8 @@ namespace Arbor.KVConfiguration.Core
 
         public ImmutableArray<KeyValueConfigurationItem> ConfigurationItems => GetConfigurationItems(
             _appSettingsDecoratorBuilder.AppSettingsBuilder).ToImmutableArray();
+
+        public string SourceChain { get; }
 
         public IKeyValueConfiguration ConfiguratorFor(string key, Action<string> logAction = null)
         {
@@ -252,6 +299,11 @@ namespace Arbor.KVConfiguration.Core
             }
 
             return configurationItems;
+        }
+
+        public override string ToString()
+        {
+            return $"{base.ToString()} [{SourceChain}]";
         }
     }
 }

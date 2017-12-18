@@ -11,12 +11,16 @@ namespace Arbor.KVConfiguration.Core
     {
         private readonly IKeyValueConfiguration _inMemoryKeyValueConfiguration;
 
+        private readonly string _assemblyName;
+
         public ReflectionKeyValueConfiguration([NotNull] Assembly assembly)
         {
             if (assembly == null)
             {
                 throw new ArgumentNullException(nameof(assembly));
             }
+
+            _assemblyName = assembly.FullName;
 
             ImmutableArray<KeyValueConfigurationItem> keyValueConfigurationItems =
                 ReflectionConfiguratonReader.ReadConfiguration(assembly);
@@ -42,5 +46,10 @@ namespace Arbor.KVConfiguration.Core
         public string this[string key] => _inMemoryKeyValueConfiguration[key];
 
         public ImmutableArray<KeyValueConfigurationItem> ConfigurationItems { get; }
+
+        public override string ToString()
+        {
+            return $"{base.ToString()} [assembly: '{_assemblyName}']";
+        }
     }
 }

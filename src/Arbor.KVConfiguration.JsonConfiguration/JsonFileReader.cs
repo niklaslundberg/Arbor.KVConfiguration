@@ -30,7 +30,15 @@ namespace Arbor.KVConfiguration.JsonConfiguration
         {
             string json = File.ReadAllText(_fileFullPath, Encoding.UTF8);
 
-            ConfigurationItems config = new JsonConfigurationSerializer().Deserialize(json);
+            ConfigurationItems config;
+            try
+            {
+                config = new JsonConfigurationSerializer().Deserialize(json);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException($"Could not read JSON configuration from file path '{_fileFullPath}' and JSON '{json}'", ex);
+            }
 
             return config;
         }

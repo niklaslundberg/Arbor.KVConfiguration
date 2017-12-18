@@ -12,6 +12,7 @@ namespace Arbor.KVConfiguration.JsonConfiguration
     public class JsonKeyValueConfiguration : IKeyValueConfigurationWithMetadata
     {
         private readonly IKeyValueConfiguration _inMemoryKeyValueConfiguration;
+        private string _fileFullPath;
 
         public JsonKeyValueConfiguration([NotNull] IEnumerable<KeyValueConfigurationItem> keyValueConfigurationItems)
         {
@@ -37,6 +38,7 @@ namespace Arbor.KVConfiguration.JsonConfiguration
         public JsonKeyValueConfiguration(string fileFullPath, bool throwWhenNotExists = true)
             : this(ReadJsonFile(fileFullPath, throwWhenNotExists))
         {
+            _fileFullPath = fileFullPath;
         }
 
         public ImmutableArray<string> AllKeys => _inMemoryKeyValueConfiguration.AllKeys;
@@ -75,6 +77,16 @@ namespace Arbor.KVConfiguration.JsonConfiguration
                 jsonFileReader.ReadConfiguration();
 
             return keyValueConfigurationItems;
+        }
+
+        public override string ToString()
+        {
+            if (!string.IsNullOrWhiteSpace(_fileFullPath))
+            {
+                return $"{base.ToString()} [json file source: '{_fileFullPath}', exists: {File.Exists(_fileFullPath)}]";
+            }
+
+            return $"{base.ToString()} [no json file source]";
         }
     }
 }
