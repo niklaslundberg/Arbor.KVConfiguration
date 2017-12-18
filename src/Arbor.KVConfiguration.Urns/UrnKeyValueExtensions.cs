@@ -207,7 +207,8 @@ namespace Arbor.KVConfiguration.Urns
 
             try
             {
-                item = JsonConvert.DeserializeObject(json, type);
+                JsonConverter[] converters = { new StringValuesJsonConverter()};
+                item = JsonConvert.DeserializeObject(json, type, converters);
             }
             catch (Exception ex)
             {
