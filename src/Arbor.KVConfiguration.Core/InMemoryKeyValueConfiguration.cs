@@ -22,7 +22,8 @@ namespace Arbor.KVConfiguration.Core
             {
                 throw new ArgumentNullException(nameof(nameValueCollection));
             }
-            _name = name;
+
+            _name = name ?? string.Empty;
 
             _keyValueDictionary =
                 new Dictionary<string, ImmutableArray<string>>(nameValueCollection.Count + 1,
