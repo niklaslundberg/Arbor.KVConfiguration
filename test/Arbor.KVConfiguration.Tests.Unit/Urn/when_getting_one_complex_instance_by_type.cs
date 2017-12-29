@@ -39,7 +39,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 
         private It should_have_instance1_uri1 = () => { instance.Uri.ShouldBeNull(); };
 
-        private It should_no_be_null
+        private It should_not_be_null
             = () => instance.ShouldNotBeNull();
     }
 }

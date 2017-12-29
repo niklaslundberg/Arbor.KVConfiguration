@@ -7,11 +7,11 @@ using Machine.Specifications;
 namespace Arbor.KVConfiguration.Tests.Unit.Urn
 {
     [Subject(typeof(UrnKeyValueExtensions))]
-    public class when_getting_single_simple_instances_by_type_and_multiple_sources
+    public class when_getting_multiple_named_simple_instances_by_generic_type_and_multiple_sources
     {
         private static IKeyValueConfiguration configuration;
 
-        private static ImmutableArray<ASimpleType> instances;
+        private static ImmutableArray<INamedInstance<ASimpleType>> instances;
 
         private Establish context = () =>
         {
@@ -19,13 +19,15 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
             {
                 { "urn:a:simple:type2:instance1:url", "myUrl1" },
                 { "urn:a:simple:type2:instance1:text", "myText1" },
+                { "urn:a:simple:type:default1:url", "myUrl1" },
+                { "urn:a:simple:type:default1:text", "myText1" },
                 { "unrelated1", "abc" },
             };
 
             var secondaryKeys = new NameValueCollection
             {
-                { "urn:a:simple:type:default:url", "myUrl" },
-                { "urn:a:simple:type:default:text", "myText" },
+                { "urn:a:simple:type:default0:url", "myUrl0" },
+                { "urn:a:simple:type:default0:text", "myText0" },
                 { "unrelated2", "123" },
             };
 
@@ -41,18 +43,36 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
                 .Build();
         };
 
-        private Because of = () => { instances = configuration.GetInstances(typeof(ASimpleType)).OfType<ASimpleType>().ToImmutableArray(); };
+        private Because of = () =>
+        {
+            instances = configuration.GetNamedInstances<ASimpleType>()
+                .ToImmutableArray();
+        };
 
         private It first_instance_should_not_be_null
             = () => instances[0].ShouldNotBeNull();
 
-        private It should_have_instance1_url = () => { instances[0].Url.ShouldEqual("myUrl"); };
+        private It should_have_instance1_url = () => { instances[0].Value.Url.ShouldEqual("myUrl0"); };
+
+        private It should_have_instance1_name = () => { instances[0].Name.ShouldEqual("default0"); };
 
         private It should_have_instance1_text = () =>
         {
-            instances[0].Text.ShouldEqual("myText");
+            instances[0].Value.Text.ShouldEqual("myText0");
         };
 
-        private It should_have_1_instance = () => instances.Length.ShouldEqual(1);
+        private It second_instance_should_not_be_null
+            = () => instances[1].ShouldNotBeNull();
+
+        private It second_have_instance2_url = () => { instances[1].Value.Url.ShouldEqual("myUrl1"); };
+
+        private It second_have_instance2_name = () => { instances[1].Name.ShouldEqual("default1"); };
+
+        private It second_have_instance2_text = () =>
+        {
+            instances[1].Value.Text.ShouldEqual("myText1");
+        };
+
+        private It should_have_2_instances = () => instances.Length.ShouldEqual(2);
     }
 }
