@@ -16,6 +16,8 @@ SET Arbor.X.NuGet.ReinstallArborPackageEnabled=true
 SET Arbor.X.NuGet.VersionUpdateEnabled=false
 SET Arbor.X.Artifacts.PdbArtifacts.Enabled=true
 SET Arbor.X.NuGet.Package.CreateNuGetWebPackages.Enabled=false
+SET Arbor.X.Tools.External.Xunit.NetCoreApp.Enabled=true
+SET Arbor.X.Tools.External.Xunit.NetFramework.Enabled=false
 
 SET Arbor.X.Build.NetAssembly.MetadataEnabled=true
 SET Arbor.X.Build.NetAssembly.Description=Key value configuration
@@ -41,7 +43,7 @@ SET Arbor.X.NuGet.Package.Artifacts.Suffix=
 SET Arbor.X.NuGet.Package.Artifacts.BuildNumber.Enabled=
 SET Arbor.X.Log.Level=
 SET Arbor.X.NuGetPackageVersion=
-SET Arbor.X.Vcs.Branch.Name.Version.OverrideEnabled
+SET Arbor.X.Vcs.Branch.Name.Version.OverrideEnabled=
 SET Arbor.X.VariableOverrideEnabled=
 SET Arbor.X.Artifacts.CleanupBeforeBuildEnabled=
 SET Arbor.X.Build.NetAssembly.Configuration=
