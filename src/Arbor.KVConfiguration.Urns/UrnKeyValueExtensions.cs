@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Dynamic;
@@ -24,15 +25,55 @@ namespace Arbor.KVConfiguration.Urns
 
             if (!instances.Any())
             {
-                return default(T);
+                return default;
             }
 
             return instances.Single();
         }
 
+        public static ImmutableArray<INamedInstance<T>> GetNamedInstances<T>(
+            [NotNull] this IKeyValueConfiguration keyValueConfiguration)
+        {
+            return GetNamedInstances(keyValueConfiguration, typeof(T))
+                .Select(item => item as INamedInstance<T>)
+                .Where(item => item != null)
+                .ToImmutableArray();
+        }
+
+        public static ImmutableArray<INamedInstance<object>> GetNamedInstances(
+            [NotNull] this IKeyValueConfiguration keyValueConfiguration,
+            [NotNull] Type type)
+        {
+            ImmutableArray<(object, string, IDictionary<string, object>)> immutableArray =
+                GetInstancesInternal(keyValueConfiguration, type);
+
+            Type generic = typeof(NamedInstance<>);
+
+            Type[] typeArgs = { type };
+
+            Type constructed = generic.MakeGenericType(typeArgs);
+
+            ImmutableArray<INamedInstance<object>> objects = immutableArray
+                .Select(item => Activator.CreateInstance(constructed, item.Item1, item.Item2))
+                .OfType<INamedInstance<object>>()
+                .ToImmutableArray();
+
+            return objects;
+        }
+
         public static object GetInstance(
             [NotNull] this IKeyValueConfiguration keyValueConfiguration,
             [NotNull] Type type)
+        {
+            object instance = GetInstance(keyValueConfiguration, type, null);
+
+            return instance;
+        }
+
+        public static object GetInstance(
+            [NotNull] this IKeyValueConfiguration keyValueConfiguration,
+            [NotNull] Type type,
+            string instanceName)
         {
             if (keyValueConfiguration == null)
             {
@@ -44,28 +85,205 @@ namespace Arbor.KVConfiguration.Urns
                 throw new ArgumentNullException(nameof(type));
             }
 
-            ImmutableArray<object> instances = GetInstances(keyValueConfiguration, type);
+            ImmutableArray<(object, string, IDictionary<string, object>)> instances =
+                GetInstancesInternal(keyValueConfiguration, type);
 
-            if (instances.Length > 1)
+            ImmutableArray<(object, string, IDictionary<string, object>)> filtered =
+                string.IsNullOrWhiteSpace(instanceName)
+                    ? instances
+                    : instances
+                        .Where(instance => instance.Item2.Equals(instanceName, StringComparison.OrdinalIgnoreCase))
+                        .ToImmutableArray();
+
+            if (filtered.Length > 1)
             {
-                throw new InvalidOperationException($"Found multiple {type}, expected 0 or 1");
+                IEnumerable<string> keys = filtered.Select(instance => instance.Item2);
+                throw new InvalidOperationException($"Found multiple {type}, expected 0 or 1, instance keys: {keys}");
             }
 
-            if (!instances.Any())
+            if (filtered.Length == 0)
             {
                 return default;
             }
 
-            return instances.Single();
+            return filtered.Single().Item1;
         }
 
         public static ImmutableArray<T> GetInstances<T>(
             [NotNull] this IKeyValueConfiguration keyValueConfiguration)
         {
-            return GetInstances(keyValueConfiguration, typeof(T)).OfType<T>().ToImmutableArray();
+            return GetInstances(keyValueConfiguration, typeof(T))
+                .OfType<T>()
+                .ToImmutableArray();
         }
 
         public static ImmutableArray<object> GetInstances(
+            [NotNull] this IKeyValueConfiguration keyValueConfiguration,
+            [NotNull] Type type)
+        {
+            return GetInstancesInternal(keyValueConfiguration, type)
+                .Select(item => item.Item1)
+                .ToImmutableArray();
+        }
+
+        private static (object, string, IDictionary<string, object>) GetItem(
+            IKeyValueConfiguration keyValueConfiguration,
+            IGrouping<Urn, Urn> keyValuePair,
+            Type type)
+        {
+            dynamic expando = new ExpandoObject();
+
+#if DEBUG
+            Console.WriteLine($"Creating type {type.FullName}, urn '{keyValuePair.Key}'");
+#endif
+
+            Urn instanceUri = keyValuePair.Key;
+
+            string instanceName = instanceUri.Name;
+
+            var asDictionary = (IDictionary<string, object>)expando;
+
+            Urn[] allKeys = keyValueConfiguration.AllKeys
+                .Select(key =>
+                {
+                    if (!Urn.TryParse(key, out Urn urn))
+                    {
+                        return null;
+                    }
+
+                    return urn;
+                })
+                .Where(urn => urn != null)
+                .ToArray();
+
+            Urn[] filteredKeys = allKeys
+                .Where(urnKey =>
+                    urnKey.IsInHierarchy(instanceUri))
+                .ToArray();
+
+            foreach (Urn itemValue in filteredKeys)
+            {
+#if DEBUG
+                Console.WriteLine($"Found key {itemValue}");
+#endif
+
+                string normalizedPropertyName = itemValue.Name.Replace("-", string.Empty);
+
+                string[] values = keyValueConfiguration.AllWithMultipleValues
+                    .Select(t =>
+                    {
+                        if (!Urn.TryParse(t.Key, out Urn urn))
+                        {
+                            return null;
+                        }
+
+                        return new { Urn = urn, Pair = t };
+                    })
+                    .Where(urn => urn != null)
+                    .Where(urn => urn.Urn == itemValue)
+                    .SelectMany(s => s.Pair.Values)
+                    .ToArray();
+
+                if (values.Length == 0)
+                {
+                    if (!asDictionary.ContainsKey(normalizedPropertyName))
+                    {
+                        asDictionary.Add(normalizedPropertyName, "");
+                    }
+#if DEBUG
+                    Console.WriteLine("\tNo value");
+#endif
+                }
+                else if (values.Length == 1)
+                {
+                    string value = values.Single();
+                    asDictionary.Add(normalizedPropertyName, value);
+#if DEBUG
+                    Console.WriteLine($"\tSingle value: {value}");
+#endif
+                }
+                else
+                {
+#if DEBUG
+                    foreach (string value in values)
+                    {
+                        Console.WriteLine($"\tMultiple value: {value}");
+                    }
+#endif
+
+                    asDictionary.Add(normalizedPropertyName, values.Select(value => value).ToArray());
+                }
+            }
+
+            if (asDictionary.Keys.Count == 0)
+            {
+                return default;
+            }
+
+            if (asDictionary.Values.All(value =>
+                value is null || (value is string text && string.IsNullOrWhiteSpace(text))))
+            {
+                return default;
+            }
+
+            string json = JsonConvert.SerializeObject(expando);
+
+            object item;
+
+            try
+            {
+                JsonConverter[] converters = { new StringValuesJsonConverter() };
+                item = JsonConvert.DeserializeObject(json, type, converters);
+            }
+            catch (Exception ex)
+            {
+                ImmutableArray<(string, string)> errorProperties = type
+                    .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                    .Select(property =>
+                    {
+                        string matchingKey = asDictionary.Keys.SingleOrDefault(key =>
+                            key.Equals(property.Name, StringComparison.OrdinalIgnoreCase));
+
+                        if (matchingKey is null)
+                        {
+                            return ("", null);
+                        }
+
+                        if (!asDictionary.TryGetValue(matchingKey, out object value))
+                        {
+                            return ("", null);
+                        }
+
+                        if ((property.PropertyType == typeof(string) ||
+                             !typeof(IEnumerable).IsAssignableFrom(property.PropertyType)) &&
+                            value is IEnumerable enumerable)
+                        {
+                            object[] objects = enumerable.OfType<object>().ToArray();
+
+                            if (objects.Length > 1)
+                            {
+                                return (property.Name,
+                                    $"The property of type {property.PropertyType.Name} with name '{property.Name}' has multiple values {string.Join(", ", objects.Select(o => $"'{o}'"))}"
+                                    );
+                            }
+                        }
+
+                        return (property.Name, null);
+                    })
+                    .Where(tuple => tuple.Item2 != null)
+                    .ToImmutableArray();
+
+                string specifiedErrors = string.Join(", ", errorProperties.Select(ep => ep.Item2));
+
+                throw new InvalidOperationException(
+                    $"{specifiedErrors} Could not deserialize json '{json}' to target type {type.FullName}".Trim(),
+                    ex);
+            }
+
+            return (item, instanceName, asDictionary);
+        }
+
+        private static ImmutableArray<(object, string, IDictionary<string, object>)> GetInstancesInternal(
             [NotNull] this IKeyValueConfiguration keyValueConfiguration,
             [NotNull] Type type)
         {
@@ -98,53 +316,17 @@ namespace Arbor.KVConfiguration.Urns
                     .Select(key => new Urn(key))
                     .Where(
                         urn =>
-                            urn.OriginalValue.StartsWith(urn.OriginalValue, StringComparison.OrdinalIgnoreCase))
+                            urn.IsInHierarchy(typeUrn))
                     .Where(key => key.NamespaceParts() == expectedParts)
                     .ToLookup(urn => urn.Parent, urn => urn).ToArray();
 
-            ImmutableArray<object> items = instanceKeys
+            ImmutableArray<(object, string, IDictionary<string, object>)> items = instanceKeys
+                .OrderBy(key => key.Key.ToString())
                 .Select(keyValuePair => GetItem(keyValueConfiguration, keyValuePair, type))
+                .Where(instance => instance.Item1 != null)
                 .ToImmutableArray();
 
             return items;
-        }
-
-        private static object GetItem(IKeyValueConfiguration keyValueConfiguration, IGrouping<Urn, Urn> keyValuePair, Type type)
-        {
-            dynamic expando = new ExpandoObject();
-
-            var asDictionary = (IDictionary<string, object>)expando;
-
-            foreach (Urn urn in keyValuePair)
-            {
-                string[] values =
-                    keyValueConfiguration.AllWithMultipleValues
-                        .Where(
-                            multipleValuesStringPair =>
-                                multipleValuesStringPair.Key.Equals(
-                                    urn.OriginalValue,
-                                    StringComparison.OrdinalIgnoreCase))
-                        .SelectMany(s => s.Values)
-                        .ToArray();
-
-                string normalizedPropertyName = urn.Name.Replace("-", string.Empty);
-
-                if (values.Length == 1)
-                {
-                    string singleValue = values.Single();
-                    asDictionary.Add(normalizedPropertyName, singleValue);
-                }
-                else
-                {
-                    asDictionary.Add(normalizedPropertyName, values);
-                }
-            }
-
-            string json = JsonConvert.SerializeObject(expando);
-
-            object item = JsonConvert.DeserializeObject(json, type);
-
-            return item;
         }
     }
 }

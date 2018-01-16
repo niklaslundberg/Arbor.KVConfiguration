@@ -12,6 +12,7 @@ namespace Arbor.KVConfiguration.UserConfiguration
         private const string ConfigUserFileName = "config.user";
 
         private readonly IKeyValueConfiguration _configuration;
+        private string _fileFullPath;
 
         public UserConfiguration(string basePath = null)
         {
@@ -52,6 +53,8 @@ namespace Arbor.KVConfiguration.UserConfiguration
             {
                 _configuration = new InMemoryKeyValueConfiguration(new NameValueCollection());
             }
+
+            _fileFullPath = fileFullPath;
         }
 
         public ImmutableArray<string> AllKeys => _configuration.AllKeys;
@@ -73,5 +76,16 @@ namespace Arbor.KVConfiguration.UserConfiguration
                 return _configuration[key];
             }
         }
+
+        public override string ToString()
+        {
+            if (!string.IsNullOrWhiteSpace(_fileFullPath))
+            {
+                return $"{base.ToString()} [json file source: '{_fileFullPath}', exists: {File.Exists(_fileFullPath)}]";
+            }
+
+            return $"{base.ToString()} [no json file source]";
+        }
     }
+
 }

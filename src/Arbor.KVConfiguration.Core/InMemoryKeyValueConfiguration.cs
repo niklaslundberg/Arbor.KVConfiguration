@@ -9,14 +9,21 @@ namespace Arbor.KVConfiguration.Core
 {
     public sealed class InMemoryKeyValueConfiguration : IKeyValueConfiguration
     {
+        private readonly string _name;
         private readonly Dictionary<string, ImmutableArray<string>> _keyValueDictionary;
 
-        public InMemoryKeyValueConfiguration(NameValueCollection nameValueCollection)
+        public InMemoryKeyValueConfiguration(NameValueCollection nameValueCollection) : this(nameValueCollection, string.Empty)
+        {
+        }
+
+        public InMemoryKeyValueConfiguration(NameValueCollection nameValueCollection, string name)
         {
             if (nameValueCollection == null)
             {
                 throw new ArgumentNullException(nameof(nameValueCollection));
             }
+
+            _name = name ?? string.Empty;
 
             _keyValueDictionary =
                 new Dictionary<string, ImmutableArray<string>>(nameValueCollection.Count + 1,
@@ -88,6 +95,16 @@ namespace Arbor.KVConfiguration.Core
             }
 
             return string.Join(",", values);
+        }
+
+        public override string ToString()
+        {
+            if (!string.IsNullOrWhiteSpace(_name))
+            {
+                return $"{base.ToString()} [name: '{_name}']";
+            }
+
+            return $"{base.ToString()} [name: 'unnamed']";
         }
     }
 }

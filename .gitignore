@@ -192,3 +192,4 @@ _patchedAssemblyInfos
 *.etl
 *.vspx
 *.ncrunchproject
+**/BenchmarkDotNet.Artifacts/**/*

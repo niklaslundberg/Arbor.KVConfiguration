@@ -16,9 +16,7 @@ namespace Arbor.KVConfiguration.Urns
 
             string trimmed = originalValue.Trim();
 
-            Uri uri;
-
-            if (!IsUri(trimmed, out uri))
+            if (!IsUri(trimmed, out Uri uri))
             {
                 throw new FormatException($"Invalid urn '{trimmed}'");
             }
@@ -49,7 +47,7 @@ namespace Arbor.KVConfiguration.Urns
 
                 if (string.IsNullOrWhiteSpace(lastOrDefault))
                 {
-                    throw new InvalidOperationException("Could not get subNamespace from urn '" + OriginalValue + "'");
+                    throw new InvalidOperationException($"Could not get subNamespace from urn \'{OriginalValue}\'");
                 }
 
                 return lastOrDefault;
@@ -123,6 +121,40 @@ namespace Arbor.KVConfiguration.Urns
             }
 
             result = new Urn(trimmed);
+
+            return true;
+        }
+
+        public override string ToString()
+        {
+            return OriginalValue;
+        }
+
+        public bool IsInHierarchy(Urn other)
+        {
+            if (other is null)
+            {
+                return false;
+            }
+
+            string[] parts = OriginalValue.Split(Separator).ToArray();
+            string[] otherParts = other.OriginalValue.Split(Separator).ToArray();
+
+            if (parts.Length < otherParts.Length)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < otherParts.Length; i++)
+            {
+                string otherPart = otherParts[i];
+                string partValue = parts[i];
+
+                if (!otherPart.Equals(partValue, StringComparison.OrdinalIgnoreCase))
+                {
+                    return false;
+                }
+            }
 
             return true;
         }

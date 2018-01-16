@@ -1,42 +1,72 @@
-﻿using System.Configuration;
-using System.Xml;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Collections.Specialized;
+using System.Linq;
 using Arbor.KVConfiguration.Core;
+using Microsoft.Configuration.ConfigurationBuilders;
 
 namespace Arbor.KVConfiguration.SystemConfiguration.Providers
 {
-    public abstract class KeyValueConfigurationBuilder : ConfigurationBuilder
+    public abstract class KeyValueConfigurationBuilder : KeyValueConfigBuilder
     {
-        protected abstract IKeyValueConfiguration GetKeyValueConfiguration();
+        private IKeyValueConfiguration _keyValueConfiguration;
 
-        public override XmlNode ProcessRawXml(XmlNode rawXml)
+        public override void Initialize(string name, NameValueCollection values)
         {
-            if (rawXml is null)
+            base.Initialize(name, values);
+
+            _keyValueConfiguration = GetKeyValueConfiguration();
+
+            CheckInitialized();
+        }
+
+        private void CheckInitialized()
+        {
+            if (_keyValueConfiguration is null)
+            {
+                throw new InvalidOperationException($"The {nameof(IKeyValueConfiguration)} has not been initialized");
+            }
+        }
+
+        public override string GetValue(string key)
+        {
+            CheckInitialized();
+
+            string value = GetKeyValueConfiguration()[key];
+
+            if (string.IsNullOrWhiteSpace(value))
             {
                 return null;
             }
 
-            XmlDocument rawXmlOwnerDocument = rawXml.OwnerDocument;
-
-            if (rawXmlOwnerDocument is null)
-            {
-                return rawXml;
-            }
-
-            foreach (MultipleValuesStringPair appSettingsAllWithMultipleValue in GetKeyValueConfiguration().AllWithMultipleValues)
-            {
-                foreach (string value in appSettingsAllWithMultipleValue.Values)
-                {
-                    XmlElement xmlElement = rawXmlOwnerDocument.CreateElement("add");
-
-                    xmlElement.SetAttribute("key", appSettingsAllWithMultipleValue.Key);
-                    xmlElement.SetAttribute("value", value);
-
-                    rawXml.AppendChild(xmlElement);
-                }
-            }
-
-            return base.ProcessRawXml(rawXml: rawXml);
+            return value;
         }
 
+        public override ICollection<KeyValuePair<string, string>> GetAllValues(string prefix)
+        {
+            CheckInitialized();
+
+            if (string.IsNullOrWhiteSpace(prefix))
+            {
+                ImmutableArray<KeyValuePair<string, string>> values = _keyValueConfiguration.AllWithMultipleValues
+                    .SelectMany(pair =>
+                        pair.Values.Select(value => new KeyValuePair<string, string>(pair.Key, value)))
+                    .ToImmutableArray();
+
+                return values;
+            }
+
+            ImmutableArray<KeyValuePair<string, string>> filteredValues = _keyValueConfiguration
+                .AllWithMultipleValues
+                .Where(item => item.Key.StartsWith(prefix))
+                .SelectMany(pair =>
+                    pair.Values.Select(value => new KeyValuePair<string, string>(pair.Key, value)))
+                .ToImmutableArray();
+
+            return filteredValues;
+        }
+
+        protected abstract IKeyValueConfiguration GetKeyValueConfiguration();
     }
 }
