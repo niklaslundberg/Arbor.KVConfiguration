@@ -133,7 +133,9 @@ namespace Arbor.KVConfiguration.Urns
         {
             dynamic expando = new ExpandoObject();
 
+#if DEBUG
             Console.WriteLine($"Creating type {type.FullName}, urn '{keyValuePair.Key}'");
+#endif
 
             Urn instanceUri = keyValuePair.Key;
 
@@ -161,7 +163,9 @@ namespace Arbor.KVConfiguration.Urns
 
             foreach (Urn itemValue in filteredKeys)
             {
+#if DEBUG
                 Console.WriteLine($"Found key {itemValue}");
+#endif
 
                 string normalizedPropertyName = itemValue.Name.Replace("-", string.Empty);
 
@@ -186,24 +190,28 @@ namespace Arbor.KVConfiguration.Urns
                     {
                         asDictionary.Add(normalizedPropertyName, "");
                     }
-
+#if DEBUG
                     Console.WriteLine("\tNo value");
+#endif
                 }
                 else if (values.Length == 1)
                 {
                     string value = values.Single();
                     asDictionary.Add(normalizedPropertyName, value);
-
+#if DEBUG
                     Console.WriteLine($"\tSingle value: {value}");
+#endif
                 }
                 else
                 {
+#if DEBUG
                     foreach (string value in values)
                     {
                         Console.WriteLine($"\tMultiple value: {value}");
                     }
+#endif
 
-                    asDictionary.Add(normalizedPropertyName, values.Select(s => s).ToArray());
+                    asDictionary.Add(normalizedPropertyName, values.Select(value => value).ToArray());
                 }
             }
 
@@ -275,7 +283,7 @@ namespace Arbor.KVConfiguration.Urns
             return (item, instanceName, asDictionary);
         }
 
-        internal static ImmutableArray<(object, string, IDictionary<string, object>)> GetInstancesInternal(
+        private static ImmutableArray<(object, string, IDictionary<string, object>)> GetInstancesInternal(
             [NotNull] this IKeyValueConfiguration keyValueConfiguration,
             [NotNull] Type type)
         {
