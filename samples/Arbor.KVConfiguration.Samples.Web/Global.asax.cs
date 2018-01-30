@@ -2,6 +2,7 @@
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Arbor.KVConfiguration.Core;
 
 namespace Arbor.KVConfiguration.Samples.Web
 {
@@ -17,6 +18,8 @@ namespace Arbor.KVConfiguration.Samples.Web
 
         protected void Application_End(object sender, EventArgs e)
         {
+            StaticKeyValueConfigurationManager.AppSettings.Dispose();
+            StaticKeyValueConfigurationManager.Release();
         }
 
         protected void Application_Error(object sender, EventArgs e)

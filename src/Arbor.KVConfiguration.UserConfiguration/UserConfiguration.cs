@@ -86,6 +86,11 @@ namespace Arbor.KVConfiguration.UserConfiguration
 
             return $"{base.ToString()} [no json file source]";
         }
+
+        public void Dispose()
+        {
+            _configuration?.Dispose();
+        }
     }
 
 }

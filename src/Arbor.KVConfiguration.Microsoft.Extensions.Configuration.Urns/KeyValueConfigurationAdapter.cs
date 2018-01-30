@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
 {
-    public class KeyValueConfigurationAdapter : IKeyValueConfiguration
+    public sealed class KeyValueConfigurationAdapter : IKeyValueConfiguration
     {
         private readonly InMemoryKeyValueConfiguration _inMemoryConfig;
 
@@ -29,5 +29,10 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
         public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues => _inMemoryConfig.AllWithMultipleValues;
 
         public string this[string key] => _inMemoryConfig[key];
+
+        public void Dispose()
+        {
+            _inMemoryConfig?.Dispose();
+        }
     }
 }

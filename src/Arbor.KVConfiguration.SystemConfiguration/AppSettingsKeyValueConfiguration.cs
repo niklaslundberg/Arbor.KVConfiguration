@@ -21,5 +21,10 @@ namespace Arbor.KVConfiguration.SystemConfiguration
             => _inMemoryKeyValueConfiguration.AllWithMultipleValues;
 
         public string this[string key] => _inMemoryKeyValueConfiguration[key];
+
+        public void Dispose()
+        {
+            _inMemoryKeyValueConfiguration?.Dispose();
+        }
     }
 }

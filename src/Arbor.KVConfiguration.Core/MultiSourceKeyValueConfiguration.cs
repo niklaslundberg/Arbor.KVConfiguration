@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core
 {
-    public class MultiSourceKeyValueConfiguration : IKeyValueConfigurationWithMetadata
+    public sealed class MultiSourceKeyValueConfiguration : IKeyValueConfigurationWithMetadata
     {
         private readonly AppSettingsDecoratorBuilder _appSettingsDecoratorBuilder;
         private readonly Action<string> _logAction;
@@ -304,6 +304,11 @@ namespace Arbor.KVConfiguration.Core
         public override string ToString()
         {
             return $"{base.ToString()} [{SourceChain}]";
+        }
+
+        public void Dispose()
+        {
+            _appSettingsDecoratorBuilder?.Dispose();
         }
     }
 }

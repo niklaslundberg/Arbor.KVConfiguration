@@ -1,9 +1,10 @@
-﻿using System.Collections.Immutable;
+﻿using System;
+using System.Collections.Immutable;
 using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core
 {
-    public interface IKeyValueConfiguration
+    public interface IKeyValueConfiguration : IDisposable
     {
         ImmutableArray<string> AllKeys { get; }
 

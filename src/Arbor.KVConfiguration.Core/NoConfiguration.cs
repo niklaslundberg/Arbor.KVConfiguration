@@ -11,5 +11,10 @@ namespace Arbor.KVConfiguration.Core
             ImmutableArray<MultipleValuesStringPair>.Empty;
 
         public string this[string key] => "";
+
+        public void Dispose()
+        {
+
+        }
     }
 }

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Arbor.KVConfiguration.Core
 {
-    public class EnvironmentVariableKeyValueConfigurationSource : IKeyValueConfiguration
+    public sealed class EnvironmentVariableKeyValueConfigurationSource : IKeyValueConfiguration
     {
         private readonly InMemoryKeyValueConfiguration _inMemoryKeyValueConfiguration;
 
@@ -31,5 +31,10 @@ namespace Arbor.KVConfiguration.Core
             => _inMemoryKeyValueConfiguration.AllWithMultipleValues;
 
         public string this[string key] => _inMemoryKeyValueConfiguration[key];
+
+        public void Dispose()
+        {
+            _inMemoryKeyValueConfiguration?.Dispose();
+        }
     }
 }

@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.JsonConfiguration
 {
-    public class JsonKeyValueConfiguration : IKeyValueConfigurationWithMetadata
+    public sealed class JsonKeyValueConfiguration : IKeyValueConfigurationWithMetadata
     {
         private readonly IKeyValueConfiguration _inMemoryKeyValueConfiguration;
         private string _fileFullPath;
@@ -87,6 +87,11 @@ namespace Arbor.KVConfiguration.JsonConfiguration
             }
 
             return $"{base.ToString()} [no json file source]";
+        }
+
+        public void Dispose()
+        {
+            _inMemoryKeyValueConfiguration?.Dispose();
         }
     }
 }
