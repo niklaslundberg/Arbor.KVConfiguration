@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using JetBrains.Annotations;
 using Microsoft.AspNetCore.Hosting;
 
 namespace Arbor.KVConfiguration.Samples.AspNetCore
@@ -12,7 +13,6 @@ namespace Arbor.KVConfiguration.Samples.AspNetCore
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
-                .UseApplicationInsights()
                 .Build();
 
             host.Run();

@@ -43,8 +43,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 
         private Because of = () =>
         {
-            instances = configuration.GetNamedInstances<ASimpleType>()
-                .ToImmutableArray();
+            instances = configuration.GetNamedInstances<ASimpleType>();
         };
 
         private It first_instance_should_not_be_null

@@ -4,7 +4,7 @@ using Arbor.KVConfiguration.Core;
 
 namespace Arbor.KVConfiguration.SystemConfiguration
 {
-    public class AppSettingsKeyValueConfiguration : IKeyValueConfiguration
+    public sealed class AppSettingsKeyValueConfiguration : IKeyValueConfiguration
     {
         private readonly InMemoryKeyValueConfiguration _inMemoryKeyValueConfiguration;
 

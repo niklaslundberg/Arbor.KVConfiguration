@@ -32,7 +32,7 @@ namespace Arbor.KVConfiguration.Core.Decorators
                 .ToImmutableArray();
         }
 
-        private string ExpandValue(string value)
+        private static string ExpandValue(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
             {

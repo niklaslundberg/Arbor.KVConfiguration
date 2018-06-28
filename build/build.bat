@@ -16,7 +16,7 @@ SET Arbor.X.NuGet.ReinstallArborPackageEnabled=true
 SET Arbor.X.NuGet.VersionUpdateEnabled=false
 SET Arbor.X.Artifacts.PdbArtifacts.Enabled=true
 SET Arbor.X.NuGet.Package.CreateNuGetWebPackages.Enabled=false
-SET Arbor.X.Tools.External.Xunit.NetCoreApp.Enabled=true
+SET Arbor.X.Tools.External.Xunit.NetCoreApp.Enabled=false
 SET Arbor.X.Tools.External.Xunit.NetFramework.Enabled=false
 
 SET Arbor.X.Build.NetAssembly.MetadataEnabled=true
