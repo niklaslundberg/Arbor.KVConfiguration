@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Specialized;
+﻿using System.Collections.Specialized;
 using Arbor.KVConfiguration.Core;
 using BenchmarkDotNet.Attributes;
 
 namespace Arbor.KVConfiguration.Tests.Benchmark
 {
-    public sealed class BenchmarkGetItemByKey : IDisposable
+    public sealed class BenchmarkGetItemByKey
     {
         private readonly IKeyValueConfiguration _configuration;
 
@@ -17,11 +16,6 @@ namespace Arbor.KVConfiguration.Tests.Benchmark
             };
 
             _configuration = new InMemoryKeyValueConfiguration(keys);
-        }
-
-        public void Dispose()
-        {
-            _configuration?.Dispose();
         }
 
         [MemoryDiagnoser]

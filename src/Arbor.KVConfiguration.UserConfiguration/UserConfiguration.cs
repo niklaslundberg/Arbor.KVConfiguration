@@ -12,7 +12,7 @@ namespace Arbor.KVConfiguration.UserConfiguration
         private const string ConfigUserFileName = "config.user";
 
         private readonly IKeyValueConfiguration _configuration;
-        private string _fileFullPath;
+        private readonly string _fileFullPath;
 
         public UserConfiguration(string basePath = null)
         {
@@ -51,7 +51,7 @@ namespace Arbor.KVConfiguration.UserConfiguration
 
             if (_configuration == null)
             {
-                _configuration = InMemoryKeyValueConfiguration.Empty;
+                _configuration = NoConfiguration.Empty;
             }
 
             _fileFullPath = fileFullPath;
@@ -86,11 +86,5 @@ namespace Arbor.KVConfiguration.UserConfiguration
 
             return $"{base.ToString()} [no json file source]";
         }
-
-        public void Dispose()
-        {
-            _configuration?.Dispose();
-        }
     }
-
 }

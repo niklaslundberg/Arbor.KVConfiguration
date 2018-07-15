@@ -21,7 +21,11 @@ namespace Arbor.KVConfiguration.Core
         public void Dispose()
         {
             Previous?.Dispose();
-            KeyValueConfiguration?.Dispose();
+
+            if (KeyValueConfiguration is IDisposable disposable)
+            {
+                disposable.Dispose();
+            }
         }
     }
 }

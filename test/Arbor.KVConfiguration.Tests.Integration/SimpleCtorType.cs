@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Arbor.KVConfiguration.Urns;
 using JetBrains.Annotations;
 
@@ -17,12 +18,12 @@ namespace Arbor.KVConfiguration.Tests.Integration
                     return true;
                 }
 
-                if (ReferenceEquals(x, null))
+                if (x is null)
                 {
                     return false;
                 }
 
-                if (ReferenceEquals(y, null))
+                if (y is null)
                 {
                     return false;
                 }
@@ -32,14 +33,14 @@ namespace Arbor.KVConfiguration.Tests.Integration
                     return false;
                 }
 
-                return string.Equals(x.Name, y.Name) && x.Age == y.Age;
+                return string.Equals(x.Name, y.Name, StringComparison.OrdinalIgnoreCase) && x.Age == y.Age;
             }
 
             public int GetHashCode(SimpleCtorType obj)
             {
                 unchecked
                 {
-                    return ((obj.Name != null ? obj.Name.GetHashCode() : 0) * 397) ^ obj.Age;
+                    return ((obj.Name?.GetHashCode() ?? 0) * 397) ^ obj.Age;
                 }
             }
         }

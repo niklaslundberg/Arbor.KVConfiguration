@@ -18,7 +18,11 @@ namespace Arbor.KVConfiguration.Samples.Web
 
         protected void Application_End(object sender, EventArgs e)
         {
-            StaticKeyValueConfigurationManager.AppSettings.Dispose();
+            if (StaticKeyValueConfigurationManager.AppSettings is IDisposable disposable)
+            {
+                disposable.Dispose();
+            }
+
             StaticKeyValueConfigurationManager.Release();
         }
 

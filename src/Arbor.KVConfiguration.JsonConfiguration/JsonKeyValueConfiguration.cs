@@ -12,7 +12,7 @@ namespace Arbor.KVConfiguration.JsonConfiguration
     public sealed class JsonKeyValueConfiguration : IKeyValueConfigurationWithMetadata
     {
         private readonly IKeyValueConfiguration _inMemoryKeyValueConfiguration;
-        private string _fileFullPath;
+        private readonly string _fileFullPath;
 
         public JsonKeyValueConfiguration([NotNull] IEnumerable<KeyValueConfigurationItem> keyValueConfigurationItems)
         {
@@ -87,11 +87,6 @@ namespace Arbor.KVConfiguration.JsonConfiguration
             }
 
             return $"{base.ToString()} [no json file source]";
-        }
-
-        public void Dispose()
-        {
-            _inMemoryKeyValueConfiguration?.Dispose();
         }
     }
 }

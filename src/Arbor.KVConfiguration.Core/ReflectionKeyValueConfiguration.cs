@@ -79,7 +79,11 @@ namespace Arbor.KVConfiguration.Core
         {
             if (_disposed)
             {
-                _inMemoryKeyValueConfiguration?.Dispose();
+                if (_inMemoryKeyValueConfiguration is IDisposable disposable)
+                {
+                    disposable.Dispose();
+                }
+
                 _inMemoryKeyValueConfiguration = null;
                 _disposed = true;
             }

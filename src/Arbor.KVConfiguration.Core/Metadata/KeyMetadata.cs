@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core.Metadata
 {
-    public struct KeyMetadata
+    public class KeyMetadata
     {
         public KeyMetadata([NotNull] string key, [CanBeNull] ConfigurationMetadata configurationMetadata)
         {

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Dynamic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using Arbor.KVConfiguration.Core;
@@ -252,7 +253,6 @@ namespace Arbor.KVConfiguration.Urns
                                 {
                                     childList.Add(subItem.Item1);
                                 }
-
                             }
                         }
                     }
@@ -298,9 +298,9 @@ namespace Arbor.KVConfiguration.Urns
                             return ("", null);
                         }
 
-                        if ((property.PropertyType == typeof(string) ||
-                             !typeof(IEnumerable).IsAssignableFrom(property.PropertyType)) &&
-                            value is IEnumerable enumerable)
+                        if ((property.PropertyType == typeof(string)
+                             || !typeof(IEnumerable).IsAssignableFrom(property.PropertyType))
+                            && value is IEnumerable enumerable)
                         {
                             object[] objects = enumerable.OfType<object>().ToArray();
 
@@ -345,7 +345,7 @@ namespace Arbor.KVConfiguration.Urns
 
             if (urnAttribute == null)
             {
-                throw new ArgumentException($"Found no {nameof(Urn).ToUpper()} for type {type}");
+                throw new ArgumentException($"Found no {nameof(Urn).ToUpper(CultureInfo.InvariantCulture)} for type {type}");
             }
 
             Urn typeUrn = urnAttribute.Urn;
