@@ -2,9 +2,10 @@
 
 namespace Arbor.KVConfiguration.Core
 {
-    internal struct NoConfiguration : IKeyValueConfiguration
+    internal class NoConfiguration : IKeyValueConfiguration
     {
         public ImmutableArray<string> AllKeys => ImmutableArray<string>.Empty;
+
         public ImmutableArray<StringPair> AllValues => ImmutableArray<StringPair>.Empty;
 
         public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues =>
@@ -12,9 +13,6 @@ namespace Arbor.KVConfiguration.Core
 
         public string this[string key] => "";
 
-        public void Dispose()
-        {
-
-        }
+        public static readonly IKeyValueConfiguration Empty => new InMemoryConfiguration(new NameValueCollection());
     }
 }

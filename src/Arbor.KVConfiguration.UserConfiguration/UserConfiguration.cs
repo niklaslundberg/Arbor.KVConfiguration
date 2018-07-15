@@ -29,7 +29,7 @@ namespace Arbor.KVConfiguration.UserConfiguration
 
                 string parentName = fileInfo.Directory?.Parent?.Name ?? string.Empty;
 
-                if (parentName.Equals("bin"))
+                if (parentName.Equals("bin", StringComparison.OrdinalIgnoreCase))
                 {
                     string projectDirectoryFullDirectoryPath =
                         fileInfo.Directory?.Parent?.Parent?.FullName ?? string.Empty;
@@ -51,7 +51,7 @@ namespace Arbor.KVConfiguration.UserConfiguration
 
             if (_configuration == null)
             {
-                _configuration = new InMemoryKeyValueConfiguration(new NameValueCollection());
+                _configuration = InMemoryKeyValueConfiguration.Empty;
             }
 
             _fileFullPath = fileFullPath;

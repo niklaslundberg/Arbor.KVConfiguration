@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core
 {
-    public interface IKeyValueConfiguration : IDisposable
+    public interface IKeyValueConfiguration
     {
         ImmutableArray<string> AllKeys { get; }
 

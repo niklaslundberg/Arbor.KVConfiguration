@@ -79,8 +79,8 @@ namespace Arbor.KVConfiguration.Core
             {
                 CheckDisposed();
 
-                return
-                    AllKeys.Select(key => new MultipleValuesStringPair(key, _keyValueDictionary[key]))
+                return AllKeys
+                        .Select(key => new MultipleValuesStringPair(key, _keyValueDictionary[key]))
                         .ToImmutableArray();
             }
         }
