@@ -22,7 +22,7 @@ SET Arbor.X.Tools.External.Xunit.NetFramework.Enabled=false
 SET Arbor.X.Build.NetAssembly.MetadataEnabled=true
 SET Arbor.X.Build.NetAssembly.Description=Key value configuration
 SET Arbor.X.Build.NetAssembly.Company=Niklas Lundberg
-SET Arbor.X.Build.NetAssembly.Copyright=© Niklas Lundberg 2014-2017
+SET Arbor.X.Build.NetAssembly.Copyright=© Niklas Lundberg 2014-2018
 SET Arbor.X.Build.NetAssembly.Trademark=Arbor.KVConfiguration
 SET Arbor.X.Build.NetAssembly.Product=Arbor.KVConfiguration
 SET Arbor.X.ShowAvailableVariablesEnabled=false
@@ -32,7 +32,7 @@ SET Arbor.X.NuGet.Package.AllowManifestReWriteEnabled=false
 
 SET Arbor.X.Tools.External.MSBuild.CodeAnalysis.Enabled=false
 
-CALL "%~dp0\Build.exe"
+CALL dotnet arbor-build
 
 REM Restore variables to default
 
