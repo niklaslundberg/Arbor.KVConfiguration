@@ -1,25 +1,26 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net471</TargetFramework>
+    <CodeAnalysisRuleSet>..\Arbor.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="11.1.0" />
-    <PackageReference Include="Microsoft.Configuration.ConfigurationBuilders.Base" Version="1.0.0-preview" />
-    <PackageReference Include="Microsoft.Net.Compilers" Version="2.4.0" />
+    <PackageReference Include="JetBrains.Annotations" Version="2018.2.1" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="2.6.1" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="2.9.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.1" />
+    <PackageReference Include="Microsoft.Configuration.ConfigurationBuilders.Base" Version="1.0.2" />
+    <PackageReference Include="Microsoft.Net.Compilers" Version="2.9.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Arbor.KVConfiguration.Core\Arbor.KVConfiguration.Core.csproj" />
     <ProjectReference Include="..\Arbor.KVConfiguration.JsonConfiguration\Arbor.KVConfiguration.JsonConfiguration.csproj" />
     <ProjectReference Include="..\Arbor.KVConfiguration.SystemConfiguration.Providers\Arbor.KVConfiguration.SystemConfiguration.Providers.csproj" />
   </ItemGroup>
-
   <ItemGroup>
     <Reference Include="System.Configuration">
-      <HintPath>..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.1\System.Configuration.dll</HintPath>
     </Reference>
   </ItemGroup>
-
 </Project>

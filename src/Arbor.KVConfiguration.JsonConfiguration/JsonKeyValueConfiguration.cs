@@ -9,10 +9,10 @@ using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.JsonConfiguration
 {
-    public class JsonKeyValueConfiguration : IKeyValueConfigurationWithMetadata
+    public sealed class JsonKeyValueConfiguration : IKeyValueConfigurationWithMetadata
     {
         private readonly IKeyValueConfiguration _inMemoryKeyValueConfiguration;
-        private string _fileFullPath;
+        private readonly string _fileFullPath;
 
         public JsonKeyValueConfiguration([NotNull] IEnumerable<KeyValueConfigurationItem> keyValueConfigurationItems)
         {

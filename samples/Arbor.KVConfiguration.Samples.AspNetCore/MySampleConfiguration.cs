@@ -2,7 +2,7 @@
 
 namespace Arbor.KVConfiguration.Samples.AspNetCore
 {
-    [Urn(Constants.ConfigurationKeys.DummyKey)]
+    [Urn(ConfigurationKeys.DummyKey)]
     public class MySampleConfiguration
     {
         public MySampleConfiguration(string name, int age)

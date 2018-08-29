@@ -9,7 +9,7 @@ using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core
 {
-    public class MultiSourceKeyValueConfiguration : IKeyValueConfigurationWithMetadata
+    public sealed class MultiSourceKeyValueConfiguration : IKeyValueConfigurationWithMetadata, IDisposable
     {
         private readonly AppSettingsDecoratorBuilder _appSettingsDecoratorBuilder;
         private readonly Action<string> _logAction;
@@ -53,7 +53,7 @@ namespace Arbor.KVConfiguration.Core
 
         private string BuildChainAsString(AppSettingsBuilder builder)
         {
-            if (builder is null || builder.KeyValueConfiguration is null)
+            if (builder?.KeyValueConfiguration is null)
             {
                 return string.Empty;
             }
@@ -193,37 +193,6 @@ namespace Arbor.KVConfiguration.Core
             return valueTuple;
         }
 
-        private static ImmutableArray<StringPair> GetValues(
-            AppSettingsBuilder appSettingsBuilder,
-            string key,
-            Action<string> logAction)
-        {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                return ImmutableArray<StringPair>.Empty;
-            }
-
-            if (appSettingsBuilder == null)
-            {
-                return ImmutableArray<StringPair>.Empty;
-            }
-
-            ImmutableArray<StringPair> values = appSettingsBuilder.KeyValueConfiguration.AllValues;
-
-            if (values.IsDefaultOrEmpty)
-            {
-                logAction?.Invoke(
-                    $"The current source {appSettingsBuilder.KeyValueConfiguration.GetType().Name} does not have any values for key '{key}'");
-
-                return GetValues(appSettingsBuilder.Previous, key, logAction);
-            }
-
-            logAction?.Invoke(
-                $"The current source {appSettingsBuilder.KeyValueConfiguration.GetType().Name} has valuea for key '{key}': {string.Join(", ", values.Select(value => $"'{value}'"))}");
-
-            return values;
-        }
-
         private IKeyValueConfiguration GetConfiguratorDefining(AppSettingsBuilder appSettingsBuilder, string key)
         {
             if (appSettingsBuilder == null)
@@ -304,6 +273,11 @@ namespace Arbor.KVConfiguration.Core
         public override string ToString()
         {
             return $"{base.ToString()} [{SourceChain}]";
+        }
+
+        public void Dispose()
+        {
+            _appSettingsDecoratorBuilder?.Dispose();
         }
     }
 }

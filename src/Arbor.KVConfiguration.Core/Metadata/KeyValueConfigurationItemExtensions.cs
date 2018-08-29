@@ -30,6 +30,7 @@ namespace Arbor.KVConfiguration.Core.Metadata
                             key,
                             found = ordered.FirstOrDefault()
                         })
+                    .Where(item => item.found?.ConfigurationMetadata != null)
                     .Select(item => new KeyMetadata(item.key, item.found.ConfigurationMetadata))
                     .ToImmutableArray();
 

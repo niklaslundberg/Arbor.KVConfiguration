@@ -28,8 +28,6 @@ namespace Arbor.KVConfiguration.Samples.AspNetCore
             services.AddMvc();
 
             services.AddKeyValueOptions(Configuration);
-            //Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
-            //    .ConfigurationValueConfigurationServiceCollectionExtensions.Configure<MySampleConfiguration>(services, Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,7 +39,6 @@ namespace Arbor.KVConfiguration.Samples.AspNetCore
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
             }
             else
             {

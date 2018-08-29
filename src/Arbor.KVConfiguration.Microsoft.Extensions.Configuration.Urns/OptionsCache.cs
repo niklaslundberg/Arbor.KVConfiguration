@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
 {
-    internal class OptionsCache<TOptions> where TOptions : class
+    internal sealed class OptionsCache<TOptions> where TOptions : class
     {
         private readonly IConfigureConfigurationValue<TOptions> _configurator;
         private readonly Func<TOptions> _createCache;
@@ -17,21 +17,15 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
             _createCache = CreateOptions;
         }
 
-        public virtual TOptions Value
-        {
-            get
-            {
-                return LazyInitializer.EnsureInitialized(
-                    ref _options,
-                    ref _cacheInitialized,
-                    ref _cacheLock,
-                    _createCache);
-            }
-        }
+        public TOptions Value => LazyInitializer.EnsureInitialized(
+            ref _options,
+            ref _cacheInitialized,
+            ref _cacheLock,
+            _createCache);
 
         private TOptions CreateOptions()
         {
-            return _configurator.Configure();
+            return _configurator.GetInstance();
         }
     }
 }

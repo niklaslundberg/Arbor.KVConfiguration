@@ -12,9 +12,9 @@ namespace Arbor.KVConfiguration.SystemConfiguration.Providers
     {
         private IKeyValueConfiguration _keyValueConfiguration;
 
-        public override void Initialize(string name, NameValueCollection values)
+        public override void Initialize(string name, NameValueCollection config)
         {
-            base.Initialize(name, values);
+            base.Initialize(name, config);
 
             _keyValueConfiguration = GetKeyValueConfiguration();
 
@@ -59,7 +59,7 @@ namespace Arbor.KVConfiguration.SystemConfiguration.Providers
 
             ImmutableArray<KeyValuePair<string, string>> filteredValues = _keyValueConfiguration
                 .AllWithMultipleValues
-                .Where(item => item.Key.StartsWith(prefix))
+                .Where(item => item.Key.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
                 .SelectMany(pair =>
                     pair.Values.Select(value => new KeyValuePair<string, string>(pair.Key, value)))
                 .ToImmutableArray();

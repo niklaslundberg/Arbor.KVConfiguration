@@ -12,7 +12,7 @@ namespace Arbor.KVConfiguration.UserConfiguration
         private const string ConfigUserFileName = "config.user";
 
         private readonly IKeyValueConfiguration _configuration;
-        private string _fileFullPath;
+        private readonly string _fileFullPath;
 
         public UserConfiguration(string basePath = null)
         {
@@ -29,7 +29,7 @@ namespace Arbor.KVConfiguration.UserConfiguration
 
                 string parentName = fileInfo.Directory?.Parent?.Name ?? string.Empty;
 
-                if (parentName.Equals("bin"))
+                if (parentName.Equals("bin", StringComparison.OrdinalIgnoreCase))
                 {
                     string projectDirectoryFullDirectoryPath =
                         fileInfo.Directory?.Parent?.Parent?.FullName ?? string.Empty;
@@ -51,7 +51,7 @@ namespace Arbor.KVConfiguration.UserConfiguration
 
             if (_configuration == null)
             {
-                _configuration = new InMemoryKeyValueConfiguration(new NameValueCollection());
+                _configuration = NoConfiguration.Empty;
             }
 
             _fileFullPath = fileFullPath;
@@ -87,5 +87,4 @@ namespace Arbor.KVConfiguration.UserConfiguration
             return $"{base.ToString()} [no json file source]";
         }
     }
-
 }

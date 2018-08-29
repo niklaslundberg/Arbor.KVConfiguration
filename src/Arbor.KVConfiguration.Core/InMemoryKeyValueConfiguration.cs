@@ -10,7 +10,9 @@ namespace Arbor.KVConfiguration.Core
     public sealed class InMemoryKeyValueConfiguration : IKeyValueConfiguration
     {
         private readonly string _name;
-        private readonly Dictionary<string, ImmutableArray<string>> _keyValueDictionary;
+        private Dictionary<string, ImmutableArray<string>> _keyValueDictionary;
+        private bool _disposed;
+        private ImmutableArray<string> _allKeys;
 
         public InMemoryKeyValueConfiguration(NameValueCollection nameValueCollection) : this(nameValueCollection, string.Empty)
         {
@@ -48,22 +50,37 @@ namespace Arbor.KVConfiguration.Core
                 }
             }
 
-            AllKeys = _keyValueDictionary.Keys.ToImmutableArray();
+            _allKeys = _keyValueDictionary.Keys.ToImmutableArray();
         }
 
-        public ImmutableArray<string> AllKeys { get; }
+        public ImmutableArray<string> AllKeys
+        {
+            get
+            {
+                CheckDisposed();
+
+                return _allKeys;
+            }
+        }
 
         public ImmutableArray<StringPair> AllValues
         {
-            get { return AllKeys.Select(key => new StringPair(key, GetCombinedValues(key))).ToImmutableArray(); }
+            get
+            {
+                CheckDisposed();
+
+                return AllKeys.Select(key => new StringPair(key, GetCombinedValues(key))).ToImmutableArray();
+            }
         }
 
         public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues
         {
             get
             {
-                return
-                    AllKeys.Select(key => new MultipleValuesStringPair(key, _keyValueDictionary[key]))
+                CheckDisposed();
+
+                return AllKeys
+                        .Select(key => new MultipleValuesStringPair(key, _keyValueDictionary[key]))
                         .ToImmutableArray();
             }
         }
@@ -72,6 +89,8 @@ namespace Arbor.KVConfiguration.Core
 
         private string GetCombinedValues(string key)
         {
+            CheckDisposed();
+
             if (key == null)
             {
                 return string.Empty;
@@ -97,6 +116,14 @@ namespace Arbor.KVConfiguration.Core
             return string.Join(",", values);
         }
 
+        private void CheckDisposed()
+        {
+            if (_disposed)
+            {
+                throw new ObjectDisposedException(ToString());
+            }
+        }
+
         public override string ToString()
         {
             if (!string.IsNullOrWhiteSpace(_name))
@@ -105,6 +132,17 @@ namespace Arbor.KVConfiguration.Core
             }
 
             return $"{base.ToString()} [name: 'unnamed']";
+        }
+
+        public void Dispose()
+        {
+            if (!_disposed)
+            {
+                _keyValueDictionary?.Clear();
+                _keyValueDictionary = null;
+                _allKeys = default;
+                _disposed = true;
+            }
         }
     }
 }

@@ -4,26 +4,25 @@ using BenchmarkDotNet.Attributes;
 
 namespace Arbor.KVConfiguration.Tests.Benchmark
 {
-    public class BenchmarkGetItemByKey
+    public sealed class BenchmarkGetItemByKey
     {
-        private IKeyValueConfiguration configuration;
+        private readonly IKeyValueConfiguration _configuration;
 
         public BenchmarkGetItemByKey()
         {
-
             var keys = new NameValueCollection
             {
                 { "urn:a:complex:immutable:type:instance1:id", "myId1" }
             };
 
-            configuration = new InMemoryKeyValueConfiguration(keys);
+            _configuration = new InMemoryKeyValueConfiguration(keys);
         }
 
         [MemoryDiagnoser]
         [Benchmark]
         public string Value()
         {
-            return configuration["urn:a:complex:immutable:type:instance1:id"];
+            return _configuration["urn:a:complex:immutable:type:instance1:id"];
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Immutable;
+﻿using System;
+using System.Collections.Immutable;
 using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core

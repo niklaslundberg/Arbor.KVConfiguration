@@ -6,9 +6,9 @@ using Arbor.KVConfiguration.Core;
 
 namespace Arbor.KVConfiguration.Samples.ConsoleApp
 {
-    public class AppScenario3
+    public static class AppScenario3
     {
-        public void Execute()
+        public static void Execute()
         {
             var collection = new NameValueCollection
             {

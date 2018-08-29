@@ -7,9 +7,9 @@ using Newtonsoft.Json;
 
 namespace Arbor.KVConfiguration.Samples.ConsoleApp
 {
-    public class AppScenario5
+    public static class AppScenario5
     {
-        public void Execute()
+        public static void Execute()
         {
             KeyValueConfigurationManager
                 .Add(new ReflectionKeyValueConfiguration(typeof(SampleConfigurationConstants).Assembly)).Build();

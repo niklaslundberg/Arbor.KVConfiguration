@@ -8,9 +8,9 @@ using Arbor.KVConfiguration.Core.Extensions.StringExtensions;
 
 namespace Arbor.KVConfiguration.Samples.ConsoleApp
 {
-    public class AppScenario2
+    public static class AppScenario2
     {
-        public void Execute()
+        public static void Execute()
         {
             var collection = new NameValueCollection
             {
@@ -44,19 +44,19 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
 
             foreach (KeyValuePair<string, string> pair in keys)
             {
-                builder.AppendLine($"Key: {pair.Key}");
+                builder.Append("Key: ").AppendLine(pair.Key);
 
                 string value = appSettingsKeyValueConfiguration.ValueOrDefault(pair.Value);
 
                 string displayValue = Specials.GetDisplayValue(value);
 
-                builder.AppendLine($"\t Instance: {displayValue}");
+                builder.Append("\t Instance: ").AppendLine(displayValue);
 
                 string staticValue = StaticKeyValueConfigurationManager.AppSettings[pair.Value];
 
                 string staticDisplayValue = Specials.GetDisplayValue(staticValue);
 
-                builder.AppendLine($"\t Static: {staticDisplayValue}");
+                builder.Append("\t Static: ").AppendLine(staticDisplayValue);
             }
 
             Console.WriteLine(builder.ToString());

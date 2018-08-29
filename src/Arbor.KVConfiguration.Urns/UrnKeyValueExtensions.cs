@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Dynamic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using Arbor.KVConfiguration.Core;
@@ -159,6 +160,7 @@ namespace Arbor.KVConfiguration.Urns
             Urn[] filteredKeys = allKeys
                 .Where(urnKey =>
                     urnKey.IsInHierarchy(instanceUri))
+                .Where(urnKey => urnKey.NamespaceParts() - instanceUri.NamespaceParts() == 1)
                 .ToArray();
 
             foreach (Urn itemValue in filteredKeys)
@@ -199,7 +201,7 @@ namespace Arbor.KVConfiguration.Urns
                     string value = values.Single();
                     asDictionary.Add(normalizedPropertyName, value);
 #if DEBUG
-                    Console.WriteLine($"\tSingle value: {value}");
+                    Console.WriteLine($"\tSingle value '{normalizedPropertyName}': {value}");
 #endif
                 }
                 else
@@ -212,6 +214,48 @@ namespace Arbor.KVConfiguration.Urns
 #endif
 
                     asDictionary.Add(normalizedPropertyName, values.Select(value => value).ToArray());
+                }
+            }
+
+            Urn[] subKeys = allKeys
+                .Where(urnKey =>
+                    urnKey.IsInHierarchy(instanceUri))
+                .Where(urnKey => urnKey.NamespaceParts() - instanceUri.NamespaceParts() == 3)
+                .ToArray();
+
+            foreach (IGrouping<Urn, Urn> subKeyGroup in subKeys.GroupBy(x => x.Parent))
+            {
+                PropertyInfo propertyInfo = type.GetProperties().SingleOrDefault(property => property.Name.Equals(subKeyGroup.Key.Parent.Name, StringComparison.OrdinalIgnoreCase));
+
+                if (propertyInfo != null)
+                {
+                    if (typeof(IEnumerable).IsAssignableFrom(propertyInfo.PropertyType))
+                    {
+                        if (propertyInfo.PropertyType.IsGenericType)
+                        {
+                            Type propertyType = propertyInfo.PropertyType.GetGenericArguments().FirstOrDefault();
+
+                            if (propertyType != null)
+                            {
+                                (object, string, IDictionary<string, object>) subItem = GetItem(keyValueConfiguration,
+                                    subKeyGroup,
+                                    propertyType);
+
+                                Console.WriteLine($"Found sub item" + subItem.Item1);
+
+                                if (!asDictionary.ContainsKey(subKeyGroup.Key.Parent.Name))
+                                {
+                                    var list = new List<object>();
+                                    asDictionary.Add(new KeyValuePair<string, object>(subKeyGroup.Key.Parent.Name, list));
+                                }
+
+                                if (asDictionary[subKeyGroup.Key.Parent.Name] is List<object> childList)
+                                {
+                                    childList.Add(subItem.Item1);
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
@@ -254,9 +298,9 @@ namespace Arbor.KVConfiguration.Urns
                             return ("", null);
                         }
 
-                        if ((property.PropertyType == typeof(string) ||
-                             !typeof(IEnumerable).IsAssignableFrom(property.PropertyType)) &&
-                            value is IEnumerable enumerable)
+                        if ((property.PropertyType == typeof(string)
+                             || !typeof(IEnumerable).IsAssignableFrom(property.PropertyType))
+                            && value is IEnumerable enumerable)
                         {
                             object[] objects = enumerable.OfType<object>().ToArray();
 
@@ -301,7 +345,7 @@ namespace Arbor.KVConfiguration.Urns
 
             if (urnAttribute == null)
             {
-                throw new ArgumentException($"Found no {nameof(Urn).ToUpper()} for type {type}");
+                throw new ArgumentException($"Found no {nameof(Urn).ToUpper(CultureInfo.InvariantCulture)} for type {type}");
             }
 
             Urn typeUrn = urnAttribute.Urn;

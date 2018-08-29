@@ -9,6 +9,6 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
         /// <summary>
         /// Invoked to configure a TOptions instance.
         /// </summary>
-        TOptions Configure();
+        TOptions GetInstance();
     }
 }

@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core.Decorators
 {
-    public class AppSettingsDecoratorBuilder
+    public class AppSettingsDecoratorBuilder : IDisposable
     {
         public AppSettingsDecoratorBuilder(
             [NotNull] AppSettingsBuilder appSettingsBuilder,
@@ -27,5 +27,25 @@ namespace Arbor.KVConfiguration.Core.Decorators
         public IKeyValueConfigurationDecorator Decorator { get; }
 
         public AppSettingsDecoratorBuilder Previous { get; }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool isDisposing)
+        {
+            if (isDisposing)
+            {
+                Previous?.Dispose();
+                AppSettingsBuilder?.Dispose();
+            }
+        }
+
+        ~AppSettingsDecoratorBuilder()
+        {
+            Dispose(false);
+        }
     }
 }
