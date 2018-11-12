@@ -223,9 +223,11 @@ namespace Arbor.KVConfiguration.Urns
                 .Where(urnKey => urnKey.NamespaceParts() - instanceUri.NamespaceParts() == 3)
                 .ToArray();
 
+            PropertyInfo[] typeProperties = type.GetProperties();
+
             foreach (IGrouping<Urn, Urn> subKeyGroup in subKeys.GroupBy(x => x.Parent))
             {
-                PropertyInfo propertyInfo = type.GetProperties().SingleOrDefault(property => property.Name.Equals(subKeyGroup.Key.Parent.Name, StringComparison.OrdinalIgnoreCase));
+                PropertyInfo propertyInfo = typeProperties.SingleOrDefault(property => property.Name.Equals(subKeyGroup.Key.Parent.Name, StringComparison.OrdinalIgnoreCase));
 
                 if (propertyInfo != null)
                 {
@@ -256,6 +258,28 @@ namespace Arbor.KVConfiguration.Urns
                             }
                         }
                     }
+                }
+            }
+
+            Urn[] subProperties = allKeys
+                .Where(urnKey =>
+                    urnKey.IsInHierarchy(instanceUri))
+                .Where(urnKey => urnKey.NamespaceParts() - instanceUri.NamespaceParts() == 2)
+                .ToArray();
+
+            IEnumerable<IGrouping<Urn, Urn>> subGroups = subProperties.GroupBy(x => x.Parent);
+
+            foreach (IGrouping<Urn, Urn> subProperty in subGroups)
+            {
+                PropertyInfo subPropertyInfo = typeProperties.SingleOrDefault(property => property.Name.Equals(subProperty.Key.Name, StringComparison.OrdinalIgnoreCase));
+
+                if (subPropertyInfo != null)
+                {
+                    (object, string, IDictionary<string, object>) subPropertyInstance = GetItem(keyValueConfiguration,
+                        subProperty,
+                        subPropertyInfo.PropertyType);
+
+                    asDictionary[subPropertyInfo.Name] = subPropertyInstance.Item1;
                 }
             }
 
