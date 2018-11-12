@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Immutable;
-using System.Collections.Specialized;
 using System.IO;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.JsonConfiguration;
@@ -16,37 +15,12 @@ namespace Arbor.KVConfiguration.UserConfiguration
 
         public UserConfiguration(string basePath = null)
         {
-            string fileFullPath = Path.Combine(basePath ?? AppDomain.CurrentDomain.BaseDirectory, ConfigUserFileName);
+            string fileFullPath = TryGetConfigUser(basePath);
 
-            if (File.Exists(fileFullPath))
+            if (!string.IsNullOrWhiteSpace(fileFullPath) && File.Exists(fileFullPath))
             {
                 var jsonConfiguration = new JsonKeyValueConfiguration(fileFullPath);
                 _configuration = jsonConfiguration;
-            }
-            else
-            {
-                var fileInfo = new FileInfo(fileFullPath);
-
-                string parentName = fileInfo.Directory?.Parent?.Name ?? string.Empty;
-
-                if (parentName.Equals("bin", StringComparison.OrdinalIgnoreCase))
-                {
-                    string projectDirectoryFullDirectoryPath =
-                        fileInfo.Directory?.Parent?.Parent?.FullName ?? string.Empty;
-
-                    if (!string.IsNullOrWhiteSpace(projectDirectoryFullDirectoryPath))
-                    {
-                        string projectDirectoryFullFilePath = Path.Combine(
-                            projectDirectoryFullDirectoryPath,
-                            ConfigUserFileName);
-
-                        if (File.Exists(projectDirectoryFullFilePath))
-                        {
-                            var jsonConfiguration = new JsonKeyValueConfiguration(projectDirectoryFullFilePath);
-                            _configuration = jsonConfiguration;
-                        }
-                    }
-                }
             }
 
             if (_configuration == null)
@@ -85,6 +59,36 @@ namespace Arbor.KVConfiguration.UserConfiguration
             }
 
             return $"{base.ToString()} [no json file source]";
+        }
+
+        private string TryGetConfigUser(string basePath)
+        {
+            try
+            {
+                string fileFullPath =
+                    Path.Combine(basePath ?? AppDomain.CurrentDomain.BaseDirectory, ConfigUserFileName);
+
+                var fileInfo = new FileInfo(fileFullPath);
+
+                DirectoryInfo currentDirectory = fileInfo.Directory;
+
+                while (currentDirectory != null)
+                {
+                    FileInfo[] configUserFiles = currentDirectory.GetFiles("config.user");
+                    if (configUserFiles.Length == 1)
+                    {
+                        return configUserFiles[0].FullName;
+                    }
+
+                    currentDirectory = currentDirectory.Parent;
+                }
+
+                return null;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }

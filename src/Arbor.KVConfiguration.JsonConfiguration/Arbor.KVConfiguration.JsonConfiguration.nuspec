@@ -24,6 +24,7 @@
       <dependency id="Arbor.KVConfiguration.Core" version="[$version$]" />
       <dependency id="Arbor.KVConfiguration.Schema" version="[$version$]" />
       <dependency id="Arbor.KVConfiguration.Schema.Json" version="[$version$]" />
+      <dependency id="Newtonsoft.Json" version="[11.0.2,12.0.0)" />
     </dependencies>
     <references></references>
     <tags></tags>

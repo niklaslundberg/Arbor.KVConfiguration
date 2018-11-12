@@ -18,6 +18,16 @@ namespace Arbor.KVConfiguration.Core.Extensions
             return type.IsClass && (type.IsPublic || type.IsNestedPublic) && type.IsAbstract && type.IsSealed;
         }
 
+        internal static bool IsPublicClass([NotNull] this Type type)
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            return type.IsClass && (type.IsPublic || type.IsNestedPublic);
+        }
+
         internal static ImmutableArray<FieldInfo> GetPublicConstantStringFields([NotNull] this Assembly assembly)
         {
             if (assembly == null)
@@ -26,8 +36,8 @@ namespace Arbor.KVConfiguration.Core.Extensions
             }
 
             ImmutableArray<FieldInfo> fields = assembly.GetLoadableTypes()
-                .Where(IsPublicStaticClass)
-                .SelectMany(type => type.GetFields())
+                .Where(IsPublicClass)
+                .SelectMany(type => type.GetFields(BindingFlags.Public | BindingFlags.Static))
                 .Where(field => field.IsPublicConstantStringField())
                 .ToImmutableArray();
 
