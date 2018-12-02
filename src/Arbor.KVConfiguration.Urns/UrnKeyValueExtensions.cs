@@ -303,6 +303,10 @@ namespace Arbor.KVConfiguration.Urns
                 JsonConverter[] converters = { new StringValuesJsonConverter() };
                 item = JsonConvert.DeserializeObject(json, type, converters);
             }
+            catch (System.IO.FileNotFoundException ex)
+            {
+                throw new InvalidOperationException($"Could not deserialize json '{json}' to target type {type.FullName}", ex);
+            }
             catch (Exception ex)
             {
                 ImmutableArray<(string, string)> errorProperties = type
