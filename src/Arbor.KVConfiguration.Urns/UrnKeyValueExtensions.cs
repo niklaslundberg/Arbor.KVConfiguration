@@ -330,8 +330,14 @@ namespace Arbor.KVConfiguration.Urns
 
                             if (objects.Length > 1)
                             {
+                                if (value is string stringValue)
+                                {
+                                    return (property.Name,
+                                            $"The property of type {property.PropertyType.Name} with name '{property.Name}' has multiple values {stringValue}");
+                                }
+
                                 return (property.Name,
-                                    $"The property of type {property.PropertyType.Name} with name '{property.Name}' has multiple values {string.Join(", ", objects.Select(o => $"'{o}'"))}"
+                                        $"The property of type {property.PropertyType.Name} with name '{property.Name}' has multiple values {string.Join(", ", objects.Select(o => $"'{o}'"))}"
                                     );
                             }
                         }
