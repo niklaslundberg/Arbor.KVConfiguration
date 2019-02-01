@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Immutable;
+using System.IO;
 using System.Linq;
 
 namespace Arbor.KVConfiguration.Core.Decorators
@@ -39,7 +40,9 @@ namespace Arbor.KVConfiguration.Core.Decorators
                 return value;
             }
 
-            return Environment.ExpandEnvironmentVariables(value);
+            string expanded = Environment.ExpandEnvironmentVariables(value);
+
+            return expanded;
         }
     }
 }

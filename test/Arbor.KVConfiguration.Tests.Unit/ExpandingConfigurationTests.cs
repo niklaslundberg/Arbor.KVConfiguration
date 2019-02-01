@@ -1,4 +1,5 @@
-﻿using System.Collections.Specialized;
+﻿using System;
+using System.Collections.Specialized;
 using System.IO;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Core.Decorators;
@@ -23,6 +24,27 @@ namespace Arbor.KVConfiguration.Tests.Unit
         }
 
         [Fact]
+        public void ItShouldExpandCustomEnvironmentVariables()
+        {
+            Environment.SetEnvironmentVariable("abcvalue", "123");
+
+
+            var values = new NameValueCollection
+            {
+                ["Test"] = "%abcvalue%"
+            };
+
+            MultiSourceKeyValueConfiguration multiSourceKeyValueConfiguration = KeyValueConfigurationManager
+                .Add(new Core.InMemoryKeyValueConfiguration(values))
+                .DecorateWith(new ExpandKeyValueConfigurationDecorator())
+                .Build();
+
+            string expanded = multiSourceKeyValueConfiguration["test"];
+
+            Assert.Equal("123", expanded);
+        }
+
+        [Fact]
         public void ItShouldExpandEnvironmentVariables()
         {
             string tempPath = Path.GetTempPath();
@@ -41,16 +63,26 @@ namespace Arbor.KVConfiguration.Tests.Unit
                 .DecorateWith(new ExpandKeyValueConfigurationDecorator())
                 .Build();
 
+            string FullPath(string path)
+            {
+                return Path.GetFullPath(path);
+            }
+
             string expected = $"{tempPath} hello";
-            Assert.Equal(expected, multiSourceKeyValueConfiguration["Test"]);
-            Assert.Equal(expected, multiSourceKeyValueConfiguration.AllValues[0].Value);
-            Assert.Equal(expected, multiSourceKeyValueConfiguration.AllWithMultipleValues[0].Values[0]);
+            Assert.Equal(expected, FullPath(multiSourceKeyValueConfiguration["Test"]));
+            Assert.Equal(expected, FullPath(multiSourceKeyValueConfiguration.AllValues[0].Value));
+            Assert.Equal(expected, FullPath(multiSourceKeyValueConfiguration.AllWithMultipleValues[0].Values[0]));
             Assert.Equal(valueWithPattern, multiSourceKeyValueConfiguration.ConfigurationItems[0].Value);
         }
 
         [Fact]
         public void ItShouldExpandEnvironmentVariablesForInstances()
         {
+            string FullPath(string path)
+            {
+                return Path.GetFullPath(path);
+            }
+
             string tempPath = Path.GetTempPath();
 
             const string pattern = "%temp%\\";
@@ -75,7 +107,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
 
             Assert.NotNull(testInstance);
 
-            Assert.Equal(expected, testInstance.Test);
+            Assert.Equal(expected, FullPath(testInstance.Test));
         }
     }
 }

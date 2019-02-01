@@ -98,11 +98,9 @@ namespace Arbor.KVConfiguration.Urns
                 return false;
             }
 
-            Uri uri;
-
             string trimmed = originalValue.Trim();
 
-            if (!IsUri(trimmed, out uri))
+            if (!IsUri(trimmed, out Uri uri))
             {
                 result = null;
                 return false;

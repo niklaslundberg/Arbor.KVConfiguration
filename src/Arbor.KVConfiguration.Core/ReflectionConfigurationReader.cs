@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core
 {
-    internal static class ReflectionConfiguratonReader
+    internal static class ReflectionConfigurationReader
     {
         public static ImmutableArray<KeyValueConfigurationItem> ReadConfiguration([NotNull] Assembly assembly)
         {

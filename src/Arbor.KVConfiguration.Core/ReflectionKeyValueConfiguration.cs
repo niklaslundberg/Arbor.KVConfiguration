@@ -24,7 +24,7 @@ namespace Arbor.KVConfiguration.Core
             _assemblyName = assembly.FullName;
 
             ImmutableArray<KeyValueConfigurationItem> keyValueConfigurationItems =
-                ReflectionConfiguratonReader.ReadConfiguration(assembly);
+                ReflectionConfigurationReader.ReadConfiguration(assembly);
 
             var nameValueCollection = new NameValueCollection();
 

@@ -12,15 +12,9 @@ namespace Arbor.KVConfiguration.Schema.Validators
 
         protected override ImmutableArray<ValidationError> DoValidate(string type, string value)
         {
-            if (!CanValidate(type))
-            {
-                throw new InvalidOperationException(
-                    $"Could not validate type '{type}', make sure to call {nameof(CanValidate)} method first");
-            }
-
             if (!Uri.IsWellFormedUriString(value, UriKind.RelativeOrAbsolute))
             {
-                return new ValidationError("Invalid URI").ValueToImmutableArray();
+                return new ValidationError($"'{value}' is not a valid URI").ValueToImmutableArray();
             }
 
             return ImmutableArray<ValidationError>.Empty;

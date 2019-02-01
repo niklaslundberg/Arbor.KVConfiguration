@@ -15,7 +15,7 @@ namespace Arbor.KVConfiguration.Schema
         {
             KeyMetadata = keyMetadata;
             Values = values.SafeToImmutableArray();
-            ValidationErrors = validationErrors?.ToImmutableArray() ?? ImmutableArray<ValidationError>.Empty;
+            ValidationErrors = validationErrors.SafeToImmutableArray();
         }
 
         public KeyMetadata KeyMetadata { get; }
