@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Dynamic;
 using System.Globalization;
 using System.Linq;
@@ -243,7 +244,7 @@ namespace Arbor.KVConfiguration.Urns
                                     subKeyGroup,
                                     propertyType);
 
-                                Console.WriteLine($"Found sub item" + subItem.Item1);
+                                Debug.WriteLine($"Found sub item {subItem.Item1}");
 
                                 if (!asDictionary.ContainsKey(subKeyGroup.Key.Parent.Name))
                                 {

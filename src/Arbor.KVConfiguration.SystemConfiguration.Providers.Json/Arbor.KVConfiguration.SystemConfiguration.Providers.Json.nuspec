@@ -27,11 +27,11 @@
     </dependencies>
     <references></references>
     <frameworkAssemblies>
-      <frameworkAssembly assemblyName="System.Configuration" targetFramework="net471" />
+      <frameworkAssembly assemblyName="System.Configuration" targetFramework="net472" />
     </frameworkAssemblies>
     <tags></tags>
   </metadata>
   <files>
-    <file src="bin\$configuration$\net471\Arbor.KVConfiguration.SystemConfiguration.Providers.Json.dll" target="lib\net471" />
+    <file src="bin\$configuration$\net472\Arbor.KVConfiguration.SystemConfiguration.Providers.Json.dll" target="lib\net472" />
   </files>
 </package>

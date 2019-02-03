@@ -5,9 +5,9 @@ using static System.String;
 
 namespace Arbor.KVConfiguration.Schema.Json
 {
-    public class JsonConfigurationSerializer
+    public static class JsonConfigurationSerializer
     {
-        public ConfigurationItems Deserialize(string json)
+        public static ConfigurationItems Deserialize(string json)
         {
             if (IsNullOrWhiteSpace(json))
             {
@@ -19,7 +19,7 @@ namespace Arbor.KVConfiguration.Schema.Json
             return configurationItems;
         }
 
-        public string Serialize(ConfigurationItems configurationItems)
+        public static string Serialize(ConfigurationItems configurationItems)
         {
             string json = JsonConvert.SerializeObject(
                 configurationItems,

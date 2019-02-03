@@ -9,15 +9,12 @@ namespace Arbor.KVConfiguration.Tests.Unit
     [Subject(typeof(JsonConfigurationSerializer))]
     public class when_serializing_a_configuration_items_list
     {
-        private static JsonConfigurationSerializer serializer;
-
         private static ConfigurationItems configuration_items;
 
         private static string serialized;
 
         private Establish context = () =>
         {
-            serializer = new JsonConfigurationSerializer();
             ImmutableArray<KeyValue> keys = new List<KeyValue>(10)
             {
                 new KeyValue("abc", "123", null),
@@ -28,7 +25,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
             configuration_items = new ConfigurationItems("1.0", keys);
         };
 
-        private Because of = () => { serialized = serializer.Serialize(configuration_items); };
+        private Because of = () => { serialized = JsonConfigurationSerializer.Serialize(configuration_items); };
 
         private It should_have_serialized_with_version_first_then_properties_in_order =
             () => { Console.WriteLine(serialized); };

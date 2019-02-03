@@ -6,14 +6,14 @@ using Arbor.KVConfiguration.JsonConfiguration;
 
 namespace Arbor.KVConfiguration.UserConfiguration
 {
-    public class UserConfiguration : IKeyValueConfiguration
+    public class UserJsonConfiguration : IKeyValueConfiguration
     {
         private const string ConfigUserFileName = "config.user";
 
         private readonly IKeyValueConfiguration _configuration;
         private readonly string _fileFullPath;
 
-        public UserConfiguration(string basePath = null)
+        public UserJsonConfiguration(string basePath = null)
         {
             string fileFullPath = TryGetConfigUser(basePath);
 

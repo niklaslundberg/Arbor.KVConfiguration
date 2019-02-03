@@ -4,7 +4,15 @@
     <CodeAnalysisRuleSet>..\..\src\Arbor.Tests.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2018.2.1" />
+    <Compile Remove="Metadata\**" />
+    <Compile Remove="Validation\**" />
+    <EmbeddedResource Remove="Metadata\**" />
+    <EmbeddedResource Remove="Validation\**" />
+    <None Remove="Metadata\**" />
+    <None Remove="Validation\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="2018.3.0" />
     <PackageReference Include="Machine.Specifications" Version="0.12.0" />
     <PackageReference Include="Machine.Specifications.Should" Version="0.11.0" />
     <PackageReference Include="Microsoft.Net.Compilers" Version="2.10.0">
@@ -33,8 +41,6 @@
     <ProjectReference Include="..\..\src\Arbor.KVConfiguration.UserConfiguration\Arbor.KVConfiguration.UserConfiguration.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Metadata\" />
-    <Folder Include="Validation\" />
     <Folder Include="Properties\" />
   </ItemGroup>
 </Project>

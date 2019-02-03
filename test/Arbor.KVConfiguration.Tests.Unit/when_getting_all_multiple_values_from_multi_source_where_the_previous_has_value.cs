@@ -1,14 +1,16 @@
-﻿using System.Collections.Specialized;
+﻿using System.Collections.Immutable;
+using System.Collections.Specialized;
+using System.Linq;
 using Arbor.KVConfiguration.Core;
 using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit
 {
     [Subject(typeof(MultiSourceKeyValueConfiguration))]
-    public class when_getting_a_value_from_multisource_where_the_previous_has_value
+    public class when_getting_all_multiple_values_from_multi_source_where_the_previous_has_value
     {
-        private static MultiSourceKeyValueConfiguration _multiSourceKeyValueConfiguration;
-        private static string foundValue;
+        private static MultiSourceKeyValueConfiguration multi_source_key_value_configuration;
+        private static ImmutableArray<MultipleValuesStringPair> found_value;
 
         private Establish context = () =>
         {
@@ -25,15 +27,15 @@ namespace Arbor.KVConfiguration.Tests.Unit
                 { "urn:unrelated", "true" }
             };
 
-            _multiSourceKeyValueConfiguration = KeyValueConfigurationManager
+            multi_source_key_value_configuration = KeyValueConfigurationManager
                 .Add(new Core.InMemoryKeyValueConfiguration(baseKeys))
                 .Add(new Core.InMemoryKeyValueConfiguration(userKeys))
                 .Build();
         };
 
         private Because of = () =>
-            foundValue = _multiSourceKeyValueConfiguration["urn:a:complex:immutable:type:instance1:id"];
+            found_value = multi_source_key_value_configuration.AllWithMultipleValues;
 
-        private It should_find_the_previous_value = () => foundValue.ShouldEqual("myId1");
+        private It should_find_the_previous_value = () => found_value.SelectMany(s => s.Values).ShouldContain("true", "myId1", "myName1", "myChild1.1","myChild1.2");
     }
 }

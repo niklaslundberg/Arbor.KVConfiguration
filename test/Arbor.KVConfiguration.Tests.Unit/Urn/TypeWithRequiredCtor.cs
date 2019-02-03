@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Tests.Unit.Urn
 {
+    [PublicAPI]
     [Urn("urn:type:with:required:ctor")]
     internal class TypeWithRequiredCtor
     {

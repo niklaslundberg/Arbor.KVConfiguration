@@ -26,6 +26,16 @@ namespace Arbor.KVConfiguration.Urns
                 throw new FormatException($"Invalid urn '{trimmed}'");
             }
 
+            if (trimmed.IndexOfAny(new []{'/', '\\'}) >= 0)
+            {
+                throw new FormatException("Urn contains invalid characters");
+            }
+
+            if (trimmed.IndexOf("::", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
+                throw new FormatException("Urn contains invalid double colon");
+            }
+
             if (!IsWellFormedUriString(trimmed))
             {
                 throw new FormatException($"Invalid urn '{trimmed}'");
@@ -159,7 +169,7 @@ namespace Arbor.KVConfiguration.Urns
 
         public bool Equals(Urn other)
         {
-            if (ReferenceEquals(null, other))
+            if (other is null)
             {
                 return false;
             }
@@ -172,7 +182,7 @@ namespace Arbor.KVConfiguration.Urns
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
+            if (obj is null)
             {
                 return false;
             }

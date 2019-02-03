@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Immutable;
 using Arbor.KVConfiguration.Schema.Validators;
-using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Urns
 {
     public class UrnValidator : BaseValueValidator
     {
-        public override bool CanValidate([NotNull] string type)
+        public override bool CanValidate(string type)
         {
             if (string.IsNullOrWhiteSpace(type))
             {

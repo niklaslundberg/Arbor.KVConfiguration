@@ -46,7 +46,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 
         private It first_instance_should_not_be_null
             = () => instances[0].ShouldNotBeNull();
-        
+
         private It should_have_instance1_url = () => { instances[0].Url.ShouldEqual("myUrl1"); };
 
         private It should_have_instance1_text = () =>
@@ -56,7 +56,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 
         private It second_instance_should_not_be_null
             = () => instances[1].ShouldNotBeNull();
-        
+
         private It should_have_instance2_url = () => { instances[1].Url.ShouldEqual("myUrl2"); };
 
         private It should_have_instance2_text = () =>

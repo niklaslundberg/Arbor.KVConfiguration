@@ -4,6 +4,7 @@ using System.Collections.Immutable;
 using System.Collections.Specialized;
 using System.Linq;
 using Arbor.KVConfiguration.Core.Extensions;
+using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core
 {
@@ -18,6 +19,7 @@ namespace Arbor.KVConfiguration.Core
         {
         }
 
+        [PublicAPI]
         public InMemoryKeyValueConfiguration(NameValueCollection nameValueCollection, string name)
         {
             if (nameValueCollection == null)

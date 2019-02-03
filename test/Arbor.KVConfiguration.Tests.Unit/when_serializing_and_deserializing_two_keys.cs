@@ -17,8 +17,6 @@ namespace Arbor.KVConfiguration.Tests.Unit
 
         private static ConfigurationItems restored_configuration;
 
-        private static JsonConfigurationSerializer serializer;
-
         private Establish context = () =>
         {
             var keyValues = new List<KeyValue>(2)
@@ -49,11 +47,10 @@ namespace Arbor.KVConfiguration.Tests.Unit
                 "1.0",
                 keyValues.ToImmutableArray());
 
-            serializer = new JsonConfigurationSerializer();
-            json = serializer.Serialize(configuration_items);
+            json = JsonConfigurationSerializer.Serialize(configuration_items);
         };
 
-        private Because of = () => { restored_configuration = serializer.Deserialize(json); };
+        private Because of = () => { restored_configuration = JsonConfigurationSerializer.Deserialize(json); };
 
         private It should_have_first_correct_key = () => { restored_configuration.Keys.First().Key.ShouldEqual("a"); };
 

@@ -8,7 +8,7 @@ namespace Arbor.KVConfiguration.Core.Extensions.BoolExtensions
         public static bool ValueOrDefault(
             [NotNull] this IKeyValueConfiguration keyValueConfiguration,
             [NotNull] string key,
-            bool defaultValue = default(bool))
+            bool defaultValue = default)
         {
             if (keyValueConfiguration == null)
             {

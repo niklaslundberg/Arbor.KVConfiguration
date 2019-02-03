@@ -1,5 +1,4 @@
 ﻿using System.Collections.Immutable;
-using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Core.Extensions.ReflectionExtensions;
 using Arbor.KVConfiguration.Core.Metadata;
 using Xunit;

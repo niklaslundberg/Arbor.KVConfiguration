@@ -8,7 +8,7 @@ namespace Arbor.KVConfiguration.Core.Extensions.IntExtensions
         public static int ValueOrDefault(
             [NotNull] this IKeyValueConfiguration keyValueConfiguration,
             [NotNull] string key,
-            int defaultValue = default(int))
+            int defaultValue = default)
         {
             if (keyValueConfiguration == null)
             {

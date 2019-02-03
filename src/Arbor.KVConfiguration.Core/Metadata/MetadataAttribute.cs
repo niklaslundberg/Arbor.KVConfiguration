@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core.Metadata
 {
+    [PublicAPI]
     [AttributeUsage(AttributeTargets.Field)]
     public sealed class MetadataAttribute : Attribute
     {

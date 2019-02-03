@@ -8,7 +8,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         private static string attempted_value = "urn:a:b:c";
 
         protected static Urns.Urn urn;
-        
+
         private Establish context = () => {urn= new Urns.Urn(attempted_value); };
 
         private Because of = () => { result = urn.IsInHierarchy(new Urns.Urn(attempted_value)); };
