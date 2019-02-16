@@ -5,6 +5,7 @@ namespace Arbor.KVConfiguration.Urns
 {
     public class Urn : IEquatable<Urn>
     {
+        private static readonly char[] InvalidCharacters = {'/', '\\'};
         public const char Separator = ':';
 
         public Urn(string originalValue)
@@ -26,7 +27,7 @@ namespace Arbor.KVConfiguration.Urns
                 throw new FormatException($"Invalid urn '{trimmed}'");
             }
 
-            if (trimmed.IndexOfAny(new []{'/', '\\'}) >= 0)
+            if (trimmed.IndexOfAny(InvalidCharacters) >= 0)
             {
                 throw new FormatException("Urn contains invalid characters");
             }
@@ -145,8 +146,8 @@ namespace Arbor.KVConfiguration.Urns
                 return false;
             }
 
-            string[] parts = OriginalValue.Split(Separator).ToArray();
-            string[] otherParts = other.OriginalValue.Split(Separator).ToArray();
+            string[] parts = OriginalValue.Split(Separator);
+            string[] otherParts = other.OriginalValue.Split(Separator);
 
             if (parts.Length < otherParts.Length)
             {
@@ -173,10 +174,12 @@ namespace Arbor.KVConfiguration.Urns
             {
                 return false;
             }
+
             if (ReferenceEquals(this, other))
             {
                 return true;
             }
+
             return string.Equals(OriginalValue, other.OriginalValue, StringComparison.OrdinalIgnoreCase);
         }
 
@@ -197,12 +200,12 @@ namespace Arbor.KVConfiguration.Urns
                 return false;
             }
 
-            return Equals((Urn)obj);
+            return Equals((Urn) obj);
         }
 
         public override int GetHashCode()
         {
-            return OriginalValue != null ? StringComparer.OrdinalIgnoreCase.GetHashCode(OriginalValue) : 0;
+            return StringComparer.OrdinalIgnoreCase.GetHashCode(OriginalValue);
         }
 
         private static bool IsWellFormedUriString(string originalValue)
@@ -212,7 +215,7 @@ namespace Arbor.KVConfiguration.Urns
 
         private static bool HasUrnScheme(Uri uri)
         {
-            return uri.Scheme.Equals("urn", StringComparison.CurrentCultureIgnoreCase);
+            return uri.Scheme.Equals("urn", StringComparison.OrdinalIgnoreCase);
         }
 
         private static bool IsUri(string originalValue, out Uri uri)
