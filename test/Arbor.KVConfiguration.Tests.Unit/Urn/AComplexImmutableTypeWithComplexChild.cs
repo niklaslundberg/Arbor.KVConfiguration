@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 namespace Arbor.KVConfiguration.Tests.Unit.Urn
 {
     [PublicAPI]
-    [Urn("urn:a:complex:immutable:type-with-complex-child")]
+    [Urn("urn:test:a:complex:immutable:type-with-complex-child")]
     [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     public class AComplexImmutableTypeWithComplexChild
     {

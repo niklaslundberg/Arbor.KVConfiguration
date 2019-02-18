@@ -13,7 +13,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 
         private Behaves_like<a_multi_level_urn> a_multi_level_urn;
 
-        private Establish context = () => { attempted_value = "urn:abc:123"; };
+        private Establish context = () => { attempted_value = "urn:test:abc:123"; };
 
         private Because of = () => { Arbor.Primitives.Urn.TryParse(attempted_value, out urn); };
 

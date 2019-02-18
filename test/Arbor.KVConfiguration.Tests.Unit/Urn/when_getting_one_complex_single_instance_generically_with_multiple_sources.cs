@@ -17,13 +17,14 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
             var userKeys = new NameValueCollection
             {
                 { "urn:test:a:complex:immutable:type:instance1:name", "myName1" },
+                { "urn:test:a:complex:immutable:type:instance1:id", "myId1" },
                 { "urn:test:a:complex:immutable:type:instance1:children", "myChild1.1" },
-                { "urn:test:a:complex:immutable:type:instance1:children", "myChild1.2" },
+                { "urn:test:a:complex:immutable:type:instance1:children", "myChild1.2" }
             };
 
             var baseKeys = new NameValueCollection
             {
-                { "urn:test:unrelated","true" }
+                { "urn:test:unrelated", "true" }
             };
 
             MultiSourceKeyValueConfiguration multiSourceKeyValueConfiguration = KeyValueConfigurationManager
@@ -36,19 +37,16 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 
         private Because of = () => { instance = configuration.GetInstance<AComplexImmutableType>(); };
 
-        private It should_not_be_null
-            = () => instance.ShouldNotBeNull();
-
         private It should_have_instance1_children1 =
             () => { instance.Children.ShouldContain("myChild1.1", "myChild1.2"); };
 
         private It should_have_instance1_id1 = () => { instance.Id.ShouldEqual("myId1"); };
 
-        private It should_have_instance1_name1 = () =>
-        {
-            instance.Name.ShouldEqual("myName1");
-        };
+        private It should_have_instance1_name1 = () => { instance.Name.ShouldEqual("myName1"); };
 
         private It should_have_instance1_uri1 = () => { instance.Uri.ShouldBeNull(); };
+
+        private It should_not_be_null
+            = () => instance.ShouldNotBeNull();
     }
 }

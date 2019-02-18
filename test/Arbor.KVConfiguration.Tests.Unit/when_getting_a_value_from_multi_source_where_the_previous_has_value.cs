@@ -14,10 +14,10 @@ namespace Arbor.KVConfiguration.Tests.Unit
         {
             var userKeys = new NameValueCollection
             {
-                { "urn:a:complex:immutable:type:instance1:id", "myId1" },
-                { "urn:a:complex:immutable:type:instance1:name", "myName1" },
-                { "urn:a:complex:immutable:type:instance1:children", "myChild1.1" },
-                { "urn:a:complex:immutable:type:instance1:children", "myChild1.2" }
+                { "urn:test:a:complex:immutable:type:instance1:id", "myId1" },
+                { "urn:test:a:complex:immutable:type:instance1:name", "myName1" },
+                { "urn:test:a:complex:immutable:type:instance1:children", "myChild1.1" },
+                { "urn:test:a:complex:immutable:type:instance1:children", "myChild1.2" }
             };
 
             var baseKeys = new NameValueCollection
@@ -32,7 +32,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
         };
 
         private Because of = () =>
-            found_value = multi_source_key_value_configuration["urn:a:complex:immutable:type:instance1:id"];
+            found_value = multi_source_key_value_configuration["urn:test:a:complex:immutable:type:instance1:id"];
 
         private It should_find_the_previous_value = () => found_value.ShouldEqual("myId1");
     }

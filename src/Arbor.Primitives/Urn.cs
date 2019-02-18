@@ -49,25 +49,24 @@ namespace Arbor.Primitives
                 throw new InvalidOperationException();
             }
 
-            ReadOnlySpan<char> nidSub = chars.Slice(chars.IndexOf(':') + 1);
+            ReadOnlySpan<char> nidSub = chars.Slice(chars.IndexOf(Separator) + 1);
 
             if (nidSub.IndexOf(':') < 0)
             {
-                throw new InvalidOperationException();
+                throw new InvalidOperationException($"Attempted value '{originalValue}' is not a valid urn");
             }
 
-            ReadOnlySpan<char> nidSlice = nidSub.Slice(0, nidSub.IndexOf(':'));
+            ReadOnlySpan<char> nidSlice = nidSub.Slice(0, nidSub.IndexOf(Separator));
 
             foreach (char c in nidSlice)
             {
                 if (c >= 128)
                 {
-                    throw new InvalidOperationException("Only");
+                    throw new InvalidOperationException("Only ascii characters allowed");
                 }
             }
+
             Nid = nidSlice.ToString();
-
-
 
             OriginalValue = trimmed;
         }

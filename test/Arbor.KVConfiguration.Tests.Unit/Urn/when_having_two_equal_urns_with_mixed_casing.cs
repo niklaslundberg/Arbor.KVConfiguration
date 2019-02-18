@@ -13,8 +13,8 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 
         private Establish context = () =>
         {
-            urn1 = new Arbor.Primitives.Urn("urn:ABC");
-            urn2 = new Arbor.Primitives.Urn("URN:abc");
+            urn1 = new Arbor.Primitives.Urn("urn:ABC:123");
+            urn2 = new Arbor.Primitives.Urn("URN:abc:123");
         };
 
         private Because of = () => { };
