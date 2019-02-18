@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Arbor.Primitives;
 
 namespace Arbor.KVConfiguration.Urns
 {

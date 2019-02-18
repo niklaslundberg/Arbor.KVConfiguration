@@ -60,7 +60,7 @@ namespace Arbor.KVConfiguration.Tests.Integration.Validation
         {
             IValueValidator urnValidator = new UrnValidator();
 
-            ImmutableArray<ValidationError> validationErrors = urnValidator.Validate("urn", "urn:abc");
+            ImmutableArray<ValidationError> validationErrors = urnValidator.Validate("urn", "urn:test:abc");
 
             Assert.Empty(validationErrors);
         }

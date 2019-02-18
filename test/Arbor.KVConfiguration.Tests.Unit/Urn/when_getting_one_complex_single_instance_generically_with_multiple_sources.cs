@@ -16,15 +16,14 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         {
             var userKeys = new NameValueCollection
             {
-                { "urn:a:complex:immutable:type:instance1:id", "myId1" },
-                { "urn:a:complex:immutable:type:instance1:name", "myName1" },
-                { "urn:a:complex:immutable:type:instance1:children", "myChild1.1" },
-                { "urn:a:complex:immutable:type:instance1:children", "myChild1.2" },
+                { "urn:test:a:complex:immutable:type:instance1:name", "myName1" },
+                { "urn:test:a:complex:immutable:type:instance1:children", "myChild1.1" },
+                { "urn:test:a:complex:immutable:type:instance1:children", "myChild1.2" },
             };
 
             var baseKeys = new NameValueCollection
             {
-                { "urn:unrelated","true" }
+                { "urn:test:unrelated","true" }
             };
 
             MultiSourceKeyValueConfiguration multiSourceKeyValueConfiguration = KeyValueConfigurationManager

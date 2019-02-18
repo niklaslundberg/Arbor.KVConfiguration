@@ -39,6 +39,7 @@
     <ProjectReference Include="..\..\src\Arbor.KVConfiguration.Schema\Arbor.KVConfiguration.Schema.csproj" />
     <ProjectReference Include="..\..\src\Arbor.KVConfiguration.Urns\Arbor.KVConfiguration.Urns.csproj" />
     <ProjectReference Include="..\..\src\Arbor.KVConfiguration.UserConfiguration\Arbor.KVConfiguration.UserConfiguration.csproj" />
+    <ProjectReference Include="..\..\src\Arbor.Primitives\Arbor.Primitives.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

@@ -25,5 +25,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Arbor.KVConfiguration.Core\Arbor.KVConfiguration.Core.csproj" />
     <ProjectReference Include="..\Arbor.KVConfiguration.Schema\Arbor.KVConfiguration.Schema.csproj" />
+    <ProjectReference Include="..\Arbor.Primitives\Arbor.Primitives.csproj" />
   </ItemGroup>
 </Project>

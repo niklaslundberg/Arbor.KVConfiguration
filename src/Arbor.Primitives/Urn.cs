@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace Arbor.KVConfiguration.Urns
+namespace Arbor.Primitives
 {
     public class Urn : IEquatable<Urn>
     {
@@ -42,8 +42,37 @@ namespace Arbor.KVConfiguration.Urns
                 throw new FormatException($"Invalid urn '{trimmed}'");
             }
 
+            var chars = trimmed.AsSpan();
+
+            if (chars.IndexOf(':') < 0)
+            {
+                throw new InvalidOperationException();
+            }
+
+            ReadOnlySpan<char> nidSub = chars.Slice(chars.IndexOf(':') + 1);
+
+            if (nidSub.IndexOf(':') < 0)
+            {
+                throw new InvalidOperationException();
+            }
+
+            ReadOnlySpan<char> nidSlice = nidSub.Slice(0, nidSub.IndexOf(':'));
+
+            foreach (char c in nidSlice)
+            {
+                if (c >= 128)
+                {
+                    throw new InvalidOperationException("Only");
+                }
+            }
+            Nid = nidSlice.ToString();
+
+
+
             OriginalValue = trimmed;
         }
+
+        public string Nid { get; }
 
         public string Name
         {

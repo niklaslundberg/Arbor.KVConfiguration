@@ -16,15 +16,15 @@ namespace Arbor.KVConfiguration.Tests.Integration
             var inMemoryKeyValueConfiguration =
                 new InMemoryKeyValueConfiguration(new NameValueCollection
                 {
-                    { "urn:simple:instance:name", "John" },
-                    { "urn:simple:instance:age", "42" }
+                    { "urn:test:simple:instance:name", "John" },
+                    { "urn:test:simple:instance:age", "42" }
                 });
 
             IConfigurationRoot configurationRoot = new ConfigurationBuilder()
                 .AddInMemoryCollection(new Dictionary<string, string>
                 {
-                    ["urn:simple:agent:name"] = "James",
-                    ["urn:simple:agent:age"] = "50"
+                    ["urn:test:simple:agent:name"] = "James",
+                    ["urn:test:simple:agent:age"] = "50"
                 })
                 .AddKeyValueConfigurationSource(inMemoryKeyValueConfiguration).Build();
 
@@ -42,8 +42,8 @@ namespace Arbor.KVConfiguration.Tests.Integration
             var inMemoryKeyValueConfiguration =
                 new InMemoryKeyValueConfiguration(new NameValueCollection
                 {
-                    { "urn:simple:instance:name", "John" },
-                    { "urn:simple:instance:age", "42" }
+                    { "urn:test:simple:instance:name", "John" },
+                    { "urn:test:simple:instance:age", "42" }
                 });
 
             IConfigurationRoot configurationRoot = new ConfigurationBuilder()

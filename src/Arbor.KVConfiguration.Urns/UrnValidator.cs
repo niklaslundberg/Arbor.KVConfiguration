@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Immutable;
 using Arbor.KVConfiguration.Schema.Validators;
+using Arbor.Primitives;
 
 namespace Arbor.KVConfiguration.Urns
 {

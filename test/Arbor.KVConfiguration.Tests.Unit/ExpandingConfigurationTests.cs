@@ -11,7 +11,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
 {
     public class ExpandingConfigurationTests
     {
-        [Urn("urn:testinstance")]
+        [Urn("urn:test:testinstance")]
         [UsedImplicitly]
         private class TestInstance
         {
@@ -89,7 +89,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
 
             string valueWithPattern = $"{pattern} hello";
 
-            string key = "urn:testinstance:0:test";
+            string key = "urn:test:testinstance:0:test";
 
             var values = new NameValueCollection
             {

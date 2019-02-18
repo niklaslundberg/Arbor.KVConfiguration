@@ -1,4 +1,5 @@
 using System;
+using Arbor.Primitives;
 
 namespace Arbor.KVConfiguration.Urns
 {
