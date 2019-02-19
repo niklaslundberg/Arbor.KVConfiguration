@@ -6,6 +6,7 @@ namespace Arbor.Primitives
     public class Urn : IEquatable<Urn>
     {
         private static readonly char[] InvalidCharacters = {'/', '\\'};
+        private const string DoubleSeparator = "::";
         public const char Separator = ':';
 
         public Urn(string originalValue)
@@ -32,7 +33,7 @@ namespace Arbor.Primitives
                 throw new FormatException("Urn contains invalid characters");
             }
 
-            if (trimmed.IndexOf("::", StringComparison.OrdinalIgnoreCase) >= 0)
+            if (trimmed.IndexOf(DoubleSeparator, StringComparison.OrdinalIgnoreCase) >= 0)
             {
                 throw new FormatException("Urn contains invalid double colon");
             }
@@ -44,14 +45,14 @@ namespace Arbor.Primitives
 
             var chars = trimmed.AsSpan();
 
-            if (chars.IndexOf(':') < 0)
+            if (chars.IndexOf(Separator) < 0)
             {
                 throw new InvalidOperationException();
             }
 
             ReadOnlySpan<char> nidSub = chars.Slice(chars.IndexOf(Separator) + 1);
 
-            if (nidSub.IndexOf(':') < 0)
+            if (nidSub.IndexOf(Separator) < 0)
             {
                 throw new InvalidOperationException($"Attempted value '{originalValue}' is not a valid urn");
             }
