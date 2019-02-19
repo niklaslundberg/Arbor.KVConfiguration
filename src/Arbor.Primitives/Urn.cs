@@ -60,7 +60,7 @@ namespace Arbor.Primitives
 
             foreach (char c in nidSlice)
             {
-                if (c >= 128)
+                if (!c.IsAscii())
                 {
                     throw new InvalidOperationException("Only ascii characters allowed");
                 }

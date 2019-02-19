@@ -21,7 +21,7 @@
     <licenseUrl>https://github.com/niklaslundberg/Arbor.KVConfiguration/blob/master/LICENSE.txt</licenseUrl>
     <copyright>Copyright Niklas Lundberg 2014 - 2019</copyright>
     <dependencies>
-      <dependency id="Arbor.Primitives" version="[$version$]" />
+      <dependency id="System.Memory" version="[4.5.2, 5.0.0)" />
     </dependencies>
     <references></references>
     <tags></tags>
