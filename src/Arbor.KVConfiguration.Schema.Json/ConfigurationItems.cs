@@ -12,10 +12,10 @@ namespace Arbor.KVConfiguration.Schema.Json
             Keys = keys;
         }
 
+        [PublicAPI]
         [JsonProperty(Order = 0, PropertyName = JsonSchemaConstants.VersionPropertyKey)]
         public string Version
         {
-            [UsedImplicitly]
             get;
         }
 

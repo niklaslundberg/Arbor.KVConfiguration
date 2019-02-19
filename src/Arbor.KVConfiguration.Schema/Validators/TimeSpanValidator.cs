@@ -12,11 +12,9 @@ namespace Arbor.KVConfiguration.Schema.Validators
 
         protected override ImmutableArray<ValidationError> DoValidate(string type, string value)
         {
-            TimeSpan parsedResult;
-
-            if (!TimeSpan.TryParse(value, out parsedResult))
+            if (!TimeSpan.TryParse(value, out TimeSpan _))
             {
-                return new ValidationError("Not a valid timespan value").ValueToImmutableArray();
+                return new ValidationError($"'{value}' is not a valid timespan value").ValueToImmutableArray();
             }
 
             return ImmutableArray<ValidationError>.Empty;

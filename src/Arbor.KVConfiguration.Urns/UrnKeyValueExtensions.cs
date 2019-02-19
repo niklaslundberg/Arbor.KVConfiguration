@@ -2,11 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Dynamic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using Arbor.KVConfiguration.Core;
+using Arbor.Primitives;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 
@@ -243,7 +245,7 @@ namespace Arbor.KVConfiguration.Urns
                                     subKeyGroup,
                                     propertyType);
 
-                                Console.WriteLine($"Found sub item" + subItem.Item1);
+                                Debug.WriteLine($"Found sub item {subItem.Item1}");
 
                                 if (!asDictionary.ContainsKey(subKeyGroup.Key.Parent.Name))
                                 {
@@ -303,6 +305,10 @@ namespace Arbor.KVConfiguration.Urns
                 JsonConverter[] converters = { new StringValuesJsonConverter() };
                 item = JsonConvert.DeserializeObject(json, type, converters);
             }
+            catch (System.IO.FileNotFoundException ex)
+            {
+                throw new InvalidOperationException($"Could not deserialize json '{json}' to target type {type.FullName}", ex);
+            }
             catch (Exception ex)
             {
                 ImmutableArray<(string, string)> errorProperties = type
@@ -330,8 +336,14 @@ namespace Arbor.KVConfiguration.Urns
 
                             if (objects.Length > 1)
                             {
+                                if (value is string stringValue)
+                                {
+                                    return (property.Name,
+                                            $"The property of type {property.PropertyType.Name} with name '{property.Name}' has multiple values {stringValue}");
+                                }
+
                                 return (property.Name,
-                                    $"The property of type {property.PropertyType.Name} with name '{property.Name}' has multiple values {string.Join(", ", objects.Select(o => $"'{o}'"))}"
+                                        $"The property of type {property.PropertyType.Name} with name '{property.Name}' has multiple values {string.Join(", ", objects.Select(o => $"'{o}'"))}"
                                     );
                             }
                         }

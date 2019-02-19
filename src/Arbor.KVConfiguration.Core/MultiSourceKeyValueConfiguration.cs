@@ -31,7 +31,7 @@ namespace Arbor.KVConfiguration.Core
 
         private string BuildDecoratorsAsString(AppSettingsDecoratorBuilder appSettingsDecoratorBuilder)
         {
-            if (appSettingsDecoratorBuilder is null || appSettingsDecoratorBuilder.Decorator is null)
+            if (appSettingsDecoratorBuilder?.Decorator is null)
             {
                 return string.Empty;
             }

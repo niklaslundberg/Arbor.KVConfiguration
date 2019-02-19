@@ -7,6 +7,7 @@ using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core.Metadata
 {
+    [PublicAPI]
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global", Justification = "Used by reflection")]
     public class ConfigurationMetadata
     {

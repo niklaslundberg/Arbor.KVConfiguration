@@ -28,8 +28,8 @@ namespace Arbor.KVConfiguration.Tests.Integration
             IConfigurationRoot configurationRoot = new ConfigurationBuilder()
                 .AddInMemoryCollection(new Dictionary<string, string>
                 {
-                    ["urn:simple:instance:name"] = "John",
-                    ["urn:simple:instance:age"] = "42",
+                    ["urn:test:simple:instance:name"] = "John",
+                    ["urn:test:simple:instance:age"] = "42",
                 }).Build();
 
             MultiSourceKeyValueConfiguration multiSourceKeyValueConfiguration = KeyValueConfigurationManager.Add(new KeyValueConfigurationAdapter(configurationRoot)).Build();

@@ -11,31 +11,31 @@ namespace Arbor.KVConfiguration.Tests.Unit
     {
         private Establish context = () =>
         {
-            _reflectionKeyValueConfiguration =
+            reflection_key_value_configuration =
                 new ReflectionKeyValueConfiguration(typeof(ClassWithNestedClasses).Assembly);
         };
 
         private Because of = () =>
         {
-            configuration_items = _reflectionKeyValueConfiguration.ConfigurationItems;
+            configuration_items = reflection_key_value_configuration.ConfigurationItems;
         };
 
         private It should_find_plain_key = () =>
         {
-            configuration_items.FirstOrDefault(x => x.Key == ClassWithNestedClasses.PlainKey).Value.ShouldNotBeNull();;
+            configuration_items.FirstOrDefault(x => x.Key == ClassWithNestedClasses.PlainKey).Value.ShouldNotBeNull();
         };
 
         private It should_find_nested_key = () =>
         {
-            configuration_items.FirstOrDefault(x => x.Key == ClassWithNestedClasses.NestedA.NestedKeyA).Value.ShouldNotBeNull();;
+            configuration_items.FirstOrDefault(x => x.Key == ClassWithNestedClasses.NestedA.NestedKeyA).Value.ShouldNotBeNull();
         };
 
         private It should_find_second_nested_key = () =>
         {
-            configuration_items.FirstOrDefault(x => x.Key == ClassWithNestedClasses.NestedB.NestedKeyB).Value.ShouldNotBeNull();;
+            configuration_items.FirstOrDefault(x => x.Key == ClassWithNestedClasses.NestedB.NestedKeyB).Value.ShouldNotBeNull();
         };
 
-        private static ReflectionKeyValueConfiguration _reflectionKeyValueConfiguration;
+        private static ReflectionKeyValueConfiguration reflection_key_value_configuration;
 
         private static ImmutableArray<KeyValueConfigurationItem> configuration_items;
     }

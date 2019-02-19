@@ -12,7 +12,7 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
     /// <summary>
     /// Adapter to use an existing IConfiguration with Arbor.KVConfiguration
     /// </summary>
-    public sealed class KeyValueConfigurationAdapter : IKeyValueConfiguration
+    public sealed class KeyValueConfigurationAdapter : IKeyValueConfiguration, IDisposable
     {
         private InMemoryKeyValueConfiguration _inMemoryConfig;
         private bool _isDisposed;

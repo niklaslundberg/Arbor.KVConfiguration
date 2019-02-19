@@ -105,4 +105,9 @@
   <Rules AnalyzerId="CC" RuleNamespace="CodeCracker.CSharp">
     <Rule Id="CC0001" Action="None" />
   </Rules>
+  <Rules AnalyzerId="IDE" RuleNamespace="VisualStudio">
+    <Rule Id="IDE0044" Action="None" />
+    <Rule Id="IDE1066" Action="None" />
+    <Rule Id="IDE1006" Action="None" />
+  </Rules>
 </RuleSet>

@@ -18,7 +18,7 @@ namespace Arbor.KVConfiguration.Core.Extensions
             return type.IsClass && (type.IsPublic || type.IsNestedPublic) && type.IsAbstract && type.IsSealed;
         }
 
-        internal static bool IsPublicClass([NotNull] this Type type)
+        private static bool IsPublicClass([NotNull] this Type type)
         {
             if (type == null)
             {
@@ -44,7 +44,7 @@ namespace Arbor.KVConfiguration.Core.Extensions
             return fields;
         }
 
-        internal static ImmutableArray<Type> GetLoadableTypes([NotNull] this Assembly assembly)
+        private static ImmutableArray<Type> GetLoadableTypes([NotNull] this Assembly assembly)
         {
             if (assembly == null)
             {
@@ -80,7 +80,7 @@ namespace Arbor.KVConfiguration.Core.Extensions
             return publicConstantStringFields;
         }
 
-        internal static bool IsPublicConstantStringField([NotNull] this FieldInfo fieldInfo)
+        private static bool IsPublicConstantStringField([NotNull] this FieldInfo fieldInfo)
         {
             if (fieldInfo == null)
             {

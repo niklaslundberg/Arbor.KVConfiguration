@@ -16,10 +16,10 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         {
             var keys = new NameValueCollection
             {
-                { "urn:a:complex:immutable:type-with-complex-child:instance1:id", "myId1" },
-                { "urn:a:complex:immutable:type-with-complex-child:instance1:name", "myName1" },
-                { "urn:a:complex:immutable:type-with-complex-child:instance1:child:name", "childName" },
-                { "urn:a:complex:immutable:type-with-complex-child:instance1:child:count", "42" },
+                { "urn:test:a:complex:immutable:type-with-complex-child:instance1:id", "myId1" },
+                { "urn:test:a:complex:immutable:type-with-complex-child:instance1:name", "myName1" },
+                { "urn:test:a:complex:immutable:type-with-complex-child:instance1:child:name", "childName" },
+                { "urn:test:a:complex:immutable:type-with-complex-child:instance1:child:count", "42" },
             };
 
             configuration = new Core.InMemoryKeyValueConfiguration(keys);

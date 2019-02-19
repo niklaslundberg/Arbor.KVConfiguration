@@ -3,7 +3,6 @@ SET Arbor.X.Build.Bootstrapper.AllowPrerelease=true
 SET Arbor.X.Tools.External.MSpec.Enabled=true
 SET Arbor.X.NuGet.Package.Artifacts.Suffix=
 SET Arbor.X.NuGet.Package.Artifacts.BuildNumber.Enabled=
-SET Arbor.X.Log.Level=Debug
 SET Arbor.X.NuGetPackageVersion=
 SET Arbor.X.Vcs.Branch.Name.Version.OverrideEnabled=false
 SET Arbor.X.Build.VariableOverrideEnabled=true

@@ -4,8 +4,9 @@ using BenchmarkDotNet.Running;
 
 namespace Arbor.KVConfiguration.Tests.Benchmark
 {
-    internal class Program
+    internal static class Program
     {
+        // ReSharper disable once UnusedParameter.Local
         private static void Main(string[] args)
         {
             Summary summary = BenchmarkRunner.Run<BenchmarkGetItemByKey>();

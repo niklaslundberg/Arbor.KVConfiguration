@@ -12,9 +12,9 @@ namespace Arbor.KVConfiguration.Schema.Validators
 
         protected override ImmutableArray<ValidationError> DoValidate(string type, string value)
         {
-            if (!int.TryParse(value, out int parsedResult))
+            if (!int.TryParse(value, out int _))
             {
-                return new ValidationError("Not a valid integer value").ValueToImmutableArray();
+                return new ValidationError($"'{value}' is not a valid integer value").ValueToImmutableArray();
             }
 
             return ImmutableArray<ValidationError>.Empty;

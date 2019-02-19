@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using JetBrains.Annotations;
 
@@ -19,6 +20,16 @@ namespace Arbor.KVConfiguration.Schema
         internal static ImmutableArray<T> ValueToImmutableArray<T>(this T item)
         {
             return new[] { item }.ToImmutableArray();
+        }
+
+        public static ImmutableArray<T> ThrowIfDefault<T>(this ImmutableArray<T> array)
+        {
+            if (array.IsDefault)
+            {
+                throw new InvalidOperationException("The array must be initialized");
+            }
+
+            return array;
         }
     }
 }

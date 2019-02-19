@@ -22,9 +22,7 @@ namespace Arbor.KVConfiguration.Core.Extensions.LongExtensions
 
             string value = keyValueConfiguration[key];
 
-            long parsedResultValue;
-
-            if (!long.TryParse(value, out parsedResultValue))
+            if (!long.TryParse(value, out long parsedResultValue))
             {
                 return defaultValue;
             }

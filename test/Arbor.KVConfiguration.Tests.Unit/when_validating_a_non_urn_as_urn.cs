@@ -5,6 +5,7 @@ using Arbor.KVConfiguration.Core.Metadata;
 using Arbor.KVConfiguration.JsonConfiguration;
 using Arbor.KVConfiguration.Schema;
 using Arbor.KVConfiguration.Schema.Validators;
+using Arbor.KVConfiguration.Urns;
 using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit
@@ -18,11 +19,11 @@ namespace Arbor.KVConfiguration.Tests.Unit
 
         private static KeyValueConfigurationValidationSummary summary;
 
-        private static ImmutableArray<KeyMetadata> metdata;
+        private static ImmutableArray<KeyMetadata> metadata;
 
         private Establish context = () =>
         {
-            configuration_validator = new ConfigurationValidator();
+            configuration_validator = new ConfigurationValidator(new IValueValidator[]{new UrnValidator()}.ToImmutableArray());
 
             var configurationItems = new List<KeyValueConfigurationItem>
             {
@@ -35,14 +36,14 @@ namespace Arbor.KVConfiguration.Tests.Unit
                         isRequired: false))
             };
 
-            metdata = configurationItems.GetMetadata();
+            metadata = configurationItems.GetMetadata();
 
             configuration = new JsonKeyValueConfiguration(configurationItems);
         };
 
         private Because of = () =>
         {
-            summary = configuration.AllWithMultipleValues.Validate(configuration_validator, metdata);
+            summary = configuration.AllWithMultipleValues.Validate(configuration_validator, metadata);
         };
 
         private It should_have_validation_errors = () =>

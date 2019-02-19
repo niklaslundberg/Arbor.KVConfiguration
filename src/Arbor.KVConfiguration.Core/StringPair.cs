@@ -33,12 +33,12 @@ namespace Arbor.KVConfiguration.Core
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj))
+            if (obj is null)
             {
                 return false;
             }
 
-            return obj is StringPair && Equals((StringPair)obj);
+            return obj is StringPair stringPair && Equals(stringPair);
         }
 
         public override int GetHashCode()

@@ -12,9 +12,9 @@ namespace Arbor.KVConfiguration.Schema.Validators
 
         protected override ImmutableArray<ValidationError> DoValidate(string type, string value)
         {
-            if (!bool.TryParse(value, out bool parsedResult))
+            if (!bool.TryParse(value, out bool _))
             {
-                return new ValidationError("Not a valid boolean value").ValueToImmutableArray();
+                return new ValidationError($"'{value}' is not a valid boolean value").ValueToImmutableArray();
             }
 
             return ImmutableArray<ValidationError>.Empty;

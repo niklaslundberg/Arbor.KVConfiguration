@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using Arbor.KVConfiguration.Core;
@@ -18,16 +17,15 @@ namespace Arbor.KVConfiguration.Schema.Validators
             {
                 new IntValidator(),
                 new UriValidator(),
-                new UrnValidator(),
                 new BoolValidator(),
                 new TimeSpanValidator()
             }.ToImmutableArray();
         }
 
         [UsedImplicitly]
-        public ConfigurationValidator([NotNull] IEnumerable<IValueValidator> validators)
+        public ConfigurationValidator(ImmutableArray<IValueValidator> validators)
         {
-            _validators = validators?.ToImmutableArray() ?? throw new ArgumentNullException(nameof(validators));
+            _validators = validators.ThrowIfDefault();
         }
 
         public KeyValueConfigurationValidationResult Validate(

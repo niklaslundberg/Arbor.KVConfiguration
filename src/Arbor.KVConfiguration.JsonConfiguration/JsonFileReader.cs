@@ -33,7 +33,7 @@ namespace Arbor.KVConfiguration.JsonConfiguration
             ConfigurationItems config;
             try
             {
-                config = new JsonConfigurationSerializer().Deserialize(json);
+                config = JsonConfigurationSerializer.Deserialize(json);
             }
             catch (Exception ex)
             {

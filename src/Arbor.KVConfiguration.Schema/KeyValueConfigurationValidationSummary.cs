@@ -10,11 +10,10 @@ namespace Arbor.KVConfiguration.Schema
         public KeyValueConfigurationValidationSummary(
             [CanBeNull] IEnumerable<KeyValueConfigurationValidationResult> keyValueConfigurationValidationResults)
         {
-            KeyValueConfigurationValidationResults = keyValueConfigurationValidationResults?.ToImmutableArray() ??
-                                                     ImmutableArray<KeyValueConfigurationValidationResult>.Empty;
+            KeyValueConfigurationValidationResults = keyValueConfigurationValidationResults.SafeToImmutableArray();
         }
 
-        public bool IsValid => KeyValueConfigurationValidationResults.All(_ => _.IsValid);
+        public bool IsValid => KeyValueConfigurationValidationResults.All(result => result.IsValid);
 
         public ImmutableArray<KeyValueConfigurationValidationResult> KeyValueConfigurationValidationResults { get; }
     }

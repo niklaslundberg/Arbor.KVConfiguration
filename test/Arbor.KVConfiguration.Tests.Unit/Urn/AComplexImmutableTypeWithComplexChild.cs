@@ -1,10 +1,12 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Arbor.KVConfiguration.Urns;
+using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Tests.Unit.Urn
 {
-    [Urn("urn:a:complex:immutable:type-with-complex-child")]
+    [PublicAPI]
+    [Urn("urn:test:a:complex:immutable:type-with-complex-child")]
     [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     public class AComplexImmutableTypeWithComplexChild
     {

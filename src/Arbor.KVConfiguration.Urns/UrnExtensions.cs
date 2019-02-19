@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Arbor.Primitives;
 
 namespace Arbor.KVConfiguration.Urns
 {
@@ -17,7 +18,7 @@ namespace Arbor.KVConfiguration.Urns
 
         public static bool IsUrn(this string value)
         {
-            return Urn.TryParse(value, out Urn urn);
+            return Urn.TryParse(value, out Urn _);
         }
     }
 }

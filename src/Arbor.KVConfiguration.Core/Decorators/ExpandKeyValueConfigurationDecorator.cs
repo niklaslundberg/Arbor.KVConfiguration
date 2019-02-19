@@ -39,7 +39,9 @@ namespace Arbor.KVConfiguration.Core.Decorators
                 return value;
             }
 
-            return Environment.ExpandEnvironmentVariables(value);
+            string expanded = Environment.ExpandEnvironmentVariables(value);
+
+            return expanded;
         }
     }
 }

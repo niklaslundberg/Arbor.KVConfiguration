@@ -4,17 +4,17 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 {
 #pragma warning disable 0649
 #pragma warning disable 0169
-    [Subject(typeof(Urns.Urn))]
+    [Subject(typeof(Arbor.Primitives.Urn))]
     public class when_having_two_equal_urns_with_mixed_casing
     {
-        protected static Urns.Urn urn1;
+        protected static Arbor.Primitives.Urn urn1;
 
-        protected static Urns.Urn urn2;
+        protected static Arbor.Primitives.Urn urn2;
 
         private Establish context = () =>
         {
-            urn1 = new Urns.Urn("urn:ABC");
-            urn2 = new Urns.Urn("URN:abc");
+            urn1 = new Arbor.Primitives.Urn("urn:ABC:123");
+            urn2 = new Arbor.Primitives.Urn("URN:abc:123");
         };
 
         private Because of = () => { };

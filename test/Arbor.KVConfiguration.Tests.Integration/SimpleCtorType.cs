@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Tests.Integration
 {
-    [Urn("urn:simple")]
+    [Urn("urn:test:simple")]
     [UsedImplicitly]
     public class SimpleCtorType
     {

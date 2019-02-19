@@ -1,25 +1,33 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net471</TargetFramework>
+    <TargetFramework>net472</TargetFramework>
     <CodeAnalysisRuleSet>..\..\src\Arbor.Tests.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2018.2.1" />
+    <Compile Remove="Metadata\**" />
+    <Compile Remove="Validation\**" />
+    <EmbeddedResource Remove="Metadata\**" />
+    <EmbeddedResource Remove="Validation\**" />
+    <None Remove="Metadata\**" />
+    <None Remove="Validation\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="2018.3.0" />
     <PackageReference Include="Machine.Specifications" Version="0.12.0" />
     <PackageReference Include="Machine.Specifications.Should" Version="0.11.0" />
-    <PackageReference Include="Microsoft.Net.Compilers" Version="2.9.0">
+    <PackageReference Include="Microsoft.Net.Compilers" Version="2.10.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     <PackageReference Include="System.Collections.Immutable" Version="1.5.0" />
-    <PackageReference Include="xunit" Version="2.4.0" />
-    <PackageReference Include="xunit.runner.console" Version="2.4.0">
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.console" Version="2.4.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0">
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
@@ -31,6 +39,7 @@
     <ProjectReference Include="..\..\src\Arbor.KVConfiguration.Schema\Arbor.KVConfiguration.Schema.csproj" />
     <ProjectReference Include="..\..\src\Arbor.KVConfiguration.Urns\Arbor.KVConfiguration.Urns.csproj" />
     <ProjectReference Include="..\..\src\Arbor.KVConfiguration.UserConfiguration\Arbor.KVConfiguration.UserConfiguration.csproj" />
+    <ProjectReference Include="..\..\src\Arbor.Primitives\Arbor.Primitives.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
