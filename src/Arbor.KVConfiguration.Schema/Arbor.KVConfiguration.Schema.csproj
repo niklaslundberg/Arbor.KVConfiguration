@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net472</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net471;net472</TargetFrameworks>
     <AssemblyName>Arbor.KVConfiguration.Schema</AssemblyName>
     <RootNamespace>Arbor.KVConfiguration.Schema</RootNamespace>
     <CodeAnalysisRuleSet>..\Arbor.ruleset</CodeAnalysisRuleSet>
