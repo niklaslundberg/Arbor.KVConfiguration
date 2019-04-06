@@ -22,7 +22,7 @@ namespace Arbor.KVConfiguration.Urns
 
         public override string ToString()
         {
-            return $"{Name} [{Value}]";
+            return $"{GetType().GenericTypeArguments[0].FullName}:'{Name}' [{Value}]";
         }
     }
 }

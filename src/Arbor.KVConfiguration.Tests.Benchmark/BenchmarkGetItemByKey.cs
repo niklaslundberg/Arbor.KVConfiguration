@@ -18,7 +18,6 @@ namespace Arbor.KVConfiguration.Tests.Benchmark
             _configuration = new InMemoryKeyValueConfiguration(keys);
         }
 
-        [MemoryDiagnoser]
         [Benchmark]
         public string Value()
         {

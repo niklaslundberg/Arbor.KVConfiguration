@@ -3,6 +3,7 @@ using System.Collections.Immutable;
 using System.Collections.Specialized;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns;
+using Arbor.KVConfiguration.Urns;
 using Microsoft.Extensions.Configuration;
 using Xunit;
 
@@ -28,7 +29,7 @@ namespace Arbor.KVConfiguration.Tests.Integration
                 })
                 .AddKeyValueConfigurationSource(inMemoryKeyValueConfiguration).Build();
 
-            ImmutableArray<SimpleCtorType> simpleCtorType = configurationRoot.GetInstances<SimpleCtorType>();
+            ImmutableArray<SimpleCtorType> simpleCtorType = configurationRoot.ToKeyValueConfigurator().GetInstances<SimpleCtorType>();
 
             Assert.NotEmpty(simpleCtorType);
 
@@ -49,7 +50,7 @@ namespace Arbor.KVConfiguration.Tests.Integration
             IConfigurationRoot configurationRoot = new ConfigurationBuilder()
                 .AddKeyValueConfigurationSource(inMemoryKeyValueConfiguration).Build();
 
-            var simpleCtorType = configurationRoot.GetInstance<SimpleCtorType>();
+            var simpleCtorType = configurationRoot.ToKeyValueConfigurator().GetInstance<SimpleCtorType>();
 
             Assert.NotNull(simpleCtorType);
             Assert.Equal("John", simpleCtorType.Name);

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{D5A28CBE-A2A3-4F3A-BBF1-3B1016FE2A96}"
 EndProject
@@ -57,7 +57,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arbor.KVConfiguration.Syste
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arbor.KVConfiguration.Tests.Benchmark", "Arbor.KVConfiguration.Tests.Benchmark\Arbor.KVConfiguration.Tests.Benchmark.csproj", "{9A114B3E-8CB4-42F3-B624-521EED996664}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.Primitives", "Arbor.Primitives\Arbor.Primitives.csproj", "{AA298AA6-ED50-4B1A-B9D5-AC20E3F4B296}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arbor.Primitives", "Arbor.Primitives\Arbor.Primitives.csproj", "{AA298AA6-ED50-4B1A-B9D5-AC20E3F4B296}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.DependencyInjection", "Arbor.KVConfiguration.DependencyInjection\Arbor.KVConfiguration.DependencyInjection.csproj", "{16569BC7-FBB2-4A47-9774-42A05C1B3CFF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -129,6 +131,10 @@ Global
 		{AA298AA6-ED50-4B1A-B9D5-AC20E3F4B296}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA298AA6-ED50-4B1A-B9D5-AC20E3F4B296}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA298AA6-ED50-4B1A-B9D5-AC20E3F4B296}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16569BC7-FBB2-4A47-9774-42A05C1B3CFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16569BC7-FBB2-4A47-9774-42A05C1B3CFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16569BC7-FBB2-4A47-9774-42A05C1B3CFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16569BC7-FBB2-4A47-9774-42A05C1B3CFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -150,6 +156,7 @@ Global
 		{E2C090B7-148E-4D97-8F20-1EC1E0087B1F} = {B6593404-264C-4DCA-8E3B-BAA7A13F1489}
 		{9A114B3E-8CB4-42F3-B624-521EED996664} = {615EC7DF-A967-463D-A633-A7CEB29F1502}
 		{AA298AA6-ED50-4B1A-B9D5-AC20E3F4B296} = {B6593404-264C-4DCA-8E3B-BAA7A13F1489}
+		{16569BC7-FBB2-4A47-9774-42A05C1B3CFF} = {B6593404-264C-4DCA-8E3B-BAA7A13F1489}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A402AF7E-9579-4861-92CB-6C4E5C33D4CF}

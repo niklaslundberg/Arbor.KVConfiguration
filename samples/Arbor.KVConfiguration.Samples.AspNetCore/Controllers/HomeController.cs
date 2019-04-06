@@ -1,4 +1,5 @@
-﻿using Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns;
+﻿using System;
+using Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Arbor.KVConfiguration.Samples.AspNetCore.Controllers
@@ -9,7 +10,7 @@ namespace Arbor.KVConfiguration.Samples.AspNetCore.Controllers
 
         public HomeController(IConfigurationValue<MySampleConfiguration> mySample)
         {
-            _mySampleConfiguration = mySample.Value;
+            _mySampleConfiguration = mySample.Value ?? throw new InvalidOperationException("Could not get value for mySample");
         }
 
         public IActionResult Index()
