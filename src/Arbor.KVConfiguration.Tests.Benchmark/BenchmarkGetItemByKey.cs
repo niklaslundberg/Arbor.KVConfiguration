@@ -4,7 +4,7 @@ using BenchmarkDotNet.Attributes;
 
 namespace Arbor.KVConfiguration.Tests.Benchmark
 {
-    public sealed class BenchmarkGetItemByKey
+    public class BenchmarkGetItemByKey
     {
         private readonly IKeyValueConfiguration _configuration;
 

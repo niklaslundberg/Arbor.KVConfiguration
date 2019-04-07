@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Urns;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,6 +9,25 @@ namespace Arbor.KVConfiguration.DependencyInjection
 {
     public static class ConfigurationRegistrationExtensions
     {
+        public static IServiceCollection AddConfigurationInstancesFromAssemblies(
+            this IServiceCollection services,
+            IKeyValueConfiguration keyValueConfiguration,
+            params Assembly[] assemblies)
+        {
+            if (assemblies.Length == 0)
+            {
+                assemblies = new[] { Assembly.GetCallingAssembly() };
+            }
+
+            ConfigurationRegistrations configurationRegistrations = keyValueConfiguration.ScanRegistrations(assemblies);
+
+            ConfigurationInstanceHolder configurationInstanceHolder = configurationRegistrations.CreateHolder();
+
+            services.AddSingleton(configurationInstanceHolder);
+
+            return services.AddConfigurationInstanceHolder(configurationInstanceHolder);
+        }
+
         public static IServiceCollection AddConfigurationInstanceHolder(
             this IServiceCollection services,
             ConfigurationInstanceHolder holder)

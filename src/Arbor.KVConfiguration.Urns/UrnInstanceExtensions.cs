@@ -36,7 +36,7 @@ namespace Arbor.KVConfiguration.Urns
             return new ConfigurationRegistrations(configurationInstanceHolders.ToImmutableArray());
         }
 
-        public static ConfigurationInstanceHolder Create(ConfigurationRegistrations configurationRegistrations)
+        public static ConfigurationInstanceHolder CreateHolder(this ConfigurationRegistrations configurationRegistrations)
         {
             var configurationInstanceHolder = new ConfigurationInstanceHolder();
             foreach (UrnTypeRegistration registration in configurationRegistrations.UrnTypeRegistrations)

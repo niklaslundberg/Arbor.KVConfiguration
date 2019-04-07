@@ -22,6 +22,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Arbor.KVConfiguration.DependencyInjection\Arbor.KVConfiguration.DependencyInjection.csproj" />
     <ProjectReference Include="..\..\src\Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns\Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns.csproj" />
     <ProjectReference Include="..\..\src\Arbor.KVConfiguration.Urns\Arbor.KVConfiguration.Urns.csproj" />
   </ItemGroup>
