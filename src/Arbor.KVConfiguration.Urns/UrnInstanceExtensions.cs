@@ -9,12 +9,13 @@ namespace Arbor.KVConfiguration.Urns
 {
     public static class UrnInstanceExtensions
     {
-        public static ConfigurationRegistrations ScanRegistrations(this IKeyValueConfiguration keyValueConfiguration,
+        public static ConfigurationRegistrations ScanRegistrations(
+            this IKeyValueConfiguration keyValueConfiguration,
             params Assembly[] assemblies)
         {
             if (assemblies.Length == 0)
             {
-                assemblies = new[] {Assembly.GetCallingAssembly() };
+                assemblies = new[] { Assembly.GetCallingAssembly() };
             }
 
             ImmutableArray<UrnTypeMapping> urnTypesInAssemblies = UrnTypes.GetUrnTypesInAssemblies(assemblies);
@@ -23,22 +24,19 @@ namespace Arbor.KVConfiguration.Urns
                 urnTypesInAssemblies.SelectMany(urnType => GetInstancesForType(keyValueConfiguration, urnType.Type));
 
             return new ConfigurationRegistrations(configurationInstanceHolders.ToImmutableArray());
-
-
         }
 
-        public static ConfigurationRegistrations GetRegistrations(this IKeyValueConfiguration keyValueConfiguration, Type type)
+        public static ConfigurationRegistrations GetRegistrations(
+            this IKeyValueConfiguration keyValueConfiguration,
+            Type type)
         {
-
-            IEnumerable<UrnTypeRegistration> configurationInstanceHolders = GetInstancesForType(keyValueConfiguration,type);
+            IEnumerable<UrnTypeRegistration> configurationInstanceHolders =
+                GetInstancesForType(keyValueConfiguration, type);
 
             return new ConfigurationRegistrations(configurationInstanceHolders.ToImmutableArray());
-
-
         }
 
-        public static ConfigurationInstanceHolder Create(
-            ConfigurationRegistrations configurationRegistrations)
+        public static ConfigurationInstanceHolder Create(ConfigurationRegistrations configurationRegistrations)
         {
             var configurationInstanceHolder = new ConfigurationInstanceHolder();
             foreach (UrnTypeRegistration registration in configurationRegistrations.UrnTypeRegistrations)
@@ -95,36 +93,24 @@ namespace Arbor.KVConfiguration.Urns
                                                     && validationObjects.Any(validatedObject =>
                                                         validatedObject.Value.Validate().Any()))
             {
-                string invalidInstances = string.Join(Environment.NewLine,
-                    validationObjects
-                        .Where(validatedObject => validatedObject.Value.Validate().Any())
-                        .Select(namedInstance => $"[{namedInstance.EnclosingTypeName()}:{namedInstance.Name}] {namedInstance.Value}"));
-
-
-                var chain = keyValueConfiguration is MultiSourceKeyValueConfiguration multiSourceKeyValueConfiguration
-                    ? $", using configuration chain {multiSourceKeyValueConfiguration.SourceChain}"
-                    : null;
-
-                //ImmutableArray<UrnTypeRegistration> urnTypeRegistrations = new[]
-                //{
-                //    new UrnTypeRegistration(
-                //        new UrnTypeMapping(type, urnAttribute.Urn),
-                //        null,
-                //        new ConfigurationRegistrationError(
-                //            $"Could not create instance of type {type.FullName}, the named instances '{invalidInstances}' are invalid{chain}"))
-                //}.ToImmutableArray();
-
-                return validationObjects.Select(validationObject =>
-                {
-                    var errors = validationObject.Value.Validate().ToArray();
-
-                    if (errors.Length == 0)
+                ImmutableArray<UrnTypeRegistration> urnTypeRegistrations = validationObjects
+                    .Select(validationObject =>
                     {
-                        return new UrnTypeRegistration(urnTypeMapping, validationObject);
-                    }
+                        ValidationError[] errors = validationObject.Value.Validate().ToArray();
 
-                    return new UrnTypeRegistration(urnTypeMapping, validationObject, errors.Select(e => new ConfigurationRegistrationError(e.ErrorMessage)).ToArray());
-                }).ToImmutableArray();
+                        if (errors.Length == 0)
+                        {
+                            return new UrnTypeRegistration(urnTypeMapping, validationObject);
+                        }
+
+                        return new UrnTypeRegistration(urnTypeMapping,
+                            validationObject,
+                            errors.Select(e => new ConfigurationRegistrationError(e.ErrorMessage))
+                                .ToArray());
+                    })
+                    .ToImmutableArray();
+
+                return urnTypeRegistrations;
             }
 
             ImmutableArray<INamedInstance<IValidationObject>> validInstances = validationObjects

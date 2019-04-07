@@ -13,14 +13,17 @@ namespace Arbor.KVConfiguration.Urns
 
         public ImmutableArray<Type> RegisteredTypes => _configurationInstances.Keys.ToImmutableArray();
 
-        public ImmutableArray<T> GetInstances<T>() where T : INamedInstance<T>
+        public ImmutableArray<Type> RegisteredNamedInstanceTypes => _configurationInstances
+            .SelectMany(s => s.Value.Values.Select(v => v.GetType())).ToImmutableArray();
+
+        public ImmutableDictionary<string, object> GetInstances(Type type)
         {
-            if (!_configurationInstances.TryGetValue(typeof(T), out ConcurrentDictionary<string, object> instances))
+            if (!_configurationInstances.TryGetValue(type, out ConcurrentDictionary<string, object> instances))
             {
-                return ImmutableArray<T>.Empty;
+                return ImmutableDictionary<string, object>.Empty;
             }
 
-            return instances.Values.OfType<T>().ToImmutableArray();
+            return instances.ToImmutableDictionary();
         }
 
         public object Get(Type type, string key)
