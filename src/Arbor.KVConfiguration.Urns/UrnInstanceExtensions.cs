@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using Arbor.KVConfiguration.Core;
@@ -36,7 +37,8 @@ namespace Arbor.KVConfiguration.Urns
             return new ConfigurationRegistrations(configurationInstanceHolders.ToImmutableArray());
         }
 
-        public static ConfigurationInstanceHolder CreateHolder(this ConfigurationRegistrations configurationRegistrations)
+        public static ConfigurationInstanceHolder CreateHolder(
+            this ConfigurationRegistrations configurationRegistrations)
         {
             var configurationInstanceHolder = new ConfigurationInstanceHolder();
             foreach (UrnTypeRegistration registration in configurationRegistrations.UrnTypeRegistrations)
@@ -67,87 +69,54 @@ namespace Arbor.KVConfiguration.Urns
             {
                 var optionalAttribute = type.GetCustomAttribute<OptionalAttribute>();
 
-                if (optionalAttribute != null)
+                if (optionalAttribute is object _)
                 {
                     return ImmutableArray<UrnTypeRegistration>.Empty;
                 }
-
 
                 ImmutableArray<UrnTypeRegistration> urnTypeRegistrations = new[]
                 {
                     new UrnTypeRegistration(
                         urnTypeMapping,
                         null,
-                        new ConfigurationRegistrationError($"Could not get any instance of type {type.FullName}"))
+                        new ValidationResult($"Could not get any instance of type {type.FullName}"))
                 }.ToImmutableArray();
 
                 return urnTypeRegistrations;
             }
 
-            ImmutableArray<INamedInstance<IValidationObject>> validationObjects = instances
-                .OfType<INamedInstance<IValidationObject>>()
-                .Where(item => item != null)
-                .ToImmutableArray();
+            (INamedInstance<object> Object, bool Valid, ValidationResult[] Errors)[] validatedObjects = instances
+                .Select(
+                    instance =>
+                        (Object: instance,
+                            Valid: DataAnnotationsValidator.TryValidate(instance.Value,
+                                out ImmutableArray<ValidationResult> details),
+                            Errors: details.ToArray()))
+                .ToArray();
 
-            if (!validationObjects.IsDefaultOrEmpty && validationObjects.Length > 0
-                                                    && validationObjects.Any(validatedObject =>
-                                                        validatedObject.Value.Validate().Any()))
+            if (validatedObjects.Any(pair => pair.Errors.Length > 0))
             {
-                ImmutableArray<UrnTypeRegistration> urnTypeRegistrations = validationObjects
+                ImmutableArray<UrnTypeRegistration> urnTypeRegistrations = validatedObjects
                     .Select(validationObject =>
                     {
-                        ValidationError[] errors = validationObject.Value.Validate().ToArray();
+                        ValidationResult[] errors = validationObject.Errors;
 
                         if (errors.Length == 0)
                         {
-                            return new UrnTypeRegistration(urnTypeMapping, validationObject);
+                            return new UrnTypeRegistration(urnTypeMapping, validationObject.Object);
                         }
 
                         return new UrnTypeRegistration(urnTypeMapping,
-                            validationObject,
-                            errors.Select(e => new ConfigurationRegistrationError(e.ErrorMessage))
-                                .ToArray());
+                            validationObject.Object,
+                            errors);
                     })
                     .ToImmutableArray();
 
                 return urnTypeRegistrations;
             }
 
-            ImmutableArray<INamedInstance<IValidationObject>> validInstances = validationObjects
-                .Where(validationObject => validationObject.Value.Validate().Any())
-                .ToImmutableArray();
-
-            if (!validInstances.IsDefaultOrEmpty && validInstances.Length == 1)
-            {
-                INamedInstance<IValidationObject> validationObject = validInstances.Single();
-
-                return new[]
-                {
-                    new UrnTypeRegistration(
-                        urnTypeMapping,
-                        validationObject)
-                }.ToImmutableArray();
-            }
-
-            if (!validInstances.IsDefaultOrEmpty && validInstances.Length > 1)
-            {
-                return validInstances
-                    .Select(item => new UrnTypeRegistration(urnTypeMapping, item))
-                    .ToImmutableArray();
-            }
-
-            if (!validationObjects.IsDefaultOrEmpty)
-            {
-                return validInstances
-                    .Select(item => new UrnTypeRegistration(urnTypeMapping,
-                        item,
-                        new ConfigurationRegistrationError($"Invalid instance {item}")))
-                    .ToImmutableArray();
-            }
-
-
             return instances
-                .Select(item => new UrnTypeRegistration(urnTypeMapping, item))
+                .Select(instance => new UrnTypeRegistration(urnTypeMapping, instance))
                 .ToImmutableArray();
         }
     }

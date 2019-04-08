@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Immutable;
 using System.Collections.Specialized;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core
 {
+    [UsedImplicitly]
     public sealed class EnvironmentVariableKeyValueConfigurationSource : IKeyValueConfiguration
     {
         private readonly InMemoryKeyValueConfiguration _inMemoryKeyValueConfiguration;
@@ -31,10 +33,5 @@ namespace Arbor.KVConfiguration.Core
             => _inMemoryKeyValueConfiguration.AllWithMultipleValues;
 
         public string this[string key] => _inMemoryKeyValueConfiguration[key];
-
-        public void Dispose()
-        {
-            _inMemoryKeyValueConfiguration?.Dispose();
-        }
     }
 }

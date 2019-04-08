@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using System.ComponentModel.DataAnnotations;
 
 namespace Arbor.KVConfiguration.Urns
 {
@@ -7,7 +8,7 @@ namespace Arbor.KVConfiguration.Urns
         public UrnTypeRegistration(
             UrnTypeMapping urnTypeMapping,
             INamedInstance<object> instance,
-            params ConfigurationRegistrationError[] configurationRegistrationErrors)
+            params ValidationResult[] configurationRegistrationErrors)
         {
             Instance = instance;
             ConfigurationRegistrationErrors = configurationRegistrationErrors.ToImmutableArray();
@@ -16,7 +17,7 @@ namespace Arbor.KVConfiguration.Urns
 
         public INamedInstance<object> Instance { get; }
 
-        public ImmutableArray<ConfigurationRegistrationError> ConfigurationRegistrationErrors { get; }
+        public ImmutableArray<ValidationResult> ConfigurationRegistrationErrors { get; }
 
         public UrnTypeMapping TypeMapping { get; }
     }

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Schema.Validators;
 using Arbor.KVConfiguration.Urns;
@@ -6,7 +8,7 @@ using Arbor.KVConfiguration.Urns;
 namespace Arbor.KVConfiguration.Tests.Unit.Registrations
 {
     [Urn(Urn)]
-    public class ValidatableRequired : IValidationObject
+    public class ValidatableRequired
     {
         public const string Urn = "urn:required:type:with:validation";
 
@@ -16,30 +18,15 @@ namespace Arbor.KVConfiguration.Tests.Unit.Registrations
             Value = value;
         }
 
+        [Required]
         public string Name { get; }
 
+        [Range(1, int.MaxValue)]
         public int Value { get; }
 
         public override string ToString()
         {
             return $"{nameof(Name)}: {Name}, {nameof(Value)}: {Value}";
-        }
-
-        public IEnumerable<ValidationError> Validate()
-        {
-            if (Name is null)
-            {
-                yield return new ValidationError("Name cannot be null");
-            }
-            else if (Name.Length == 0)
-            {
-                yield return new ValidationError("Name cannot be empty");
-            }
-
-            if (Value <= 0)
-            {
-                yield return new ValidationError($"Value cannot be 0 or negative, was {Value}");
-            }
         }
     }
 }

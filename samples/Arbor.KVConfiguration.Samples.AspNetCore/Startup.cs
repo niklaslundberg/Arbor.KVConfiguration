@@ -16,7 +16,6 @@ namespace Arbor.KVConfiguration.Samples.AspNetCore
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", false, true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true);
-            //.AddEnvironmentVariables();
             Configuration = builder.Build();
         }
 

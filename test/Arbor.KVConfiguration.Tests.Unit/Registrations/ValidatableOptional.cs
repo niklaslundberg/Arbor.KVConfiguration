@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Urns;
 
@@ -6,7 +7,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Registrations
 {
     [Optional]
     [Urn(Urn)]
-    public class ValidatableOptional : IValidationObject
+    public class ValidatableOptional
     {
         public const string Urn = "urn:optional:type:with:validation";
 
@@ -16,30 +17,15 @@ namespace Arbor.KVConfiguration.Tests.Unit.Registrations
             Value = value;
         }
 
+        [Required]
         public string Name { get; }
 
+        [Range(1,int.MaxValue)]
         public int Value { get; }
 
         public override string ToString()
         {
             return $"{nameof(Name)}: {Name}, {nameof(Value)}: {Value}";
-        }
-
-        public IEnumerable<ValidationError> Validate()
-        {
-            if (Name is null)
-            {
-                yield return new ValidationError("Name cannot be null");
-            }
-            else if (Name.Length == 0)
-            {
-                yield return new ValidationError("Name cannot be empty");
-            }
-
-            if (Value <= 0)
-            {
-                yield return new ValidationError($"Value cannot be 0 or negative, was {Value}");
-            }
         }
     }
 }

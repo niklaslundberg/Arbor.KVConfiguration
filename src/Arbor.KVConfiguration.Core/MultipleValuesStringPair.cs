@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core
 {
-    public struct MultipleValuesStringPair : IEquatable<MultipleValuesStringPair>
+    public readonly struct MultipleValuesStringPair : IEquatable<MultipleValuesStringPair>
     {
         private readonly ImmutableArray<string> _values;
 

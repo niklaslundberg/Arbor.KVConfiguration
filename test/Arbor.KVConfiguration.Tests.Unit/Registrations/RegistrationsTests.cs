@@ -37,10 +37,10 @@ namespace Arbor.KVConfiguration.Tests.Unit.Registrations
             foreach (UrnTypeRegistration urnTypeRegistration in configurationRegistrations.UrnTypeRegistrations.Where(
                 s => s.ConfigurationRegistrationErrors.Length > 0))
             {
-                foreach (ConfigurationRegistrationError configurationRegistrationError in urnTypeRegistration
+                foreach (var configurationRegistrationError in urnTypeRegistration
                     .ConfigurationRegistrationErrors)
                 {
-                    output.WriteLine(configurationRegistrationError.Error);
+                    output.WriteLine(configurationRegistrationError.ErrorMessage);
                 }
             }
 
@@ -60,9 +60,9 @@ namespace Arbor.KVConfiguration.Tests.Unit.Registrations
 
             foreach (UrnTypeRegistration configurationRegistrationsUrnTypeRegistration in configurationRegistrations.UrnTypeRegistrations.Where(s => s.ConfigurationRegistrationErrors.Length > 0))
             {
-                foreach (ConfigurationRegistrationError configurationRegistrationError in configurationRegistrationsUrnTypeRegistration.ConfigurationRegistrationErrors)
+                foreach (var configurationRegistrationError in configurationRegistrationsUrnTypeRegistration.ConfigurationRegistrationErrors)
                 {
-                    output.WriteLine("Invalid instance {0}, error message: '{1}'", configurationRegistrationsUrnTypeRegistration.Instance, configurationRegistrationError.Error);
+                    output.WriteLine("Invalid instance {0}, error message: '{1}'", configurationRegistrationsUrnTypeRegistration.Instance, configurationRegistrationError.ErrorMessage);
                 }
             }
 
@@ -84,9 +84,9 @@ namespace Arbor.KVConfiguration.Tests.Unit.Registrations
 
             foreach (UrnTypeRegistration configurationRegistrationsUrnTypeRegistration in configurationRegistrations.UrnTypeRegistrations.Where(s => s.ConfigurationRegistrationErrors.Length > 0))
             {
-                foreach (ConfigurationRegistrationError configurationRegistrationError in configurationRegistrationsUrnTypeRegistration.ConfigurationRegistrationErrors)
+                foreach (var configurationRegistrationError in configurationRegistrationsUrnTypeRegistration.ConfigurationRegistrationErrors)
                 {
-                    output.WriteLine("Invalid, error message: '{0}'", configurationRegistrationError.Error);
+                    output.WriteLine("Invalid, error message: '{0}'", configurationRegistrationError.ErrorMessage);
                 }
             }
 

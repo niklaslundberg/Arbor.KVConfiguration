@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Arbor.KVConfiguration.Schema;
 using Arbor.KVConfiguration.Urns;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,7 +26,8 @@ namespace Arbor.KVConfiguration.Samples.AspNetCore.Controllers
         [HttpGet]
         public object Diagnostics(
             [FromServices] ConfigurationInstanceHolder configurationInstanceHolder,
-            [FromServices] IEnumerable<MySampleMultipleInstance> multipleInstances)
+            [FromServices] IEnumerable<MySampleMultipleInstance> multipleInstances,
+            [FromServices] KeyValueConfigurationValidationSummary validationSummary)
         {
             return new
             {
@@ -36,7 +38,8 @@ namespace Arbor.KVConfiguration.Samples.AspNetCore.Controllers
                         Instances = configurationInstanceHolder.GetInstances(type).ToArray()
                     })
                     .ToArray(),
-                multipleInstances
+                multipleInstances,
+                validationSummary
             };
         }
 

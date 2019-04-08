@@ -30,12 +30,15 @@ namespace Arbor.KVConfiguration.Schema
                         item =>
                             item.Key.Equals(multipleValuesStringPair.Key, StringComparison.OrdinalIgnoreCase));
 
-                KeyValueConfigurationValidationResult validationResult =
-                    configurationValidator.Validate(multipleValuesStringPair, metadataItem);
-
-                if (!validationResult.IsValid)
+                if (metadataItem != null)
                 {
-                    keyValueConfigurationValidationResults.Add(validationResult);
+                    KeyValueConfigurationValidationResult validationResult =
+                        configurationValidator.Validate(multipleValuesStringPair, metadataItem);
+
+                    if (!validationResult.IsValid)
+                    {
+                        keyValueConfigurationValidationResults.Add(validationResult);
+                    }
                 }
             }
 
