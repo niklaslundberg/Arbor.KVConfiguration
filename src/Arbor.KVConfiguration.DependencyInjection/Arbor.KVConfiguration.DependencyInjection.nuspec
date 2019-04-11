@@ -21,8 +21,6 @@
     <licenseUrl>https://github.com/niklaslundberg/Arbor.KVConfiguration/blob/master/LICENSE.txt</licenseUrl>
     <copyright>Copyright Niklas Lundberg 2014 - 2019</copyright>
     <dependencies>
-
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
       <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="[2.2.0,3.0.0)" />
       <dependency id="Arbor.KVConfiguration.Core" version="[$version$]" />
       <dependency id="Arbor.KVConfiguration.Urns" version="[$version$]" />
