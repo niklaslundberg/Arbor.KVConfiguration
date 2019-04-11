@@ -30,6 +30,7 @@ SET Arbor.X.Tools.External.MSBuild.Verbosity=minimal
 SET Arbor.X.NuGet.Package.AllowManifestReWriteEnabled=false
 
 SET Arbor.X.Tools.External.MSBuild.CodeAnalysis.Enabled=false
+SET Arbor.X.Build.PublishDotNetExecutableProjects=false
 
 CALL dotnet arbor-build
 
