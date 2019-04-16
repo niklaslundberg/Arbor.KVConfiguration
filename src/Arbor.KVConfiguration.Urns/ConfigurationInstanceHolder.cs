@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Immutable;
+using System.Linq;
 using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Urns
@@ -12,6 +13,12 @@ namespace Arbor.KVConfiguration.Urns
 
         public ImmutableArray<Type> RegisteredTypes => _configurationInstances.Keys.ToImmutableArray();
 
+        public ImmutableDictionary<string, T> GetInstances<T>() where T : class
+        {
+            return GetInstances(typeof(T)).Where(pair => pair.Value is T)
+                .ToImmutableDictionary(pair => pair.Key, pair => pair.Value as T);
+        }
+
         public ImmutableDictionary<string, object> GetInstances(Type type)
         {
             if (!_configurationInstances.TryGetValue(type, out ConcurrentDictionary<string, object> instances))
@@ -22,11 +29,25 @@ namespace Arbor.KVConfiguration.Urns
             return instances.ToImmutableDictionary();
         }
 
+        public bool TryGet<T>(string key, out T instance) where T : class
+        {
+            object foundInstance = Get(typeof(T), key);
+
+            if (foundInstance is T castedInstance)
+            {
+                instance = castedInstance;
+                return true;
+            }
+
+            instance = default;
+            return false;
+        }
+
         public object Get(Type type, string key)
         {
             if (!_configurationInstances.TryGetValue(type, out ConcurrentDictionary<string, object> instances))
             {
-                return ImmutableArray<object>.Empty;
+                return default;
             }
 
             instances.TryGetValue(key, out object instance);
