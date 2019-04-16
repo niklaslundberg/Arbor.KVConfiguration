@@ -7,6 +7,7 @@ using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core
 {
+    [UsedImplicitly]
     public sealed class ReflectionKeyValueConfiguration : IKeyValueConfigurationWithMetadata
     {
         private readonly string _assemblyName;
@@ -72,20 +73,6 @@ namespace Arbor.KVConfiguration.Core
             {
                 CheckDisposed();
                 return _configurationItems;
-            }
-        }
-
-        public void Dispose()
-        {
-            if (_disposed)
-            {
-                if (_inMemoryKeyValueConfiguration is IDisposable disposable)
-                {
-                    disposable.Dispose();
-                }
-
-                _inMemoryKeyValueConfiguration = null;
-                _disposed = true;
             }
         }
 

@@ -9,7 +9,7 @@ namespace Arbor.KVConfiguration.Schema
     {
         internal static ImmutableArray<T> SafeToImmutableArray<T>([CanBeNull] this IEnumerable<T> enumerable)
         {
-            if (enumerable is ImmutableArray<T> array)
+            if (enumerable is ImmutableArray<T> array && !array.IsDefault)
             {
                 return array;
             }

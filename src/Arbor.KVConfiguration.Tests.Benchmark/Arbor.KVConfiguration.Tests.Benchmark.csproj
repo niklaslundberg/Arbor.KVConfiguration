@@ -10,13 +10,16 @@
     <None Remove="BenchmarkDotNet.Artifacts\**" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.11.4" />
-    <PackageReference Include="Microsoft.Net.Compilers" Version="2.10.0">
+    <PackageReference Include="BenchmarkDotNet" Version="0.11.5" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Net.Compilers" Version="3.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Arbor.KVConfiguration.Core\Arbor.KVConfiguration.Core.csproj" />
+    <ProjectReference Include="..\Arbor.KVConfiguration.DependencyInjection\Arbor.KVConfiguration.DependencyInjection.csproj" />
+    <ProjectReference Include="..\Arbor.KVConfiguration.Urns\Arbor.KVConfiguration.Urns.csproj" />
   </ItemGroup>
 </Project>

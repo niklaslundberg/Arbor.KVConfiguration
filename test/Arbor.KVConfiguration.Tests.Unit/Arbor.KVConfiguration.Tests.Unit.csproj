@@ -12,14 +12,15 @@
     <None Remove="Validation\**" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2018.3.0" />
+    <PackageReference Include="JetBrains.Annotations" Version="2019.1.1" />
     <PackageReference Include="Machine.Specifications" Version="0.12.0" />
     <PackageReference Include="Machine.Specifications.Should" Version="0.11.0" />
-    <PackageReference Include="Microsoft.Net.Compilers" Version="2.10.0">
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Net.Compilers" Version="3.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     <PackageReference Include="System.Collections.Immutable" Version="1.5.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
@@ -34,6 +35,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Arbor.KVConfiguration.Core\Arbor.KVConfiguration.Core.csproj" />
+    <ProjectReference Include="..\..\src\Arbor.KVConfiguration.DependencyInjection\Arbor.KVConfiguration.DependencyInjection.csproj" />
     <ProjectReference Include="..\..\src\Arbor.KVConfiguration.JsonConfiguration\Arbor.KVConfiguration.JsonConfiguration.csproj" />
     <ProjectReference Include="..\..\src\Arbor.KVConfiguration.Schema.Json\Arbor.KVConfiguration.Schema.Json.csproj" />
     <ProjectReference Include="..\..\src\Arbor.KVConfiguration.Schema\Arbor.KVConfiguration.Schema.csproj" />

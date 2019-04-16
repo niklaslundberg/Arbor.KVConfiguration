@@ -1,4 +1,9 @@
 using System;
+using System.Collections.Immutable;
+using System.Linq;
+using System.Reflection;
+using Arbor.KVConfiguration.Core;
+using Arbor.KVConfiguration.Urns;
 using JetBrains.Annotations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,15 +33,15 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
                 throw new ArgumentNullException(nameof(configuration));
             }
 
+            services.TryAddSingleton(configuration);
+
             services.TryAdd(ServiceDescriptor.Singleton(typeof(IConfigureConfigurationValue<>),
                 typeof(ConfigureFromConfigurationOptions<>)));
 
             services.TryAdd(ServiceDescriptor.Singleton(typeof(IConfigurationValue<>),
                 typeof(UrnOpenGenericsManager<>)));
 
-            services.TryAddSingleton(configuration);
-
             return services;
         }
-    }
+  }
 }

@@ -12,6 +12,12 @@ namespace Arbor.KVConfiguration.Tests.Benchmark
             Summary summary = BenchmarkRunner.Run<BenchmarkGetItemByKey>();
 
             Console.WriteLine(summary);
+
+            Summary summary2 = BenchmarkRunner.Run<BenchmarkBindConfigurationKey>();
+
+            Console.WriteLine(summary2);
+
+            Console.ReadLine();
         }
     }
 }

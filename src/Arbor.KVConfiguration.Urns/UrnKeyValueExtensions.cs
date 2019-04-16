@@ -23,7 +23,7 @@ namespace Arbor.KVConfiguration.Urns
 
             if (instances.Length > 1)
             {
-                throw new InvalidOperationException($"Found multiple {typeof(T)}, expected 0 or 1");
+                throw new InvalidOperationException($"Found multiple instances of type {typeof(T).FullName}, expected 0 or 1");
             }
 
             if (!instances.Any())
@@ -34,6 +34,7 @@ namespace Arbor.KVConfiguration.Urns
             return instances.Single();
         }
 
+        [PublicAPI]
         public static ImmutableArray<INamedInstance<T>> GetNamedInstances<T>(
             [NotNull] this IKeyValueConfiguration keyValueConfiguration)
         {
@@ -43,6 +44,7 @@ namespace Arbor.KVConfiguration.Urns
                 .ToImmutableArray();
         }
 
+        [PublicAPI]
         public static ImmutableArray<INamedInstance<object>> GetNamedInstances(
             [NotNull] this IKeyValueConfiguration keyValueConfiguration,
             [NotNull] Type type)
@@ -54,16 +56,17 @@ namespace Arbor.KVConfiguration.Urns
 
             Type[] typeArgs = { type };
 
-            Type constructed = generic.MakeGenericType(typeArgs);
+            Type constructedGenericType = generic.MakeGenericType(typeArgs);
 
             ImmutableArray<INamedInstance<object>> objects = immutableArray
-                .Select(item => Activator.CreateInstance(constructed, item.Item1, item.Item2))
+                .Select(item => Activator.CreateInstance(constructedGenericType, item.Item1, item.Item2))
                 .OfType<INamedInstance<object>>()
                 .ToImmutableArray();
 
             return objects;
         }
 
+        [PublicAPI]
         public static object GetInstance(
             [NotNull] this IKeyValueConfiguration keyValueConfiguration,
             [NotNull] Type type)
@@ -73,6 +76,7 @@ namespace Arbor.KVConfiguration.Urns
             return instance;
         }
 
+        [PublicAPI]
         public static object GetInstance(
             [NotNull] this IKeyValueConfiguration keyValueConfiguration,
             [NotNull] Type type,
@@ -120,6 +124,7 @@ namespace Arbor.KVConfiguration.Urns
                 .ToImmutableArray();
         }
 
+        [PublicAPI]
         public static ImmutableArray<object> GetInstances(
             [NotNull] this IKeyValueConfiguration keyValueConfiguration,
             [NotNull] Type type)
@@ -144,7 +149,7 @@ namespace Arbor.KVConfiguration.Urns
 
             string instanceName = instanceUri.Name;
 
-            var asDictionary = (IDictionary<string, object>)expando;
+            var asDictionary = (IDictionary<string, object>) expando;
 
             Urn[] allKeys = keyValueConfiguration.AllKeys
                 .Select(key =>
@@ -311,56 +316,64 @@ namespace Arbor.KVConfiguration.Urns
             }
             catch (Exception ex)
             {
-                ImmutableArray<(string, string)> errorProperties = type
-                    .GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                    .Select(property =>
-                    {
-                        string matchingKey = asDictionary.Keys.SingleOrDefault(key =>
-                            key.Equals(property.Name, StringComparison.OrdinalIgnoreCase));
+                InvalidOperationException invalidOperationException = CreateException(type, asDictionary, json, ex);
 
-                        if (matchingKey is null)
-                        {
-                            return ("", null);
-                        }
-
-                        if (!asDictionary.TryGetValue(matchingKey, out object value))
-                        {
-                            return ("", null);
-                        }
-
-                        if ((property.PropertyType == typeof(string)
-                             || !typeof(IEnumerable).IsAssignableFrom(property.PropertyType))
-                            && value is IEnumerable enumerable)
-                        {
-                            object[] objects = enumerable.OfType<object>().ToArray();
-
-                            if (objects.Length > 1)
-                            {
-                                if (value is string stringValue)
-                                {
-                                    return (property.Name,
-                                            $"The property of type {property.PropertyType.Name} with name '{property.Name}' has multiple values {stringValue}");
-                                }
-
-                                return (property.Name,
-                                        $"The property of type {property.PropertyType.Name} with name '{property.Name}' has multiple values {string.Join(", ", objects.Select(o => $"'{o}'"))}"
-                                    );
-                            }
-                        }
-
-                        return (property.Name, null);
-                    })
-                    .Where(tuple => tuple.Item2 != null)
-                    .ToImmutableArray();
-
-                string specifiedErrors = string.Join(", ", errorProperties.Select(ep => ep.Item2));
-
-                throw new InvalidOperationException(
-                    $"{specifiedErrors} Could not deserialize json '{json}' to target type {type.FullName}".Trim(),
-                    ex);
+                throw invalidOperationException;
             }
 
             return (item, instanceName, asDictionary);
+        }
+
+        private static InvalidOperationException CreateException(Type type, IDictionary<string, object> asDictionary, string json, Exception ex)
+        {
+            ImmutableArray<(string, string)> errorProperties = type
+                .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .Select(property =>
+                {
+                    string matchingKey = asDictionary.Keys.SingleOrDefault(key =>
+                        key.Equals(property.Name, StringComparison.OrdinalIgnoreCase));
+
+                    if (matchingKey is null)
+                    {
+                        return ("", null);
+                    }
+
+                    if (!asDictionary.TryGetValue(matchingKey, out object value))
+                    {
+                        return ("", null);
+                    }
+
+                    if ((property.PropertyType == typeof(string)
+                         || !typeof(IEnumerable).IsAssignableFrom(property.PropertyType))
+                        && value is IEnumerable enumerable)
+                    {
+                        object[] objects = enumerable.OfType<object>().ToArray();
+
+                        if (objects.Length > 1)
+                        {
+                            if (value is string stringValue)
+                            {
+                                return (property.Name,
+                                    $"The property of type {property.PropertyType.Name} with name '{property.Name}' has multiple values {stringValue}");
+                            }
+
+                            return (property.Name,
+                                    $"The property of type {property.PropertyType.Name} with name '{property.Name}' has multiple values {string.Join(", ", objects.Select(o => $"'{o}'"))}"
+                                );
+                        }
+                    }
+
+                    return (property.Name, null);
+                })
+                .Where(tuple => tuple.Item2 != null)
+                .ToImmutableArray();
+
+            string specifiedErrors = string.Join(", ", errorProperties.Select(ep => ep.Item2));
+
+            var invalidOperationException = new InvalidOperationException(
+                $"{specifiedErrors} Could not deserialize json '{json}' to target type {type.FullName}".Trim(),
+                ex);
+            return invalidOperationException;
         }
 
         private static ImmutableArray<(object, string, IDictionary<string, object>)> GetInstancesInternal(
@@ -381,7 +394,7 @@ namespace Arbor.KVConfiguration.Urns
 
             if (urnAttribute == null)
             {
-                throw new ArgumentException($"Found no {nameof(Urn).ToUpper(CultureInfo.InvariantCulture)} for type {type}");
+                throw new ArgumentException($"Could not get instance of type {type.FullName}. Found no {nameof(Urn).ToUpper(CultureInfo.InvariantCulture)}. Expected class attribute {typeof(UrnAttribute).FullName}");
             }
 
             Urn typeUrn = urnAttribute.Urn;

@@ -74,7 +74,7 @@ namespace Arbor.KVConfiguration.UserConfiguration
 
                 while (currentDirectory != null)
                 {
-                    FileInfo[] configUserFiles = currentDirectory.GetFiles("config.user");
+                    FileInfo[] configUserFiles = currentDirectory.GetFiles(ConfigUserFileName);
                     if (configUserFiles.Length == 1)
                     {
                         return configUserFiles[0].FullName;

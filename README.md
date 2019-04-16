@@ -12,7 +12,7 @@ Key-Value mapping of configuration values to objects
 
 * Trace source for a given key
 
-* Supports decorators, like expand environment variables
+* Supports decorators, like expanding environment variables
 
 * Supports Microsoft.Configuration.ConfigurationBuilders for .NET Framework projects
 

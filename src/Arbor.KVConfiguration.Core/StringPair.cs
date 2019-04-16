@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Arbor.KVConfiguration.Core
 {
-    public struct StringPair : IEquatable<StringPair>
+    public readonly struct StringPair : IEquatable<StringPair>
     {
         public StringPair(string key, string value)
         {

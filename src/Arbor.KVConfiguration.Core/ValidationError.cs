@@ -1,6 +1,6 @@
 using System;
 
-namespace Arbor.KVConfiguration.Schema.Validators
+namespace Arbor.KVConfiguration.Core
 {
     public class ValidationError
     {
