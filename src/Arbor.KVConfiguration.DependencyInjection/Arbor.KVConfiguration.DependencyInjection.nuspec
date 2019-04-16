@@ -7,7 +7,7 @@
     <authors>Niklas Lundberg</authors>
     <owners></owners>
     <description>
-      Key value configuration core library
+      Key value configuration with support for Microsoft Dependency Injection
     </description>
     <releaseNotes>
     </releaseNotes>
