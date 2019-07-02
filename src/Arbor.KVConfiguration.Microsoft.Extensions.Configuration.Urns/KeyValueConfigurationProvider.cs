@@ -10,10 +10,7 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
     {
         private readonly KeyValueConfigurationSourceAdapter _adapter;
 
-        public KeyValueConfigurationProvider(KeyValueConfigurationSourceAdapter adapter)
-        {
-            _adapter = adapter;
-        }
+        public KeyValueConfigurationProvider(KeyValueConfigurationSourceAdapter adapter) => _adapter = adapter;
 
         public bool TryGet(string key, out string value)
         {
@@ -34,10 +31,7 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
             // Not supported
         }
 
-        public IChangeToken GetReloadToken()
-        {
-            return new CancellationChangeToken(default);
-        }
+        public IChangeToken GetReloadToken() => new CancellationChangeToken(default);
 
         public void Load()
         {

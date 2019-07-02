@@ -6,40 +6,22 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
     public class UrnSpecification
     {
         [Fact]
-        public void EmptyStringShouldThrowInCtor()
-        {
-            Assert.Throws<ArgumentException>(() => new Primitives.Urn(""));
-        }
+        public void EmptyStringShouldThrowInCtor() => Assert.Throws<ArgumentException>(() => new Primitives.Urn(""));
 
         [Fact]
-        public void InvalidUriStringShouldThrowInCtor()
-        {
-            Assert.Throws<FormatException>(() => new Primitives.Urn("-"));
-        }
+        public void InvalidUriStringShouldThrowInCtor() => Assert.Throws<FormatException>(() => new Primitives.Urn("-"));
 
         [Fact]
-        public void InvalidUrnStringShouldThrowInCtor()
-        {
-            Assert.Throws<FormatException>(() => new Primitives.Urn("http://abc"));
-        }
+        public void InvalidUrnStringShouldThrowInCtor() => Assert.Throws<FormatException>(() => new Primitives.Urn("http://abc"));
 
         [Fact]
-        public void NullStringShouldThrowInCtor()
-        {
-            Assert.Throws<ArgumentException>(() => new Primitives.Urn(null));
-        }
+        public void NullStringShouldThrowInCtor() => Assert.Throws<ArgumentException>(() => new Primitives.Urn(null));
 
         [Fact]
-        public void UrnStringTooShortShouldThrowInCtor()
-        {
-            Assert.Throws<FormatException>(() => new Primitives.Urn("urn:/"));
-        }
+        public void UrnStringTooShortShouldThrowInCtor() => Assert.Throws<FormatException>(() => new Primitives.Urn("urn:/"));
 
         [Fact]
-        public void UrnStringWithDoubleColonShouldThrowInCtor()
-        {
-            Assert.Throws<FormatException>(() => new Primitives.Urn("urn::"));
-        }
+        public void UrnStringWithDoubleColonShouldThrowInCtor() => Assert.Throws<FormatException>(() => new Primitives.Urn("urn::"));
 
         [Fact]
         public void EqualsForSameShouldEqualTrue()
@@ -105,27 +87,15 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         }
 
         [Fact]
-        public void TryParseWithNullShouldReturnFalse()
-        {
-            Assert.False(Primitives.Urn.TryParse(null, out Primitives.Urn _));
-        }
+        public void TryParseWithNullShouldReturnFalse() => Assert.False(Primitives.Urn.TryParse(null, out Primitives.Urn _));
 
         [Fact]
-        public void TryParseWithEmptyShouldReturnFalse()
-        {
-            Assert.False(Primitives.Urn.TryParse("", out Primitives.Urn _));
-        }
+        public void TryParseWithEmptyShouldReturnFalse() => Assert.False(Primitives.Urn.TryParse("", out Primitives.Urn _));
 
         [Fact]
-        public void TryParseInvalidUriShouldReturnFalse()
-        {
-            Assert.False(Primitives.Urn.TryParse("urn:a{", out Primitives.Urn _));
-        }
+        public void TryParseInvalidUriShouldReturnFalse() => Assert.False(Primitives.Urn.TryParse("urn:a{", out Primitives.Urn _));
 
         [Fact]
-        public void CtorWithInvalidUrnShouldThrow()
-        {
-            Assert.Throws<FormatException>(() =>new Primitives.Urn("urn:a{"));
-        }
+        public void CtorWithInvalidUrnShouldThrow() => Assert.Throws<FormatException>(() =>new Primitives.Urn("urn:a{"));
     }
 }

@@ -9,10 +9,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Registrations
 {
     public class RegistrationsTests
     {
-        public RegistrationsTests(ITestOutputHelper output)
-        {
-            this.output = output;
-        }
+        public RegistrationsTests(ITestOutputHelper output) => this.output = output;
 
         private readonly ITestOutputHelper output;
 

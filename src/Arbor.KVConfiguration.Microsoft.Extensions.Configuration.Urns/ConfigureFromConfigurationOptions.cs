@@ -15,20 +15,11 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
     {
         private KeyValueConfigurationAdapter _keyValueConfiguration;
 
-        public ConfigureFromConfigurationOptions(IConfiguration configuration)
-        {
-            _keyValueConfiguration = new KeyValueConfigurationAdapter(configuration);
-        }
+        public ConfigureFromConfigurationOptions(IConfiguration configuration) => _keyValueConfiguration = new KeyValueConfigurationAdapter(configuration);
 
-        public TOptions GetInstance()
-        {
-            return _keyValueConfiguration.GetInstance<TOptions>();
-        }
+        public TOptions GetInstance() => _keyValueConfiguration.GetInstance<TOptions>();
 
-        public ImmutableArray<TOptions> GetInstances()
-        {
-            return _keyValueConfiguration.GetInstances<TOptions>();
-        }
+        public ImmutableArray<TOptions> GetInstances() => _keyValueConfiguration.GetInstances<TOptions>();
 
         public void Dispose()
         {

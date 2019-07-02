@@ -19,9 +19,6 @@ namespace Arbor.KVConfiguration.Tests.Benchmark
         }
 
         [Benchmark]
-        public string Value()
-        {
-            return _configuration["urn:a:complex:immutable:type:instance1:id"];
-        }
+        public string Value() => _configuration["urn:a:complex:immutable:type:instance1:id"];
     }
 }

@@ -70,9 +70,6 @@ namespace Arbor.KVConfiguration.Core.Metadata
 
         public string ValueType { get; }
 
-        public override string ToString()
-        {
-            return $"[{nameof(MemberName)}: {MemberName}] [{nameof(ValueType)}: {ValueType}]";
-        }
+        public override string ToString() => $"[{nameof(MemberName)}: {MemberName}] [{nameof(ValueType)}: {ValueType}]";
     }
 }

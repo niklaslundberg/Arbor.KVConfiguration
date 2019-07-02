@@ -7,9 +7,7 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
     {
         public static IConfigurationBuilder AddKeyValueConfigurationSource(
             this IConfigurationBuilder builder,
-            IKeyValueConfiguration keyValueConfiguration)
-        {
-            return builder.Add(new KeyValueConfigurationSourceAdapter(keyValueConfiguration));
-        }
+            IKeyValueConfiguration keyValueConfiguration) =>
+            builder.Add(new KeyValueConfigurationSourceAdapter(keyValueConfiguration));
     }
 }

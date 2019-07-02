@@ -9,10 +9,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.DependencyInjection
     {
         private class MyConfiguration
         {
-            public MyConfiguration(int id)
-            {
-                Id = id;
-            }
+            public MyConfiguration(int id) => Id = id;
 
             public int Id { get; }
         }

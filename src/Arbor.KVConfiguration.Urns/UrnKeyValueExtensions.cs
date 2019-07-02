@@ -36,13 +36,11 @@ namespace Arbor.KVConfiguration.Urns
 
         [PublicAPI]
         public static ImmutableArray<INamedInstance<T>> GetNamedInstances<T>(
-            [NotNull] this IKeyValueConfiguration keyValueConfiguration)
-        {
-            return GetNamedInstances(keyValueConfiguration, typeof(T))
+            [NotNull] this IKeyValueConfiguration keyValueConfiguration) =>
+            GetNamedInstances(keyValueConfiguration, typeof(T))
                 .Select(item => item as INamedInstance<T>)
                 .Where(item => item != null)
                 .ToImmutableArray();
-        }
 
         [PublicAPI]
         public static ImmutableArray<INamedInstance<object>> GetNamedInstances(
@@ -117,22 +115,18 @@ namespace Arbor.KVConfiguration.Urns
         }
 
         public static ImmutableArray<T> GetInstances<T>(
-            [NotNull] this IKeyValueConfiguration keyValueConfiguration)
-        {
-            return GetInstances(keyValueConfiguration, typeof(T))
+            [NotNull] this IKeyValueConfiguration keyValueConfiguration) =>
+            GetInstances(keyValueConfiguration, typeof(T))
                 .OfType<T>()
                 .ToImmutableArray();
-        }
 
         [PublicAPI]
         public static ImmutableArray<object> GetInstances(
             [NotNull] this IKeyValueConfiguration keyValueConfiguration,
-            [NotNull] Type type)
-        {
-            return GetInstancesInternal(keyValueConfiguration, type)
+            [NotNull] Type type) =>
+            GetInstancesInternal(keyValueConfiguration, type)
                 .Select(item => item.Item1)
                 .ToImmutableArray();
-        }
 
         private static (object, string, IDictionary<string, object>) GetItem(
             IKeyValueConfiguration keyValueConfiguration,

@@ -9,7 +9,7 @@ namespace Arbor.KVConfiguration.Core.Metadata
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                throw new ArgumentException("Argument is null or whitespace", nameof(key));
+                throw new ArgumentException(KeyValueResources.ArgumentIsNullOrWhitespace, nameof(key));
             }
 
             Key = key;

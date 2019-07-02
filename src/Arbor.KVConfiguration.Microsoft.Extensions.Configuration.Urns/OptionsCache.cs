@@ -23,9 +23,6 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
             ref _cacheLock,
             _createCache);
 
-        private TOptions CreateOptions()
-        {
-            return _configurator.GetInstance();
-        }
+        private TOptions CreateOptions() => _configurator.GetInstance();
     }
 }

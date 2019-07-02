@@ -12,25 +12,19 @@ namespace Arbor.KVConfiguration.Samples.AspNetCore.Controllers
     {
         private readonly MySampleConfiguration _mySampleConfiguration;
 
-        public HomeController(MySampleConfiguration mySample)
-        {
+        public HomeController(MySampleConfiguration mySample) =>
             _mySampleConfiguration =
                 mySample ?? throw new InvalidOperationException("Could not get value for mySample");
-        }
 
-        public IActionResult Index()
-        {
-            return View(new SampleViewModel(_mySampleConfiguration));
-        }
+        public IActionResult Index() => View(new SampleViewModel(_mySampleConfiguration));
 
         [PublicAPI]
         [Route("~/diagnostics")]
         [HttpGet]
         public object Diagnostics(
             [FromServices] ConfigurationInstanceHolder configurationInstanceHolder,
-            [FromServices] IEnumerable<MySampleMultipleInstance> multipleInstances)
-        {
-            return new
+            [FromServices] IEnumerable<MySampleMultipleInstance> multipleInstances) =>
+            new
             {
                 Instances = configurationInstanceHolder.RegisteredTypes
                     .Select(type => new
@@ -41,11 +35,7 @@ namespace Arbor.KVConfiguration.Samples.AspNetCore.Controllers
                     .ToArray(),
                 multipleInstances
             };
-        }
 
-        public IActionResult Error()
-        {
-            return View();
-        }
+        public IActionResult Error() => View();
     }
 }

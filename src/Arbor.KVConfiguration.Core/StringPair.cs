@@ -15,21 +15,13 @@ namespace Arbor.KVConfiguration.Core
 
         public string Value { get; }
 
-        public static bool operator ==(StringPair left, StringPair right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(StringPair left, StringPair right) => left.Equals(right);
 
-        public static bool operator !=(StringPair left, StringPair right)
-        {
-            return !left.Equals(right);
-        }
+        public static bool operator !=(StringPair left, StringPair right) => !left.Equals(right);
 
-        public bool Equals(StringPair other)
-        {
-            return string.Equals(Key, other.Key, StringComparison.OrdinalIgnoreCase) &&
-                   string.Equals(Value, other.Value, StringComparison.OrdinalIgnoreCase);
-        }
+        public bool Equals(StringPair other) =>
+            string.Equals(Key, other.Key, StringComparison.OrdinalIgnoreCase) &&
+            string.Equals(Value, other.Value, StringComparison.OrdinalIgnoreCase);
 
         public override bool Equals(object obj)
         {

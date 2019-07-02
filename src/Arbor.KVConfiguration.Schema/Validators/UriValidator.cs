@@ -6,10 +6,7 @@ namespace Arbor.KVConfiguration.Schema.Validators
 {
     public class UriValidator : BaseValueValidator
     {
-        public override bool CanValidate(string type)
-        {
-            return string.Equals("uri", type, StringComparison.OrdinalIgnoreCase);
-        }
+        public override bool CanValidate(string type) => string.Equals("uri", type, StringComparison.OrdinalIgnoreCase);
 
         protected override ImmutableArray<ValidationError> DoValidate(string type, string value)
         {

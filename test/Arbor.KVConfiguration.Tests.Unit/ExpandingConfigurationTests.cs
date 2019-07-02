@@ -15,10 +15,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
         [UsedImplicitly]
         private class TestInstance
         {
-            public TestInstance(string test)
-            {
-                Test = test;
-            }
+            public TestInstance(string test) => Test = test;
 
             public string Test { get; }
         }
