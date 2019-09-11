@@ -35,21 +35,13 @@ namespace Arbor.KVConfiguration.Core
 
         public bool HasSingleValue => Values.Length == 1;
 
-        public static bool operator ==(MultipleValuesStringPair left, MultipleValuesStringPair right)
-        {
-            return left.Equals(right);
-        }
+        public static bool operator ==(MultipleValuesStringPair left, MultipleValuesStringPair right) => left.Equals(right);
 
-        public static bool operator !=(MultipleValuesStringPair left, MultipleValuesStringPair right)
-        {
-            return !left.Equals(right);
-        }
+        public static bool operator !=(MultipleValuesStringPair left, MultipleValuesStringPair right) => !left.Equals(right);
 
-        public bool Equals(MultipleValuesStringPair other)
-        {
-            return string.Equals(Key, other.Key, StringComparison.OrdinalIgnoreCase) &&
-                   Values.SequenceEqual(other.Values, StringComparer.OrdinalIgnoreCase);
-        }
+        public bool Equals(MultipleValuesStringPair other) =>
+            string.Equals(Key, other.Key, StringComparison.OrdinalIgnoreCase) &&
+            Values.SequenceEqual(other.Values, StringComparer.OrdinalIgnoreCase);
 
         public override bool Equals(object obj)
         {

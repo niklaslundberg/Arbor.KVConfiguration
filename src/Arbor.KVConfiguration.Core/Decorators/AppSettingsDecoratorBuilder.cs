@@ -43,9 +43,6 @@ namespace Arbor.KVConfiguration.Core.Decorators
             }
         }
 
-        ~AppSettingsDecoratorBuilder()
-        {
-            Dispose(false);
-        }
+        ~AppSettingsDecoratorBuilder() => Dispose(false);
     }
 }

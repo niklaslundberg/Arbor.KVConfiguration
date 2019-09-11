@@ -8,10 +8,7 @@ namespace Arbor.Primitives
 {
     public class EnvironmentVariables
     {
-        public EnvironmentVariables(IReadOnlyDictionary<string, string> variables)
-        {
-            Variables = variables ?? throw new ArgumentNullException(nameof(variables));
-        }
+        public EnvironmentVariables(IReadOnlyDictionary<string, string> variables) => Variables = variables ?? throw new ArgumentNullException(nameof(variables));
 
         public IReadOnlyDictionary<string, string> Variables { get; }
 
@@ -28,9 +25,6 @@ namespace Arbor.Primitives
             return all;
         }
 
-        public static EnvironmentVariables GetEnvironmentVariables()
-        {
-            return new EnvironmentVariables(GetAll());
-        }
+        public static EnvironmentVariables GetEnvironmentVariables() => new EnvironmentVariables(GetAll());
     }
 }

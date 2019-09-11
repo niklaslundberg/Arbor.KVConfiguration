@@ -19,10 +19,7 @@ namespace Arbor.KVConfiguration.Urns
         /// <returns>
         /// <c>true</c> if this instance can convert the specified object type; otherwise, <c>false</c>.
         /// </returns>
-        public override bool CanConvert(Type objectType)
-        {
-            return objectType == typeof(StringValues);
-        }
+        public override bool CanConvert(Type objectType) => objectType == typeof(StringValues);
 
         /// <summary>
         /// Reads the JSON representation of the object.

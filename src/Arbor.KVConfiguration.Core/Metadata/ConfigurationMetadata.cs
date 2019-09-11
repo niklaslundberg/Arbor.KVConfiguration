@@ -31,7 +31,7 @@ namespace Arbor.KVConfiguration.Core.Metadata
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                throw new ArgumentException("Argument is null or whitespace", nameof(key));
+                throw new ArgumentException(KeyValueResources.ArgumentIsNullOrWhitespace, nameof(key));
             }
 
             Key = key;
@@ -84,9 +84,6 @@ namespace Arbor.KVConfiguration.Core.Metadata
 
         public string ValueType { get; }
 
-        public override string ToString()
-        {
-            return $"[{nameof(Key)}: {Key}] [{nameof(ValueType)}: {ValueType}]";
-        }
+        public override string ToString() => $"[{nameof(Key)}: {Key}] [{nameof(ValueType)}: {ValueType}]";
     }
 }

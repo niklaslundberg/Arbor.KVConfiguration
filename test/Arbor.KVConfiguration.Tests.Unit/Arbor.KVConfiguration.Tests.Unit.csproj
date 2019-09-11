@@ -13,15 +13,15 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2019.1.1" />
-    <PackageReference Include="Machine.Specifications" Version="0.12.0" />
-    <PackageReference Include="Machine.Specifications.Should" Version="0.11.0" />
+    <PackageReference Include="Machine.Specifications" Version="1.0.0" />
+    <PackageReference Include="Machine.Specifications.Should" Version="1.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Net.Compilers" Version="3.0.0">
+    <PackageReference Include="Microsoft.Net.Compilers" Version="3.1.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="System.Collections.Immutable" Version="1.5.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.console" Version="2.4.1">

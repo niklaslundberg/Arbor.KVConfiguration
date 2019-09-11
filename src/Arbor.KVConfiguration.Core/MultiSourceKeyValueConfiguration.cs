@@ -235,15 +235,9 @@ namespace Arbor.KVConfiguration.Core
             return tuple.Item1;
         }
 
-        public override string ToString()
-        {
-            return $"{base.ToString()} [{SourceChain}]";
-        }
+        public override string ToString() => $"{base.ToString()} [{SourceChain}]";
 
-        public void Dispose()
-        {
-            _appSettingsDecoratorBuilder?.Dispose();
-        }
+        public void Dispose() => _appSettingsDecoratorBuilder?.Dispose();
 
         public ImmutableArray<string> AllKeys => GetAllKeys(_appSettingsDecoratorBuilder.AppSettingsBuilder)
             .Distinct(StringComparer.OrdinalIgnoreCase).ToImmutableArray();

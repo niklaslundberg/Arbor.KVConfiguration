@@ -7,9 +7,6 @@ namespace Arbor.KVConfiguration.Tests.Integration
     {
         // ReSharper disable once UnusedParameter.Local
         [UsedImplicitly]
-        private static void Main(string[] args)
-        {
-            Console.WriteLine("Hello World!");
-        }
+        private static void Main(string[] args) => Console.WriteLine("Hello World!");
     }
 }

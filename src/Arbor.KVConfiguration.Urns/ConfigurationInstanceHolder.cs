@@ -13,11 +13,9 @@ namespace Arbor.KVConfiguration.Urns
 
         public ImmutableArray<Type> RegisteredTypes => _configurationInstances.Keys.ToImmutableArray();
 
-        public ImmutableDictionary<string, T> GetInstances<T>() where T : class
-        {
-            return GetInstances(typeof(T)).Where(pair => pair.Value is T)
+        public ImmutableDictionary<string, T> GetInstances<T>() where T : class =>
+            GetInstances(typeof(T)).Where(pair => pair.Value is T)
                 .ToImmutableDictionary(pair => pair.Key, pair => pair.Value as T);
-        }
 
         public ImmutableDictionary<string, object> GetInstances(Type type)
         {

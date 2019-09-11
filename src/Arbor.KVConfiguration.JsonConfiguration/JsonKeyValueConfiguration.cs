@@ -36,10 +36,8 @@ namespace Arbor.KVConfiguration.JsonConfiguration
         }
 
         public JsonKeyValueConfiguration(string fileFullPath, bool throwWhenNotExists = true)
-            : this(ReadJsonFile(fileFullPath, throwWhenNotExists))
-        {
+            : this(ReadJsonFile(fileFullPath, throwWhenNotExists)) =>
             _fileFullPath = fileFullPath;
-        }
 
         public ImmutableArray<string> AllKeys => _inMemoryKeyValueConfiguration.AllKeys;
 
@@ -58,7 +56,7 @@ namespace Arbor.KVConfiguration.JsonConfiguration
         {
             if (string.IsNullOrWhiteSpace(fileFullPath))
             {
-                throw new ArgumentException("Argument is null or whitespace", nameof(fileFullPath));
+                throw new ArgumentException(KeyValueResources.ArgumentIsNullOrWhitespace, nameof(fileFullPath));
             }
 
             if (!File.Exists(fileFullPath))

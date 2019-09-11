@@ -13,7 +13,7 @@ namespace Arbor.Primitives
         {
             if (string.IsNullOrWhiteSpace(originalValue))
             {
-                throw new ArgumentException("Argument is null or whitespace", nameof(originalValue));
+                throw new ArgumentException(PrimitivesResources.ArgumentIsNullOrWhitespace, nameof(originalValue));
             }
 
             string trimmed = originalValue.Trim();
@@ -30,7 +30,7 @@ namespace Arbor.Primitives
 
             if (trimmed.IndexOfAny(InvalidCharacters) >= 0)
             {
-                throw new FormatException("Urn contains invalid characters");
+                throw new FormatException(PrimitivesResources.UrnContainsInvalidCharacters);
             }
 
             if (trimmed.IndexOf(DoubleSeparator, StringComparison.OrdinalIgnoreCase) >= 0)
@@ -120,15 +120,9 @@ namespace Arbor.Primitives
             }
         }
 
-        public static bool operator ==(Urn left, Urn right)
-        {
-            return Equals(left, right);
-        }
+        public static bool operator ==(Urn left, Urn right) => Equals(left, right);
 
-        public static bool operator !=(Urn left, Urn right)
-        {
-            return !Equals(left, right);
-        }
+        public static bool operator !=(Urn left, Urn right) => !Equals(left, right);
 
         public static bool TryParse(string originalValue, out Urn result)
         {
@@ -163,10 +157,7 @@ namespace Arbor.Primitives
             return true;
         }
 
-        public override string ToString()
-        {
-            return OriginalValue;
-        }
+        public override string ToString() => OriginalValue;
 
         public bool IsInHierarchy(Urn other)
         {
@@ -229,27 +220,15 @@ namespace Arbor.Primitives
                 return false;
             }
 
-            return Equals((Urn) obj);
+            return Equals((Urn)obj);
         }
 
-        public override int GetHashCode()
-        {
-            return StringComparer.OrdinalIgnoreCase.GetHashCode(OriginalValue);
-        }
+        public override int GetHashCode() => StringComparer.OrdinalIgnoreCase.GetHashCode(OriginalValue);
 
-        private static bool IsWellFormedUriString(string originalValue)
-        {
-            return Uri.IsWellFormedUriString(originalValue, UriKind.Absolute);
-        }
+        private static bool IsWellFormedUriString(string originalValue) => Uri.IsWellFormedUriString(originalValue, UriKind.Absolute);
 
-        private static bool HasUrnScheme(Uri uri)
-        {
-            return uri.Scheme.Equals("urn", StringComparison.OrdinalIgnoreCase);
-        }
+        private static bool HasUrnScheme(Uri uri) => uri.Scheme.Equals("urn", StringComparison.OrdinalIgnoreCase);
 
-        private static bool IsUri(string originalValue, out Uri uri)
-        {
-            return Uri.TryCreate(originalValue, UriKind.Absolute, out uri);
-        }
+        private static bool IsUri(string originalValue, out Uri uri) => Uri.TryCreate(originalValue, UriKind.Absolute, out uri);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Core.Metadata;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -14,7 +15,7 @@ namespace Arbor.KVConfiguration.Schema.Json
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                throw new ArgumentException("Argument is null or whitespace", nameof(key));
+                throw new ArgumentException(KeyValueResources.ArgumentIsNullOrWhitespace, nameof(key));
             }
 
             Key = key;
@@ -32,9 +33,6 @@ namespace Arbor.KVConfiguration.Schema.Json
         public string Value { get; }
 
         [UsedImplicitly]
-        public bool ShouldSerializeConfigurationMetadata()
-        {
-            return ConfigurationMetadata != null;
-        }
+        public bool ShouldSerializeConfigurationMetadata() => ConfigurationMetadata != null;
     }
 }

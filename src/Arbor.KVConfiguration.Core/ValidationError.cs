@@ -8,7 +8,7 @@ namespace Arbor.KVConfiguration.Core
         {
             if (string.IsNullOrWhiteSpace(errorMessage))
             {
-                throw new ArgumentException("Argument is null or whitespace", nameof(errorMessage));
+                throw new ArgumentException(KeyValueResources.ArgumentIsNullOrWhitespace, nameof(errorMessage));
             }
 
             ErrorMessage = errorMessage;

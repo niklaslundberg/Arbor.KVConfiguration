@@ -11,8 +11,7 @@ namespace Arbor.KVConfiguration.Schema.Validators
     {
         private readonly ImmutableArray<IValueValidator> _validators;
 
-        public ConfigurationValidator()
-        {
+        public ConfigurationValidator() =>
             _validators = new List<IValueValidator>(10)
             {
                 new IntValidator(),
@@ -20,13 +19,9 @@ namespace Arbor.KVConfiguration.Schema.Validators
                 new BoolValidator(),
                 new TimeSpanValidator()
             }.ToImmutableArray();
-        }
 
         [UsedImplicitly]
-        public ConfigurationValidator(ImmutableArray<IValueValidator> validators)
-        {
-            _validators = validators.ThrowIfDefault();
-        }
+        public ConfigurationValidator(ImmutableArray<IValueValidator> validators) => _validators = validators.ThrowIfDefault();
 
         public KeyValueConfigurationValidationResult Validate(
             MultipleValuesStringPair multipleValuesStringPair,
