@@ -10,6 +10,9 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: install-tools
-      run: dotnet tool install --global Arbor.Tooler.GlobalTool
+      run: |
+        dotnet tool install --global Arbor.Tooler.GlobalTool
+        dotnet tool install --global Arbor.Build.Bootstrapper
+      run: 
     - name: build
       run: build\build.bat
