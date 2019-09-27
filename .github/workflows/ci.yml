@@ -13,6 +13,5 @@ jobs:
       run: |
         dotnet tool install --global Arbor.Tooler.GlobalTool
         dotnet tool install --global Arbor.Build.Bootstrapper
-      run: 
     - name: build
       run: build\build.bat
