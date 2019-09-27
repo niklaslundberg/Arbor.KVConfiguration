@@ -1,4 +1,5 @@
 @ECHO OFF
+SET Arbor.X.Log.Level=Verbose
 SET Arbor.X.Build.Bootstrapper.AllowPrerelease=true
 SET Arbor.X.Tools.External.MSpec.Enabled=true
 SET Arbor.X.NuGet.Package.Artifacts.Suffix=
