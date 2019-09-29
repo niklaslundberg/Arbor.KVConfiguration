@@ -14,7 +14,7 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
     /// </summary>
     public sealed class KeyValueConfigurationAdapter : IKeyValueConfiguration, IDisposable
     {
-        private InMemoryKeyValueConfiguration _inMemoryConfig;
+        private InMemoryKeyValueConfiguration? _inMemoryConfig;
         private bool _isDisposed;
 
         public KeyValueConfigurationAdapter([NotNull] IConfiguration config)
@@ -41,7 +41,7 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
             get
             {
                 CheckDisposed();
-                return _inMemoryConfig.AllKeys;
+                return _inMemoryConfig!.AllKeys;
             }
         }
 
@@ -50,7 +50,7 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
             get
             {
                 CheckDisposed();
-                return _inMemoryConfig.AllValues;
+                return _inMemoryConfig!.AllValues;
             }
         }
 
@@ -59,7 +59,7 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
             get
             {
                 CheckDisposed();
-                return _inMemoryConfig.AllWithMultipleValues;
+                return _inMemoryConfig!.AllWithMultipleValues;
             }
         }
 
@@ -68,7 +68,7 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
             get
             {
                 CheckDisposed();
-                return _inMemoryConfig[key];
+                return _inMemoryConfig![key];
             }
         }
 

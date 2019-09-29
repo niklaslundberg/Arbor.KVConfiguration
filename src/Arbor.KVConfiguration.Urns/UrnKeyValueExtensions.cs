@@ -40,7 +40,7 @@ namespace Arbor.KVConfiguration.Urns
             GetNamedInstances(keyValueConfiguration, typeof(T))
                 .Select(item => item as INamedInstance<T>)
                 .Where(item => item is object)
-                .ToImmutableArray();
+                .ToImmutableArray()!;
 
         [PublicAPI]
         public static ImmutableArray<INamedInstance<object>> GetNamedInstances(
@@ -148,7 +148,7 @@ namespace Arbor.KVConfiguration.Urns
             Urn[] allKeys = keyValueConfiguration.AllKeys
                 .Select(key =>
                 {
-                    if (!Urn.TryParse(key, out Urn urn))
+                    if (!Urn.TryParse(key, out Urn? urn))
                     {
                         return null;
                     }
@@ -175,15 +175,14 @@ namespace Arbor.KVConfiguration.Urns
                 string[] values = keyValueConfiguration.AllWithMultipleValues
                     .Select(t =>
                     {
-                        if (!Urn.TryParse(t.Key, out Urn urn))
+                        if (!Urn.TryParse(t.Key, out Urn? urn))
                         {
                             return null;
                         }
 
                         return new { Urn = urn, Pair = t };
                     })
-                    .Where(urn => urn is object)
-                    .Where(urn => urn!.Urn == itemValue)
+                    .Where(urn => urn is object && urn.Urn is object && urn.Urn == itemValue)
                     .SelectMany(s => s!.Pair.Values)
                     .ToArray();
 
@@ -320,7 +319,7 @@ namespace Arbor.KVConfiguration.Urns
 
         private static InvalidOperationException CreateException(Type type, IDictionary<string, object> asDictionary, string json, Exception ex)
         {
-            ImmutableArray<(string, string)> errorProperties = type
+            ImmutableArray<(string, string?)> errorProperties = type
                 .GetProperties(BindingFlags.Public | BindingFlags.Instance)
                 .Select(property =>
                 {
@@ -329,12 +328,12 @@ namespace Arbor.KVConfiguration.Urns
 
                     if (matchingKey is null)
                     {
-                        return ("", null);
+                        return ("", null)!;
                     }
 
                     if (!asDictionary.TryGetValue(matchingKey, out object value))
                     {
-                        return ("", null);
+                        return ("", null)!;
                     }
 
                     if ((property.PropertyType == typeof(string)
@@ -357,10 +356,10 @@ namespace Arbor.KVConfiguration.Urns
                         }
                     }
 
-                    return (property.Name, null);
+                    return (property.Name, null)!;
                 })
                 .Where(tuple => tuple.Item2 is object)
-                .ToImmutableArray();
+                .ToImmutableArray()!;
 
             string specifiedErrors = string.Join(", ", errorProperties.Select(ep => ep.Item2));
 

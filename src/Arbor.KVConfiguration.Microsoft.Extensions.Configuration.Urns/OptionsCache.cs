@@ -9,7 +9,7 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
         private readonly Func<TOptions> _createCache;
         private bool _cacheInitialized;
         private object _cacheLock = new object();
-        private TOptions _options;
+        private TOptions? _options;
 
         public OptionsCache(IConfigureConfigurationValue<TOptions> configurator)
         {
@@ -17,7 +17,7 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
             _createCache = CreateOptions;
         }
 
-        public TOptions Value => LazyInitializer.EnsureInitialized(
+        public TOptions? Value => LazyInitializer.EnsureInitialized(
             ref _options,
             ref _cacheInitialized,
             ref _cacheLock,

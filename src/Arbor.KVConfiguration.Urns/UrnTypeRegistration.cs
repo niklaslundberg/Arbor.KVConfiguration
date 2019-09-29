@@ -7,7 +7,7 @@ namespace Arbor.KVConfiguration.Urns
     {
         public UrnTypeRegistration(
             UrnTypeMapping urnTypeMapping,
-            INamedInstance<object> instance,
+            INamedInstance<object>? instance,
             params ValidationResult[] configurationRegistrationErrors)
         {
             Instance = instance;
@@ -15,7 +15,7 @@ namespace Arbor.KVConfiguration.Urns
             TypeMapping = urnTypeMapping;
         }
 
-        public INamedInstance<object> Instance { get; }
+        public INamedInstance<object>? Instance { get; }
 
         public ImmutableArray<ValidationResult> ConfigurationRegistrationErrors { get; }
 

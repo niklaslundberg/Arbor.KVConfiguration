@@ -11,7 +11,7 @@ namespace Arbor.KVConfiguration.Core
     public sealed class InMemoryKeyValueConfiguration : IKeyValueConfiguration
     {
         private readonly string _name;
-        private Dictionary<string, ImmutableArray<string>> _keyValueDictionary;
+        private Dictionary<string, ImmutableArray<string>>? _keyValueDictionary;
         private bool _disposed;
         private ImmutableArray<string> _allKeys;
 
@@ -82,7 +82,7 @@ namespace Arbor.KVConfiguration.Core
                 CheckDisposed();
 
                 return AllKeys
-                        .Select(key => new MultipleValuesStringPair(key, _keyValueDictionary[key]))
+                        .Select(key => new MultipleValuesStringPair(key, _keyValueDictionary![key]))
                         .ToImmutableArray();
             }
         }
@@ -98,7 +98,7 @@ namespace Arbor.KVConfiguration.Core
                 return string.Empty;
             }
 
-            if (!_keyValueDictionary.ContainsKey(key))
+            if (!_keyValueDictionary!.ContainsKey(key))
             {
                 return string.Empty;
             }

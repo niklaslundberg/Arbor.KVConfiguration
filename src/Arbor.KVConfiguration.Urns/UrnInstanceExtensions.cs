@@ -48,7 +48,10 @@ namespace Arbor.KVConfiguration.Urns
             var configurationInstanceHolder = new ConfigurationInstanceHolder();
             foreach (UrnTypeRegistration registration in configurationRegistrations.UrnTypeRegistrations)
             {
-                configurationInstanceHolder.Add(registration.Instance);
+                if (registration.Instance is object)
+                {
+                    configurationInstanceHolder.Add(registration.Instance);
+                }
             }
 
             return configurationInstanceHolder;
@@ -58,6 +61,11 @@ namespace Arbor.KVConfiguration.Urns
             IKeyValueConfiguration keyValueConfiguration,
             Type type)
         {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
             var urnAttribute = type.GetCustomAttribute<UrnAttribute>();
 
             if (urnAttribute is null)
@@ -74,7 +82,7 @@ namespace Arbor.KVConfiguration.Urns
             {
                 var optionalAttribute = type.GetCustomAttribute<OptionalAttribute>();
 
-                if (optionalAttribute is object _)
+                if (optionalAttribute is object)
                 {
                     return ImmutableArray<UrnTypeRegistration>.Empty;
                 }

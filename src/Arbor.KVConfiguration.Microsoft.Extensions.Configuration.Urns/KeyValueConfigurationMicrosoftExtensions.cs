@@ -1,4 +1,5 @@
-﻿using Arbor.KVConfiguration.Core;
+﻿using System;
+using Arbor.KVConfiguration.Core;
 using Microsoft.Extensions.Configuration;
 
 namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
@@ -7,7 +8,14 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
     {
         public static IConfigurationBuilder AddKeyValueConfigurationSource(
             this IConfigurationBuilder builder,
-            IKeyValueConfiguration keyValueConfiguration) =>
-            builder.Add(new KeyValueConfigurationSourceAdapter(keyValueConfiguration));
+            IKeyValueConfiguration keyValueConfiguration)
+        {
+            if (builder == null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
+
+            return builder.Add(new KeyValueConfigurationSourceAdapter(keyValueConfiguration));
+        }
     }
 }

@@ -13,11 +13,11 @@ namespace Arbor.KVConfiguration.Core
     {
         private const string Arrow = "-->";
         private readonly AppSettingsDecoratorBuilder _appSettingsDecoratorBuilder;
-        private readonly Action<string> _logAction;
+        private readonly Action<string>? _logAction;
 
         public MultiSourceKeyValueConfiguration(
             [NotNull] AppSettingsDecoratorBuilder appSettingsDecoratorBuilder,
-            Action<string> logAction = null)
+            Action<string>? logAction = null)
         {
             _appSettingsDecoratorBuilder = appSettingsDecoratorBuilder ??
                                            throw new ArgumentNullException(nameof(appSettingsDecoratorBuilder));
@@ -97,7 +97,7 @@ namespace Arbor.KVConfiguration.Core
                 return "";
             }
 
-            string decorated = null;
+            string? decorated = null;
             if (decorator.Previous is object)
             {
                 decorated = DecorateValue(decorator.Previous, value);
@@ -107,9 +107,9 @@ namespace Arbor.KVConfiguration.Core
         }
 
         private static (IKeyValueConfiguration, string) GetValue(
-            AppSettingsBuilder appSettingsBuilder,
+            AppSettingsBuilder? appSettingsBuilder,
             string key,
-            Action<string> logAction)
+            Action<string>? logAction)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
@@ -141,7 +141,7 @@ namespace Arbor.KVConfiguration.Core
             return valueTuple;
         }
 
-        private IKeyValueConfiguration GetConfiguratorDefining(AppSettingsBuilder appSettingsBuilder, string key)
+        private IKeyValueConfiguration GetConfiguratorDefining(AppSettingsBuilder? appSettingsBuilder, string key)
         {
             if (appSettingsBuilder is null)
             {
@@ -157,7 +157,7 @@ namespace Arbor.KVConfiguration.Core
         }
 
         private ImmutableArray<MultipleValuesStringPair> GetMultipleValues(
-            AppSettingsBuilder appSettingsBuilder,
+            AppSettingsBuilder? appSettingsBuilder,
             ImmutableArray<string> keysLeft)
         {
             if (appSettingsBuilder is null)
@@ -222,7 +222,7 @@ namespace Arbor.KVConfiguration.Core
         }
 
         [PublicAPI]
-        public IKeyValueConfiguration ConfiguratorFor(string key, Action<string> logAction = null)
+        public IKeyValueConfiguration ConfiguratorFor(string key, Action<string>? logAction = null)
         {
             (IKeyValueConfiguration, string) tuple =
                 GetValue(_appSettingsDecoratorBuilder.AppSettingsBuilder, key, logAction);

@@ -18,21 +18,39 @@ namespace Arbor.KVConfiguration.Core.Decorators
             return expanded;
         }
 
-        public ImmutableArray<string> GetAllKeys(IKeyValueConfiguration keyValueConfiguration) =>
-            keyValueConfiguration.AllKeys;
+        public ImmutableArray<string> GetAllKeys(IKeyValueConfiguration keyValueConfiguration)
+        {
+            if (keyValueConfiguration == null)
+            {
+                throw new ArgumentNullException(nameof(keyValueConfiguration));
+            }
+
+            return keyValueConfiguration.AllKeys;
+        }
 
         public string GetValue(string value) => ExpandValue(value);
 
-        public ImmutableArray<StringPair> GetAllValues(IKeyValueConfiguration keyValueConfiguration) =>
-            keyValueConfiguration.AllValues
-                .Select(item => new StringPair(item.Key, ExpandValue(item.Value)))
-                .ToImmutableArray();
+        public ImmutableArray<StringPair> GetAllValues(IKeyValueConfiguration keyValueConfiguration)
+        {
+            if (keyValueConfiguration == null)
+            {
+                throw new ArgumentNullException(nameof(keyValueConfiguration));
+            }
 
-        public ImmutableArray<MultipleValuesStringPair> GetAllWithMultipleValues(
-            IKeyValueConfiguration keyValueConfiguration) =>
-            keyValueConfiguration.AllWithMultipleValues
-                .Select(item => new MultipleValuesStringPair(item.Key,
+            return keyValueConfiguration.AllValues.Select(item => new StringPair(item.Key, ExpandValue(item.Value)))
+                .ToImmutableArray();
+        }
+
+        public ImmutableArray<MultipleValuesStringPair> GetAllWithMultipleValues(IKeyValueConfiguration keyValueConfiguration)
+        {
+            if (keyValueConfiguration == null)
+            {
+                throw new ArgumentNullException(nameof(keyValueConfiguration));
+            }
+
+            return keyValueConfiguration.AllWithMultipleValues.Select(item => new MultipleValuesStringPair(item.Key,
                     item.Values.Select(ExpandValue).ToImmutableArray()))
                 .ToImmutableArray();
+        }
     }
 }

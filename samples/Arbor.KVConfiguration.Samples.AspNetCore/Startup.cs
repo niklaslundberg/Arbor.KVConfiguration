@@ -10,7 +10,7 @@ namespace Arbor.KVConfiguration.Samples.AspNetCore
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        public Startup([NotNull] IHostingEnvironment env)
         {
             IConfigurationBuilder builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)

@@ -18,15 +18,15 @@ namespace Arbor.KVConfiguration.Core.Metadata
             string description = "",
             string partInvariantName = "",
             string partFullName = "",
-            [CanBeNull] Type containingType = null,
+            Type? containingType = null,
             int sourceLine = -1,
             string sourceFile = "",
             bool isRequired = true,
             string defaultValue = "",
             string notes = "",
             bool allowMultipleValues = false,
-            [CanBeNull] IEnumerable<string> examples = null,
-            [CanBeNull] IEnumerable<string> tags = null,
+            IEnumerable<string>? examples = null,
+            IEnumerable<string>? tags = null,
             string keyType = "")
         {
             if (string.IsNullOrWhiteSpace(key))
@@ -48,15 +48,15 @@ namespace Arbor.KVConfiguration.Core.Metadata
             Notes = notes;
             AllowMultipleValues = allowMultipleValues;
             KeyType = keyType;
-            Examples = examples.SafeToImmutableArray();
-            Tags = tags.SafeToImmutableArray();
+            Examples = examples!.SafeToImmutableArray();
+            Tags = tags!.SafeToImmutableArray();
         }
 
         public bool AllowMultipleValues { get; }
 
         public string KeyType { get; }
 
-        public Type ContainingType { get; }
+        public Type? ContainingType { get; }
 
         public string DefaultValue { get; }
 

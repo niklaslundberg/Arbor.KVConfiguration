@@ -8,7 +8,7 @@ namespace Arbor.KVConfiguration.Core
     {
         public static MultiSourceKeyValueConfiguration Build(
             [NotNull] this AppSettingsBuilder appSettingsBuild,
-            Action<string> logAction = null)
+            Action<string>? logAction = null)
         {
             if (appSettingsBuild is null)
             {
@@ -23,7 +23,7 @@ namespace Arbor.KVConfiguration.Core
 
         public static MultiSourceKeyValueConfiguration Build(
             [NotNull] this AppSettingsDecoratorBuilder appSettingsBuild,
-            Action<string> logAction = null)
+            Action<string>? logAction = null)
         {
             if (appSettingsBuild is null)
             {
@@ -109,11 +109,51 @@ namespace Arbor.KVConfiguration.Core
 
         private static MultiSourceKeyValueConfiguration Initialize(
             [NotNull] IKeyValueConfiguration keyValueConfiguration,
-            Action<string> logAction = null)
+            Action<string>? logAction = null)
         {
             if (keyValueConfiguration is null)
             {
                 throw new ArgumentNullException(nameof(keyValueConfiguration));
+            }
+
+            if (logAction == null)
+            {
+                throw new ArgumentNullException(nameof(logAction));
+            }
+
+            if (logAction == null)
+            {
+                throw new ArgumentNullException(nameof(logAction));
+            }
+
+            if (logAction == null)
+            {
+                throw new ArgumentNullException(nameof(logAction));
+            }
+
+            if (logAction == null)
+            {
+                throw new ArgumentNullException(nameof(logAction));
+            }
+
+            if (logAction == null)
+            {
+                throw new ArgumentNullException(nameof(logAction));
+            }
+
+            if (logAction == null)
+            {
+                throw new ArgumentNullException(nameof(logAction));
+            }
+
+            if (logAction == null)
+            {
+                throw new ArgumentNullException(nameof(logAction));
+            }
+
+            if (logAction == null)
+            {
+                throw new ArgumentNullException(nameof(logAction));
             }
 
             if (keyValueConfiguration is MultiSourceKeyValueConfiguration multiSourceKeyValueConfiguration)

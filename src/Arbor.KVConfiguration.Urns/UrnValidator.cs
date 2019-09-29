@@ -18,7 +18,7 @@ namespace Arbor.KVConfiguration.Urns
             return string.Equals("urn", type, StringComparison.OrdinalIgnoreCase);
         }
 
-        protected override ImmutableArray<ValidationError> DoValidate(string type, string value)
+        protected override ImmutableArray<ValidationError> DoValidate(string type, string? value)
         {
             if (value is null)
             {

@@ -7,8 +7,8 @@ namespace Arbor.KVConfiguration.Core.Metadata
     {
         public KeyValueConfigurationItem(
             [NotNull] string key,
-            [CanBeNull] string value,
-            [CanBeNull] ConfigurationMetadata configurationMetadata)
+            string? value,
+            ConfigurationMetadata? configurationMetadata)
         {
             Key = key ?? throw new ArgumentNullException(nameof(key));
             Value = value;
@@ -17,9 +17,9 @@ namespace Arbor.KVConfiguration.Core.Metadata
 
         public string Key { get; }
 
-        public ConfigurationMetadata ConfigurationMetadata { get; }
+        public ConfigurationMetadata? ConfigurationMetadata { get; }
 
-        public string Value { get; }
+        public string? Value { get; }
 
         public override string ToString() => $"{nameof(Key)}: {Key}, {nameof(Value)}: {Value}, {nameof(ConfigurationMetadata)}: {ConfigurationMetadata}";
     }

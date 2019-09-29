@@ -7,7 +7,7 @@ namespace Arbor.KVConfiguration.Core
     {
         public AppSettingsBuilder(
             [NotNull] IKeyValueConfiguration keyValueConfiguration,
-            [CanBeNull] AppSettingsBuilder previous)
+            AppSettingsBuilder? previous)
         {
             KeyValueConfiguration = keyValueConfiguration ??
                                     throw new ArgumentNullException(nameof(keyValueConfiguration));
@@ -16,7 +16,7 @@ namespace Arbor.KVConfiguration.Core
 
         public IKeyValueConfiguration KeyValueConfiguration { get; }
 
-        public AppSettingsBuilder Previous { get; }
+        public AppSettingsBuilder? Previous { get; }
 
         public void Dispose()
         {

@@ -5,6 +5,8 @@ namespace Arbor.KVConfiguration.Core.Decorators
 {
     public class AppSettingsDecoratorBuilder : IDisposable
     {
+        private bool _isDisposed;
+
         public AppSettingsDecoratorBuilder(
             [NotNull] AppSettingsBuilder appSettingsBuilder,
             [NotNull] IKeyValueConfigurationDecorator decorator)
@@ -26,7 +28,7 @@ namespace Arbor.KVConfiguration.Core.Decorators
 
         public IKeyValueConfigurationDecorator Decorator { get; }
 
-        public AppSettingsDecoratorBuilder Previous { get; }
+        public AppSettingsDecoratorBuilder? Previous { get; }
 
         public void Dispose()
         {
@@ -36,10 +38,11 @@ namespace Arbor.KVConfiguration.Core.Decorators
 
         protected virtual void Dispose(bool isDisposing)
         {
-            if (isDisposing)
+            if (isDisposing && !_isDisposed)
             {
                 Previous?.Dispose();
                 AppSettingsBuilder?.Dispose();
+                _isDisposed = true;
             }
         }
 

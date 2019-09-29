@@ -12,7 +12,7 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
 
         public KeyValueConfigurationProvider(KeyValueConfigurationSourceAdapter adapter) => _adapter = adapter;
 
-        public bool TryGet(string key, out string value)
+        public bool TryGet(string key, out string? value)
         {
             string foundValue = _adapter.KeyValueConfiguration[key];
 

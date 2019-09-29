@@ -124,7 +124,7 @@ namespace Arbor.Primitives
 
         public static bool operator !=(Urn left, Urn right) => !Equals(left, right);
 
-        public static bool TryParse(string originalValue, out Urn result)
+        public static bool TryParse(string originalValue, out Urn? result)
         {
             if (string.IsNullOrWhiteSpace(originalValue))
             {
