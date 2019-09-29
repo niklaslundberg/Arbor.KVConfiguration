@@ -19,7 +19,7 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
 
         public KeyValueConfigurationAdapter([NotNull] IConfiguration config)
         {
-            if (config == null)
+            if (config is null)
             {
                 throw new ArgumentNullException(nameof(config));
             }

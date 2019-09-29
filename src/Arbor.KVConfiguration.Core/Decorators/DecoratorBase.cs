@@ -9,7 +9,7 @@ namespace Arbor.KVConfiguration.Core.Decorators
     {
         public ImmutableArray<string> GetAllKeys([NotNull] IKeyValueConfiguration keyValueConfiguration)
         {
-            if (keyValueConfiguration == null)
+            if (keyValueConfiguration is null)
             {
                 throw new ArgumentNullException(nameof(keyValueConfiguration));
             }
@@ -21,7 +21,7 @@ namespace Arbor.KVConfiguration.Core.Decorators
 
         public ImmutableArray<StringPair> GetAllValues(IKeyValueConfiguration keyValueConfiguration)
         {
-            if (keyValueConfiguration == null)
+            if (keyValueConfiguration is null)
             {
                 throw new ArgumentNullException(nameof(keyValueConfiguration));
             }
@@ -33,7 +33,7 @@ namespace Arbor.KVConfiguration.Core.Decorators
         public ImmutableArray<MultipleValuesStringPair> GetAllWithMultipleValues(
             IKeyValueConfiguration keyValueConfiguration)
         {
-            if (keyValueConfiguration == null)
+            if (keyValueConfiguration is null)
             {
                 throw new ArgumentNullException(nameof(keyValueConfiguration));
             }

@@ -5,7 +5,7 @@ namespace Arbor.KVConfiguration.Core.Metadata
 {
     public class KeyMetadata
     {
-        public KeyMetadata([NotNull] string key, [CanBeNull] ConfigurationMetadata configurationMetadata)
+        public KeyMetadata([NotNull] string key, ConfigurationMetadata? configurationMetadata)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
@@ -18,6 +18,6 @@ namespace Arbor.KVConfiguration.Core.Metadata
 
         public string Key { get; }
 
-        public ConfigurationMetadata ConfigurationMetadata { get; }
+        public ConfigurationMetadata? ConfigurationMetadata { get; }
     }
 }

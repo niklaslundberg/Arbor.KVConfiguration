@@ -45,13 +45,13 @@ namespace Arbor.KVConfiguration.Core
         {
             var toStringBuilder = new StringBuilder(Key?.Length + Value?.Length + 4 ?? 10);
             toStringBuilder.Append('[');
-            if (Key != null)
+            if (Key is object)
             {
                 toStringBuilder.Append(Key);
             }
 
             toStringBuilder.Append(", \"");
-            if (Value != null)
+            if (Value is object)
             {
                 toStringBuilder.Append(Value);
             }

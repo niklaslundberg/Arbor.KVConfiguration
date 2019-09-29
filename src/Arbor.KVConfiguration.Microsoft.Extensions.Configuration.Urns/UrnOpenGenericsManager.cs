@@ -9,7 +9,7 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
 
         public UrnOpenGenericsManager([NotNull] IConfigureConfigurationValue<TOptions> configurator)
         {
-            if (configurator == null)
+            if (configurator is null)
             {
                 throw new ArgumentNullException(nameof(configurator));
             }

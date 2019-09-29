@@ -16,7 +16,7 @@ namespace Arbor.KVConfiguration.JsonConfiguration
 
         public JsonKeyValueConfiguration([NotNull] IEnumerable<KeyValueConfigurationItem> keyValueConfigurationItems)
         {
-            if (keyValueConfigurationItems == null)
+            if (keyValueConfigurationItems is null)
             {
                 throw new ArgumentNullException(nameof(keyValueConfigurationItems));
             }

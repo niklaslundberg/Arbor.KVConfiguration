@@ -9,7 +9,7 @@ namespace Arbor.KVConfiguration.Urns
     {
         public static ImmutableArray<UrnTypeMapping> GetUrnTypesInAssemblies(params Assembly[] assemblies)
         {
-            UrnTypeMapping HasUrnAttribute(Type type)
+            UrnTypeMapping? HasUrnAttribute(Type type)
             {
                 var customAttribute = type.GetCustomAttribute<UrnAttribute>();
 
@@ -21,8 +21,8 @@ namespace Arbor.KVConfiguration.Urns
                     assembly.ExportedTypes
                         .Where(type => !type.IsAbstract && type.IsPublic)
                         .Select(HasUrnAttribute))
-                .Where(mapping => mapping != null)
-                .ToImmutableArray();
+                .Where(mapping => mapping is object)
+                .ToImmutableArray()!;
 
             return urnMappedTypes;
         }

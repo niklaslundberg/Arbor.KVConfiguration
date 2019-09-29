@@ -23,12 +23,12 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
             this IServiceCollection services,
             [NotNull] IConfiguration configuration)
         {
-            if (services == null)
+            if (services is null)
             {
                 throw new ArgumentNullException(nameof(services));
             }
 
-            if (configuration == null)
+            if (configuration is null)
             {
                 throw new ArgumentNullException(nameof(configuration));
             }

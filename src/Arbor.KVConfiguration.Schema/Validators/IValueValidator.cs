@@ -8,6 +8,6 @@ namespace Arbor.KVConfiguration.Schema.Validators
     {
         bool CanValidate([NotNull] string type);
 
-        ImmutableArray<ValidationError> Validate([NotNull] string type, [CanBeNull] string value);
+        ImmutableArray<ValidationError> Validate([NotNull] string type, string? value);
     }
 }

@@ -12,7 +12,7 @@ namespace Arbor.KVConfiguration.Core.Extensions.ReflectionExtensions
             [NotNull] this AppSettingsBuilder appSettingsBuilder,
             IEnumerable<Assembly> scanAssemblies)
         {
-            if (appSettingsBuilder == null)
+            if (appSettingsBuilder is null)
             {
                 throw new ArgumentNullException(nameof(appSettingsBuilder));
             }

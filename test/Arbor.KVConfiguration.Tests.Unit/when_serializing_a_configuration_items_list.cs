@@ -15,7 +15,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
 
         private Establish context = () =>
         {
-            ImmutableArray<KeyValue> keys = new List<KeyValue>(10)
+            var keys = new List<KeyValue>(10)
             {
                 new KeyValue("abc", "123", null),
                 new KeyValue("def", "234", null),

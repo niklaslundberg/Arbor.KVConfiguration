@@ -8,7 +8,7 @@ namespace Arbor.KVConfiguration.Urns
     {
         public static int NamespaceParts(this Urn urn)
         {
-            if (urn == null)
+            if (urn is null)
             {
                 throw new ArgumentNullException(nameof(urn));
             }

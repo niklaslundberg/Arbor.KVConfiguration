@@ -16,10 +16,10 @@ namespace Arbor.Primitives
         {
             IDictionary environmentVariables = Environment.GetEnvironmentVariables();
 
-            ImmutableDictionary<string, string> all = environmentVariables
+            var all = environmentVariables
                 .OfType<DictionaryEntry>()
-                .ToImmutableDictionary(entry => (string) entry.Key,
-                    entry => (string) entry.Value,
+                .ToImmutableDictionary(entry => (string)entry.Key,
+                    entry => (string)entry.Value,
                     StringComparer.OrdinalIgnoreCase);
 
             return all;

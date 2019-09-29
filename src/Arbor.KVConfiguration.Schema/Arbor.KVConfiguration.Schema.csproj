@@ -4,6 +4,7 @@
     <AssemblyName>Arbor.KVConfiguration.Schema</AssemblyName>
     <RootNamespace>Arbor.KVConfiguration.Schema</RootNamespace>
     <CodeAnalysisRuleSet>..\Arbor.ruleset</CodeAnalysisRuleSet>
+    <LangVersion>8</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2019.1.3" />

@@ -15,7 +15,7 @@ namespace Arbor.KVConfiguration.Core
 
         public ReflectionKeyValueConfiguration([NotNull] Assembly assembly)
         {
-            if (assembly == null)
+            if (assembly is null)
             {
                 throw new ArgumentNullException(nameof(assembly));
             }

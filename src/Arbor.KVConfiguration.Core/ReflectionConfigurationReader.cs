@@ -12,14 +12,14 @@ namespace Arbor.KVConfiguration.Core
     {
         public static ImmutableArray<KeyValueConfigurationItem> ReadConfiguration([NotNull] Assembly assembly)
         {
-            if (assembly == null)
+            if (assembly is null)
             {
                 throw new ArgumentNullException(nameof(assembly));
             }
 
             ImmutableArray<ConfigurationMetadata> metadataFromAssemblyTypes = assembly.GetMetadataFromAssemblyTypes();
 
-            ImmutableArray<KeyValueConfigurationItem> configurationItems =
+            var configurationItems =
                 metadataFromAssemblyTypes
                     .Select(item => new KeyValueConfigurationItem(item.Key, item.DefaultValue, item))
                     .ToImmutableArray();

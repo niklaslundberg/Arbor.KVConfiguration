@@ -12,7 +12,7 @@ namespace Arbor.KVConfiguration.Core.Extensions.ReflectionExtensions
         public static ImmutableArray<ConfigurationMetadata> GetMetadataType(
             [NotNull] this Type type)
         {
-            if (type == null)
+            if (type is null)
             {
                 throw new ArgumentNullException(nameof(type));
             }
@@ -40,7 +40,7 @@ namespace Arbor.KVConfiguration.Core.Extensions.ReflectionExtensions
         public static ImmutableArray<ConfigurationMetadata> GetMetadataFromAssemblyTypes(
             [NotNull] this Assembly assembly)
         {
-            if (assembly == null)
+            if (assembly is null)
             {
                 throw new ArgumentNullException(nameof(assembly));
             }
@@ -69,7 +69,7 @@ namespace Arbor.KVConfiguration.Core.Extensions.ReflectionExtensions
                         Field = field,
                         Attribute = field.GetCustomAttribute<MetadataAttribute>()
                     })
-                .Where(pair => pair.Attribute != null)
+                .Where(pair => pair.Attribute is object)
                 .ToArray();
 
             if (!configurationMetadataFields.Any())
@@ -77,7 +77,7 @@ namespace Arbor.KVConfiguration.Core.Extensions.ReflectionExtensions
                 return ImmutableArray<ConfigurationMetadata>.Empty;
             }
 
-            ImmutableArray<ConfigurationMetadata> metadata = configurationMetadataFields
+            var metadata = configurationMetadataFields
                 .Select(
                     pair =>
                         new ConfigurationMetadata(pair.Field.GetValue(null) as string ??

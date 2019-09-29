@@ -8,7 +8,7 @@ namespace Arbor.KVConfiguration.UserConfiguration
     {
         public static AppSettingsBuilder AddUserSettings([NotNull] this AppSettingsBuilder builder, string basePath)
         {
-            if (builder == null)
+            if (builder is null)
             {
                 throw new ArgumentNullException(nameof(builder));
             }

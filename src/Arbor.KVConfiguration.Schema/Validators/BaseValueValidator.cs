@@ -8,7 +8,7 @@ namespace Arbor.KVConfiguration.Schema.Validators
     {
         public abstract bool CanValidate(string type);
 
-        public ImmutableArray<ValidationError> Validate(string type, string value)
+        public ImmutableArray<ValidationError> Validate(string type, string? value)
         {
             if (string.IsNullOrWhiteSpace(type))
             {
@@ -24,6 +24,6 @@ namespace Arbor.KVConfiguration.Schema.Validators
             return DoValidate(type, value);
         }
 
-        protected abstract ImmutableArray<ValidationError> DoValidate(string type, string value);
+        protected abstract ImmutableArray<ValidationError> DoValidate(string type, string? value);
     }
 }

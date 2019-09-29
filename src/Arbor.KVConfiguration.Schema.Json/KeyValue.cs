@@ -10,7 +10,7 @@ namespace Arbor.KVConfiguration.Schema.Json
     {
         public KeyValue(
             [NotNull] string key,
-            [CanBeNull] string value,
+            string? value,
             [CanBeNull] ConfigurationMetadata configurationMetadata)
         {
             if (string.IsNullOrWhiteSpace(key))
@@ -30,9 +30,9 @@ namespace Arbor.KVConfiguration.Schema.Json
         public ConfigurationMetadata ConfigurationMetadata { get; }
 
         [JsonProperty(Order = 1)]
-        public string Value { get; }
+        public string? Value { get; }
 
         [UsedImplicitly]
-        public bool ShouldSerializeConfigurationMetadata() => ConfigurationMetadata != null;
+        public bool ShouldSerializeConfigurationMetadata() => ConfigurationMetadata is object;
     }
 }

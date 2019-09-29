@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using Arbor.KVConfiguration.Core;
+using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Urns
 {
@@ -37,9 +38,13 @@ namespace Arbor.KVConfiguration.Urns
             return new ConfigurationRegistrations(configurationInstanceHolders.ToImmutableArray());
         }
 
-        public static ConfigurationInstanceHolder CreateHolder(
-            this ConfigurationRegistrations configurationRegistrations)
+        public static ConfigurationInstanceHolder CreateHolder([NotNull] this ConfigurationRegistrations configurationRegistrations)
         {
+            if (configurationRegistrations == null)
+            {
+                throw new ArgumentNullException(nameof(configurationRegistrations));
+            }
+
             var configurationInstanceHolder = new ConfigurationInstanceHolder();
             foreach (UrnTypeRegistration registration in configurationRegistrations.UrnTypeRegistrations)
             {
@@ -74,7 +79,7 @@ namespace Arbor.KVConfiguration.Urns
                     return ImmutableArray<UrnTypeRegistration>.Empty;
                 }
 
-                ImmutableArray<UrnTypeRegistration> urnTypeRegistrations = new[]
+                var urnTypeRegistrations = new[]
                 {
                     new UrnTypeRegistration(
                         urnTypeMapping,
@@ -96,7 +101,7 @@ namespace Arbor.KVConfiguration.Urns
 
             if (validatedObjects.Any(pair => pair.Errors.Length > 0))
             {
-                ImmutableArray<UrnTypeRegistration> urnTypeRegistrations = validatedObjects
+                var urnTypeRegistrations = validatedObjects
                     .Select(validationObject =>
                     {
                         ValidationResult[] errors = validationObject.Errors;

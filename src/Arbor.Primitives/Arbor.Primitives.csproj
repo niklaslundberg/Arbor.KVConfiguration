@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net471;net472</TargetFrameworks>
+    <LangVersion>8</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,17 +19,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="PrimitivesResource.Designer.cs">
-      <DependentUpon>PrimitivesResource.resx</DependentUpon>
+    <Compile Update="PrimitivesResources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <DependentUpon>PrimitivesResources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="PrimitivesResource.resx">
-      <LastGenOutput>PrimitivesResource.Designer.cs</LastGenOutput>
+    <EmbeddedResource Update="PrimitivesResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>PrimitivesResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

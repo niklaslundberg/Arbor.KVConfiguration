@@ -12,12 +12,12 @@ namespace Arbor.KVConfiguration.JsonConfiguration
         internal static ImmutableArray<KeyValueConfigurationItem> ReadConfiguration(
             [NotNull] this ConfigurationItems configurationItems)
         {
-            if (configurationItems == null)
+            if (configurationItems is null)
             {
                 throw new ArgumentNullException(nameof(configurationItems));
             }
 
-            ImmutableArray<KeyValueConfigurationItem> keyValueConfigurationItems = configurationItems.Keys
+            var keyValueConfigurationItems = configurationItems.Keys
                 .Select(
                     keyValue => new KeyValueConfigurationItem(keyValue.Key,
                         keyValue.Value,

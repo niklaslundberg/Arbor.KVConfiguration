@@ -12,7 +12,7 @@ namespace Arbor.KVConfiguration.Core.Metadata.Extensions
         public static ImmutableArray<KeyValueConfigurationItem> GetKeyValueConfigurationItems(
             [NotNull] this IKeyValueConfigurationWithMetadata keyValueConfiguration)
         {
-            if (keyValueConfiguration == null)
+            if (keyValueConfiguration is null)
             {
                 throw new ArgumentNullException(nameof(keyValueConfiguration));
             }
@@ -23,7 +23,7 @@ namespace Arbor.KVConfiguration.Core.Metadata.Extensions
         public static ImmutableArray<KeyValueConfigurationItem> GetKeyValueConfigurationItems(
             [NotNull] this IKeyValueConfiguration keyValueConfiguration)
         {
-            if (keyValueConfiguration == null)
+            if (keyValueConfiguration is null)
             {
                 throw new ArgumentNullException(nameof(keyValueConfiguration));
             }
@@ -33,7 +33,7 @@ namespace Arbor.KVConfiguration.Core.Metadata.Extensions
                 return keyValueConfigurationWithMetadata.GetKeyValueConfigurationItems();
             }
 
-            ImmutableArray<KeyValueConfigurationItem> keyValueConfigurationItems = keyValueConfiguration
+            var keyValueConfigurationItems = keyValueConfiguration
                 .AllWithMultipleValues.Select(item =>
                 {
                     var configurationItems = new List<KeyValueConfigurationItem>();

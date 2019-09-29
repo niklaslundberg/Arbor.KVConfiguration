@@ -39,7 +39,7 @@ namespace Arbor.KVConfiguration.Urns
         {
             if (reader.TokenType == JsonToken.StartArray)
             {
-                JArray array = JArray.Load(reader);
+                var array = JArray.Load(reader);
 
                 var values = array.ToObject<string[]>();
 

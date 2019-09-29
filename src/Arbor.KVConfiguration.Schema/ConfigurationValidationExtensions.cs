@@ -16,7 +16,7 @@ namespace Arbor.KVConfiguration.Schema
             [NotNull] IConfigurationValidator configurationValidator,
             ImmutableArray<KeyMetadata> metadata)
         {
-            if (configurationValidator == null)
+            if (configurationValidator is null)
             {
                 throw new ArgumentNullException(nameof(configurationValidator));
             }
@@ -26,11 +26,11 @@ namespace Arbor.KVConfiguration.Schema
             foreach (MultipleValuesStringPair multipleValuesStringPair in multipleValuesStringPairs)
             {
                 KeyMetadata metadataItem =
-                    metadata.SingleOrDefault(
+                    metadata.SafeToImmutableArray().SingleOrDefault(
                         item =>
                             item.Key.Equals(multipleValuesStringPair.Key, StringComparison.OrdinalIgnoreCase));
 
-                if (metadataItem != null)
+                if (metadataItem is object)
                 {
                     KeyValueConfigurationValidationResult validationResult =
                         configurationValidator.Validate(multipleValuesStringPair, metadataItem);

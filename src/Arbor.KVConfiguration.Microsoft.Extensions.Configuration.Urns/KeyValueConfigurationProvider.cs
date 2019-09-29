@@ -42,7 +42,7 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
             IEnumerable<string> earlierKeys,
             string parentPath)
         {
-            string prefix = parentPath == null ? string.Empty : parentPath + ConfigurationPath.KeyDelimiter;
+            string prefix = parentPath is null ? string.Empty : parentPath + ConfigurationPath.KeyDelimiter;
 
             return _adapter.KeyValueConfiguration.AllValues
                 .Where(kv => kv.Key.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))

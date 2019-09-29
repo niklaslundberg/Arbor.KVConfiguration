@@ -8,7 +8,7 @@ namespace Arbor.KVConfiguration.Schema.Validators
     {
         public override bool CanValidate(string type) => string.Equals("uri", type, StringComparison.OrdinalIgnoreCase);
 
-        protected override ImmutableArray<ValidationError> DoValidate(string type, string value)
+        protected override ImmutableArray<ValidationError> DoValidate(string type, string? value)
         {
             if (!Uri.IsWellFormedUriString(value, UriKind.RelativeOrAbsolute))
             {

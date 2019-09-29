@@ -7,7 +7,7 @@ namespace Arbor.KVConfiguration.Urns
     {
         public static string EnclosingTypeName<T>([NotNull] this INamedInstance<T> instance)
         {
-            if (instance == null)
+            if (instance is null)
             {
                 throw new ArgumentNullException(nameof(instance));
             }
