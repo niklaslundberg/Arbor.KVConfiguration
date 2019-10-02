@@ -14,7 +14,8 @@ jobs:
         NuGetPassword: ${{ secrets.GITHUB_TOKEN }}
       run: |
         dotnet tool install --global Arbor.Tooler.GlobalTool
-        dotnet tool install --global Arbor.Build.Bootstrapper
+        dotnet tool install --global Arbor.Build.Bootstrapper'
+        choco install nuget.commandline
         nuget source Add -Name "GitHub" -Source "https://nuget.pkg.github.com/niklaslundberg/index.json" -UserName niklaslundberg -Password "%NuGetPassword%"
     - name: build
       env:
