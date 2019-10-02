@@ -7,6 +7,7 @@ jobs:
 
     runs-on: windows-2019
     
+    
     steps:
     - uses: actions/checkout@v1
     - name: install-tools
@@ -14,4 +15,6 @@ jobs:
         dotnet tool install --global Arbor.Tooler.GlobalTool
         dotnet tool install --global Arbor.Build.Bootstrapper
     - name: build
+      env: # Or as an environment variable
+        TestPassword1: ${{ secrets.TestPassword }}
       run: build\build.bat
