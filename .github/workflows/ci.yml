@@ -18,4 +18,5 @@ jobs:
         Arbor.X.Tools.External.SymbolServer.ApiKey: ${{ secrets.GITHUB_TOKEN }}
         Arbor.X.Tools.External.SymbolServer.Uri: "https://nuget.pkg.github.com/niklaslundberg/index.json"
         Arbor.X.NuGet.PackageUpload.Enabled: "true"
+        Arbor.X.NuGet.PackageUpload.ForceUploadEnabled: "true"
       run: build\build.bat
