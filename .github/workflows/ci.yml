@@ -6,8 +6,7 @@ jobs:
   build:
 
     runs-on: windows-2019
-    
-    
+
     steps:
     - uses: actions/checkout@v1
     - name: install-tools
@@ -16,5 +15,7 @@ jobs:
         dotnet tool install --global Arbor.Build.Bootstrapper
     - name: build
       env: # Or as an environment variable
-        TestPassword1: ${{ secrets.TestPassword }}
+        Arbor.X.Tools.External.SymbolServer.ApiKey: ${{ secrets.GITHUB_TOKEN }}
+        Arbor.X.Tools.External.SymbolServer.Uri: "https://nuget.pkg.github.com/niklaslundberg/index.json"
+        Arbor.X.NuGet.PackageUpload.Enabled: "true"
       run: build\build.bat
