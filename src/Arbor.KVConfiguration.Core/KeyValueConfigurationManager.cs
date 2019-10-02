@@ -116,45 +116,7 @@ namespace Arbor.KVConfiguration.Core
                 throw new ArgumentNullException(nameof(keyValueConfiguration));
             }
 
-            if (logAction == null)
-            {
-                throw new ArgumentNullException(nameof(logAction));
-            }
-
-            if (logAction == null)
-            {
-                throw new ArgumentNullException(nameof(logAction));
-            }
-
-            if (logAction == null)
-            {
-                throw new ArgumentNullException(nameof(logAction));
-            }
-
-            if (logAction == null)
-            {
-                throw new ArgumentNullException(nameof(logAction));
-            }
-
-            if (logAction == null)
-            {
-                throw new ArgumentNullException(nameof(logAction));
-            }
-
-            if (logAction == null)
-            {
-                throw new ArgumentNullException(nameof(logAction));
-            }
-
-            if (logAction == null)
-            {
-                throw new ArgumentNullException(nameof(logAction));
-            }
-
-            if (logAction == null)
-            {
-                throw new ArgumentNullException(nameof(logAction));
-            }
+            logAction ??= s => { };
 
             if (keyValueConfiguration is MultiSourceKeyValueConfiguration multiSourceKeyValueConfiguration)
             {

@@ -41,7 +41,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         }
 
         [Fact]
-        public void EqualsForOtherWithDifferentCasingShouldEqualFalse()
+        public void EqualsForOtherWithDifferentNidCasingShouldEqualTrue()
         {
             var a = new Primitives.Urn("urn:a:b:c");
             var b = new Primitives.Urn("urn:A:b:c");

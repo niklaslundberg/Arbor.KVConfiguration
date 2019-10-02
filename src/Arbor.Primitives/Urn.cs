@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Arbor.Primitives
@@ -69,8 +70,15 @@ namespace Arbor.Primitives
 
             Nid = nidSlice.ToString();
 
+            ReadOnlySpan<char> schemeSlice = chars.Slice(0, 3);
+#pragma warning disable CA1308 // Normalize strings to uppercase
+            Scheme = schemeSlice.ToString().ToLowerInvariant();
+#pragma warning restore CA1308 // Normalize strings to uppercase
+
             OriginalValue = trimmed;
         }
+
+        public string Scheme { get; }
 
         public string Nid { get; }
 
@@ -200,8 +208,28 @@ namespace Arbor.Primitives
                 return true;
             }
 
+            if (!Scheme.Equals(other.Scheme, StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            if (!Nid.Equals(other.Nid, StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            var caseSensitiveParts = CaseInsensitiveParts(this);
+            var otherParts = CaseInsensitiveParts(other);
+
+            if (!caseSensitiveParts.SequenceEqual(otherParts))
+            {
+                return false;
+            }
+
             return string.Equals(OriginalValue, other.OriginalValue, StringComparison.OrdinalIgnoreCase);
         }
+
+        private static ReadOnlySpan<char> CaseInsensitiveParts(Urn urn) => urn.OriginalValue.AsSpan().Slice(urn.Scheme.Length + urn.Nid.Length + 1);
 
         public override bool Equals(object obj)
         {
@@ -230,5 +258,15 @@ namespace Arbor.Primitives
         private static bool HasUrnScheme(Uri uri) => uri.Scheme.Equals("urn", StringComparison.OrdinalIgnoreCase);
 
         private static bool IsUri(string originalValue, out Uri uri) => Uri.TryCreate(originalValue, UriKind.Absolute, out uri);
+
+        public static Urn Parse(string attemptedValue)
+        {
+            if (!TryParse(attemptedValue, out Urn? urn))
+            {
+                throw new FormatException($"The attempted value '{attemptedValue}' is not a valid URN");
+            }
+
+            return urn!;
+        }
     }
 }
