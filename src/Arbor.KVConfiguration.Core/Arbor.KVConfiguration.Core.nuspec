@@ -19,11 +19,11 @@
     <projectUrl>https://github.com/niklaslundberg/Arbor.KVConfiguration</projectUrl>
     <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <licenseUrl>https://github.com/niklaslundberg/Arbor.KVConfiguration/blob/master/LICENSE.txt</licenseUrl>
-    <copyright>Copyright Niklas Lundberg 2014 - 2018</copyright>
+    <license type="expression">MIT</license>
+    <copyright>Copyright Niklas Lundberg 2014 - 2019</copyright>
     <dependencies>
       <dependency id="System.Collections.Immutable" version="[1.5.0,2.0.0)" />
-      <dependency id="Microsoft.Extensions.Primitives" version="[2.0.0,3.0.0)" />
+      <dependency id="Microsoft.Extensions.Primitives" version="[3.0.0,4.0.0)" />
     </dependencies>
     <references></references>
     <tags></tags>
