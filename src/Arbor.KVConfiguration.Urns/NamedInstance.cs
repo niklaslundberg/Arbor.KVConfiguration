@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Arbor.KVConfiguration.Core;
 using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Urns
@@ -8,7 +9,7 @@ namespace Arbor.KVConfiguration.Urns
     {
         public bool Equals(NamedInstance<T> other)
         {
-            if (ReferenceEquals(null, other))
+            if (other is null)
             {
                 return false;
             }
@@ -21,10 +22,7 @@ namespace Arbor.KVConfiguration.Urns
             return EqualityComparer<T>.Default.Equals(Value, other.Value) && string.Equals(Name, other.Name, StringComparison.InvariantCulture);
         }
 
-        public override bool Equals(object obj)
-        {
-            return ReferenceEquals(this, obj) || obj is NamedInstance<T> other && Equals(other);
-        }
+        public override bool Equals(object obj) => ReferenceEquals(this, obj) || obj is NamedInstance<T> other && Equals(other);
 
         public override int GetHashCode()
         {
@@ -34,21 +32,15 @@ namespace Arbor.KVConfiguration.Urns
             }
         }
 
-        public static bool operator ==(NamedInstance<T> left, NamedInstance<T> right)
-        {
-            return Equals(left, right);
-        }
+        public static bool operator ==(NamedInstance<T> left, NamedInstance<T> right) => Equals(left, right);
 
-        public static bool operator !=(NamedInstance<T> left, NamedInstance<T> right)
-        {
-            return !Equals(left, right);
-        }
+        public static bool operator !=(NamedInstance<T> left, NamedInstance<T> right) => !Equals(left, right);
 
         public NamedInstance([NotNull] T value, [NotNull] string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                throw new ArgumentException("Value cannot be null or whitespace.", nameof(name));
+                throw new ArgumentException(KeyValueResources.ArgumentIsNullOrWhitespace, nameof(name));
             }
 
             Value = value;
@@ -59,9 +51,6 @@ namespace Arbor.KVConfiguration.Urns
 
         public string Name { get; }
 
-        public override string ToString()
-        {
-            return $"{GetType().GenericTypeArguments[0].FullName}:'{Name}' [{Value}]";
-        }
+        public override string ToString() => $"{GetType().GenericTypeArguments[0].FullName}:'{Name}' [{Value}]";
     }
 }

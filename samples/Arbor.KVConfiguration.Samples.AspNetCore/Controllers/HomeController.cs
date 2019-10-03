@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Arbor.KVConfiguration.Schema;
 using Arbor.KVConfiguration.Urns;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Mvc;
@@ -12,16 +11,11 @@ namespace Arbor.KVConfiguration.Samples.AspNetCore.Controllers
     {
         private readonly MySampleConfiguration _mySampleConfiguration;
 
-        public HomeController(MySampleConfiguration mySample)
-        {
+        public HomeController(MySampleConfiguration mySample) =>
             _mySampleConfiguration =
                 mySample ?? throw new InvalidOperationException("Could not get value for mySample");
-        }
 
-        public IActionResult Index()
-        {
-            return View(new SampleViewModel(_mySampleConfiguration));
-        }
+        public IActionResult Index() => View(new SampleViewModel(_mySampleConfiguration));
 
         [PublicAPI]
         [Route("~/diagnostics")]
@@ -30,9 +24,19 @@ namespace Arbor.KVConfiguration.Samples.AspNetCore.Controllers
             [FromServices] ConfigurationInstanceHolder configurationInstanceHolder,
             [FromServices] IEnumerable<MySampleMultipleInstance> multipleInstances)
         {
+            if (configurationInstanceHolder is null)
+            {
+                throw new ArgumentNullException(nameof(configurationInstanceHolder));
+            }
+
+            if (multipleInstances is null)
+            {
+                throw new ArgumentNullException(nameof(multipleInstances));
+            }
+
             return new
             {
-                Instances = configurationInstanceHolder.RegisteredTypes
+                Instances = configurationInstanceHolder!.RegisteredTypes
                     .Select(type => new
                     {
                         type.FullName,
@@ -43,9 +47,6 @@ namespace Arbor.KVConfiguration.Samples.AspNetCore.Controllers
             };
         }
 
-        public IActionResult Error()
-        {
-            return View();
-        }
+        public IActionResult Error() => View();
     }
 }

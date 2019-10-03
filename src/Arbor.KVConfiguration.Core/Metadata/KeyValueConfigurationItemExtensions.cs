@@ -10,7 +10,7 @@ namespace Arbor.KVConfiguration.Core.Metadata
         public static ImmutableArray<KeyMetadata> GetMetadata(
             [CanBeNull] this IEnumerable<KeyValueConfigurationItem> items)
         {
-            if (items == null)
+            if (items is null)
             {
                 return ImmutableArray<KeyMetadata>.Empty;
             }
@@ -20,17 +20,17 @@ namespace Arbor.KVConfiguration.Core.Metadata
 
             string[] uniqueKeys = keyValueConfigurationItems.Select(item => item.Key).Distinct().ToArray();
 
-            KeyValueConfigurationItem[] ordered = keyValueConfigurationItems.Where(_ => _.ConfigurationMetadata != null)
+            KeyValueConfigurationItem[] ordered = keyValueConfigurationItems.Where(_ => _.ConfigurationMetadata is object)
                 .ToArray();
 
-            ImmutableArray<KeyMetadata> readOnlyKeyMetadata =
+            var readOnlyKeyMetadata =
                 uniqueKeys.Select(
                         key => new
                         {
                             key,
                             found = ordered.FirstOrDefault()
                         })
-                    .Where(item => item.found?.ConfigurationMetadata != null)
+                    .Where(item => item.found?.ConfigurationMetadata is object)
                     .Select(item => new KeyMetadata(item.key, item.found.ConfigurationMetadata))
                     .ToImmutableArray();
 

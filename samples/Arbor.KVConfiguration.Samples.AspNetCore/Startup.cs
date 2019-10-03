@@ -10,7 +10,7 @@ namespace Arbor.KVConfiguration.Samples.AspNetCore
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        public Startup([NotNull] IHostingEnvironment env)
         {
             IConfigurationBuilder builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
@@ -46,13 +46,6 @@ namespace Arbor.KVConfiguration.Samples.AspNetCore
             }
 
             app.UseStaticFiles();
-
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    "default",
-                    "{controller=Home}/{action=Index}/{id?}");
-            });
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
     {
         public static string Print([NotNull] this IEnumerable<MultipleValuesStringPair> multipleValuesStringPairs)
         {
-            if (multipleValuesStringPairs == null)
+            if (multipleValuesStringPairs is null)
             {
                 throw new ArgumentNullException(nameof(multipleValuesStringPairs));
             }

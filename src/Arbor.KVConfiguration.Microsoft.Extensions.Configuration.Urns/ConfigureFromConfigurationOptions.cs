@@ -13,22 +13,13 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
     public sealed class ConfigureFromConfigurationOptions<TOptions> : IConfigureConfigurationValue<TOptions>, IKeyValueConfiguration, IDisposable
         where TOptions : class
     {
-        private KeyValueConfigurationAdapter _keyValueConfiguration;
+        private KeyValueConfigurationAdapter? _keyValueConfiguration;
 
-        public ConfigureFromConfigurationOptions(IConfiguration configuration)
-        {
-            _keyValueConfiguration = new KeyValueConfigurationAdapter(configuration);
-        }
+        public ConfigureFromConfigurationOptions(IConfiguration configuration) => _keyValueConfiguration = new KeyValueConfigurationAdapter(configuration)!;
 
-        public TOptions GetInstance()
-        {
-            return _keyValueConfiguration.GetInstance<TOptions>();
-        }
+        public TOptions GetInstance() => _keyValueConfiguration?.GetInstance<TOptions>() ?? throw new InvalidOperationException("Configuration is not set");
 
-        public ImmutableArray<TOptions> GetInstances()
-        {
-            return _keyValueConfiguration.GetInstances<TOptions>();
-        }
+        public ImmutableArray<TOptions> GetInstances() => _keyValueConfiguration?.GetInstances<TOptions>() ?? ImmutableArray<TOptions>.Empty;
 
         public void Dispose()
         {
@@ -36,12 +27,12 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
             _keyValueConfiguration = null;
         }
 
-        public ImmutableArray<string> AllKeys => _keyValueConfiguration.AllKeys;
+        public ImmutableArray<string> AllKeys => _keyValueConfiguration?.AllKeys ?? ImmutableArray<string>.Empty;
 
-        public ImmutableArray<StringPair> AllValues => _keyValueConfiguration.AllValues;
+        public ImmutableArray<StringPair> AllValues => _keyValueConfiguration?.AllValues ?? ImmutableArray<StringPair>.Empty;
 
-        public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues => _keyValueConfiguration.AllWithMultipleValues;
+        public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues => _keyValueConfiguration?.AllWithMultipleValues ?? ImmutableArray<MultipleValuesStringPair>.Empty;
 
-        public string this[string key] => _keyValueConfiguration[key];
+        public string this[string key] => _keyValueConfiguration?[key] ?? "";
     }
 }

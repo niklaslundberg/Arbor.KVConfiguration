@@ -3,7 +3,6 @@ using System.Collections.Immutable;
 using System.Linq;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Core.Metadata;
-using Arbor.KVConfiguration.Schema.Validators;
 
 namespace Arbor.KVConfiguration.Schema
 {
@@ -12,11 +11,11 @@ namespace Arbor.KVConfiguration.Schema
         public KeyValueConfigurationValidationResult(
             KeyMetadata keyMetadata,
             IEnumerable<string> values,
-            IEnumerable<ValidationError> validationErrors = null)
+            IEnumerable<ValidationError>? validationErrors = default)
         {
             KeyMetadata = keyMetadata;
             Values = values.SafeToImmutableArray();
-            ValidationErrors = validationErrors.SafeToImmutableArray();
+            ValidationErrors = validationErrors!.SafeToImmutableArray();
         }
 
         public KeyMetadata KeyMetadata { get; }

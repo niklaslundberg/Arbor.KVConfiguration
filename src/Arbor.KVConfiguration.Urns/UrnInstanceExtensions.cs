@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using Arbor.KVConfiguration.Core;
+using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Urns
 {
@@ -37,13 +38,20 @@ namespace Arbor.KVConfiguration.Urns
             return new ConfigurationRegistrations(configurationInstanceHolders.ToImmutableArray());
         }
 
-        public static ConfigurationInstanceHolder CreateHolder(
-            this ConfigurationRegistrations configurationRegistrations)
+        public static ConfigurationInstanceHolder CreateHolder([NotNull] this ConfigurationRegistrations configurationRegistrations)
         {
+            if (configurationRegistrations == null)
+            {
+                throw new ArgumentNullException(nameof(configurationRegistrations));
+            }
+
             var configurationInstanceHolder = new ConfigurationInstanceHolder();
             foreach (UrnTypeRegistration registration in configurationRegistrations.UrnTypeRegistrations)
             {
-                configurationInstanceHolder.Add(registration.Instance);
+                if (registration.Instance is object)
+                {
+                    configurationInstanceHolder.Add(registration.Instance);
+                }
             }
 
             return configurationInstanceHolder;
@@ -53,6 +61,11 @@ namespace Arbor.KVConfiguration.Urns
             IKeyValueConfiguration keyValueConfiguration,
             Type type)
         {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
             var urnAttribute = type.GetCustomAttribute<UrnAttribute>();
 
             if (urnAttribute is null)
@@ -69,12 +82,12 @@ namespace Arbor.KVConfiguration.Urns
             {
                 var optionalAttribute = type.GetCustomAttribute<OptionalAttribute>();
 
-                if (optionalAttribute is object _)
+                if (optionalAttribute is object)
                 {
                     return ImmutableArray<UrnTypeRegistration>.Empty;
                 }
 
-                ImmutableArray<UrnTypeRegistration> urnTypeRegistrations = new[]
+                var urnTypeRegistrations = new[]
                 {
                     new UrnTypeRegistration(
                         urnTypeMapping,
@@ -96,7 +109,7 @@ namespace Arbor.KVConfiguration.Urns
 
             if (validatedObjects.Any(pair => pair.Errors.Length > 0))
             {
-                ImmutableArray<UrnTypeRegistration> urnTypeRegistrations = validatedObjects
+                var urnTypeRegistrations = validatedObjects
                     .Select(validationObject =>
                     {
                         ValidationResult[] errors = validationObject.Errors;

@@ -1,4 +1,5 @@
 using System;
+using Arbor.KVConfiguration.Core;
 using Arbor.Primitives;
 
 namespace Arbor.KVConfiguration.Urns
@@ -10,7 +11,7 @@ namespace Arbor.KVConfiguration.Urns
         {
             if (string.IsNullOrWhiteSpace(urn))
             {
-                throw new ArgumentException("Argument is null or whitespace", nameof(urn));
+                throw new ArgumentException(KeyValueResources.ArgumentIsNullOrWhitespace, nameof(urn));
             }
 
             Urn = new Urn(urn);

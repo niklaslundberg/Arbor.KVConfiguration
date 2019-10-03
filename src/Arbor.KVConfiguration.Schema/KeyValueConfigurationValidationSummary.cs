@@ -8,10 +8,8 @@ namespace Arbor.KVConfiguration.Schema
     public class KeyValueConfigurationValidationSummary
     {
         public KeyValueConfigurationValidationSummary(
-            [CanBeNull] IEnumerable<KeyValueConfigurationValidationResult> keyValueConfigurationValidationResults)
-        {
+            [CanBeNull] IEnumerable<KeyValueConfigurationValidationResult> keyValueConfigurationValidationResults) =>
             KeyValueConfigurationValidationResults = keyValueConfigurationValidationResults.SafeToImmutableArray();
-        }
 
         public bool IsValid => KeyValueConfigurationValidationResults.All(result => result.IsValid);
 

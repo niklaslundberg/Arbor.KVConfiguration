@@ -13,11 +13,9 @@ namespace Arbor.KVConfiguration.Urns
 
         public ImmutableArray<Type> RegisteredTypes => _configurationInstances.Keys.ToImmutableArray();
 
-        public ImmutableDictionary<string, T> GetInstances<T>() where T : class
-        {
-            return GetInstances(typeof(T)).Where(pair => pair.Value is T)
+        public ImmutableDictionary<string, T?> GetInstances<T>() where T : class =>
+            GetInstances(typeof(T)).Where(pair => pair.Value is T)
                 .ToImmutableDictionary(pair => pair.Key, pair => pair.Value as T);
-        }
 
         public ImmutableDictionary<string, object> GetInstances(Type type)
         {
@@ -29,13 +27,13 @@ namespace Arbor.KVConfiguration.Urns
             return instances.ToImmutableDictionary();
         }
 
-        public bool TryGet<T>(string key, out T instance) where T : class
+        public bool TryGet<T>(string key, out T? instance) where T : class
         {
-            object foundInstance = Get(typeof(T), key);
+            object? foundInstance = Get(typeof(T), key);
 
-            if (foundInstance is T castedInstance)
+            if (foundInstance is T returnInstance)
             {
-                instance = castedInstance;
+                instance = returnInstance;
                 return true;
             }
 
@@ -43,7 +41,7 @@ namespace Arbor.KVConfiguration.Urns
             return false;
         }
 
-        public object Get(Type type, string key)
+        private object? Get(Type type, string key)
         {
             if (!_configurationInstances.TryGetValue(type, out ConcurrentDictionary<string, object> instances))
             {
@@ -57,7 +55,7 @@ namespace Arbor.KVConfiguration.Urns
 
         public void Add([NotNull] INamedInstance<object> instance)
         {
-            if (instance == null)
+            if (instance is null)
             {
                 throw new ArgumentNullException(nameof(instance));
             }

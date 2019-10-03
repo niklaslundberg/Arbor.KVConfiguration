@@ -8,10 +8,7 @@ namespace Arbor.Primitives
 {
     public class EnvironmentVariables
     {
-        public EnvironmentVariables(IReadOnlyDictionary<string, string> variables)
-        {
-            Variables = variables ?? throw new ArgumentNullException(nameof(variables));
-        }
+        public EnvironmentVariables(IReadOnlyDictionary<string, string> variables) => Variables = variables ?? throw new ArgumentNullException(nameof(variables));
 
         public IReadOnlyDictionary<string, string> Variables { get; }
 
@@ -19,18 +16,15 @@ namespace Arbor.Primitives
         {
             IDictionary environmentVariables = Environment.GetEnvironmentVariables();
 
-            ImmutableDictionary<string, string> all = environmentVariables
+            var all = environmentVariables
                 .OfType<DictionaryEntry>()
-                .ToImmutableDictionary(entry => (string) entry.Key,
-                    entry => (string) entry.Value,
+                .ToImmutableDictionary(entry => (string)entry.Key,
+                    entry => (string)entry.Value,
                     StringComparer.OrdinalIgnoreCase);
 
             return all;
         }
 
-        public static EnvironmentVariables GetEnvironmentVariables()
-        {
-            return new EnvironmentVariables(GetAll());
-        }
+        public static EnvironmentVariables GetEnvironmentVariables() => new EnvironmentVariables(GetAll());
     }
 }

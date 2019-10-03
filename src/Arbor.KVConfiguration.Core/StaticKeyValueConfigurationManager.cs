@@ -5,14 +5,14 @@ namespace Arbor.KVConfiguration.Core
 {
     public static class StaticKeyValueConfigurationManager
     {
-        private static IKeyValueConfiguration _appSettings;
-        private static readonly object _MutexLock = new object();
+        private static IKeyValueConfiguration? _appSettings;
+        private static readonly object MutexLock = new object();
 
         public static void Release()
         {
-            if (_appSettings is null)
+            if (_appSettings is object)
             {
-                _appSettings = null;
+                _appSettings = default;
             }
         }
 
@@ -20,7 +20,7 @@ namespace Arbor.KVConfiguration.Core
         {
             get
             {
-                if (_appSettings == null)
+                if (_appSettings is null)
                 {
                     throw new InvalidOperationException(
                         $"The {nameof(StaticKeyValueConfigurationManager)} has not yet been initialized, please ensure to call {nameof(Initialize)} method first");
@@ -30,20 +30,20 @@ namespace Arbor.KVConfiguration.Core
             }
         }
 
-        public static bool IsInitialized => _appSettings != null;
+        public static bool IsInitialized => _appSettings is object;
 
         public static IKeyValueConfiguration Initialize([NotNull] IKeyValueConfiguration keyValueConfiguration)
         {
-            if (keyValueConfiguration == null)
+            if (keyValueConfiguration is null)
             {
                 throw new ArgumentNullException(nameof(keyValueConfiguration));
             }
 
-            if (_appSettings == null)
+            if (_appSettings is null)
             {
-                lock (_MutexLock)
+                lock (MutexLock)
                 {
-                    if (_appSettings == null)
+                    if (_appSettings is null)
                     {
                         _appSettings = keyValueConfiguration;
                     }

@@ -10,7 +10,7 @@ namespace Arbor.KVConfiguration.Core.Extensions
     {
         internal static bool IsPublicStaticClass([NotNull] this Type type)
         {
-            if (type == null)
+            if (type is null)
             {
                 throw new ArgumentNullException(nameof(type));
             }
@@ -20,7 +20,7 @@ namespace Arbor.KVConfiguration.Core.Extensions
 
         private static bool IsPublicClass([NotNull] this Type type)
         {
-            if (type == null)
+            if (type is null)
             {
                 throw new ArgumentNullException(nameof(type));
             }
@@ -30,12 +30,12 @@ namespace Arbor.KVConfiguration.Core.Extensions
 
         internal static ImmutableArray<FieldInfo> GetPublicConstantStringFields([NotNull] this Assembly assembly)
         {
-            if (assembly == null)
+            if (assembly is null)
             {
                 throw new ArgumentNullException(nameof(assembly));
             }
 
-            ImmutableArray<FieldInfo> fields = assembly.GetLoadableTypes()
+            var fields = assembly.GetLoadableTypes()
                 .Where(IsPublicClass)
                 .SelectMany(type => type.GetFields(BindingFlags.Public | BindingFlags.Static))
                 .Where(field => field.IsPublicConstantStringField())
@@ -46,7 +46,7 @@ namespace Arbor.KVConfiguration.Core.Extensions
 
         private static ImmutableArray<Type> GetLoadableTypes([NotNull] this Assembly assembly)
         {
-            if (assembly == null)
+            if (assembly is null)
             {
                 throw new ArgumentNullException(nameof(assembly));
             }
@@ -57,13 +57,13 @@ namespace Arbor.KVConfiguration.Core.Extensions
             }
             catch (ReflectionTypeLoadException ex)
             {
-                return ex.Types.Where(type => type != null).ToImmutableArray();
+                return ex.Types.Where(type => type is object).ToImmutableArray();
             }
         }
 
         internal static ImmutableArray<FieldInfo> GetPublicConstantStringFields([NotNull] this Type type)
         {
-            if (type == null)
+            if (type is null)
             {
                 throw new ArgumentNullException(nameof(type));
             }
@@ -73,7 +73,7 @@ namespace Arbor.KVConfiguration.Core.Extensions
                 return ImmutableArray<FieldInfo>.Empty;
             }
 
-            ImmutableArray<FieldInfo> publicConstantStringFields = type.GetFields()
+            var publicConstantStringFields = type.GetFields()
                 .Where(field => field.IsPublicConstantStringField())
                 .ToImmutableArray();
 
@@ -82,7 +82,7 @@ namespace Arbor.KVConfiguration.Core.Extensions
 
         private static bool IsPublicConstantStringField([NotNull] this FieldInfo fieldInfo)
         {
-            if (fieldInfo == null)
+            if (fieldInfo is null)
             {
                 throw new ArgumentNullException(nameof(fieldInfo));
             }

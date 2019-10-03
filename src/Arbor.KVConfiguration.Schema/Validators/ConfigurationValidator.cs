@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using Arbor.KVConfiguration.Core;
@@ -11,8 +12,7 @@ namespace Arbor.KVConfiguration.Schema.Validators
     {
         private readonly ImmutableArray<IValueValidator> _validators;
 
-        public ConfigurationValidator()
-        {
+        public ConfigurationValidator() =>
             _validators = new List<IValueValidator>(10)
             {
                 new IntValidator(),
@@ -20,19 +20,20 @@ namespace Arbor.KVConfiguration.Schema.Validators
                 new BoolValidator(),
                 new TimeSpanValidator()
             }.ToImmutableArray();
-        }
 
         [UsedImplicitly]
-        public ConfigurationValidator(ImmutableArray<IValueValidator> validators)
-        {
-            _validators = validators.ThrowIfDefault();
-        }
+        public ConfigurationValidator(ImmutableArray<IValueValidator> validators) => _validators = validators.ThrowIfDefault();
 
         public KeyValueConfigurationValidationResult Validate(
             MultipleValuesStringPair multipleValuesStringPair,
-            KeyMetadata metadataItem)
+            [NotNull] KeyMetadata metadataItem)
         {
-            if (metadataItem.ConfigurationMetadata == null)
+            if (metadataItem is null)
+            {
+                throw new ArgumentNullException(nameof(metadataItem));
+            }
+
+            if (metadataItem.ConfigurationMetadata is null)
             {
                 return new KeyValueConfigurationValidationResult(metadataItem, multipleValuesStringPair.Values);
             }

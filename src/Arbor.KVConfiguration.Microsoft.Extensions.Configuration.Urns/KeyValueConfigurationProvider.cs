@@ -10,12 +10,9 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
     {
         private readonly KeyValueConfigurationSourceAdapter _adapter;
 
-        public KeyValueConfigurationProvider(KeyValueConfigurationSourceAdapter adapter)
-        {
-            _adapter = adapter;
-        }
+        public KeyValueConfigurationProvider(KeyValueConfigurationSourceAdapter adapter) => _adapter = adapter;
 
-        public bool TryGet(string key, out string value)
+        public bool TryGet(string key, out string? value)
         {
             string foundValue = _adapter.KeyValueConfiguration[key];
 
@@ -34,10 +31,7 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
             // Not supported
         }
 
-        public IChangeToken GetReloadToken()
-        {
-            return new CancellationChangeToken(default);
-        }
+        public IChangeToken GetReloadToken() => new CancellationChangeToken(default);
 
         public void Load()
         {
@@ -48,7 +42,7 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
             IEnumerable<string> earlierKeys,
             string parentPath)
         {
-            string prefix = parentPath == null ? string.Empty : parentPath + ConfigurationPath.KeyDelimiter;
+            string prefix = parentPath is null ? string.Empty : parentPath + ConfigurationPath.KeyDelimiter;
 
             return _adapter.KeyValueConfiguration.AllValues
                 .Where(kv => kv.Key.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))

@@ -6,9 +6,6 @@ namespace Arbor.KVConfiguration.Urns
     {
         public ImmutableArray<UrnTypeRegistration> UrnTypeRegistrations { get; }
 
-        public ConfigurationRegistrations(ImmutableArray<UrnTypeRegistration> urnTypeRegistrations)
-        {
-            UrnTypeRegistrations = urnTypeRegistrations;
-        }
+        public ConfigurationRegistrations(ImmutableArray<UrnTypeRegistration> urnTypeRegistrations) => UrnTypeRegistrations = urnTypeRegistrations;
     }
 }

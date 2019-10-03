@@ -22,8 +22,8 @@ namespace Arbor.KVConfiguration.Core.Metadata
             string defaultValue = "",
             string notes = "",
             bool allowMultipleValues = false,
-            [CanBeNull] string[] examples = null,
-            [CanBeNull] string[] tags = null,
+            string[]? examples = null,
+            string[]? tags = null,
             string keyType = "")
         {
             MemberName = memberName ?? "";
@@ -38,8 +38,8 @@ namespace Arbor.KVConfiguration.Core.Metadata
             Notes = notes ?? "";
             AllowMultipleValues = allowMultipleValues;
             KeyType = keyType ?? "";
-            Examples = examples.SafeToImmutableArray();
-            Tags = tags.SafeToImmutableArray();
+            Examples = examples!.SafeToImmutableArray();
+            Tags = tags!.SafeToImmutableArray();
         }
 
         public bool AllowMultipleValues { get; }
@@ -70,9 +70,6 @@ namespace Arbor.KVConfiguration.Core.Metadata
 
         public string ValueType { get; }
 
-        public override string ToString()
-        {
-            return $"[{nameof(MemberName)}: {MemberName}] [{nameof(ValueType)}: {ValueType}]";
-        }
+        public override string ToString() => $"[{nameof(MemberName)}: {MemberName}] [{nameof(ValueType)}: {ValueType}]";
     }
 }

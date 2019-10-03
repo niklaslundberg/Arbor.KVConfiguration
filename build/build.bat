@@ -26,8 +26,8 @@ SET Arbor.X.Build.NetAssembly.Company=Niklas Lundberg
 SET Arbor.X.Build.NetAssembly.Copyright=© Niklas Lundberg 2014-2018
 SET Arbor.X.Build.NetAssembly.Trademark=Arbor.KVConfiguration
 SET Arbor.X.Build.NetAssembly.Product=Arbor.KVConfiguration
-SET Arbor.X.ShowAvailableVariablesEnabled=false
-SET Arbor.X.ShowDefinedVariablesEnabled=false
+SET Arbor.X.ShowAvailableVariablesEnabled=true
+SET Arbor.X.ShowDefinedVariablesEnabled=true
 SET Arbor.X.Tools.External.MSBuild.Verbosity=minimal
 SET Arbor.X.NuGet.Package.AllowManifestReWriteEnabled=false
 

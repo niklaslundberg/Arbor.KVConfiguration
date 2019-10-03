@@ -37,7 +37,7 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
                 "urn:another-key"
             };
 
-            List<KeyValuePair<string, string>> keys = Specials.Special.ToList();
+            var keys = Specials.Special.ToList();
             keys.AddRange(goodKeys.Select(goodKey => new KeyValuePair<string, string>(goodKey, goodKey)));
 
             var builder = new StringBuilder();

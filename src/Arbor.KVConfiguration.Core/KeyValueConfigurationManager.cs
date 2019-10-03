@@ -8,9 +8,9 @@ namespace Arbor.KVConfiguration.Core
     {
         public static MultiSourceKeyValueConfiguration Build(
             [NotNull] this AppSettingsBuilder appSettingsBuild,
-            Action<string> logAction = null)
+            Action<string>? logAction = null)
         {
-            if (appSettingsBuild == null)
+            if (appSettingsBuild is null)
             {
                 throw new ArgumentNullException(nameof(appSettingsBuild));
             }
@@ -23,9 +23,9 @@ namespace Arbor.KVConfiguration.Core
 
         public static MultiSourceKeyValueConfiguration Build(
             [NotNull] this AppSettingsDecoratorBuilder appSettingsBuild,
-            Action<string> logAction = null)
+            Action<string>? logAction = null)
         {
-            if (appSettingsBuild == null)
+            if (appSettingsBuild is null)
             {
                 throw new ArgumentNullException(nameof(appSettingsBuild));
             }
@@ -42,7 +42,7 @@ namespace Arbor.KVConfiguration.Core
         /// <returns></returns>
         public static AppSettingsBuilder Add([NotNull] IKeyValueConfiguration keyValueConfiguration)
         {
-            if (keyValueConfiguration == null)
+            if (keyValueConfiguration is null)
             {
                 throw new ArgumentNullException(nameof(keyValueConfiguration));
             }
@@ -60,12 +60,12 @@ namespace Arbor.KVConfiguration.Core
             [NotNull] this AppSettingsBuilder appSettingsBuilder,
             [NotNull] IKeyValueConfiguration keyValueConfiguration)
         {
-            if (appSettingsBuilder == null)
+            if (appSettingsBuilder is null)
             {
                 throw new ArgumentNullException(nameof(appSettingsBuilder));
             }
 
-            if (keyValueConfiguration == null)
+            if (keyValueConfiguration is null)
             {
                 throw new ArgumentNullException(nameof(keyValueConfiguration));
             }
@@ -77,12 +77,12 @@ namespace Arbor.KVConfiguration.Core
             [NotNull] this AppSettingsBuilder builder,
             [NotNull] IKeyValueConfigurationDecorator decorator)
         {
-            if (builder == null)
+            if (builder is null)
             {
                 throw new ArgumentNullException(nameof(builder));
             }
 
-            if (decorator == null)
+            if (decorator is null)
             {
                 throw new ArgumentNullException(nameof(decorator));
             }
@@ -94,12 +94,12 @@ namespace Arbor.KVConfiguration.Core
             [NotNull] this AppSettingsDecoratorBuilder builder,
             [NotNull] IKeyValueConfigurationDecorator decorator)
         {
-            if (builder == null)
+            if (builder is null)
             {
                 throw new ArgumentNullException(nameof(builder));
             }
 
-            if (decorator == null)
+            if (decorator is null)
             {
                 throw new ArgumentNullException(nameof(decorator));
             }
@@ -109,12 +109,14 @@ namespace Arbor.KVConfiguration.Core
 
         private static MultiSourceKeyValueConfiguration Initialize(
             [NotNull] IKeyValueConfiguration keyValueConfiguration,
-            Action<string> logAction = null)
+            Action<string>? logAction = null)
         {
-            if (keyValueConfiguration == null)
+            if (keyValueConfiguration is null)
             {
                 throw new ArgumentNullException(nameof(keyValueConfiguration));
             }
+
+            logAction ??= s => { };
 
             if (keyValueConfiguration is MultiSourceKeyValueConfiguration multiSourceKeyValueConfiguration)
             {

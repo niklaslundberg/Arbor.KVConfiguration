@@ -11,7 +11,7 @@ namespace Arbor.KVConfiguration.Core
     public sealed class InMemoryKeyValueConfiguration : IKeyValueConfiguration
     {
         private readonly string _name;
-        private Dictionary<string, ImmutableArray<string>> _keyValueDictionary;
+        private Dictionary<string, ImmutableArray<string>>? _keyValueDictionary;
         private bool _disposed;
         private ImmutableArray<string> _allKeys;
 
@@ -22,7 +22,7 @@ namespace Arbor.KVConfiguration.Core
         [PublicAPI]
         public InMemoryKeyValueConfiguration(NameValueCollection nameValueCollection, string name)
         {
-            if (nameValueCollection == null)
+            if (nameValueCollection is null)
             {
                 throw new ArgumentNullException(nameof(nameValueCollection));
             }
@@ -33,7 +33,7 @@ namespace Arbor.KVConfiguration.Core
                 new Dictionary<string, ImmutableArray<string>>(nameValueCollection.Count + 1,
                     StringComparer.OrdinalIgnoreCase);
 
-            ImmutableArray<string> keys = nameValueCollection.AllKeys.ToImmutableArray();
+            var keys = nameValueCollection.AllKeys.ToImmutableArray();
 
             foreach (string key in keys)
             {
@@ -82,7 +82,7 @@ namespace Arbor.KVConfiguration.Core
                 CheckDisposed();
 
                 return AllKeys
-                        .Select(key => new MultipleValuesStringPair(key, _keyValueDictionary[key]))
+                        .Select(key => new MultipleValuesStringPair(key, _keyValueDictionary![key]))
                         .ToImmutableArray();
             }
         }
@@ -93,12 +93,12 @@ namespace Arbor.KVConfiguration.Core
         {
             CheckDisposed();
 
-            if (key == null)
+            if (key is null)
             {
                 return string.Empty;
             }
 
-            if (!_keyValueDictionary.ContainsKey(key))
+            if (!_keyValueDictionary!.ContainsKey(key))
             {
                 return string.Empty;
             }

@@ -23,9 +23,6 @@ namespace Arbor.KVConfiguration.Tests.Unit.Registrations
         [Range(1,int.MaxValue)]
         public int Value { get; }
 
-        public override string ToString()
-        {
-            return $"{nameof(Name)}: {Name}, {nameof(Value)}: {Value}";
-        }
+        public override string ToString() => $"{nameof(Name)}: {Name}, {nameof(Value)}: {Value}";
     }
 }

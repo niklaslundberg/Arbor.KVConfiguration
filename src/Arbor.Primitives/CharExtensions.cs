@@ -2,9 +2,6 @@
 {
     internal static class CharExtensions
     {
-        public static bool IsAscii(this char character)
-        {
-            return character <= 127;
-        }
+        public static bool IsAscii(this char character) => character <= 127;
     }
 }

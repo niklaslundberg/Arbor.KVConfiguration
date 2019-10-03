@@ -9,7 +9,7 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
 
         public UrnOpenGenericsManager([NotNull] IConfigureConfigurationValue<TOptions> configurator)
         {
-            if (configurator == null)
+            if (configurator is null)
             {
                 throw new ArgumentNullException(nameof(configurator));
             }
@@ -17,6 +17,6 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
             _cache = new OptionsCache<TOptions>(configurator);
         }
 
-        public TOptions Value => _cache.Value;
+        public TOptions Value => _cache?.Value ?? throw new InvalidOperationException("Could not get value");
     }
 }

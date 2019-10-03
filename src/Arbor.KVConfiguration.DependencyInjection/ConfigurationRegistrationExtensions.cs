@@ -16,12 +16,12 @@ namespace Arbor.KVConfiguration.DependencyInjection
             [NotNull] IKeyValueConfiguration keyValueConfiguration,
             params Assembly[] assemblies)
         {
-            if (services == null)
+            if (services is null)
             {
                 throw new ArgumentNullException(nameof(services));
             }
 
-            if (keyValueConfiguration == null)
+            if (keyValueConfiguration is null)
             {
                 throw new ArgumentNullException(nameof(keyValueConfiguration));
             }

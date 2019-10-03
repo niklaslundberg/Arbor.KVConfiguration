@@ -10,7 +10,7 @@ namespace Arbor.KVConfiguration.Core.Extensions.IntExtensions
             [NotNull] string key,
             int defaultValue = default)
         {
-            if (keyValueConfiguration == null)
+            if (keyValueConfiguration is null)
             {
                 throw new ArgumentNullException(nameof(keyValueConfiguration));
             }

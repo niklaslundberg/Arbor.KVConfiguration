@@ -8,7 +8,7 @@ namespace Arbor.KVConfiguration.Urns
     {
         public static int NamespaceParts(this Urn urn)
         {
-            if (urn == null)
+            if (urn is null)
             {
                 throw new ArgumentNullException(nameof(urn));
             }
@@ -16,9 +16,6 @@ namespace Arbor.KVConfiguration.Urns
             return urn.OriginalValue.Count(c => c == Urn.Separator) + 1;
         }
 
-        public static bool IsUrn(this string value)
-        {
-            return Urn.TryParse(value, out Urn _);
-        }
+        public static bool IsUrn(this string value) => Urn.TryParse(value, out Urn _);
     }
 }

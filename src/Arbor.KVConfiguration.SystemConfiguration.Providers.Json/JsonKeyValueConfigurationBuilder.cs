@@ -12,11 +12,11 @@ namespace Arbor.KVConfiguration.SystemConfiguration.Providers.Json
         private const string IgnoreMissingFilePropertyName = "ignoreMissingFile";
 
         private bool _ignoreMissingFile;
-        private string _jsonFilePath;
+        private string? _jsonFilePath;
 
         public override void Initialize(string name, NameValueCollection config)
         {
-            if (config == null)
+            if (config is null)
             {
                 throw new ArgumentNullException(nameof(config));
             }
@@ -36,7 +36,14 @@ namespace Arbor.KVConfiguration.SystemConfiguration.Providers.Json
                     $"{nameof(JsonKeyValueConfigurationBuilder)} '{name}': Json file must be specified with the '{JsonFilePropertyName}' attribute.");
             }
 
-            _jsonFilePath = Utils.MapPath(jsonFile);
+            string jsonFilePath = Utils.MapPath(jsonFile);
+
+            if (string.IsNullOrWhiteSpace(jsonFilePath))
+            {
+                throw new InvalidOperationException($"Could not get path for json file {jsonFile}");
+            }
+
+            _jsonFilePath = jsonFilePath;
 
             if (!_ignoreMissingFile && !File.Exists(_jsonFilePath))
             {
@@ -49,7 +56,12 @@ namespace Arbor.KVConfiguration.SystemConfiguration.Providers.Json
 
         protected override IKeyValueConfiguration GetKeyValueConfiguration()
         {
-            var jsonConfiguration = new JsonConfiguration.JsonKeyValueConfiguration(_jsonFilePath, throwWhenNotExists: !_ignoreMissingFile);
+            if (string.IsNullOrWhiteSpace(_jsonFilePath))
+            {
+                throw new InvalidOperationException("Json file path is not set");
+            }
+
+            var jsonConfiguration = new JsonConfiguration.JsonKeyValueConfiguration(_jsonFilePath!, throwWhenNotExists: !_ignoreMissingFile);
 
             return jsonConfiguration;
         }
