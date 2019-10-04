@@ -41,7 +41,7 @@ namespace Arbor.KVConfiguration.Urns
             return false;
         }
 
-        private object? Get(Type type, string key)
+        public object? Get(Type type, string key)
         {
             if (!_configurationInstances.TryGetValue(type, out ConcurrentDictionary<string, object> instances))
             {
