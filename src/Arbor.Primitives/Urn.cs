@@ -160,6 +160,22 @@ namespace Arbor.Primitives
                 return false;
             }
 
+            var chars = trimmed.AsSpan();
+
+            if (chars.IndexOf(Separator) < 0)
+            {
+                result = null;
+                return false;
+            }
+
+            ReadOnlySpan<char> nidSub = chars.Slice(chars.IndexOf(Separator) + 1);
+
+            if (nidSub.IndexOf(Separator) < 0)
+            {
+                result = null;
+                return false;
+            }
+
             result = new Urn(trimmed);
 
             return true;
