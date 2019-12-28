@@ -30,6 +30,7 @@ SET Arbor.Build.ShowAvailableVariablesEnabled=true
 SET Arbor.Build.ShowDefinedVariablesEnabled=true
 SET Arbor.Build.Tools.External.MSBuild.Verbosity=minimal
 SET Arbor.Build.NuGet.Package.AllowManifestReWriteEnabled=false
+SET Arbor.Build.BuilderNumber.UnixEpochSecondsEnabled=true
 
 SET Arbor.Build.Tools.External.MSBuild.CodeAnalysis.Enabled=false
 SET Arbor.Build.Build.PublishDotNetExecutableProjects=false
