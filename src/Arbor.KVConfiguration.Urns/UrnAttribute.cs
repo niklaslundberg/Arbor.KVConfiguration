@@ -14,9 +14,12 @@ namespace Arbor.KVConfiguration.Urns
                 throw new ArgumentException(KeyValueResources.ArgumentIsNullOrWhitespace, nameof(urn));
             }
 
-            Urn = new Urn(urn);
+            if (Urn.TryParse(urn, out Urn parsed))
+            {
+                Urn = parsed;
+            }
         }
 
-        public Urn Urn { get; }
+        public Urn? Urn { get; }
     }
 }

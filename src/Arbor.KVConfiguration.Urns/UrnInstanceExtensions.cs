@@ -70,7 +70,7 @@ namespace Arbor.KVConfiguration.Urns
             {
                 var urnAttribute = type.GetCustomAttribute<UrnAttribute>();
 
-                if (urnAttribute is null)
+                if (urnAttribute?.Urn is null)
                 {
                     return ImmutableArray<UrnTypeRegistration>.Empty;
                 }
