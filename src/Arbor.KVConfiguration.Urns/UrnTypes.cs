@@ -13,7 +13,7 @@ namespace Arbor.KVConfiguration.Urns
             {
                 var customAttribute = type.GetCustomAttribute<UrnAttribute>();
 
-                return customAttribute is null ? null : new UrnTypeMapping(type, customAttribute.Urn);
+                return customAttribute?.Urn is null ? null : new UrnTypeMapping(type, customAttribute.Urn);
             }
 
             ImmutableArray<UrnTypeMapping> urnMappedTypes = assemblies

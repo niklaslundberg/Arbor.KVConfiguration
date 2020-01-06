@@ -41,6 +41,36 @@ namespace Arbor.KVConfiguration.Urns
             return false;
         }
 
+        public bool TryGet([NotNull] string key, [NotNull] Type type, out object? instance)
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                throw new ArgumentException("Value cannot be null or whitespace.", nameof(key));
+            }
+
+            object? foundInstance = Get(type, key);
+
+            if (foundInstance is null)
+            {
+                instance = default;
+                return false;
+            }
+
+            if (type.IsInstanceOfType(foundInstance))
+            {
+                instance = foundInstance;
+                return true;
+            }
+
+            instance = default;
+            return false;
+        }
+
         public object? Get(Type type, string key)
         {
             if (!_configurationInstances.TryGetValue(type, out ConcurrentDictionary<string, object> instances))
@@ -51,6 +81,29 @@ namespace Arbor.KVConfiguration.Urns
             instances.TryGetValue(key, out object instance);
 
             return instance;
+        }
+
+        public bool TryRemove([NotNull] string key, [NotNull] Type type, out object? removed)
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                throw new ArgumentException("Value cannot be null or whitespace.", nameof(key));
+            }
+
+            if (_configurationInstances.TryGetValue(type, out ConcurrentDictionary<string, object> instances)
+                && instances.TryRemove(key, out object removedItem))
+            {
+                removed = removedItem;
+                return true;
+            }
+
+            removed = default;
+            return false;
         }
 
         public void Add([NotNull] INamedInstance<object> instance)

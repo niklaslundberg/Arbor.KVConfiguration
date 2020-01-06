@@ -39,7 +39,7 @@ namespace Arbor.KVConfiguration.Urns
             [NotNull] this IKeyValueConfiguration keyValueConfiguration) =>
             GetNamedInstances(keyValueConfiguration, typeof(T))
                 .Select(item => item as INamedInstance<T>)
-                .Where(item => item is object)
+                .Where(item => item is {})
                 .ToImmutableArray()!;
 
         [PublicAPI]
@@ -155,7 +155,7 @@ namespace Arbor.KVConfiguration.Urns
 
                     return urn;
                 })
-                .Where(urn => urn is object)
+                .Where(urn => urn is {})
                 .ToArray()!;
 
             Urn[] filteredKeys = allKeys
@@ -182,7 +182,7 @@ namespace Arbor.KVConfiguration.Urns
 
                         return new { Urn = urn, Pair = t };
                     })
-                    .Where(urn => urn is object && urn.Urn is object && urn.Urn == itemValue)
+                    .Where(urn => urn?.Urn is {} && urn.Urn == itemValue)
                     .SelectMany(s => s!.Pair.Values)
                     .ToArray();
 
@@ -229,7 +229,7 @@ namespace Arbor.KVConfiguration.Urns
             {
                 PropertyInfo propertyInfo = typeProperties.SingleOrDefault(property => property.Name.Equals(subKeyGroup.Key.Parent.Name, StringComparison.OrdinalIgnoreCase));
 
-                if (propertyInfo is object)
+                if (propertyInfo is {})
                 {
                     if (typeof(IEnumerable).IsAssignableFrom(propertyInfo.PropertyType))
                     {
@@ -237,7 +237,7 @@ namespace Arbor.KVConfiguration.Urns
                         {
                             Type propertyType = propertyInfo.PropertyType.GetGenericArguments().FirstOrDefault();
 
-                            if (propertyType is object)
+                            if (propertyType is {})
                             {
                                 (object, string, IDictionary<string, object>) subItem = GetItem(keyValueConfiguration,
                                     subKeyGroup,
@@ -273,7 +273,7 @@ namespace Arbor.KVConfiguration.Urns
             {
                 PropertyInfo subPropertyInfo = typeProperties.SingleOrDefault(property => property.Name.Equals(subProperty.Key.Name, StringComparison.OrdinalIgnoreCase));
 
-                if (subPropertyInfo is object)
+                if (subPropertyInfo is {})
                 {
                     (object, string, IDictionary<string, object>) subPropertyInstance = GetItem(keyValueConfiguration,
                         subProperty,
@@ -358,7 +358,7 @@ namespace Arbor.KVConfiguration.Urns
 
                     return (property.Name, null)!;
                 })
-                .Where(tuple => tuple.Item2 is object)
+                .Where(tuple => tuple.Item2 is {})
                 .ToImmutableArray()!;
 
             string specifiedErrors = string.Join(", ", errorProperties.Select(ep => ep.Item2));
@@ -390,7 +390,12 @@ namespace Arbor.KVConfiguration.Urns
                 throw new ArgumentException($"Could not get instance of type {type.FullName}. Found no {nameof(Urn).ToUpper(CultureInfo.InvariantCulture)}. Expected class attribute {typeof(UrnAttribute).FullName}");
             }
 
-            Urn typeUrn = urnAttribute.Urn;
+            Urn? typeUrn = urnAttribute.Urn;
+
+            if (typeUrn is null)
+            {
+                return ImmutableArray<(object, string, IDictionary<string, object>)>.Empty;
+            }
 
             int parts = typeUrn.NamespaceParts();
 
@@ -409,7 +414,7 @@ namespace Arbor.KVConfiguration.Urns
             var items = instanceKeys
                 .OrderBy(key => key.Key.ToString())
                 .Select(keyValuePair => GetItem(keyValueConfiguration, keyValuePair, type))
-                .Where(instance => instance.Item1 is object)
+                .Where(instance => instance.Item1 is {})
                 .ToImmutableArray();
 
             return items;
