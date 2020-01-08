@@ -15,7 +15,11 @@ namespace Arbor.KVConfiguration.GlobalTool
 {
     public sealed class App : IAsyncDisposable
     {
-        private App(IHost host, ILogger logger, string[] args, IReadOnlyDictionary<string, string> variables)
+        private App(
+            IHost host,
+            ILogger logger,
+            string[] args,
+            IReadOnlyDictionary<string, string> variables)
         {
             Host = host;
             Logger = logger;
@@ -24,8 +28,11 @@ namespace Arbor.KVConfiguration.GlobalTool
         }
 
         public IHost Host { get; }
+
         public ILogger Logger { get; }
+
         public string[] Args { get; }
+
         public IReadOnlyDictionary<string, string> Variables { get; }
 
         public async ValueTask DisposeAsync()
@@ -36,10 +43,16 @@ namespace Arbor.KVConfiguration.GlobalTool
 
         public static async Task<int> CreateAndRunAsync(string[] args, IReadOnlyDictionary<string, string> variables)
         {
-            using var logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
-                .WriteTo.Console()
-                .CreateLogger();
+            var loggerConfiguration = new LoggerConfiguration()
+                .WriteTo.Console();
+
+            if (args.Any(arg => arg.Equals(AppConstants.DebugArg)))
+            {
+                loggerConfiguration = loggerConfiguration
+                    .MinimumLevel.Debug();
+            }
+
+            using var logger = loggerConfiguration.CreateLogger();
 
             App app;
 
@@ -75,6 +88,8 @@ namespace Arbor.KVConfiguration.GlobalTool
 
         private async Task<int> RunAsync()
         {
+            Logger.Information("Running application");
+
             string[] usedArgs = Args;
 
             if (Environment.UserInteractive && Debugger.IsAttached && usedArgs.Length == 0)
@@ -114,13 +129,19 @@ namespace Arbor.KVConfiguration.GlobalTool
 
             var kvPairs = newPairs.ToList();
 
+            Logger.Debug("Adding {ExistingCount} new values", kvPairs.Count);
+
             if (File.Exists(file))
             {
+                Logger.Debug("Found existing file '{File}'", file);
                 string content = await File.ReadAllTextAsync(file, Encoding.UTF8);
                 var items = JsonConfigurationSerializer.Deserialize(content);
 
                 var oldValuesToAdd = items.Keys.Where(oldPair =>
-                    !newPairs.Any(newPair => oldPair.Key.Equals(newPair.Key, StringComparison.OrdinalIgnoreCase)));
+                    !newPairs.Any(newPair => oldPair.Key.Equals(newPair.Key, StringComparison.OrdinalIgnoreCase)))
+                    .ToArray();
+
+                Logger.Debug("Adding {ExistingCount} existing values", oldValuesToAdd.Length);
 
                 foreach (var oldValue in oldValuesToAdd)
                 {
@@ -152,7 +173,7 @@ namespace Arbor.KVConfiguration.GlobalTool
                 throw;
             }
 
-            Logger.Information("Running application");
+            Logger.Debug("Successfully written file '{File}'", file);
 
             return 0;
         }

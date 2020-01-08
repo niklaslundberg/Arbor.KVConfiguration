@@ -8,7 +8,8 @@ namespace Arbor.KVConfiguration.GlobalTool
     {
         public ImmutableArray<KeyValuePair<string, string>> Parse(IEnumerable<string> parameters) => parameters
             .Where(parameter => !string.IsNullOrWhiteSpace(parameter)
-                                && parameter.Contains("="))
+                                && parameter.Contains("=")
+                                && !parameter.StartsWith("--"))
             .Select(parameter =>
             {
                 string[] parts = parameter.Split("=");
