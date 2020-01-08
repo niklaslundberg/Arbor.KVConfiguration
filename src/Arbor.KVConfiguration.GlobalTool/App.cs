@@ -88,32 +88,14 @@ namespace Arbor.KVConfiguration.GlobalTool
 
         private async Task<int> RunAsync()
         {
-            Logger.Information("Running application");
+            Logger.Debug("Running application");
 
-            string[] usedArgs = Args;
-
-            if (Environment.UserInteractive && Debugger.IsAttached && usedArgs.Length == 0)
-            {
-                var args = new List<string>();
-
-                while (true)
-                {
-                    string readLine = Console.ReadLine();
-
-                    if (string.IsNullOrWhiteSpace(readLine))
-                    {
-                        break;
-                    }
-
-                    args.Add(readLine);
-                }
-
-                usedArgs = args.ToArray();
-            }
+            string[] usedArgs = GetArgs();
 
             if (usedArgs.Length == 0)
             {
                 Logger.Error("Missing required args");
+                ShowUsage();
                 return 3;
             }
 
@@ -122,6 +104,7 @@ namespace Arbor.KVConfiguration.GlobalTool
             if (newPairs.IsDefaultOrEmpty)
             {
                 Logger.Error("No value pairs defined");
+                ShowUsage();
                 return 2;
             }
 
@@ -176,6 +159,35 @@ namespace Arbor.KVConfiguration.GlobalTool
             Logger.Debug("Successfully written file '{File}'", file);
 
             return 0;
+        }
+
+        private void ShowUsage() => Logger.Information("usage: {{fullPathFileToWrite}} {{argKey}}={{argValue}} Example: {ExampleFileName} {ExampleKey1}={ExampleValue1} {ExampleKey2}={ExampleValue2}", "c:\\applicationMetadata.json", "myKey", "myValue", "myKey2", "myValue2");
+
+        private string[] GetArgs()
+        {
+            string[] usedArgs = Args;
+
+            if (Environment.UserInteractive && Debugger.IsAttached && usedArgs.Length == 0)
+            {
+                Logger.Information("Enter args");
+                var args = new List<string>();
+
+                while (true)
+                {
+                    string readLine = Console.ReadLine();
+
+                    if (string.IsNullOrWhiteSpace(readLine))
+                    {
+                        break;
+                    }
+
+                    args.Add(readLine);
+                }
+
+                usedArgs = args.ToArray();
+            }
+
+            return usedArgs;
         }
 
         private static async Task<App> BuildApp(string[] args,
