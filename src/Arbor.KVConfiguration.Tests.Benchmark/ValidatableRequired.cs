@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Arbor.KVConfiguration.Core;
-using Arbor.KVConfiguration.Schema.Validators;
+﻿using System.ComponentModel.DataAnnotations;
 using Arbor.KVConfiguration.Urns;
 
-namespace Arbor.KVConfiguration.Tests.Unit.Registrations
+namespace Arbor.KVConfiguration.Tests.Benchmark
 {
     [Urn(Urn)]
     public class ValidatableRequired

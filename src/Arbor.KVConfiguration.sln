@@ -63,6 +63,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arbor.Primitives", "Arbor.P
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arbor.KVConfiguration.DependencyInjection", "Arbor.KVConfiguration.DependencyInjection\Arbor.KVConfiguration.DependencyInjection.csproj", "{16569BC7-FBB2-4A47-9774-42A05C1B3CFF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.GlobalTool", "Arbor.KVConfiguration.GlobalTool\Arbor.KVConfiguration.GlobalTool.csproj", "{580CCDED-A380-4EB5-9081-AF16CB5C0212}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -137,6 +139,10 @@ Global
 		{16569BC7-FBB2-4A47-9774-42A05C1B3CFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16569BC7-FBB2-4A47-9774-42A05C1B3CFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16569BC7-FBB2-4A47-9774-42A05C1B3CFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{580CCDED-A380-4EB5-9081-AF16CB5C0212}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{580CCDED-A380-4EB5-9081-AF16CB5C0212}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{580CCDED-A380-4EB5-9081-AF16CB5C0212}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{580CCDED-A380-4EB5-9081-AF16CB5C0212}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -159,6 +165,7 @@ Global
 		{9A114B3E-8CB4-42F3-B624-521EED996664} = {615EC7DF-A967-463D-A633-A7CEB29F1502}
 		{AA298AA6-ED50-4B1A-B9D5-AC20E3F4B296} = {B6593404-264C-4DCA-8E3B-BAA7A13F1489}
 		{16569BC7-FBB2-4A47-9774-42A05C1B3CFF} = {B6593404-264C-4DCA-8E3B-BAA7A13F1489}
+		{580CCDED-A380-4EB5-9081-AF16CB5C0212} = {B6593404-264C-4DCA-8E3B-BAA7A13F1489}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A402AF7E-9579-4861-92CB-6C4E5C33D4CF}
