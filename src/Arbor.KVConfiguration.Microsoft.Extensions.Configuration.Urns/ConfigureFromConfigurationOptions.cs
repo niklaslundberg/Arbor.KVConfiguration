@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Immutable;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Urns;
+using Microsoft.Extensions.Configuration;
 
 namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
 {

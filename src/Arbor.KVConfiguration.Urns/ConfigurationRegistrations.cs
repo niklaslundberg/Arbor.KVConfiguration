@@ -1,4 +1,6 @@
-﻿namespace Arbor.KVConfiguration.Urns
+﻿using System.Collections.Immutable;
+
+namespace Arbor.KVConfiguration.Urns
 {
     public class ConfigurationRegistrations
     {

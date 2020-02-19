@@ -1,4 +1,6 @@
-﻿namespace Arbor.KVConfiguration.Samples.AspNetCore
+﻿using Arbor.KVConfiguration.Urns;
+
+namespace Arbor.KVConfiguration.Samples.AspNetCore
 {
     [Urn(ConfigurationKeys.DummyKey)]
     public class MySampleConfiguration

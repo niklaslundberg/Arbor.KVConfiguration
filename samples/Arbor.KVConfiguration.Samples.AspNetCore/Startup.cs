@@ -1,10 +1,17 @@
-﻿using Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns;
+﻿using Arbor.KVConfiguration.DependencyInjection;
+using Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns;
+using JetBrains.Annotations;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Arbor.KVConfiguration.Samples.AspNetCore
 {
     public class Startup
     {
-        public Startup([NotNull] IHostingEnvironment env)
+        public Startup([NotNull] IWebHostEnvironment env)
         {
             IConfigurationBuilder builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
@@ -28,7 +35,7 @@ namespace Arbor.KVConfiguration.Samples.AspNetCore
         [PublicAPI]
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 #pragma warning disable CA1822 // Mark members as static
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 #pragma warning restore CA1822 // Mark members as static
         {
             if (env.IsDevelopment())

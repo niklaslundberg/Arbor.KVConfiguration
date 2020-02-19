@@ -1,4 +1,7 @@
-﻿using Arbor.KVConfiguration.Urns;
+﻿using System.Collections.Immutable;
+using System.Linq;
+using Arbor.KVConfiguration.Urns;
+using Xunit;
 
 namespace Arbor.KVConfiguration.Tests.Unit.Registrations
 {

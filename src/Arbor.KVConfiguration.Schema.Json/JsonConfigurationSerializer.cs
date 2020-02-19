@@ -1,5 +1,7 @@
 ﻿using System;
 using Arbor.KVConfiguration.Core;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using static System.String;
 
 namespace Arbor.KVConfiguration.Schema.Json

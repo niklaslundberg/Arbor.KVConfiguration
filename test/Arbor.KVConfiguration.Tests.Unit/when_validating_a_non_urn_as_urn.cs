@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using Arbor.KVConfiguration.Core.Metadata;
 using Arbor.KVConfiguration.JsonConfiguration;
 using Arbor.KVConfiguration.Schema;
 using Arbor.KVConfiguration.Schema.Validators;
 using Arbor.KVConfiguration.Urns;
+using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit
 {

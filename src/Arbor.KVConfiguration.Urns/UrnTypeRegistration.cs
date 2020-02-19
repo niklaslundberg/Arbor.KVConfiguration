@@ -1,4 +1,7 @@
-﻿namespace Arbor.KVConfiguration.Urns
+﻿using System.Collections.Immutable;
+using System.ComponentModel.DataAnnotations;
+
+namespace Arbor.KVConfiguration.Urns
 {
     public class UrnTypeRegistration
     {

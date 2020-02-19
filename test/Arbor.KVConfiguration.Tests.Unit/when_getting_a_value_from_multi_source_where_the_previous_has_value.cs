@@ -1,5 +1,6 @@
 ﻿using System.Collections.Specialized;
 using Arbor.KVConfiguration.Core;
+using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit
 {

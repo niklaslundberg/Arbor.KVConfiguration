@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Immutable;
 using Arbor.KVConfiguration.Core;
 
 namespace Arbor.KVConfiguration.Schema.Validators

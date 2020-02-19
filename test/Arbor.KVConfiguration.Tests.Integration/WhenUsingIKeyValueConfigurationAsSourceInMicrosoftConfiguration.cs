@@ -1,6 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Collections.Specialized;
 using Arbor.KVConfiguration.Core;
+using Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns;
+using Arbor.KVConfiguration.Urns;
+using Microsoft.Extensions.Configuration;
+using Xunit;
 
 namespace Arbor.KVConfiguration.Tests.Integration
 {

@@ -1,5 +1,7 @@
 ﻿using System;
 using Arbor.KVConfiguration.Core;
+using JetBrains.Annotations;
+using Microsoft.Extensions.Configuration;
 
 namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
 {

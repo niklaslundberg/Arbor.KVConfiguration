@@ -1,5 +1,6 @@
 ﻿using System;
 using Arbor.KVConfiguration.Core;
+using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.UserConfiguration
 {

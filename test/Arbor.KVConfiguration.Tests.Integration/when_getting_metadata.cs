@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Immutable;
 using System.IO;
 using Arbor.KVConfiguration.Core.Metadata;
 using Arbor.KVConfiguration.JsonConfiguration;
+using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Integration
 {

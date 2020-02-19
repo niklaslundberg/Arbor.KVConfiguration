@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit.Urn
 {

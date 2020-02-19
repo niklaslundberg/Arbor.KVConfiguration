@@ -1,4 +1,6 @@
-﻿using Arbor.KVConfiguration.Core.Extensions.CommandLine;
+﻿using System.Linq;
+using Arbor.KVConfiguration.Core.Extensions.CommandLine;
+using Xunit;
 
 namespace Arbor.KVConfiguration.Tests.Unit.CommandLine
 {

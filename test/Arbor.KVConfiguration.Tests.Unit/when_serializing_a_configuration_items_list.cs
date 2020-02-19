@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using Arbor.KVConfiguration.Schema.Json;
+using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit
 {

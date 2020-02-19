@@ -1,5 +1,6 @@
 ﻿using System;
 using Arbor.KVConfiguration.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
 {

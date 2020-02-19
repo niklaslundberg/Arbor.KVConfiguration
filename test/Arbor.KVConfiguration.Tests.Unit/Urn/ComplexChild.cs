@@ -1,3 +1,5 @@
+using JetBrains.Annotations;
+
 namespace Arbor.KVConfiguration.Tests.Unit.Urn
 {
     [UsedImplicitly]

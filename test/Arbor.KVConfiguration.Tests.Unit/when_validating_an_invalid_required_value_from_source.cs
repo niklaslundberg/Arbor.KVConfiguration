@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Immutable;
 using System.Collections.Specialized;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Core.Metadata;
 using Arbor.KVConfiguration.Schema;
 using Arbor.KVConfiguration.Schema.Validators;
+using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit
 {

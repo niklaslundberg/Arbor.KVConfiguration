@@ -1,3 +1,5 @@
+using Machine.Specifications;
+
 namespace Arbor.KVConfiguration.Tests.Unit.Urn
 {
     [Subject(typeof(Primitives.Urn))]

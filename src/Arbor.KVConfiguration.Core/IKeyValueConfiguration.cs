@@ -1,4 +1,7 @@
-﻿namespace Arbor.KVConfiguration.Core
+﻿using System.Collections.Immutable;
+using JetBrains.Annotations;
+
+namespace Arbor.KVConfiguration.Core
 {
     public interface IKeyValueConfiguration
     {

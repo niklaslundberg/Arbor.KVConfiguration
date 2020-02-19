@@ -1,5 +1,6 @@
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Core.Extensions.StringExtensions;
+using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Integration.AppSettingsKeyValueConfiguration
 {

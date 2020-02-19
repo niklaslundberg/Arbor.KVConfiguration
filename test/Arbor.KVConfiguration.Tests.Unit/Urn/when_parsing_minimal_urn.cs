@@ -1,4 +1,6 @@
-﻿namespace Arbor.KVConfiguration.Tests.Unit.Urn
+﻿using Machine.Specifications;
+
+namespace Arbor.KVConfiguration.Tests.Unit.Urn
 {
 #pragma warning disable 0649
 #pragma warning disable 0169

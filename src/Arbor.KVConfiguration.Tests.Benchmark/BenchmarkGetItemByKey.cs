@@ -1,5 +1,6 @@
 ﻿using System.Collections.Specialized;
 using Arbor.KVConfiguration.Core;
+using BenchmarkDotNet.Attributes;
 
 namespace Arbor.KVConfiguration.Tests.Benchmark
 {

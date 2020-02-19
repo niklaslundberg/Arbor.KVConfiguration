@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Immutable;
 using Arbor.KVConfiguration.Core.Extensions.ReflectionExtensions;
 using Arbor.KVConfiguration.Core.Metadata;
+using Machine.Specifications;
+using Newtonsoft.Json;
 
 namespace Arbor.KVConfiguration.Tests.Unit.Schema
 {

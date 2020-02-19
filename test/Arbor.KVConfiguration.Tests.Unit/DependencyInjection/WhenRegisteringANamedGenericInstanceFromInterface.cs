@@ -1,4 +1,7 @@
-﻿using Arbor.KVConfiguration.Urns;
+﻿using Arbor.KVConfiguration.DependencyInjection;
+using Arbor.KVConfiguration.Urns;
+using Microsoft.Extensions.DependencyInjection;
+using Xunit;
 
 namespace Arbor.KVConfiguration.Tests.Unit.DependencyInjection
 {

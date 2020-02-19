@@ -1,6 +1,9 @@
 ﻿using System.Collections.Specialized;
 using Arbor.KVConfiguration.Core;
+using Arbor.KVConfiguration.DependencyInjection;
 using Arbor.KVConfiguration.Urns;
+using BenchmarkDotNet.Attributes;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Arbor.KVConfiguration.Tests.Benchmark
 {

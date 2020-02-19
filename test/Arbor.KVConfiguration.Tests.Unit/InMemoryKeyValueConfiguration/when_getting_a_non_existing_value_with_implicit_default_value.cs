@@ -1,5 +1,6 @@
 ﻿using System.Collections.Specialized;
 using Arbor.KVConfiguration.Core.Extensions.StringExtensions;
+using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit.InMemoryKeyValueConfiguration
 {

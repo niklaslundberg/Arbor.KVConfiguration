@@ -1,5 +1,8 @@
-﻿using Arbor.KVConfiguration.Core;
+﻿using System.Collections.Immutable;
+using System.Linq;
+using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Core.Metadata;
+using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit
 {

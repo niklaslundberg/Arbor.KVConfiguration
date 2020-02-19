@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using Arbor.Aesculus.Core;
 
 namespace Arbor.KVConfiguration.Tests.Integration
 {

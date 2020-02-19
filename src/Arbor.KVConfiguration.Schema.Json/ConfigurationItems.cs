@@ -1,4 +1,8 @@
-﻿namespace Arbor.KVConfiguration.Schema.Json
+﻿using System.Collections.Immutable;
+using JetBrains.Annotations;
+using Newtonsoft.Json;
+
+namespace Arbor.KVConfiguration.Schema.Json
 {
     public class ConfigurationItems
     {

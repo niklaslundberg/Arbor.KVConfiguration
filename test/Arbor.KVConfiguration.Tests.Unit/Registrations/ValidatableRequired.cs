@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Arbor.KVConfiguration.Urns;
 
 namespace Arbor.KVConfiguration.Tests.Unit.Registrations

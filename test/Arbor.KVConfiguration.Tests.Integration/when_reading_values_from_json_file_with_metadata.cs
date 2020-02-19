@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.JsonConfiguration;
+using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Integration
 {

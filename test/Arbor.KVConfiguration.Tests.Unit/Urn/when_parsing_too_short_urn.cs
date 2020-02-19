@@ -1,4 +1,6 @@
-﻿namespace Arbor.KVConfiguration.Tests.Unit.Urn
+﻿using Machine.Specifications;
+
+namespace Arbor.KVConfiguration.Tests.Unit.Urn
 {
     public class when_parsing_too_short_urn
     {
