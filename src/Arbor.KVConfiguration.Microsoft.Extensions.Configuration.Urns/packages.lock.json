@@ -551,7 +551,7 @@
       "Microsoft.NETCore.Platforms": {
         "type": "Transitive",
         "resolved": "1.1.0",
-        "contentHash": "kz0PEW2lhqygehI/d6XsPCQzD7ff7gUJaVGPVETX611eadGsA3A877GdSlU0LRVMCTH/+P3o2iDTak+S08V2+A=="
+        "contentHash": "uoUGC4tJaluKa1xVj0iCCZ8fSgT/WT1pYNq48RzHuAF2qYguV4J+CvbQsJm4Jss0cWwTbtPPoK1Q3ttdsM9oUg=="
       },
       "Microsoft.NetFramework.Analyzers": {
         "type": "Transitive",
