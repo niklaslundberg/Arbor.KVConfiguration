@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using Arbor.KVConfiguration.Urns;
 
@@ -10,7 +9,10 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
     [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     public class AComplexImmutableTypeWithComplexChildren
     {
-        public AComplexImmutableTypeWithComplexChildren(string id, string name, IEnumerable<ComplexChild> children, Uri uri = null)
+        public AComplexImmutableTypeWithComplexChildren(string id,
+            string name,
+            IEnumerable<ComplexChild> children,
+            Uri uri = null)
         {
             Id = id;
             Name = name;

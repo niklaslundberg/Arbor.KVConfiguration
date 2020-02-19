@@ -16,7 +16,7 @@ namespace Arbor.KVConfiguration.Core.Extensions.EnvironmentVariables
 
             var nameValueCollection = new NameValueCollection();
 
-            foreach (KeyValuePair<string, string> environmentVariable in environmentVariables)
+            foreach (var environmentVariable in environmentVariables)
             {
                 nameValueCollection.Add(environmentVariable.Key, environmentVariable.Value);
             }

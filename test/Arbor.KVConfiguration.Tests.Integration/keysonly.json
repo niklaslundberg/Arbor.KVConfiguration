@@ -5,7 +5,7 @@
             "value": "A custom a value",
             "metadata": {
                 "key": "ATestKey",
-                "valueType":  "string"
+                "valueType": "string"
             }
         },
         {

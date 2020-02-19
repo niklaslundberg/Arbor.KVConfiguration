@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 
 namespace Arbor.Primitives
 {
     public class EnvironmentVariables
     {
-        public EnvironmentVariables(IReadOnlyDictionary<string, string> variables) => Variables = variables ?? throw new ArgumentNullException(nameof(variables));
+        public EnvironmentVariables(IReadOnlyDictionary<string, string> variables) =>
+            Variables = variables ?? throw new ArgumentNullException(nameof(variables));
 
         public IReadOnlyDictionary<string, string> Variables { get; }
 
         private static ImmutableDictionary<string, string> GetAll()
         {
-            IDictionary environmentVariables = Environment.GetEnvironmentVariables();
+            var environmentVariables = Environment.GetEnvironmentVariables();
 
             var all = environmentVariables
                 .OfType<DictionaryEntry>()

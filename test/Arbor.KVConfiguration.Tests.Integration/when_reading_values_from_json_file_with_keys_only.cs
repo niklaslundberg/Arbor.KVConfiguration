@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
 using Arbor.KVConfiguration.JsonConfiguration;
-using Arbor.KVConfiguration.Schema.Json;
-using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Integration
 {
@@ -22,6 +20,7 @@ namespace Arbor.KVConfiguration.Tests.Integration
                 "test",
                 "Arbor.KVConfiguration.Tests.Integration",
                 "keysonly.json");
+
             reader = new JsonFileReader(appsettings_full_path);
         };
 

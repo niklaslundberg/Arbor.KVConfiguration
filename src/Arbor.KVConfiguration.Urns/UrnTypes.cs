@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Immutable;
 using System.Linq;
 using System.Reflection;
 
@@ -13,7 +12,9 @@ namespace Arbor.KVConfiguration.Urns
             {
                 var customAttribute = type.GetCustomAttribute<UrnAttribute>();
 
-                return customAttribute?.Urn is null ? null : new UrnTypeMapping(type, customAttribute.Urn);
+                return customAttribute?.Urn is null
+                    ? null
+                    : new UrnTypeMapping(type, customAttribute.Urn);
             }
 
             ImmutableArray<UrnTypeMapping> urnMappedTypes = assemblies

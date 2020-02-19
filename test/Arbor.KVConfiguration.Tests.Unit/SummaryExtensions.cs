@@ -1,8 +1,6 @@
-using System.Linq;
 using System.Text;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Schema;
-using Arbor.KVConfiguration.Schema.Validators;
 
 namespace Arbor.KVConfiguration.Tests.Unit
 {
@@ -23,7 +21,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
                 KeyValueConfigurationValidationResult[] errors =
                     summary.KeyValueConfigurationValidationResults.Where(_ => !_.IsValid).ToArray();
 
-                foreach (KeyValueConfigurationValidationResult keyValueConfigurationValidationResult in errors)
+                foreach (var keyValueConfigurationValidationResult in errors)
                 {
                     builder.AppendLine($"# {keyValueConfigurationValidationResult.KeyMetadata.Key}");
 

@@ -1,9 +1,6 @@
 ﻿using System.Collections.Specialized;
 using Arbor.KVConfiguration.Core;
-using Arbor.KVConfiguration.DependencyInjection;
 using Arbor.KVConfiguration.Urns;
-using BenchmarkDotNet.Attributes;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Arbor.KVConfiguration.Tests.Benchmark
 {
@@ -15,16 +12,16 @@ namespace Arbor.KVConfiguration.Tests.Benchmark
         {
             var keys = new NameValueCollection
             {
-                { "urn:required:type:with:validation:instance:name", "abc" },
-                { "urn:required:type:with:validation:instance:value", "123" }
+                {"urn:required:type:with:validation:instance:name", "abc"},
+                {"urn:required:type:with:validation:instance:value", "123"}
             };
 
             var configuration = new InMemoryKeyValueConfiguration(keys);
 
-            ConfigurationRegistrations configurationRegistrations =
+            var configurationRegistrations =
                 configuration.GetRegistrations(typeof(ValidatableRequired));
 
-            ConfigurationInstanceHolder configurationInstanceHolder = configurationRegistrations.CreateHolder();
+            var configurationInstanceHolder = configurationRegistrations.CreateHolder();
 
             _serviceProvider = new ServiceCollection()
                 .AddConfigurationInstanceHolder(configurationInstanceHolder)

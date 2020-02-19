@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit.Urn
 {
@@ -7,7 +6,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class a_multi_level_urn
     {
-        protected static Arbor.Primitives.Urn urn;
+        protected static Primitives.Urn urn;
 
         private It should_have_a_parent = () => urn.Parent.ShouldNotBeNull();
 

@@ -1,10 +1,4 @@
-﻿using Arbor.KVConfiguration.DependencyInjection;
-using Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns;
-using JetBrains.Annotations;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns;
 
 namespace Arbor.KVConfiguration.Samples.AspNetCore
 {
@@ -16,6 +10,7 @@ namespace Arbor.KVConfiguration.Samples.AspNetCore
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", false, true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true);
+
             Configuration = builder.Build();
         }
 

@@ -1,23 +1,9 @@
 ﻿using System;
-using System.Collections.Immutable;
-using System.Linq;
 
 namespace Arbor.KVConfiguration.Core.Decorators
 {
     public sealed class ExpandKeyValueConfigurationDecorator : IKeyValueConfigurationDecorator
     {
-        private static string ExpandValue(string value)
-        {
-            if (string.IsNullOrWhiteSpace(value))
-            {
-                return value;
-            }
-
-            string expanded = Environment.ExpandEnvironmentVariables(value);
-
-            return expanded;
-        }
-
         public ImmutableArray<string> GetAllKeys(IKeyValueConfiguration keyValueConfiguration)
         {
             if (keyValueConfiguration == null)
@@ -41,7 +27,8 @@ namespace Arbor.KVConfiguration.Core.Decorators
                 .ToImmutableArray();
         }
 
-        public ImmutableArray<MultipleValuesStringPair> GetAllWithMultipleValues(IKeyValueConfiguration keyValueConfiguration)
+        public ImmutableArray<MultipleValuesStringPair> GetAllWithMultipleValues(
+            IKeyValueConfiguration keyValueConfiguration)
         {
             if (keyValueConfiguration == null)
             {
@@ -51,6 +38,18 @@ namespace Arbor.KVConfiguration.Core.Decorators
             return keyValueConfiguration.AllWithMultipleValues.Select(item => new MultipleValuesStringPair(item.Key,
                     item.Values.Select(ExpandValue).ToImmutableArray()))
                 .ToImmutableArray();
+        }
+
+        private static string ExpandValue(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return value;
+            }
+
+            string expanded = Environment.ExpandEnvironmentVariables(value);
+
+            return expanded;
         }
     }
 }

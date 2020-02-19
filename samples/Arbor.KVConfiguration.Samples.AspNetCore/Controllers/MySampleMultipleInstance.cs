@@ -1,6 +1,4 @@
-﻿using Arbor.KVConfiguration.Urns;
-
-namespace Arbor.KVConfiguration.Samples.AspNetCore.Controllers
+﻿namespace Arbor.KVConfiguration.Samples.AspNetCore.Controllers
 {
     [Urn(Urn)]
     public class MySampleMultipleInstance

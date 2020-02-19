@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Immutable;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Schema.Validators;
 using Arbor.Primitives;
@@ -22,17 +21,18 @@ namespace Arbor.KVConfiguration.Urns
         {
             if (value is null)
             {
-                return new[] { new ValidationError("Value is null") }.ToImmutableArray();
+                return new[] {new ValidationError("Value is null")}.ToImmutableArray();
             }
 
             if (string.IsNullOrWhiteSpace(value))
             {
-                return new[] { new ValidationError("Value is not a valid URN, current value only contains white-spaces") }.ToImmutableArray();
+                return new[] {new ValidationError("Value is not a valid URN, current value only contains white-spaces")}
+                    .ToImmutableArray();
             }
 
-            if (!Urn.TryParse(value, out Urn _))
+            if (!Urn.TryParse(value, out _))
             {
-                return new[] { new ValidationError($"'{value}' is not a valid URN") }.ToImmutableArray();
+                return new[] {new ValidationError($"'{value}' is not a valid URN")}.ToImmutableArray();
             }
 
             return ImmutableArray<ValidationError>.Empty;

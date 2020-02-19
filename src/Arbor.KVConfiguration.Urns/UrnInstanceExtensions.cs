@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using Arbor.KVConfiguration.Core;
-using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Urns
 {
@@ -17,7 +14,7 @@ namespace Arbor.KVConfiguration.Urns
         {
             if (assemblies.Length == 0)
             {
-                assemblies = new[] { Assembly.GetCallingAssembly() };
+                assemblies = new[] {Assembly.GetCallingAssembly()};
             }
 
             ImmutableArray<UrnTypeMapping> urnTypesInAssemblies = UrnTypes.GetUrnTypesInAssemblies(assemblies);
@@ -38,7 +35,8 @@ namespace Arbor.KVConfiguration.Urns
             return new ConfigurationRegistrations(configurationInstanceHolders.ToImmutableArray());
         }
 
-        public static ConfigurationInstanceHolder CreateHolder([NotNull] this ConfigurationRegistrations configurationRegistrations)
+        public static ConfigurationInstanceHolder CreateHolder(
+            [NotNull] this ConfigurationRegistrations configurationRegistrations)
         {
             if (configurationRegistrations == null)
             {
@@ -46,6 +44,7 @@ namespace Arbor.KVConfiguration.Urns
             }
 
             var configurationInstanceHolder = new ConfigurationInstanceHolder();
+
             foreach (UrnTypeRegistration registration in configurationRegistrations.UrnTypeRegistrations)
             {
                 if (registration.Instance is { })

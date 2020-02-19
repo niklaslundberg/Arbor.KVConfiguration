@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using Arbor.KVConfiguration.Core.Metadata;
 using Arbor.KVConfiguration.JsonConfiguration;
 using Arbor.KVConfiguration.Schema;
 using Arbor.KVConfiguration.Schema.Validators;
-using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit
 {
@@ -31,8 +29,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
                     string.Empty,
                     new ConfigurationMetadata(
                         "abc",
-                        "string",
-                        isRequired: true))
+                        "string"))
             };
 
             metdata = configurationItems.GetMetadata();

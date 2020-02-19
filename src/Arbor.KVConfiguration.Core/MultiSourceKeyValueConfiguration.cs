@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using Arbor.KVConfiguration.Core.Decorators;
 using Arbor.KVConfiguration.Core.Metadata;
 using Arbor.KVConfiguration.Core.Metadata.Extensions;
-using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core
 {
@@ -21,16 +19,61 @@ namespace Arbor.KVConfiguration.Core
         {
             _appSettingsDecoratorBuilder = appSettingsDecoratorBuilder ??
                                            throw new ArgumentNullException(nameof(appSettingsDecoratorBuilder));
+
             _logAction = logAction;
 
             string decorators = BuildDecoratorsAsString(_appSettingsDecoratorBuilder);
 
             SourceChain = "source chain: " + BuildChainAsString(_appSettingsDecoratorBuilder.AppSettingsBuilder) +
-                          (string.IsNullOrWhiteSpace(decorators) ? string.Empty : ", decorators: " + decorators);
+                          (string.IsNullOrWhiteSpace(decorators)
+                              ? string.Empty
+                              : ", decorators: " + decorators);
         }
 
-        [PublicAPI]
-        public string SourceChain { get; }
+        [PublicAPI] public string SourceChain { get; }
+
+        public void Dispose() => _appSettingsDecoratorBuilder?.Dispose();
+
+        public ImmutableArray<string> AllKeys => GetAllKeys(_appSettingsDecoratorBuilder.AppSettingsBuilder)
+            .Distinct(StringComparer.OrdinalIgnoreCase).ToImmutableArray();
+
+        public ImmutableArray<StringPair> AllValues
+        {
+            get
+            {
+                IEnumerable<StringPair> stringPairs = AllKeys.Select(key => new StringPair(key,
+                    GetValue(_appSettingsDecoratorBuilder.AppSettingsBuilder, key, _logAction).Item2));
+
+                var immutableArray =
+                    stringPairs.Select(pair => new StringPair(pair.Key,
+                        DecorateValue(_appSettingsDecoratorBuilder, pair.Value))).ToImmutableArray();
+
+                return immutableArray;
+            }
+        }
+
+        public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues
+        {
+            get
+            {
+                ImmutableArray<MultipleValuesStringPair> values =
+                    GetMultipleValues(_appSettingsDecoratorBuilder.AppSettingsBuilder, AllKeys);
+
+                var multipleValuesStringPairs = values
+                    .Select(item => new MultipleValuesStringPair(item.Key,
+                        item.Values.Select(value => DecorateValue(_appSettingsDecoratorBuilder, value))
+                            .ToImmutableArray()))
+                    .ToImmutableArray();
+
+                return multipleValuesStringPairs;
+            }
+        }
+
+        public string this[string key] => DecorateValue(_appSettingsDecoratorBuilder,
+            GetValue(_appSettingsDecoratorBuilder.AppSettingsBuilder, key, _logAction).Item2);
+
+        public ImmutableArray<KeyValueConfigurationItem> ConfigurationItems => GetConfigurationItems(
+            _appSettingsDecoratorBuilder.AppSettingsBuilder).ToImmutableArray();
 
         private string BuildDecoratorsAsString(AppSettingsDecoratorBuilder appSettingsDecoratorBuilder)
         {
@@ -83,7 +126,7 @@ namespace Arbor.KVConfiguration.Core
                 return appSettingsBuilder.KeyValueConfiguration.AllKeys.ToArray();
             }
 
-            string[] allPreviousKeys = GetAllKeys(appSettingsBuilder.Previous);
+            var allPreviousKeys = GetAllKeys(appSettingsBuilder.Previous);
 
             string[] allKeys = appSettingsBuilder.KeyValueConfiguration.AllKeys.Concat(allPreviousKeys).ToArray();
 
@@ -98,6 +141,7 @@ namespace Arbor.KVConfiguration.Core
             }
 
             string? decorated = null;
+
             if (decorator.Previous is object)
             {
                 decorated = DecorateValue(decorator.Previous, value);
@@ -181,6 +225,7 @@ namespace Arbor.KVConfiguration.Core
             }
 
             var keysLeftAfterValues = keysLeft.Except(values.Select(t => t.Key)).ToImmutableArray();
+
             if (keysLeftAfterValues.Any())
             {
                 values.AddRange(GetMultipleValues(appSettingsBuilder.Previous, keysLeftAfterValues));
@@ -224,7 +269,7 @@ namespace Arbor.KVConfiguration.Core
         [PublicAPI]
         public IKeyValueConfiguration ConfiguratorFor(string key, Action<string>? logAction = null)
         {
-            (IKeyValueConfiguration, string) tuple =
+            var tuple =
                 GetValue(_appSettingsDecoratorBuilder.AppSettingsBuilder, key, logAction);
 
             if (tuple.Item1 is NoConfiguration || tuple.Item1 is null)
@@ -236,47 +281,5 @@ namespace Arbor.KVConfiguration.Core
         }
 
         public override string ToString() => $"{base.ToString()} [{SourceChain}]";
-
-        public void Dispose() => _appSettingsDecoratorBuilder?.Dispose();
-
-        public ImmutableArray<string> AllKeys => GetAllKeys(_appSettingsDecoratorBuilder.AppSettingsBuilder)
-            .Distinct(StringComparer.OrdinalIgnoreCase).ToImmutableArray();
-
-        public ImmutableArray<StringPair> AllValues
-        {
-            get
-            {
-                IEnumerable<StringPair> stringPairs = AllKeys.Select(key => new StringPair(key,
-                    GetValue(_appSettingsDecoratorBuilder.AppSettingsBuilder, key, _logAction).Item2));
-                var immutableArray =
-                    stringPairs.Select(pair => new StringPair(pair.Key,
-                        DecorateValue(_appSettingsDecoratorBuilder, pair.Value))).ToImmutableArray();
-
-                return immutableArray;
-            }
-        }
-
-        public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues
-        {
-            get
-            {
-                ImmutableArray<MultipleValuesStringPair> values =
-                    GetMultipleValues(_appSettingsDecoratorBuilder.AppSettingsBuilder, AllKeys);
-
-                var multipleValuesStringPairs = values
-                    .Select(item => new MultipleValuesStringPair(item.Key,
-                        item.Values.Select(value => DecorateValue(_appSettingsDecoratorBuilder, value))
-                            .ToImmutableArray()))
-                    .ToImmutableArray();
-
-                return multipleValuesStringPairs;
-            }
-        }
-
-        public string this[string key] => DecorateValue(_appSettingsDecoratorBuilder,
-            GetValue(_appSettingsDecoratorBuilder.AppSettingsBuilder, key, _logAction).Item2);
-
-        public ImmutableArray<KeyValueConfigurationItem> ConfigurationItems => GetConfigurationItems(
-            _appSettingsDecoratorBuilder.AppSettingsBuilder).ToImmutableArray();
     }
 }

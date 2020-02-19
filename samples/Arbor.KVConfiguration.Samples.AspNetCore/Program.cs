@@ -1,8 +1,4 @@
-﻿using System.IO;
-using JetBrains.Annotations;
-using Microsoft.AspNetCore.Hosting;
-
-namespace Arbor.KVConfiguration.Samples.AspNetCore
+﻿namespace Arbor.KVConfiguration.Samples.AspNetCore
 {
     public static class Program
     {

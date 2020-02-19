@@ -1,7 +1,4 @@
-﻿using System.Collections.Immutable;
-using JetBrains.Annotations;
-
-namespace Arbor.KVConfiguration.Core
+﻿namespace Arbor.KVConfiguration.Core
 {
     public interface IKeyValueConfiguration
     {
@@ -11,7 +8,6 @@ namespace Arbor.KVConfiguration.Core
 
         ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues { get; }
 
-        [CanBeNull]
-        string this[[CanBeNull] string key] { get; }
+        [CanBeNull] string this[[CanBeNull] string key] { get; }
     }
 }

@@ -1,6 +1,4 @@
 ﻿using System;
-using BenchmarkDotNet.Reports;
-using BenchmarkDotNet.Running;
 
 namespace Arbor.KVConfiguration.Tests.Benchmark
 {

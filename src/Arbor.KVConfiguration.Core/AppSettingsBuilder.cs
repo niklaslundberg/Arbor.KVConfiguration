@@ -1,5 +1,4 @@
 ﻿using System;
-using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core
 {
@@ -11,6 +10,7 @@ namespace Arbor.KVConfiguration.Core
         {
             KeyValueConfiguration = keyValueConfiguration ??
                                     throw new ArgumentNullException(nameof(keyValueConfiguration));
+
             Previous = previous;
         }
 

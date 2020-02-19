@@ -1,9 +1,7 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.JsonConfiguration;
-using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Integration
 {
@@ -34,6 +32,7 @@ namespace Arbor.KVConfiguration.Tests.Integration
             foreach (MultipleValuesStringPair stringPair in json_key_value_configuration.AllWithMultipleValues)
             {
                 Console.WriteLine(stringPair.Key);
+
                 foreach (string value in stringPair.Values)
                 {
                     Console.WriteLine("  " + value);

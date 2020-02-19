@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit.Urn
 {
@@ -8,9 +7,9 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     internal class two_unequal_urns
     {
-        protected static Arbor.Primitives.Urn urn1;
+        protected static Primitives.Urn urn1;
 
-        protected static Arbor.Primitives.Urn urn2;
+        protected static Primitives.Urn urn2;
 
         private It should_not_be_equal_as_object = () => urn1.Equals((object)urn2).ShouldBeFalse();
 

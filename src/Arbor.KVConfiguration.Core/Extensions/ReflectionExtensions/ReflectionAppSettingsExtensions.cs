@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core.Extensions.ReflectionExtensions
 {
@@ -22,7 +21,7 @@ namespace Arbor.KVConfiguration.Core.Extensions.ReflectionExtensions
                 return appSettingsBuilder;
             }
 
-            foreach (Assembly currentAssembly in scanAssemblies.OrderBy(assembly => assembly.FullName))
+            foreach (var currentAssembly in scanAssemblies.OrderBy(assembly => assembly.FullName))
             {
                 appSettingsBuilder =
                     appSettingsBuilder.Add(

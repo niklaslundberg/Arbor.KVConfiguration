@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Arbor.KVConfiguration.Core;
-using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Tests.Unit
 {
@@ -17,9 +16,10 @@ namespace Arbor.KVConfiguration.Tests.Unit
 
             var builder = new StringBuilder();
 
-            foreach (MultipleValuesStringPair multipleValuesStringPair in multipleValuesStringPairs)
+            foreach (var multipleValuesStringPair in multipleValuesStringPairs)
             {
                 builder.AppendLine(multipleValuesStringPair.Key);
+
                 foreach (string value in multipleValuesStringPair.Values)
                 {
                     builder.AppendLine($" {value}");

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Primitives;
 
 namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
 {
@@ -42,7 +39,9 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
             IEnumerable<string> earlierKeys,
             string parentPath)
         {
-            string prefix = parentPath is null ? string.Empty : parentPath + ConfigurationPath.KeyDelimiter;
+            string prefix = parentPath is null
+                ? string.Empty
+                : parentPath + ConfigurationPath.KeyDelimiter;
 
             return _adapter.KeyValueConfiguration.AllValues
                 .Where(kv => kv.Key.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
@@ -54,7 +53,10 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
         private static string Segment(string key, int prefixLength)
         {
             int indexOf = key.IndexOf(ConfigurationPath.KeyDelimiter, prefixLength, StringComparison.OrdinalIgnoreCase);
-            return indexOf < 0 ? key.Substring(prefixLength) : key.Substring(prefixLength, indexOf - prefixLength);
+
+            return indexOf < 0
+                ? key.Substring(prefixLength)
+                : key.Substring(prefixLength, indexOf - prefixLength);
         }
     }
 }

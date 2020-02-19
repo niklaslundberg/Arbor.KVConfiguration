@@ -1,13 +1,10 @@
-﻿using System.Collections.Immutable;
-using System.Collections.Specialized;
-using JetBrains.Annotations;
+﻿using System.Collections.Specialized;
 
 namespace Arbor.KVConfiguration.Core
 {
     public class NoConfiguration : IKeyValueConfiguration
     {
-        [NotNull]
-        public static readonly IKeyValueConfiguration Empty =
+        [NotNull] public static readonly IKeyValueConfiguration Empty =
             new InMemoryKeyValueConfiguration(new NameValueCollection());
 
         public ImmutableArray<string> AllKeys => ImmutableArray<string>.Empty;

@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Immutable;
 using System.Collections.Specialized;
 using System.Reflection;
 using Arbor.KVConfiguration.Core.Metadata;
-using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core
 {
@@ -40,7 +38,8 @@ namespace Arbor.KVConfiguration.Core
 
         public ImmutableArray<StringPair> AllValues => _inMemoryKeyValueConfiguration.AllValues;
 
-        public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues => _inMemoryKeyValueConfiguration.AllWithMultipleValues;
+        public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues =>
+            _inMemoryKeyValueConfiguration.AllWithMultipleValues;
 
         public string this[string key] => _inMemoryKeyValueConfiguration[key];
 

@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Immutable;
 using System.Collections.Specialized;
 using System.Linq;
-using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core
 {
@@ -16,7 +14,7 @@ namespace Arbor.KVConfiguration.Core
         {
             var collection = new NameValueCollection();
 
-            foreach (DictionaryEntry item in Environment.GetEnvironmentVariables().OfType<DictionaryEntry>())
+            foreach (var item in Environment.GetEnvironmentVariables().OfType<DictionaryEntry>())
             {
                 collection.Add(item.Key as string ?? item.Key.ToString(),
                     item.Value as string ?? item.Value.ToString());

@@ -1,11 +1,9 @@
 using System;
-using System.Collections.Immutable;
 using System.Collections.Specialized;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Core.Metadata;
 using Arbor.KVConfiguration.Schema;
 using Arbor.KVConfiguration.Schema.Validators;
-using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit
 {
@@ -23,10 +21,11 @@ namespace Arbor.KVConfiguration.Tests.Unit
         private Establish context = () =>
         {
             configuration_validator = new ConfigurationValidator();
+
             configuration =
                 new Core.InMemoryKeyValueConfiguration(new NameValueCollection
                 {
-                    { "urn:a:dummy:key:field:constant:urn-value", "a-required-value-fulfilled" }
+                    {"urn:a:dummy:key:field:constant:urn-value", "a-required-value-fulfilled"}
                 });
 
             ImmutableArray<KeyValueConfigurationItem> configurationItems =

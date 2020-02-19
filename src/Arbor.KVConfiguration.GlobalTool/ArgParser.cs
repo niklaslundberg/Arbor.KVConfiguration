@@ -12,7 +12,7 @@ namespace Arbor.KVConfiguration.GlobalTool
                                 && !parameter.StartsWith("--"))
             .Select(parameter =>
             {
-                string[] parts = parameter.Split("=");
+                var parts = parameter.Split("=");
 
                 if (parts.Length != 2)
                 {

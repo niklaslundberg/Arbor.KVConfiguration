@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using Arbor.KVConfiguration.Schema.Json;
-using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit
 {
@@ -22,6 +20,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
                 new KeyValue("ghi", "345", null),
                 new KeyValue("ghi", "456", null)
             }.ToImmutableArray();
+
             configuration_items = new ConfigurationItems("1.0", keys);
         };
 

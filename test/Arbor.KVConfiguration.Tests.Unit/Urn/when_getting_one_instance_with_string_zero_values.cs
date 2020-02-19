@@ -1,7 +1,6 @@
 using System.Collections.Specialized;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Urns;
-using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit.Urn
 {
@@ -14,10 +13,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 
         private Establish context = () =>
         {
-            var keys = new NameValueCollection
-            {
-                { "urn:a:type:with:string:params:instance1:other", "def" }
-            };
+            var keys = new NameValueCollection {{"urn:a:type:with:string:params:instance1:other", "def"}};
 
             configuration = new Core.InMemoryKeyValueConfiguration(keys);
         };

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Immutable;
 using System.IO;
 using System.Text;
 using Arbor.KVConfiguration.Core;
@@ -32,18 +31,21 @@ namespace Arbor.KVConfiguration.JsonConfiguration
             string json = File.ReadAllText(_fileFullPath, Encoding.UTF8);
 
             ConfigurationItems config;
+
             try
             {
                 config = JsonConfigurationSerializer.Deserialize(json);
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException($"Could not read JSON configuration from file path '{_fileFullPath}' and JSON '{json}'", ex);
+                throw new InvalidOperationException(
+                    $"Could not read JSON configuration from file path '{_fileFullPath}' and JSON '{json}'", ex);
             }
 
             return config;
         }
 
-        public ImmutableArray<KeyValueConfigurationItem> ReadConfiguration() => GetConfigurationItems().ReadConfiguration();
+        public ImmutableArray<KeyValueConfigurationItem> ReadConfiguration() =>
+            GetConfigurationItems().ReadConfiguration();
     }
 }

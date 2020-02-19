@@ -1,5 +1,3 @@
-using Xunit;
-
 namespace Arbor.KVConfiguration.Tests.Unit.Urn
 {
     public class UrnEqualsTests

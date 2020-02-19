@@ -1,6 +1,5 @@
 using System.Collections.Specialized;
 using Arbor.KVConfiguration.Core.Extensions.StringExtensions;
-using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit.InMemoryKeyValueConfiguration
 {
@@ -14,10 +13,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.InMemoryKeyValueConfiguration
         private Establish context = () =>
         {
             configuration = new Core.InMemoryKeyValueConfiguration(
-                new NameValueCollection
-                {
-                    { "a", "b" }
-                });
+                new NameValueCollection {{"a", "b"}});
         };
 
         private Because of = () => { value = configuration.ValueOrDefault("d", "e"); };

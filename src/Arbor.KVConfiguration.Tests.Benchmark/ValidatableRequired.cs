@@ -14,11 +14,9 @@ namespace Arbor.KVConfiguration.Tests.Benchmark
             Value = value;
         }
 
-        [Required]
-        public string Name { get; }
+        [Required] public string Name { get; }
 
-        [Range(1, int.MaxValue)]
-        public int Value { get; }
+        [Range(1, int.MaxValue)] public int Value { get; }
 
         public override string ToString() => $"{nameof(Name)}: {Name}, {nameof(Value)}: {Value}";
     }

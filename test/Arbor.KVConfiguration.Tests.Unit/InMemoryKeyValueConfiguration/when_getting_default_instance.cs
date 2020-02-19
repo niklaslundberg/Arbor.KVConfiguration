@@ -1,5 +1,4 @@
 using Arbor.KVConfiguration.Core;
-using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit.InMemoryKeyValueConfiguration
 {
@@ -7,7 +6,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.InMemoryKeyValueConfiguration
     public class when_getting_default_instance
     {
         private static MultipleValuesStringPair instance;
-        private Because of = () => instance = default(MultipleValuesStringPair);
+        private Because of = () => instance = default;
 
         private It should_return_empty_values = () => instance.Values.ShouldBeEmpty();
 

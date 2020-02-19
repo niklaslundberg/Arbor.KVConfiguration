@@ -2,7 +2,7 @@
 using System.Collections.Specialized;
 using System.IO;
 using Arbor.KVConfiguration.Core;
-using Microsoft.Configuration.ConfigurationBuilders;
+using Arbor.KVConfiguration.JsonConfiguration;
 
 namespace Arbor.KVConfiguration.SystemConfiguration.Providers.Json
 {
@@ -23,7 +23,9 @@ namespace Arbor.KVConfiguration.SystemConfiguration.Providers.Json
 
             if (string.IsNullOrWhiteSpace(name))
             {
-                throw new ArgumentException($"{nameof(JsonKeyValueConfigurationBuilder)} is missing value for its 'name' property", nameof(name));
+                throw new ArgumentException(
+                    $"{nameof(JsonKeyValueConfigurationBuilder)} is missing value for its 'name' property",
+                    nameof(name));
             }
 
             _ignoreMissingFile = !bool.TryParse(config[IgnoreMissingFilePropertyName], out bool result) || result;
@@ -61,7 +63,7 @@ namespace Arbor.KVConfiguration.SystemConfiguration.Providers.Json
                 throw new InvalidOperationException("Json file path is not set");
             }
 
-            var jsonConfiguration = new JsonConfiguration.JsonKeyValueConfiguration(_jsonFilePath!, throwWhenNotExists: !_ignoreMissingFile);
+            var jsonConfiguration = new JsonKeyValueConfiguration(_jsonFilePath!, !_ignoreMissingFile);
 
             return jsonConfiguration;
         }

@@ -1,11 +1,7 @@
 using System;
-using System.Collections.Immutable;
 using System.Collections.Specialized;
-using System.Linq;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Urns;
-using Machine.Specifications;
-using Newtonsoft.Json;
 
 namespace Arbor.KVConfiguration.Tests.Unit.Urn
 {
@@ -18,27 +14,25 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 
         private Establish context = () =>
         {
-            var primaryKeys = new NameValueCollection
-            {
-                { "urn:test:a:complex:immutable:type:instance1:id", "myId1" }
-            };
+            var primaryKeys = new NameValueCollection {{"urn:test:a:complex:immutable:type:instance1:id", "myId1"}};
 
             var secondaryKeys = new NameValueCollection
             {
-                { "urn:test:a:complex:immutable:type:instance1:name", "myName1" },
-                { "urn:test:a:complex:immutable:type:instance1:children", "myChild1.1" },
-                { "urn:test:a:complex:immutable:type:instance1:children", "myChild1.2" },
-                { "urn:test:a:complex:immutable:type:instance2:id", "myId2" },
-                { "urn:test:a:complex:immutable:type:instance2:name", "myName2" },
-                { "urn:test:a:complex:immutable:type:instance3:id", "myId3" },
-                { "urn:test:a:complex:immutable:type:instance3:name", "myName3" },
-                { "urn:test:a:complex:immutable:type:instance3:children", "myChild3.1" },
-                { "urn:test:a:complex:immutable:type:instance3:children", "myChild3.2" },
-                { "urn:test:a:complex:immutable:type:instance3:children", "myChild3.3" },
-                { "urn:test:a:complex:immutable:type:instance3:uri", "http://example.com/" }
+                {"urn:test:a:complex:immutable:type:instance1:name", "myName1"},
+                {"urn:test:a:complex:immutable:type:instance1:children", "myChild1.1"},
+                {"urn:test:a:complex:immutable:type:instance1:children", "myChild1.2"},
+                {"urn:test:a:complex:immutable:type:instance2:id", "myId2"},
+                {"urn:test:a:complex:immutable:type:instance2:name", "myName2"},
+                {"urn:test:a:complex:immutable:type:instance3:id", "myId3"},
+                {"urn:test:a:complex:immutable:type:instance3:name", "myName3"},
+                {"urn:test:a:complex:immutable:type:instance3:children", "myChild3.1"},
+                {"urn:test:a:complex:immutable:type:instance3:children", "myChild3.2"},
+                {"urn:test:a:complex:immutable:type:instance3:children", "myChild3.3"},
+                {"urn:test:a:complex:immutable:type:instance3:uri", "http://example.com/"}
             };
 
-            configuration = KeyValueConfigurationManager.Add(new Core.InMemoryKeyValueConfiguration(primaryKeys)).Add(new Core.InMemoryKeyValueConfiguration(secondaryKeys)).Build();
+            configuration = KeyValueConfigurationManager.Add(new Core.InMemoryKeyValueConfiguration(primaryKeys))
+                .Add(new Core.InMemoryKeyValueConfiguration(secondaryKeys)).Build();
         };
 
         private Because of = () => { instances = configuration.GetInstances<AComplexImmutableType>(); };

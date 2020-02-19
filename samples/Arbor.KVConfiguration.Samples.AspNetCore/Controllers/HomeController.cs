@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Arbor.KVConfiguration.Urns;
-using JetBrains.Annotations;
-using Microsoft.AspNetCore.Mvc;
+﻿using Arbor.KVConfiguration.Urns;
 
 namespace Arbor.KVConfiguration.Samples.AspNetCore.Controllers
 {
@@ -39,8 +34,7 @@ namespace Arbor.KVConfiguration.Samples.AspNetCore.Controllers
                 Instances = configurationInstanceHolder!.RegisteredTypes
                     .Select(type => new
                     {
-                        type.FullName,
-                        Instances = configurationInstanceHolder.GetInstances(type).ToArray()
+                        type.FullName, Instances = configurationInstanceHolder.GetInstances(type).ToArray()
                     })
                     .ToArray(),
                 multipleInstances

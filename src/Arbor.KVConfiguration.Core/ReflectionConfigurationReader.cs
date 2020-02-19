@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Immutable;
-using System.Linq;
 using System.Reflection;
 using Arbor.KVConfiguration.Core.Extensions.ReflectionExtensions;
 using Arbor.KVConfiguration.Core.Metadata;
-using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core
 {

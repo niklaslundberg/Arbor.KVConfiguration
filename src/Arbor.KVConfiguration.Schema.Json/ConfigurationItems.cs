@@ -1,14 +1,13 @@
-﻿using System.Collections.Immutable;
-using JetBrains.Annotations;
-using Newtonsoft.Json;
-
-namespace Arbor.KVConfiguration.Schema.Json
+﻿namespace Arbor.KVConfiguration.Schema.Json
 {
     public class ConfigurationItems
     {
         public ConfigurationItems(string version, ImmutableArray<KeyValue> keys)
         {
-            Version = string.IsNullOrWhiteSpace(version) ? JsonSchemaConstants.Version1_0 : version;
+            Version = string.IsNullOrWhiteSpace(version)
+                ? JsonSchemaConstants.Version1_0
+                : version;
+
             Keys = keys;
         }
 
@@ -19,7 +18,6 @@ namespace Arbor.KVConfiguration.Schema.Json
             get;
         }
 
-        [JsonProperty(Order = 1)]
-        public ImmutableArray<KeyValue> Keys { get; }
+        [JsonProperty(Order = 1)] public ImmutableArray<KeyValue> Keys { get; }
     }
 }

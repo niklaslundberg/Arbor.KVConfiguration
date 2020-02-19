@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Arbor.KVConfiguration.Core;
-using Arbor.KVConfiguration.Urns;
+﻿using Arbor.KVConfiguration.Urns;
 
 namespace Arbor.KVConfiguration.Tests.Unit.Registrations
 {
@@ -17,11 +14,9 @@ namespace Arbor.KVConfiguration.Tests.Unit.Registrations
             Value = value;
         }
 
-        [Required]
-        public string Name { get; }
+        [Required] public string Name { get; }
 
-        [Range(1, int.MaxValue)]
-        public int Value { get; }
+        [Range(1, int.MaxValue)] public int Value { get; }
 
         public override string ToString() => $"{nameof(Name)}: {Name}, {nameof(Value)}: {Value}";
     }

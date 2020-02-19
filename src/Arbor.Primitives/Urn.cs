@@ -1,14 +1,13 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Arbor.Primitives
 {
     public class Urn : IEquatable<Urn>
     {
-        private static readonly char[] InvalidCharacters = { '/', '\\' };
         private const string DoubleSeparator = "::";
         public const char Separator = ':';
+        private static readonly char[] InvalidCharacters = {'/', '\\'};
 
         public Urn(string originalValue)
         {
@@ -19,7 +18,7 @@ namespace Arbor.Primitives
 
             string trimmed = originalValue.Trim();
 
-            if (!IsUri(trimmed, out Uri uri))
+            if (!IsUri(trimmed, out var uri))
             {
                 throw new FormatException($"Invalid urn '{trimmed}'");
             }
@@ -87,10 +86,7 @@ namespace Arbor.Primitives
             get
             {
                 string lastOrDefault = OriginalValue.Split(
-                    new[]
-                    {
-                        Separator
-                    },
+                    new[] {Separator},
                     StringSplitOptions.RemoveEmptyEntries).LastOrDefault();
 
                 if (string.IsNullOrWhiteSpace(lastOrDefault))
@@ -128,6 +124,39 @@ namespace Arbor.Primitives
             }
         }
 
+        public bool Equals(Urn other)
+        {
+            if (other is null)
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (!Scheme.Equals(other.Scheme, StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            if (!Nid.Equals(other.Nid, StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+
+            var caseSensitiveParts = CaseInsensitiveParts(this);
+            var otherParts = CaseInsensitiveParts(other);
+
+            if (!caseSensitiveParts.SequenceEqual(otherParts))
+            {
+                return false;
+            }
+
+            return string.Equals(OriginalValue, other.OriginalValue, StringComparison.OrdinalIgnoreCase);
+        }
+
         public static bool operator ==(Urn left, Urn right) => Equals(left, right);
 
         public static bool operator !=(Urn left, Urn right) => !Equals(left, right);
@@ -142,7 +171,7 @@ namespace Arbor.Primitives
 
             string trimmed = originalValue.Trim();
 
-            if (!IsUri(trimmed, out Uri uri))
+            if (!IsUri(trimmed, out var uri))
             {
                 result = null;
                 return false;
@@ -190,8 +219,8 @@ namespace Arbor.Primitives
                 return false;
             }
 
-            string[] parts = OriginalValue.Split(Separator);
-            string[] otherParts = other.OriginalValue.Split(Separator);
+            var parts = OriginalValue.Split(Separator);
+            var otherParts = other.OriginalValue.Split(Separator);
 
             if (parts.Length < otherParts.Length)
             {
@@ -212,40 +241,8 @@ namespace Arbor.Primitives
             return true;
         }
 
-        public bool Equals(Urn other)
-        {
-            if (other is null)
-            {
-                return false;
-            }
-
-            if (ReferenceEquals(this, other))
-            {
-                return true;
-            }
-
-            if (!Scheme.Equals(other.Scheme, StringComparison.OrdinalIgnoreCase))
-            {
-                return false;
-            }
-
-            if (!Nid.Equals(other.Nid, StringComparison.OrdinalIgnoreCase))
-            {
-                return false;
-            }
-
-            var caseSensitiveParts = CaseInsensitiveParts(this);
-            var otherParts = CaseInsensitiveParts(other);
-
-            if (!caseSensitiveParts.SequenceEqual(otherParts))
-            {
-                return false;
-            }
-
-            return string.Equals(OriginalValue, other.OriginalValue, StringComparison.OrdinalIgnoreCase);
-        }
-
-        private static ReadOnlySpan<char> CaseInsensitiveParts(Urn urn) => urn.OriginalValue.AsSpan().Slice(urn.Scheme.Length + urn.Nid.Length + 1);
+        private static ReadOnlySpan<char> CaseInsensitiveParts(Urn urn) =>
+            urn.OriginalValue.AsSpan().Slice(urn.Scheme.Length + urn.Nid.Length + 1);
 
         public override bool Equals(object obj)
         {
@@ -269,15 +266,17 @@ namespace Arbor.Primitives
 
         public override int GetHashCode() => StringComparer.OrdinalIgnoreCase.GetHashCode(OriginalValue);
 
-        private static bool IsWellFormedUriString(string originalValue) => Uri.IsWellFormedUriString(originalValue, UriKind.Absolute);
+        private static bool IsWellFormedUriString(string originalValue) =>
+            Uri.IsWellFormedUriString(originalValue, UriKind.Absolute);
 
         private static bool HasUrnScheme(Uri uri) => uri.Scheme.Equals("urn", StringComparison.OrdinalIgnoreCase);
 
-        private static bool IsUri(string originalValue, out Uri uri) => Uri.TryCreate(originalValue, UriKind.Absolute, out uri);
+        private static bool IsUri(string originalValue, out Uri uri) =>
+            Uri.TryCreate(originalValue, UriKind.Absolute, out uri);
 
         public static Urn Parse(string attemptedValue)
         {
-            if (!TryParse(attemptedValue, out Urn? urn))
+            if (!TryParse(attemptedValue, out var urn))
             {
                 throw new FormatException($"The attempted value '{attemptedValue}' is not a valid URN");
             }

@@ -1,5 +1,4 @@
-﻿using System.Collections.Immutable;
-using Arbor.KVConfiguration.Core.Metadata;
+﻿using Arbor.KVConfiguration.Core.Metadata;
 
 namespace Arbor.KVConfiguration.Core
 {

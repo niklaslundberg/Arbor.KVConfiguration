@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Immutable;
 using System.IO;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.JsonConfiguration;
@@ -30,6 +29,26 @@ namespace Arbor.KVConfiguration.UserConfiguration
             _fileFullPath = fileFullPath;
         }
 
+        public ImmutableArray<string> AllKeys => _configuration.AllKeys;
+
+        public ImmutableArray<StringPair> AllValues => _configuration.AllValues;
+
+        public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues
+            => _configuration.AllWithMultipleValues;
+
+        public string this[string key]
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(key))
+                {
+                    return string.Empty;
+                }
+
+                return _configuration[key];
+            }
+        }
+
         private static string? TryGetConfigUser(string? basePath)
         {
             basePath ??= AppDomain.CurrentDomain.BaseDirectory;
@@ -41,11 +60,12 @@ namespace Arbor.KVConfiguration.UserConfiguration
 
                 var fileInfo = new FileInfo(fileFullPath);
 
-                DirectoryInfo currentDirectory = fileInfo.Directory;
+                var currentDirectory = fileInfo.Directory;
 
                 while (currentDirectory is object)
                 {
-                    FileInfo[] configUserFiles = currentDirectory.GetFiles(ConfigUserFileName);
+                    var configUserFiles = currentDirectory.GetFiles(ConfigUserFileName);
+
                     if (configUserFiles.Length == 1)
                     {
                         return configUserFiles[0].FullName;
@@ -70,26 +90,6 @@ namespace Arbor.KVConfiguration.UserConfiguration
             }
 
             return $"{base.ToString()} [no json file source]";
-        }
-
-        public ImmutableArray<string> AllKeys => _configuration.AllKeys;
-
-        public ImmutableArray<StringPair> AllValues => _configuration.AllValues;
-
-        public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues
-            => _configuration.AllWithMultipleValues;
-
-        public string this[string key]
-        {
-            get
-            {
-                if (string.IsNullOrWhiteSpace(key))
-                {
-                    return string.Empty;
-                }
-
-                return _configuration[key];
-            }
         }
     }
 }

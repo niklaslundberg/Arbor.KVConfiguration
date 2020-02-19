@@ -6,8 +6,7 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public static class SampleConfigurationConstants
     {
-        [Metadata("urn")]
-        public const string
+        [Metadata("urn")] public const string
             ATestKey = "urn:test:key";
 
         [Metadata("urn", defaultValue: "ThisIsDefault")]

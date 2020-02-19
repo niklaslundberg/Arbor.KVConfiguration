@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Core.Metadata;
 using Arbor.KVConfiguration.Schema.Validators;
-using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Schema
 {
@@ -32,7 +29,7 @@ namespace Arbor.KVConfiguration.Schema
 
                 if (metadataItem is object)
                 {
-                    KeyValueConfigurationValidationResult validationResult =
+                    var validationResult =
                         configurationValidator.Validate(multipleValuesStringPair, metadataItem);
 
                     if (!validationResult.IsValid)

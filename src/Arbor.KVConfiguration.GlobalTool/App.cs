@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Arbor.KVConfiguration.Schema.Json;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Serilog;
 
 namespace Arbor.KVConfiguration.GlobalTool
 {
@@ -90,7 +86,7 @@ namespace Arbor.KVConfiguration.GlobalTool
         {
             Logger.Debug("Running application");
 
-            string[] usedArgs = GetArgs();
+            var usedArgs = GetArgs();
 
             if (usedArgs.Length == 0)
             {
@@ -121,7 +117,7 @@ namespace Arbor.KVConfiguration.GlobalTool
                 var items = JsonConfigurationSerializer.Deserialize(content);
 
                 var oldValuesToAdd = items.Keys.Where(oldPair =>
-                    !newPairs.Any(newPair => oldPair.Key.Equals(newPair.Key, StringComparison.OrdinalIgnoreCase)))
+                        !newPairs.Any(newPair => oldPair.Key.Equals(newPair.Key, StringComparison.OrdinalIgnoreCase)))
                     .ToArray();
 
                 Logger.Debug("Adding {ExistingCount} existing values", oldValuesToAdd.Length);
@@ -161,11 +157,13 @@ namespace Arbor.KVConfiguration.GlobalTool
             return 0;
         }
 
-        private void ShowUsage() => Logger.Information("usage: {{fullPathFileToWrite}} {{argKey}}={{argValue}} Example: {ExampleFileName} {ExampleKey1}={ExampleValue1} {ExampleKey2}={ExampleValue2}", "c:\\applicationMetadata.json", "myKey", "myValue", "myKey2", "myValue2");
+        private void ShowUsage() => Logger.Information(
+            "usage: {{fullPathFileToWrite}} {{argKey}}={{argValue}} Example: {ExampleFileName} {ExampleKey1}={ExampleValue1} {ExampleKey2}={ExampleValue2}",
+            "c:\\applicationMetadata.json", "myKey", "myValue", "myKey2", "myValue2");
 
         private string[] GetArgs()
         {
-            string[] usedArgs = Args;
+            var usedArgs = Args;
 
             if (Environment.UserInteractive && Debugger.IsAttached && usedArgs.Length == 0)
             {

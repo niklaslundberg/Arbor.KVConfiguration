@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Collections.Specialized;
 using System.IO;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Core.Metadata;
-using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.JsonConfiguration
 {
     public sealed class JsonKeyValueConfiguration : IKeyValueConfigurationWithMetadata
     {
-        private readonly IKeyValueConfiguration _inMemoryKeyValueConfiguration;
         private readonly string? _fileFullPath;
+        private readonly IKeyValueConfiguration _inMemoryKeyValueConfiguration;
 
         public JsonKeyValueConfiguration([NotNull] IEnumerable<KeyValueConfigurationItem> keyValueConfigurationItems)
         {

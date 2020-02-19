@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Immutable;
-using System.Linq;
-using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Urns
 {
@@ -19,7 +16,7 @@ namespace Arbor.KVConfiguration.Urns
 
         public ImmutableDictionary<string, object> GetInstances(Type type)
         {
-            if (!_configurationInstances.TryGetValue(type, out ConcurrentDictionary<string, object> instances))
+            if (!_configurationInstances.TryGetValue(type, out var instances))
             {
                 return ImmutableDictionary<string, object>.Empty;
             }
@@ -29,7 +26,7 @@ namespace Arbor.KVConfiguration.Urns
 
         public bool TryGet<T>(string key, out T? instance) where T : class
         {
-            object? foundInstance = Get(typeof(T), key);
+            var foundInstance = Get(typeof(T), key);
 
             if (foundInstance is T returnInstance)
             {
@@ -53,7 +50,7 @@ namespace Arbor.KVConfiguration.Urns
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(key));
             }
 
-            object? foundInstance = Get(type, key);
+            var foundInstance = Get(type, key);
 
             if (foundInstance is null)
             {
@@ -73,12 +70,12 @@ namespace Arbor.KVConfiguration.Urns
 
         public object? Get(Type type, string key)
         {
-            if (!_configurationInstances.TryGetValue(type, out ConcurrentDictionary<string, object> instances))
+            if (!_configurationInstances.TryGetValue(type, out var instances))
             {
                 return default;
             }
 
-            instances.TryGetValue(key, out object instance);
+            instances.TryGetValue(key, out var instance);
 
             return instance;
         }
@@ -95,8 +92,8 @@ namespace Arbor.KVConfiguration.Urns
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(key));
             }
 
-            if (_configurationInstances.TryGetValue(type, out ConcurrentDictionary<string, object> instances)
-                && instances.TryRemove(key, out object removedItem))
+            if (_configurationInstances.TryGetValue(type, out var instances)
+                && instances.TryRemove(key, out var removedItem))
             {
                 removed = removedItem;
                 return true;
@@ -114,7 +111,7 @@ namespace Arbor.KVConfiguration.Urns
             }
 
             if (!_configurationInstances.TryGetValue(instance.Value.GetType(),
-                out ConcurrentDictionary<string, object> typeInstanceDictionary))
+                out var typeInstanceDictionary))
             {
                 var typeDictionary = new ConcurrentDictionary<string, object>();
                 typeDictionary.AddOrUpdate(instance.Name, instance.Value, (name, found) => instance.Value);

@@ -1,8 +1,6 @@
-using System.Collections.Immutable;
 using System.Collections.Specialized;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Urns;
-using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit.Urn
 {
@@ -17,24 +15,21 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         {
             var primaryKeys = new NameValueCollection
             {
-                { "urn:a:simple:type2:instance1:url", "myUrl1" },
-                { "urn:a:simple:type2:instance1:text", "myText1" },
-                { "urn:a:simple:type:default1:url", "myUrl1" },
-                { "urn:a:simple:type:default1:text", "myText1" },
-                { "unrelated1", "abc" },
+                {"urn:a:simple:type2:instance1:url", "myUrl1"},
+                {"urn:a:simple:type2:instance1:text", "myText1"},
+                {"urn:a:simple:type:default1:url", "myUrl1"},
+                {"urn:a:simple:type:default1:text", "myText1"},
+                {"unrelated1", "abc"}
             };
 
             var secondaryKeys = new NameValueCollection
             {
-                { "urn:a:simple:type:default0:url", "myUrl0" },
-                { "urn:a:simple:type:default0:text", "myText0" },
-                { "unrelated2", "123" },
+                {"urn:a:simple:type:default0:url", "myUrl0"},
+                {"urn:a:simple:type:default0:text", "myText0"},
+                {"unrelated2", "123"}
             };
 
-            var thirdKeys = new NameValueCollection
-            {
-                { "urn:a:simple:type3:instance2:url", "" }
-            };
+            var thirdKeys = new NameValueCollection {{"urn:a:simple:type3:instance2:url", ""}};
 
             configuration = KeyValueConfigurationManager
                 .Add(new Core.InMemoryKeyValueConfiguration(primaryKeys))
@@ -43,24 +38,10 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
                 .Build();
         };
 
-        private Because of = () => { instances = configuration.GetNamedInstances<ASimpleType>(); };
-
         private It first_instance_should_not_be_null
             = () => instances[0].ShouldNotBeNull();
 
-        private It should_have_instance1_url = () => { instances[0].Value.Url.ShouldEqual("myUrl0"); };
-
-        private It should_have_instance1_name = () => { instances[0].Name.ShouldEqual("default0"); };
-
-        private It should_have_instance1_text = () =>
-        {
-            instances[0].Value.Text.ShouldEqual("myText0");
-        };
-
-        private It second_instance_should_not_be_null
-            = () => instances[1].ShouldNotBeNull();
-
-        private It second_have_instance2_url = () => { instances[1].Value.Url.ShouldEqual("myUrl1"); };
+        private Because of = () => { instances = configuration.GetNamedInstances<ASimpleType>(); };
 
         private It second_have_instance2_name = () => { instances[1].Name.ShouldEqual("default1"); };
 
@@ -69,6 +50,20 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
             instances[1].Value.Text.ShouldEqual("myText1");
         };
 
+        private It second_have_instance2_url = () => { instances[1].Value.Url.ShouldEqual("myUrl1"); };
+
+        private It second_instance_should_not_be_null
+            = () => instances[1].ShouldNotBeNull();
+
         private It should_have_2_instances = () => instances.Length.ShouldEqual(2);
+
+        private It should_have_instance1_name = () => { instances[0].Name.ShouldEqual("default0"); };
+
+        private It should_have_instance1_text = () =>
+        {
+            instances[0].Value.Text.ShouldEqual("myText0");
+        };
+
+        private It should_have_instance1_url = () => { instances[0].Value.Url.ShouldEqual("myUrl0"); };
     }
 }

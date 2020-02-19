@@ -1,5 +1,4 @@
-﻿using System.Collections.Immutable;
-using System.Configuration;
+﻿using System.Configuration;
 using Arbor.KVConfiguration.Core;
 
 namespace Arbor.KVConfiguration.SystemConfiguration
@@ -8,7 +7,8 @@ namespace Arbor.KVConfiguration.SystemConfiguration
     {
         private readonly InMemoryKeyValueConfiguration _inMemoryKeyValueConfiguration;
 
-        public AppSettingsKeyValueConfiguration() => _inMemoryKeyValueConfiguration = new InMemoryKeyValueConfiguration(ConfigurationManager.AppSettings);
+        public AppSettingsKeyValueConfiguration() => _inMemoryKeyValueConfiguration =
+            new InMemoryKeyValueConfiguration(ConfigurationManager.AppSettings);
 
         public ImmutableArray<string> AllKeys => _inMemoryKeyValueConfiguration.AllKeys;
 

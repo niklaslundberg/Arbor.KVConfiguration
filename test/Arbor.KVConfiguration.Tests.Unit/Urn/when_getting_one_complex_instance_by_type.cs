@@ -1,7 +1,6 @@
 using System.Collections.Specialized;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Urns;
-using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit.Urn
 {
@@ -16,10 +15,10 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         {
             var keys = new NameValueCollection
             {
-                { "urn:test:a:complex:immutable:type:instance1:id", "myId1" },
-                { "urn:test:a:complex:immutable:type:instance1:name", "myName1" },
-                { "urn:test:a:complex:immutable:type:instance1:children", "myChild1.1" },
-                { "urn:test:a:complex:immutable:type:instance1:children", "myChild1.2" }
+                {"urn:test:a:complex:immutable:type:instance1:id", "myId1"},
+                {"urn:test:a:complex:immutable:type:instance1:name", "myName1"},
+                {"urn:test:a:complex:immutable:type:instance1:children", "myChild1.1"},
+                {"urn:test:a:complex:immutable:type:instance1:children", "myChild1.2"}
             };
 
             configuration = new Core.InMemoryKeyValueConfiguration(keys);

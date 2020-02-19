@@ -12,9 +12,7 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
         {
             var collection = new NameValueCollection
             {
-                { "urn:test:key", "a" },
-                { "urn:another-key", "b" },
-                { "urn:yet-another-key", "c" }
+                {"urn:test:key", "a"}, {"urn:another-key", "b"}, {"urn:yet-another-key", "c"}
             };
 
             IKeyValueConfiguration appSettingsKeyValueConfiguration = new InMemoryKeyValueConfiguration(collection);
@@ -39,6 +37,7 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
                     }
 
                     string b = StaticKeyValueConfigurationManager.AppSettings["urn:another-key"];
+
                     if (b != "b")
                     {
                         Console.WriteLine("WRONG b in index {0}, value {1}", index, b);
@@ -46,6 +45,7 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
                     }
 
                     string c = StaticKeyValueConfigurationManager.AppSettings["urn:yet-another-key"];
+
                     if (c != "c")
                     {
                         Console.WriteLine("WRONG c in index {0}, value {1}", index, c);
@@ -53,7 +53,9 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
                     }
                 });
 
-            Console.WriteLine(succeeded ? "OK" : "Failed");
+            Console.WriteLine(succeeded
+                ? "OK"
+                : "Failed");
         }
     }
 }

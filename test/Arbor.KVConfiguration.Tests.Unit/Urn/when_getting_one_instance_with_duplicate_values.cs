@@ -2,7 +2,6 @@ using System;
 using System.Collections.Specialized;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Urns;
-using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit.Urn
 {
@@ -11,12 +10,14 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
     {
         private static IKeyValueConfiguration configuration;
 
+        private static Exception exception;
+
         private Establish context = () =>
         {
             var keys = new NameValueCollection
             {
-                { "urn:type:with:required:ctor:instance1:key", "abc" },
-                { "urn:type:with:required:ctor:instance1:key", "def" }
+                {"urn:type:with:required:ctor:instance1:key", "abc"},
+                {"urn:type:with:required:ctor:instance1:key", "def"}
             };
 
             configuration = new Core.InMemoryKeyValueConfiguration(keys);
@@ -24,10 +25,9 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 
         private Because of = () =>
         {
-            exception = Catch.Exception(() => configuration.GetInstance(typeof(TypeWithRequiredCtor)) as TypeWithRequiredCtor);
+            exception = Catch.Exception(() =>
+                configuration.GetInstance(typeof(TypeWithRequiredCtor)) as TypeWithRequiredCtor);
         };
-
-        private static Exception exception;
 
         private It should_throw_invalid_operation_exception = () =>
         {

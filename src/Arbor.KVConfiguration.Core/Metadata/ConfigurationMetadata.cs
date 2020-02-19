@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using Arbor.KVConfiguration.Core.Extensions;
-using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core.Metadata
 {

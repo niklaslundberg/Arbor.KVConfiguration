@@ -1,7 +1,4 @@
-﻿using System.Collections.Immutable;
-using System.Linq;
-using Arbor.KVConfiguration.Urns;
-using Xunit;
+﻿using Arbor.KVConfiguration.Urns;
 
 namespace Arbor.KVConfiguration.Tests.Unit.Registrations
 {
@@ -62,7 +59,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Registrations
             var instance = new ValidatableOptional("abc", 123);
             holder.Add(new NamedInstance<ValidatableOptional>(instance, "abc-instance"));
 
-            bool found = holder.TryGet("abc-instance", typeof(ValidatableOptional), out object foundInstance);
+            bool found = holder.TryGet("abc-instance", typeof(ValidatableOptional), out var foundInstance);
 
             Assert.True(found);
 
@@ -81,7 +78,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Registrations
 
             Assert.NotNull(instance);
 
-            bool isRemoved = holder.TryRemove("abc-instance", typeof(ValidatableOptional), out object removed);
+            bool isRemoved = holder.TryRemove("abc-instance", typeof(ValidatableOptional), out var removed);
 
             Assert.True(isRemoved);
 
@@ -102,7 +99,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Registrations
 
             Assert.NotNull(instance);
 
-            bool isRemoved = holder.TryRemove("abc-instance", typeof(string), out object removed);
+            bool isRemoved = holder.TryRemove("abc-instance", typeof(string), out var removed);
 
             Assert.False(isRemoved);
 
@@ -121,7 +118,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Registrations
 
             Assert.NotNull(instance);
 
-            bool isRemoved = holder.TryRemove("abc-instance-2", typeof(ValidatableOptional), out object removed);
+            bool isRemoved = holder.TryRemove("abc-instance-2", typeof(ValidatableOptional), out var removed);
 
             Assert.False(isRemoved);
 

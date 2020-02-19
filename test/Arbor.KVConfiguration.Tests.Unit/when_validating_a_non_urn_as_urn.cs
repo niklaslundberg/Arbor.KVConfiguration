@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using Arbor.KVConfiguration.Core.Metadata;
 using Arbor.KVConfiguration.JsonConfiguration;
 using Arbor.KVConfiguration.Schema;
 using Arbor.KVConfiguration.Schema.Validators;
 using Arbor.KVConfiguration.Urns;
-using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit
 {
@@ -23,7 +21,8 @@ namespace Arbor.KVConfiguration.Tests.Unit
 
         private Establish context = () =>
         {
-            configuration_validator = new ConfigurationValidator(new IValueValidator[] { new UrnValidator() }.ToImmutableArray());
+            configuration_validator =
+                new ConfigurationValidator(new IValueValidator[] {new UrnValidator()}.ToImmutableArray());
 
             var configurationItems = new List<KeyValueConfigurationItem>
             {

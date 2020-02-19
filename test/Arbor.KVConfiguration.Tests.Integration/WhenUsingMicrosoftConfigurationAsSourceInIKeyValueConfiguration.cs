@@ -2,8 +2,6 @@
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns;
 using Arbor.KVConfiguration.Urns;
-using Microsoft.Extensions.Configuration;
-using Xunit;
 
 namespace Arbor.KVConfiguration.Tests.Integration
 {
@@ -13,9 +11,10 @@ namespace Arbor.KVConfiguration.Tests.Integration
         public void ItShouldUseValuesDefined()
         {
             IConfigurationRoot configurationRoot = new ConfigurationBuilder()
-                .AddInMemoryCollection(new Dictionary<string, string> { ["a:b:c"] = "123" }).Build();
+                .AddInMemoryCollection(new Dictionary<string, string> {["a:b:c"] = "123"}).Build();
 
-            MultiSourceKeyValueConfiguration multiSourceKeyValueConfiguration = KeyValueConfigurationManager.Add(new KeyValueConfigurationAdapter(configurationRoot)).Build();
+            var multiSourceKeyValueConfiguration = KeyValueConfigurationManager
+                .Add(new KeyValueConfigurationAdapter(configurationRoot)).Build();
 
             string actual = multiSourceKeyValueConfiguration["a:b:c"];
 
@@ -28,11 +27,11 @@ namespace Arbor.KVConfiguration.Tests.Integration
             IConfigurationRoot configurationRoot = new ConfigurationBuilder()
                 .AddInMemoryCollection(new Dictionary<string, string>
                 {
-                    ["urn:test:simple:instance:name"] = "John",
-                    ["urn:test:simple:instance:age"] = "42",
+                    ["urn:test:simple:instance:name"] = "John", ["urn:test:simple:instance:age"] = "42"
                 }).Build();
 
-            MultiSourceKeyValueConfiguration multiSourceKeyValueConfiguration = KeyValueConfigurationManager.Add(new KeyValueConfigurationAdapter(configurationRoot)).Build();
+            var multiSourceKeyValueConfiguration = KeyValueConfigurationManager
+                .Add(new KeyValueConfigurationAdapter(configurationRoot)).Build();
 
             var actual = multiSourceKeyValueConfiguration.GetInstance<SimpleCtorType>();
 

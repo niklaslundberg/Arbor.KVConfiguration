@@ -1,6 +1,4 @@
-﻿using System.Collections.Immutable;
-using Arbor.KVConfiguration.Core;
-using JetBrains.Annotations;
+﻿using Arbor.KVConfiguration.Core;
 
 namespace Arbor.KVConfiguration.Schema.Validators
 {

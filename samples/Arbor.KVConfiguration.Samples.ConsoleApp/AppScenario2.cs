@@ -14,14 +14,14 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
         {
             var collection = new NameValueCollection
             {
-                { string.Empty, string.Empty },
-                { null, null },
-                { null, string.Empty },
-                { string.Empty, null },
-                { "\t", "\t" },
-                { "urn:test:key", "a-test-value" },
-                { "urn:test:KEY", "second-test-value" },
-                { "urn:another-key", "another-test-value" }
+                {string.Empty, string.Empty},
+                {null, null},
+                {null, string.Empty},
+                {string.Empty, null},
+                {"\t", "\t"},
+                {"urn:test:key", "a-test-value"},
+                {"urn:test:KEY", "second-test-value"},
+                {"urn:another-key", "another-test-value"}
             };
 
             IKeyValueConfiguration appSettingsKeyValueConfiguration = new InMemoryKeyValueConfiguration(collection);
@@ -42,7 +42,7 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
 
             var builder = new StringBuilder();
 
-            foreach (KeyValuePair<string, string> pair in keys)
+            foreach (var pair in keys)
             {
                 builder.Append("Key: ").AppendLine(pair.Key);
 
