@@ -36,6 +36,6 @@ namespace Arbor.KVConfiguration.Tests.Unit
         private Because of = () =>
             found_value = multi_source_key_value_configuration.AllWithMultipleValues;
 
-        private It should_find_the_previous_value = () => found_value.SelectMany(s => s.Values).ShouldContain("true", "myId1", "myName1", "myChild1.1","myChild1.2");
+        private It should_find_the_previous_value = () => found_value.SelectMany(s => s.Values).ShouldContain("true", "myId1", "myName1", "myChild1.1", "myChild1.2");
     }
 }

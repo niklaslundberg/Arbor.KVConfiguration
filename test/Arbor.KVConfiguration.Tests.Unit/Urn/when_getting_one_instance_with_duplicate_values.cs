@@ -24,7 +24,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 
         private Because of = () =>
         {
-            exception = Catch.Exception( ()=> configuration.GetInstance(typeof(TypeWithRequiredCtor)) as TypeWithRequiredCtor);
+            exception = Catch.Exception(() => configuration.GetInstance(typeof(TypeWithRequiredCtor)) as TypeWithRequiredCtor);
         };
 
         private static Exception exception;

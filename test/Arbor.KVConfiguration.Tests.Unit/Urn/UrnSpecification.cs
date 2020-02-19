@@ -61,7 +61,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         public void EqualsForSameAsObjectShouldEqualTrue()
         {
             var a = new Primitives.Urn("urn:a:b:c");
-            var asAObject = (object) a;
+            var asAObject = (object)a;
 
             Assert.True(a.Equals(asAObject));
         }
@@ -70,7 +70,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         public void EqualsForNullAsObjectShouldEqualFalse()
         {
             var a = new Primitives.Urn("urn:a:b:c");
-            var b = (object) null;
+            var b = (object)null;
 
             // ReSharper disable once ExpressionIsAlwaysNull
             Assert.False(a.Equals(b));
@@ -96,6 +96,6 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         public void TryParseInvalidUriShouldReturnFalse() => Assert.False(Primitives.Urn.TryParse("urn:a{", out Primitives.Urn _));
 
         [Fact]
-        public void CtorWithInvalidUrnShouldThrow() => Assert.Throws<FormatException>(() =>new Primitives.Urn("urn:a{"));
+        public void CtorWithInvalidUrnShouldThrow() => Assert.Throws<FormatException>(() => new Primitives.Urn("urn:a{"));
     }
 }

@@ -23,7 +23,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
 
         private Establish context = () =>
         {
-            configuration_validator = new ConfigurationValidator(new IValueValidator[]{new UrnValidator()}.ToImmutableArray());
+            configuration_validator = new ConfigurationValidator(new IValueValidator[] { new UrnValidator() }.ToImmutableArray());
 
             var configurationItems = new List<KeyValueConfigurationItem>
             {

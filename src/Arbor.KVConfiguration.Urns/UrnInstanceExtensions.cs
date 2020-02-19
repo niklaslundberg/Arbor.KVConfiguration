@@ -48,7 +48,7 @@ namespace Arbor.KVConfiguration.Urns
             var configurationInstanceHolder = new ConfigurationInstanceHolder();
             foreach (UrnTypeRegistration registration in configurationRegistrations.UrnTypeRegistrations)
             {
-                if (registration.Instance is {})
+                if (registration.Instance is { })
                 {
                     configurationInstanceHolder.Add(registration.Instance);
                 }
@@ -83,7 +83,7 @@ namespace Arbor.KVConfiguration.Urns
                 {
                     var optionalAttribute = type.GetCustomAttribute<OptionalAttribute>();
 
-                    if (optionalAttribute is {})
+                    if (optionalAttribute is { })
                     {
                         return ImmutableArray<UrnTypeRegistration>.Empty;
                     }

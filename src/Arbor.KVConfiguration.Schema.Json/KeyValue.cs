@@ -33,6 +33,6 @@ namespace Arbor.KVConfiguration.Schema.Json
         public string? Value { get; }
 
         [UsedImplicitly]
-        public bool ShouldSerializeConfigurationMetadata() => ConfigurationMetadata is {};
+        public bool ShouldSerializeConfigurationMetadata() => ConfigurationMetadata is { };
     }
 }

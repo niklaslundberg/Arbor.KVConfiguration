@@ -9,7 +9,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 
         protected static Arbor.Primitives.Urn urn;
 
-        private Establish context = () => {urn= new Arbor.Primitives.Urn(attempted_value); };
+        private Establish context = () => { urn = new Arbor.Primitives.Urn(attempted_value); };
 
         private Because of = () => { result = urn.IsInHierarchy(new Arbor.Primitives.Urn("urn:a:d:c")); };
 

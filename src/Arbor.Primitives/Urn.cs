@@ -6,7 +6,7 @@ namespace Arbor.Primitives
 {
     public class Urn : IEquatable<Urn>
     {
-        private static readonly char[] InvalidCharacters = {'/', '\\'};
+        private static readonly char[] InvalidCharacters = { '/', '\\' };
         private const string DoubleSeparator = "::";
         public const char Separator = ':';
 

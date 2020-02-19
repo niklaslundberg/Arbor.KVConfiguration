@@ -43,5 +43,5 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
 
             return services;
         }
-  }
+    }
 }
