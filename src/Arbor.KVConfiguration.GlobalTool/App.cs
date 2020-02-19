@@ -10,6 +10,7 @@ using Arbor.KVConfiguration.Schema.Json;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using Serilog.Core;
 
 namespace Arbor.KVConfiguration.GlobalTool
 {
@@ -35,15 +36,16 @@ namespace Arbor.KVConfiguration.GlobalTool
 
         public IReadOnlyDictionary<string, string> Variables { get; }
 
-        public async ValueTask DisposeAsync()
+        public ValueTask DisposeAsync()
         {
             Logger.Debug("Disposing host");
             Host.Dispose();
+            return default;
         }
 
         public static async Task<int> CreateAndRunAsync(string[] args, IReadOnlyDictionary<string, string> variables)
         {
-            var loggerConfiguration = new LoggerConfiguration()
+            LoggerConfiguration loggerConfiguration = new LoggerConfiguration()
                 .WriteTo.Console();
 
             if (args.Any(arg => arg.Equals(AppConstants.DebugArg)))
@@ -52,7 +54,7 @@ namespace Arbor.KVConfiguration.GlobalTool
                     .MinimumLevel.Debug();
             }
 
-            using var logger = loggerConfiguration.CreateLogger();
+            using Logger logger = loggerConfiguration.CreateLogger();
 
             App app;
 
@@ -90,7 +92,7 @@ namespace Arbor.KVConfiguration.GlobalTool
         {
             Logger.Debug("Running application");
 
-            var usedArgs = GetArgs();
+            string[] usedArgs = GetArgs();
 
             if (usedArgs.Length == 0)
             {
@@ -99,7 +101,8 @@ namespace Arbor.KVConfiguration.GlobalTool
                 return 3;
             }
 
-            var newPairs = Host.Services.GetRequiredService<ArgParser>().Parse(usedArgs.Skip(1));
+            ImmutableArray<KeyValuePair<string, string>> newPairs =
+                Host.Services.GetRequiredService<ArgParser>().Parse(usedArgs.Skip(1));
 
             if (newPairs.IsDefaultOrEmpty)
             {
@@ -118,15 +121,15 @@ namespace Arbor.KVConfiguration.GlobalTool
             {
                 Logger.Debug("Found existing file '{File}'", file);
                 string content = await File.ReadAllTextAsync(file, Encoding.UTF8);
-                var items = JsonConfigurationSerializer.Deserialize(content);
+                ConfigurationItems items = JsonConfigurationSerializer.Deserialize(content);
 
-                var oldValuesToAdd = items.Keys.Where(oldPair =>
+                KeyValue[] oldValuesToAdd = items.Keys.Where(oldPair =>
                         !newPairs.Any(newPair => oldPair.Key.Equals(newPair.Key, StringComparison.OrdinalIgnoreCase)))
                     .ToArray();
 
                 Logger.Debug("Adding {ExistingCount} existing values", oldValuesToAdd.Length);
 
-                foreach (var oldValue in oldValuesToAdd)
+                foreach (KeyValue oldValue in oldValuesToAdd)
                 {
                     if (oldValue.Value is null)
                     {
@@ -137,7 +140,7 @@ namespace Arbor.KVConfiguration.GlobalTool
                 }
             }
 
-            var sorted = kvPairs.OrderBy(pair => pair.Key);
+            IOrderedEnumerable<KeyValuePair<string, string>> sorted = kvPairs.OrderBy(pair => pair.Key);
 
             var configurationItems = new ConfigurationItems("1.0",
                 sorted
@@ -167,7 +170,7 @@ namespace Arbor.KVConfiguration.GlobalTool
 
         private string[] GetArgs()
         {
-            var usedArgs = Args;
+            string[] usedArgs = Args;
 
             if (Environment.UserInteractive && Debugger.IsAttached && usedArgs.Length == 0)
             {
@@ -198,14 +201,14 @@ namespace Arbor.KVConfiguration.GlobalTool
         {
             logger.Debug("Creating host");
 
-            var hostBuilder = Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(args)
+            IHostBuilder hostBuilder = Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddSingleton(logger);
                     services.AddSingleton<ArgParser>();
                 }).UseSerilog(logger);
 
-            var host = hostBuilder.Build();
+            IHost host = hostBuilder.Build();
 
             return new App(host, logger, args, variables);
         }

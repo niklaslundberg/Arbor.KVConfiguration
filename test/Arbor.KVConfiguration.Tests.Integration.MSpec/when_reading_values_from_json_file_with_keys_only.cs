@@ -4,33 +4,36 @@ using Arbor.KVConfiguration.JsonConfiguration;
 using Arbor.KVConfiguration.Schema.Json;
 using Machine.Specifications;
 
-namespace Arbor.KVConfiguration.Tests.Integration
+namespace Arbor.KVConfiguration.Tests.Integration.MSpec
 {
     [Subject(typeof(JsonFileReader))]
-    public class when_reading_version_from_file_with_version
+    public class when_reading_values_from_json_file_with_keys_only
     {
-        private static string appsettings_full_path;
+        static string appsettings_full_path;
 
-        private static ConfigurationItems configuration_items;
+        static ConfigurationItems configuration_items;
 
-        private static JsonFileReader reader;
+        static JsonFileReader reader;
 
-        private Establish context = () =>
+        Establish context = () =>
         {
             appsettings_full_path = Path.Combine(
                 VcsTestPathHelper.FindVcsRootPath(),
                 "test",
                 "Arbor.KVConfiguration.Tests.Integration",
-                "appsettings.json");
+                "keysonly.json");
 
             reader = new JsonFileReader(appsettings_full_path);
         };
 
-        private Because of = () => { configuration_items = reader.GetConfigurationItems(); };
+        Because of = () => { configuration_items = reader.GetConfigurationItems(); };
 
-        private It should_have_implicit_version = () => { configuration_items.Version.ShouldEqual("99.0"); };
+        It should_have_implicit_version = () =>
+        {
+            configuration_items.Version.ShouldEqual(JsonSchemaConstants.Version1_0);
+        };
 
-        private It should_have_three_values = () =>
+        It should_have_three_values = () =>
         {
             foreach (KeyValue item in configuration_items.Keys)
             {

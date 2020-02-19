@@ -1,32 +1,31 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using Arbor.Aesculus.Core;
 
-namespace Arbor.KVConfiguration.Tests.Integration
+namespace Arbor.KVConfiguration.Tests.Integration.MSpec
 {
-    internal static class VcsTestPathHelper
+    static class VcsTestPathHelper
     {
         public static string FindVcsRootPath()
         {
             try
             {
-                Assembly ncrunchAssembly = AppDomain.CurrentDomain.Load("NCrunch.Framework");
+                var ncrunchAssembly = AppDomain.CurrentDomain.Load("NCrunch.Framework");
 
-                Type ncrunchType =
+                var ncrunchType =
                     ncrunchAssembly.GetTypes()
                         .FirstOrDefault(
                             type => type.Name.Equals("NCrunchEnvironment",
                                 StringComparison.InvariantCultureIgnoreCase));
 
-                MethodInfo method = ncrunchType?.GetMethod("GetOriginalSolutionPath");
+                var method = ncrunchType?.GetMethod("GetOriginalSolutionPath");
 
                 string originalSolutionPath = method?.Invoke(null, null) as string;
 
                 if (!string.IsNullOrWhiteSpace(originalSolutionPath))
                 {
-                    DirectoryInfo parent = new DirectoryInfo(originalSolutionPath).Parent;
+                    var parent = new DirectoryInfo(originalSolutionPath).Parent;
                     // ReSharper disable once PossibleNullReferenceException
                     return VcsPathHelper.FindVcsRootPath(parent.FullName);
                 }

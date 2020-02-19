@@ -48,7 +48,7 @@ namespace Arbor.KVConfiguration.Tests.Integration
             IConfigurationRoot configurationRoot = new ConfigurationBuilder()
                 .AddKeyValueConfigurationSource(inMemoryKeyValueConfiguration).Build();
 
-            var simpleCtorType = configurationRoot.ToKeyValueConfigurator().GetInstance<SimpleCtorType>();
+            SimpleCtorType simpleCtorType = configurationRoot.ToKeyValueConfigurator().GetInstance<SimpleCtorType>();
 
             Assert.NotNull(simpleCtorType);
             Assert.Equal("John", simpleCtorType.Name);

@@ -60,7 +60,7 @@ dotnet_style_null_propagation = true:warning
 # https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference#implicit-and-explicit-types
 csharp_style_var_for_built_in_types = false:warning
 csharp_style_var_when_type_is_apparent = true:warning
-#csharp_style_var_elsewhere = true:warning
+csharp_style_var_elsewhere = false:warning
 # Expression-bodied members
 # https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference#expression_bodied_members
 csharp_style_expression_bodied_methods = true:warning
@@ -323,3 +323,6 @@ dotnet_naming_symbols.parameters_group.applicable_kinds = parameter
 dotnet_naming_rule.parameters_rule.symbols  = parameters_group
 dotnet_naming_rule.parameters_rule.style    = camel_case_style
 dotnet_naming_rule.parameters_rule.severity = warning
+
+# CA2007: Consider calling ConfigureAwait on the awaited task
+dotnet_diagnostic.CA2007.severity = none

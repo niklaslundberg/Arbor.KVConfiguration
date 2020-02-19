@@ -34,7 +34,7 @@ namespace Arbor.KVConfiguration.Core
 
         [PublicAPI] public string SourceChain { get; }
 
-        public void Dispose() => _appSettingsDecoratorBuilder?.Dispose();
+        public void Dispose() => _appSettingsDecoratorBuilder.Dispose();
 
         public ImmutableArray<string> AllKeys => GetAllKeys(_appSettingsDecoratorBuilder.AppSettingsBuilder)
             .Distinct(StringComparer.OrdinalIgnoreCase).ToImmutableArray();
@@ -91,7 +91,7 @@ namespace Arbor.KVConfiguration.Core
 
             string result = appSettingsDecoratorBuilder.Decorator.ToString();
 
-            if (appSettingsDecoratorBuilder.Previous is object)
+            if (appSettingsDecoratorBuilder.Previous is {})
             {
                 result += Arrow + BuildDecoratorsAsString(appSettingsDecoratorBuilder.Previous);
             }
@@ -108,7 +108,7 @@ namespace Arbor.KVConfiguration.Core
 
             string result = builder.KeyValueConfiguration.ToString();
 
-            if (builder.Previous is object)
+            if (builder.Previous is {})
             {
                 result += Arrow + BuildChainAsString(builder.Previous);
             }
@@ -128,7 +128,7 @@ namespace Arbor.KVConfiguration.Core
                 return appSettingsBuilder.KeyValueConfiguration.AllKeys.ToArray();
             }
 
-            var allPreviousKeys = GetAllKeys(appSettingsBuilder.Previous);
+            string[] allPreviousKeys = GetAllKeys(appSettingsBuilder.Previous);
 
             string[] allKeys = appSettingsBuilder.KeyValueConfiguration.AllKeys.Concat(allPreviousKeys).ToArray();
 
@@ -144,7 +144,7 @@ namespace Arbor.KVConfiguration.Core
 
             string? decorated = null;
 
-            if (decorator.Previous is object)
+            if (decorator.Previous is {})
             {
                 decorated = DecorateValue(decorator.Previous, value);
             }
@@ -250,7 +250,7 @@ namespace Arbor.KVConfiguration.Core
         {
             var configurationItems = new List<KeyValueConfigurationItem>();
 
-            if (appSettingsBuilder.Previous is object)
+            if (appSettingsBuilder.Previous is {})
             {
                 configurationItems.AddRange(GetConfigurationItems(appSettingsBuilder.Previous));
             }
@@ -271,7 +271,7 @@ namespace Arbor.KVConfiguration.Core
         [PublicAPI]
         public IKeyValueConfiguration ConfiguratorFor(string key, Action<string>? logAction = null)
         {
-            var tuple =
+            (IKeyValueConfiguration, string) tuple =
                 GetValue(_appSettingsDecoratorBuilder.AppSettingsBuilder, key, logAction);
 
             if (tuple.Item1 is NoConfiguration || tuple.Item1 is null)
