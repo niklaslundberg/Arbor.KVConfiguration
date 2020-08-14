@@ -1,5 +1,7 @@
 @ECHO OFF
 SET Arbor.Build.Log.Level=Verbose
+SET Arbor.Build.BuildNumber.UnixEpochSecondsEnabled=true
+SET Arbor.Build.Bootstrapper.AllowPrerelease=true
 SET Arbor.Build.Build.Bootstrapper.AllowPrerelease=true
 SET Arbor.Build.Tools.External.MSpec.Enabled=true
 SET Arbor.Build.NuGet.Package.Artifacts.Suffix=
@@ -23,7 +25,7 @@ SET Arbor.Build.Tools.External.Xunit.NetFramework.Enabled=false
 SET Arbor.Build.Build.NetAssembly.MetadataEnabled=true
 SET Arbor.Build.Build.NetAssembly.Description=Key value configuration
 SET Arbor.Build.Build.NetAssembly.Company=Niklas Lundberg
-SET Arbor.Build.Build.NetAssembly.Copyright=© Niklas Lundberg 2014-2018
+SET Arbor.Build.Build.NetAssembly.Copyright=© Niklas Lundberg 2014-2020
 SET Arbor.Build.Build.NetAssembly.Trademark=Arbor.KVConfiguration
 SET Arbor.Build.Build.NetAssembly.Product=Arbor.KVConfiguration
 SET Arbor.Build.ShowAvailableVariablesEnabled=true
