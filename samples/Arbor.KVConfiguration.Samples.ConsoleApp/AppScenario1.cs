@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Globalization;
 using System.Text;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Core.Extensions.StringExtensions;
-using Arbor.KVConfiguration.SystemConfiguration;
 
 namespace Arbor.KVConfiguration.Samples.ConsoleApp
 {
@@ -12,7 +12,7 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
     {
         public static void Execute()
         {
-            IKeyValueConfiguration appSettingsKeyValueConfiguration = new AppSettingsKeyValueConfiguration();
+            IKeyValueConfiguration appSettingsKeyValueConfiguration = new InMemoryKeyValueConfiguration(new NameValueCollection());
 
             KeyValueConfigurationManager.Add(appSettingsKeyValueConfiguration).Build();
 
