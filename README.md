@@ -14,6 +14,8 @@ Key-Value mapping of configuration values to objects
 
 * Supports decorators, like expanding environment variables
 
+* Supports Microsoft.Configuration.ConfigurationBuilders for .NET Framework projects
+
 * Supports both single and multiple values per key
 
 

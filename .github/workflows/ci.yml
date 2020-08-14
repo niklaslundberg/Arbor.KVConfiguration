@@ -5,13 +5,10 @@ on: [push]
 jobs:
   build:
 
-    runs-on: windows-2019
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v1
-    - uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: '5.0.100-preview.7.20366.6'
     - name: install-tools
       run: |
         dotnet tool install --global Arbor.Tooler.GlobalTool

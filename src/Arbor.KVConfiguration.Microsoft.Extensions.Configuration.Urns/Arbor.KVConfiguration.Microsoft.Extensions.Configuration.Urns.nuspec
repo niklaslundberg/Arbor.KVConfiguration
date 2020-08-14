@@ -24,15 +24,19 @@
         <dependencies>
             <dependency id="Arbor.KVConfiguration.Core" version="[$version$]" />
             <dependency id="Arbor.KVConfiguration.Urns" version="[$version$]" />
-            <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="[3.0.0,6.0.0)" />
-            <dependency id="Microsoft.Extensions.Configuration" version="[3.0.0,6.0.0)" />
+            <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="[3.0.0,4.0.0)" />
+            <dependency id="Microsoft.Extensions.Configuration" version="[3.0.0,4.0.0)" />
         </dependencies>
         <references></references>
         <tags></tags>
     </metadata>
     <files>
         <file
-            src="bin\$configuration$\net5.0\Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns.dll"
-            target="lib\net5.0" />
+            src="bin\$configuration$\netstandard2.0\Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns.dll"
+            target="lib\netstandard2.0" />
+        <file src="bin\$configuration$\net471\Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns.dll"
+              target="lib\net471" />
+        <file src="bin\$configuration$\net472\Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns.dll"
+              target="lib\net472" />
     </files>
 </package>

@@ -2,9 +2,9 @@
 
 <package>
     <metadata>
-        <id>Arbor.KVConfiguration.JsonConfiguration</id>
+        <id>Arbor.KVConfiguration.SystemConfiguration.Providers</id>
         <version>0.0.1</version>
-        <title>Arbor.KVConfiguration.JsonConfiguration</title>
+        <title>Arbor.KVConfiguration.SystemConfiguration.Providers</title>
         <authors>Niklas Lundberg</authors>
         <owners></owners>
         <description>
@@ -13,7 +13,7 @@
         <releaseNotes>
         </releaseNotes>
         <summary>
-            Arbor.KVConfiguration.JsonConfiguration
+            Arbor.KVConfiguration.SystemConfiguration.Providers
         </summary>
         <language>en-US</language>
         <projectUrl>https://github.com/niklaslundberg/Arbor.KVConfiguration</projectUrl>
@@ -23,17 +23,17 @@
         <copyright>Copyright Niklas Lundberg 2016 - 2020</copyright>
         <dependencies>
             <dependency id="Arbor.KVConfiguration.Core" version="[$version$]" />
-            <dependency id="Arbor.KVConfiguration.Schema" version="[$version$]" />
-            <dependency id="Arbor.KVConfiguration.Schema.Json" version="[$version$]" />
-            <dependency id="Newtonsoft.Json" version="[12.0.1,13.0.0)" />
         </dependencies>
         <references></references>
+        <frameworkAssemblies>
+            <frameworkAssembly assemblyName="System.Configuration" targetFramework="net472" />
+        </frameworkAssemblies>
         <tags></tags>
     </metadata>
     <files>
-        <file src="bin\$configuration$\netstandard2.0\Arbor.KVConfiguration.JsonConfiguration.dll"
-              target="lib\netstandard2.0" />
-        <file src="bin\$configuration$\net471\Arbor.KVConfiguration.JsonConfiguration.dll" target="lib\net471" />
-        <file src="bin\$configuration$\net472\Arbor.KVConfiguration.JsonConfiguration.dll" target="lib\net472" />
+        <file src="bin\$configuration$\net471\Arbor.KVConfiguration.SystemConfiguration.Providers.dll"
+              target="lib\net471" />
+        <file src="bin\$configuration$\net472\Arbor.KVConfiguration.SystemConfiguration.Providers.dll"
+              target="lib\net472" />
     </files>
 </package>

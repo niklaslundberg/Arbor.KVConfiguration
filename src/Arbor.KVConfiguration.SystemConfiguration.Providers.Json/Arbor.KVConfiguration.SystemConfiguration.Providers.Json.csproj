@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net471;net472</TargetFrameworks>
+    <TargetFrameworks>net471;net472</TargetFrameworks>
     <CodeAnalysisRuleSet>..\Arbor.ruleset</CodeAnalysisRuleSet>
     <LangVersion>8</LangVersion>
   </PropertyGroup>
@@ -15,10 +15,15 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="System.Collections.Immutable" Version="1.7.0" />
+    <PackageReference Include="Microsoft.Configuration.ConfigurationBuilders.Base" Version="1.0.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Arbor.KVConfiguration.Core\Arbor.KVConfiguration.Core.csproj" />
+    <ProjectReference Include="..\Arbor.KVConfiguration.JsonConfiguration\Arbor.KVConfiguration.JsonConfiguration.csproj" />
+    <ProjectReference Include="..\Arbor.KVConfiguration.SystemConfiguration.Providers\Arbor.KVConfiguration.SystemConfiguration.Providers.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Configuration">
+    </Reference>
   </ItemGroup>
 </Project>
