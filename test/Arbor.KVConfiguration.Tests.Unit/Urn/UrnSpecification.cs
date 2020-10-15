@@ -17,7 +17,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
             Assert.Throws<FormatException>(() => new Primitives.Urn("http://abc"));
 
         [Fact]
-        public void NullStringShouldThrowInCtor() => Assert.Throws<ArgumentException>(() => new Primitives.Urn(null));
+        public void NullStringShouldThrowInCtor() => Assert.Throws<ArgumentException>(() => new Primitives.Urn(null!));
 
         [Fact]
         public void UrnStringTooShortShouldThrowInCtor() =>
