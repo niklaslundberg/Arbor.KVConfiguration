@@ -81,11 +81,11 @@ namespace Arbor.Primitives
 
         public string Nid { get; }
 
-        public string Name
+        public string? Name
         {
             get
             {
-                string lastOrDefault = OriginalValue.Split(
+                string? lastOrDefault = OriginalValue.Split(
                     new[] {Separator},
                     StringSplitOptions.RemoveEmptyEntries).LastOrDefault();
 
@@ -124,7 +124,7 @@ namespace Arbor.Primitives
             }
         }
 
-        public bool Equals(Urn other)
+        public bool Equals(Urn? other)
         {
             if (other is null)
             {
@@ -161,9 +161,9 @@ namespace Arbor.Primitives
 
         public static bool operator !=(Urn left, Urn right) => !Equals(left, right);
 
-        public static bool TryParse(string originalValue, out Urn? result)
+        public static bool TryParse(string? originalValue, out Urn? result)
         {
-            if (string.IsNullOrWhiteSpace(originalValue))
+            if (originalValue is null || string.IsNullOrWhiteSpace(originalValue))
             {
                 result = null;
                 return false;
@@ -212,7 +212,7 @@ namespace Arbor.Primitives
 
         public override string ToString() => OriginalValue;
 
-        public bool IsInHierarchy(Urn other)
+        public bool IsInHierarchy(Urn? other)
         {
             if (other is null)
             {
@@ -244,7 +244,7 @@ namespace Arbor.Primitives
         private static ReadOnlySpan<char> CaseInsensitiveParts(Urn urn) =>
             urn.OriginalValue.AsSpan().Slice(urn.Scheme.Length + urn.Nid.Length + 1);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj is null)
             {

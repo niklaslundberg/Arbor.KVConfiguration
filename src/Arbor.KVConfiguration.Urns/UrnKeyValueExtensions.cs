@@ -184,7 +184,7 @@ namespace Arbor.KVConfiguration.Urns
 
                         return new {Urn = urn, Pair = t};
                     })
-                    .Where(urn => urn?.Urn is { } && urn.Urn == itemValue)
+                    .Where(urn => urn is {} && urn.Urn is { } && urn.Urn == itemValue)
                     .SelectMany(s => s!.Pair.Values)
                     .ToArray();
 

@@ -5,7 +5,7 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
 {
     public static class Specials
     {
-        public static readonly Dictionary<string, string> Special = new Dictionary<string, string>
+        public static readonly Dictionary<string, string?> Special = new Dictionary<string, string?>
         {
             {"[EMPTY]", string.Empty}, {"[NULL]", null}, {"[BLANK]", "\t"}
         };
