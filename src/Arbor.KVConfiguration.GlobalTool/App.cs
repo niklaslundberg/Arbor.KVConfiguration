@@ -61,7 +61,7 @@ namespace Arbor.KVConfiguration.GlobalTool
             try
             {
                 logger.Debug("Building app");
-                app = await BuildApp(args, variables, logger);
+                app = await BuildApp(args, variables, logger).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -73,7 +73,7 @@ namespace Arbor.KVConfiguration.GlobalTool
             {
                 logger.Debug("Starting app");
 
-                int exitCode = await app.RunAsync();
+                int exitCode = await app.RunAsync().ConfigureAwait(false);
                 logger.Debug("Exiting with exit coed {ExitCode}", exitCode);
                 return exitCode;
             }

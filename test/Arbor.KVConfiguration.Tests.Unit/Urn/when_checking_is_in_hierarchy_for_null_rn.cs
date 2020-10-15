@@ -13,7 +13,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 
         private Establish context = () => { urn = new Primitives.Urn(attempted_value); };
 
-        private Because of = () => { result = urn.IsInHierarchy(null); };
+        private Because of = () => { result = urn.IsInHierarchy(null!); };
 
         private It should_false = () => result.ShouldBeFalse();
     }
