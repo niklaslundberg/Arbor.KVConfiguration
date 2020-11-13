@@ -84,7 +84,7 @@ namespace Arbor.KVConfiguration.GlobalTool
             }
             finally
             {
-                await app.DisposeAsync();
+                await app.DisposeAsync().ConfigureAwait(false);
             }
         }
 
@@ -120,7 +120,7 @@ namespace Arbor.KVConfiguration.GlobalTool
             if (File.Exists(file))
             {
                 Logger.Debug("Found existing file '{File}'", file);
-                string content = await File.ReadAllTextAsync(file, Encoding.UTF8);
+                string content = await File.ReadAllTextAsync(file, Encoding.UTF8).ConfigureAwait(false);
                 ConfigurationItems items = JsonConfigurationSerializer.Deserialize(content);
 
                 KeyValue[] oldValuesToAdd = items.Keys.Where(oldPair =>
@@ -151,7 +151,7 @@ namespace Arbor.KVConfiguration.GlobalTool
 
             try
             {
-                await File.WriteAllTextAsync(file, json, Encoding.UTF8);
+                await File.WriteAllTextAsync(file, json, Encoding.UTF8).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

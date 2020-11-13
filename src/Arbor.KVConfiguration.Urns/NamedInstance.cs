@@ -18,7 +18,15 @@ namespace Arbor.KVConfiguration.Urns
             Name = name;
         }
 
-        public bool Equals(NamedInstance<T> other)
+
+        [NotNull]
+        public T Value { get; }
+
+        public string Name { get; }
+
+        public override bool Equals(object obj) => Equals(obj as NamedInstance<T>);
+
+        public bool Equals(NamedInstance<T>? other)
         {
             if (other is null)
             {
@@ -33,13 +41,6 @@ namespace Arbor.KVConfiguration.Urns
             return EqualityComparer<T>.Default.Equals(Value, other.Value) &&
                    string.Equals(Name, other.Name, StringComparison.InvariantCulture);
         }
-
-        public T Value { get; }
-
-        public string Name { get; }
-
-        public override bool Equals(object obj) =>
-            ReferenceEquals(this, obj) || (obj is NamedInstance<T> other && Equals(other));
 
         public override int GetHashCode()
         {

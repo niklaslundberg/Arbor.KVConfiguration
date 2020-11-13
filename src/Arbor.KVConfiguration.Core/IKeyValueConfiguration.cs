@@ -11,6 +11,6 @@ namespace Arbor.KVConfiguration.Core
 
         ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues { get; }
 
-        [CanBeNull] string this[[CanBeNull] string key] { get; }
+        [CanBeNull] string this[string? key] { get; }
     }
 }

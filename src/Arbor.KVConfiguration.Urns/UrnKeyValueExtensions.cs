@@ -246,17 +246,22 @@ namespace Arbor.KVConfiguration.Urns
                                     subKeyGroup,
                                     propertyType);
 
-                                Debug.WriteLine($"Found sub item {subItem.Item1}");
+                                var name = subKeyGroup.Key.Parent.Name;
 
-                                if (!asDictionary.ContainsKey(subKeyGroup.Key.Parent.Name))
+                                if (name is null)
+                                {
+                                    continue;
+                                }
+
+                                if (!asDictionary.ContainsKey(name))
                                 {
                                     var list = new List<object>();
 
                                     asDictionary.Add(
-                                        new KeyValuePair<string, object>(subKeyGroup.Key.Parent.Name, list));
+                                        new KeyValuePair<string, object>(name, list));
                                 }
 
-                                if (asDictionary[subKeyGroup.Key.Parent.Name] is List<object> childList)
+                                if (asDictionary[name] is List<object> childList)
                                 {
                                     childList.Add(subItem.Item1);
                                 }
@@ -302,7 +307,7 @@ namespace Arbor.KVConfiguration.Urns
 
             string json = JsonConvert.SerializeObject(expando);
 
-            object item;
+            object? item;
 
             try
             {

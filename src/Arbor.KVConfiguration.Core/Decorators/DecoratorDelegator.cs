@@ -8,6 +8,7 @@ namespace Arbor.KVConfiguration.Core.Decorators
 
         protected override void Dispose(bool isDisposing)
         {
+            base.Dispose();
         }
     }
 }

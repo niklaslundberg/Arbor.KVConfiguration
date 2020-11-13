@@ -1,0 +1,13 @@
+###########################
+# .NET Language Conventions
+# https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference#language-conventions
+###########################
+
+# .NET Code Style Settings
+[*.{cs,csx,cake,vb}]
+# "this." and "Me." qualifiers
+# https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference#this_and_me
+
+dotnet_diagnostic.CS8602.severity = silent
+dotnet_diagnostic.S2933.severity = silent
+dotnet_diagnostic.IDE0044.severity = silent

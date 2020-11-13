@@ -18,8 +18,13 @@ namespace Arbor.KVConfiguration.Core
 
             foreach (var item in Environment.GetEnvironmentVariables().OfType<DictionaryEntry>())
             {
-                collection.Add(item.Key as string ?? item.Key.ToString(),
-                    item.Value as string ?? item.Value.ToString());
+                var pair = (item.Key as string ?? item.Key.ToString(),
+                    item.Value as string ?? item.Value?.ToString());
+
+                if (!string.IsNullOrWhiteSpace(pair.Item2))
+                {
+                    collection.Add(pair.Item1, pair.Item2);
+                }
             }
 
             _inMemoryKeyValueConfiguration = new InMemoryKeyValueConfiguration(collection);
@@ -32,6 +37,6 @@ namespace Arbor.KVConfiguration.Core
         public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues
             => _inMemoryKeyValueConfiguration.AllWithMultipleValues;
 
-        public string this[string key] => _inMemoryKeyValueConfiguration[key];
+        public string this[string? key] => _inMemoryKeyValueConfiguration[key];
     }
 }

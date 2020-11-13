@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core
 {
-    public sealed class InMemoryKeyValueConfiguration : IKeyValueConfiguration
+    public sealed class InMemoryKeyValueConfiguration : IKeyValueConfiguration, IDisposable
     {
         private readonly string _name;
         private ImmutableArray<string> _allKeys;
