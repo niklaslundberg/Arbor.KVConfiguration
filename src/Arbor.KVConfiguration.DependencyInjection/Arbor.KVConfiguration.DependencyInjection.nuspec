@@ -22,7 +22,7 @@
         <license type="expression">MIT</license>
         <copyright>Copyright Niklas Lundberg 2016 - 2020</copyright>
         <dependencies>
-            <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="[3.0.0,4.0.0)" />
+            <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="[3.0.0,6.0.0)" />
             <dependency id="Arbor.KVConfiguration.Core" version="[$version$]" />
             <dependency id="Arbor.KVConfiguration.Urns" version="[$version$]" />
         </dependencies>
