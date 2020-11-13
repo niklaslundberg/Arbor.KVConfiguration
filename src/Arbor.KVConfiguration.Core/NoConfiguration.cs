@@ -1,5 +1,4 @@
 ﻿using System.Collections.Immutable;
-using System.Collections.Specialized;
 using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core
@@ -7,7 +6,12 @@ namespace Arbor.KVConfiguration.Core
     public class NoConfiguration : IKeyValueConfiguration
     {
         [NotNull] public static readonly IKeyValueConfiguration Empty =
-            new InMemoryKeyValueConfiguration(new NameValueCollection());
+            new NoConfiguration();
+
+        private NoConfiguration()
+        {
+
+        }
 
         public ImmutableArray<string> AllKeys => ImmutableArray<string>.Empty;
 
@@ -16,6 +20,6 @@ namespace Arbor.KVConfiguration.Core
         public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues =>
             ImmutableArray<MultipleValuesStringPair>.Empty;
 
-        public string this[string key] => string.Empty;
+        public string this[string? key] => string.Empty;
     }
 }
