@@ -71,13 +71,13 @@ namespace Arbor.KVConfiguration.Core
             }
         }
 
-        public string this[string key] => DecorateValue(_appSettingsDecoratorBuilder,
+        public string this[string? key] => DecorateValue(_appSettingsDecoratorBuilder,
             GetValue(_appSettingsDecoratorBuilder.AppSettingsBuilder, key, _logAction).Item2);
 
         public ImmutableArray<KeyValueConfigurationItem> ConfigurationItems => GetConfigurationItems(
             _appSettingsDecoratorBuilder.AppSettingsBuilder).ToImmutableArray();
 
-        private string BuildDecoratorsAsString(AppSettingsDecoratorBuilder appSettingsDecoratorBuilder)
+        private string BuildDecoratorsAsString(AppSettingsDecoratorBuilder? appSettingsDecoratorBuilder)
         {
             if (appSettingsDecoratorBuilder?.Decorator is null)
             {
@@ -99,7 +99,7 @@ namespace Arbor.KVConfiguration.Core
             return result;
         }
 
-        private string BuildChainAsString(AppSettingsBuilder builder)
+        private string BuildChainAsString(AppSettingsBuilder? builder)
         {
             if (builder?.KeyValueConfiguration is null)
             {
@@ -116,7 +116,7 @@ namespace Arbor.KVConfiguration.Core
             return result;
         }
 
-        private static string[] GetAllKeys(AppSettingsBuilder appSettingsBuilder)
+        private static string[] GetAllKeys(AppSettingsBuilder? appSettingsBuilder)
         {
             if (appSettingsBuilder is null)
             {
@@ -154,7 +154,7 @@ namespace Arbor.KVConfiguration.Core
 
         private static (IKeyValueConfiguration, string) GetValue(
             AppSettingsBuilder? appSettingsBuilder,
-            string key,
+            string? key,
             Action<string>? logAction)
         {
             if (string.IsNullOrWhiteSpace(key))
@@ -269,14 +269,19 @@ namespace Arbor.KVConfiguration.Core
         }
 
         [PublicAPI]
-        public IKeyValueConfiguration ConfiguratorFor(string key, Action<string>? logAction = null)
+        public IKeyValueConfiguration? ConfiguratorFor(string? key, Action<string>? logAction = null)
         {
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                return null;
+            }
+
             (IKeyValueConfiguration, string) tuple =
                 GetValue(_appSettingsDecoratorBuilder.AppSettingsBuilder, key, logAction);
 
             if (tuple.Item1 is NoConfiguration || tuple.Item1 is null)
             {
-                return GetConfiguratorDefining(_appSettingsDecoratorBuilder.AppSettingsBuilder, key);
+                return GetConfiguratorDefining(_appSettingsDecoratorBuilder.AppSettingsBuilder, key!);
             }
 
             return tuple.Item1;

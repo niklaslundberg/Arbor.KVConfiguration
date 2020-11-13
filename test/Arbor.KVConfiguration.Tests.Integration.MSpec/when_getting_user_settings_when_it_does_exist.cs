@@ -1,3 +1,4 @@
+using System.IO;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.UserConfiguration;
 using Machine.Specifications;
@@ -9,8 +10,16 @@ namespace Arbor.KVConfiguration.Tests.Integration.MSpec
     {
         static MultiSourceKeyValueConfiguration configuration;
 
+        static string base_path;
+
+        Establish context = () =>
+        {
+            base_path = Path.Combine(VcsTestPathHelper.FindVcsRootPath(), "test",
+                "Arbor.KVConfiguration.Tests.Integration.MSpec");
+        };
+
         Because of = () =>
-            configuration = KeyValueConfigurationManager.Add(new UserJsonConfiguration()).Build();
+            configuration = KeyValueConfigurationManager.Add(new UserJsonConfiguration(base_path)).Build();
 
         It should_be_part_of_source_chain = () =>
             configuration.SourceChain.ShouldContain(
