@@ -8,23 +8,39 @@ namespace Arbor.Primitives
 {
     public class EnvironmentVariables
     {
-        public EnvironmentVariables(IReadOnlyDictionary<string, string> variables) => Variables = variables ?? throw new ArgumentNullException(nameof(variables));
+        public EnvironmentVariables(IReadOnlyDictionary<string, string> variables) =>
+            Variables = variables ?? throw new ArgumentNullException(nameof(variables));
 
         public IReadOnlyDictionary<string, string> Variables { get; }
 
-        private static ImmutableDictionary<string, string> GetAll()
+        private static ImmutableDictionary<string, string> GetAll(StringComparer stringComparer)
         {
-            IDictionary environmentVariables = Environment.GetEnvironmentVariables();
+            var environmentVariables = Environment.GetEnvironmentVariables();
 
             var all = environmentVariables
                 .OfType<DictionaryEntry>()
                 .ToImmutableDictionary(entry => (string)entry.Key,
                     entry => (string)entry.Value,
-                    StringComparer.OrdinalIgnoreCase);
+                    stringComparer);
 
             return all;
         }
 
-        public static EnvironmentVariables GetEnvironmentVariables() => new EnvironmentVariables(GetAll());
+        public static readonly StringComparer DefaultStringComparer =
+            Environment.OSVersion.Platform == PlatformID.Unix ||
+            Environment.OSVersion.Platform == PlatformID.MacOSX
+                ? StringComparer.Ordinal
+                : StringComparer.OrdinalIgnoreCase;
+
+        public static EnvironmentVariables GetEnvironmentVariables() => new EnvironmentVariables(GetAll(DefaultStringComparer));
+        public static EnvironmentVariables GetEnvironmentVariables(StringComparer stringComparer)
+        {
+            if (stringComparer is null)
+            {
+                throw new ArgumentNullException(nameof(stringComparer));
+            }
+
+            return new EnvironmentVariables(GetAll(stringComparer));
+        }
     }
 }

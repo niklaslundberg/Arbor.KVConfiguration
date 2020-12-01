@@ -1,14 +1,16 @@
-﻿using System.Collections.Immutable;
+﻿using System;
+using System.Collections.Immutable;
 using System.Configuration;
 using Arbor.KVConfiguration.Core;
 
 namespace Arbor.KVConfiguration.SystemConfiguration
 {
-    public sealed class AppSettingsKeyValueConfiguration : IKeyValueConfiguration
+    public sealed class AppSettingsKeyValueConfiguration : IKeyValueConfiguration, IDisposable
     {
         private readonly InMemoryKeyValueConfiguration _inMemoryKeyValueConfiguration;
 
-        public AppSettingsKeyValueConfiguration() => _inMemoryKeyValueConfiguration = new InMemoryKeyValueConfiguration(ConfigurationManager.AppSettings);
+        public AppSettingsKeyValueConfiguration() => _inMemoryKeyValueConfiguration =
+            new InMemoryKeyValueConfiguration(ConfigurationManager.AppSettings);
 
         public ImmutableArray<string> AllKeys => _inMemoryKeyValueConfiguration.AllKeys;
 
@@ -18,7 +20,6 @@ namespace Arbor.KVConfiguration.SystemConfiguration
             => _inMemoryKeyValueConfiguration.AllWithMultipleValues;
 
         public string this[string key] => _inMemoryKeyValueConfiguration[key];
-
         public void Dispose() => _inMemoryKeyValueConfiguration?.Dispose();
     }
 }

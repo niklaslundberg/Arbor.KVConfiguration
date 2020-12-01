@@ -25,14 +25,14 @@ namespace Arbor.KVConfiguration.Schema
 
             foreach (MultipleValuesStringPair multipleValuesStringPair in multipleValuesStringPairs)
             {
-                KeyMetadata metadataItem =
+                KeyMetadata? metadataItem =
                     metadata.SafeToImmutableArray().SingleOrDefault(
                         item =>
                             item.Key.Equals(multipleValuesStringPair.Key, StringComparison.OrdinalIgnoreCase));
 
-                if (metadataItem is object)
+                if (metadataItem is {})
                 {
-                    KeyValueConfigurationValidationResult validationResult =
+                    var validationResult =
                         configurationValidator.Validate(multipleValuesStringPair, metadataItem);
 
                     if (!validationResult.IsValid)

@@ -15,21 +15,17 @@ namespace Arbor.KVConfiguration.Core.Metadata
                 return ImmutableArray<KeyMetadata>.Empty;
             }
 
-            KeyValueConfigurationItem[] keyValueConfigurationItems = items as KeyValueConfigurationItem[]
-                                                                     ?? items.ToArray();
+            var keyValueConfigurationItems = items as KeyValueConfigurationItem[]
+                                             ?? items.ToArray();
 
-            string[] uniqueKeys = keyValueConfigurationItems.Select(item => item.Key).Distinct().ToArray();
+            var uniqueKeys = keyValueConfigurationItems.Select(item => item.Key).Distinct().ToArray();
 
-            KeyValueConfigurationItem[] ordered = keyValueConfigurationItems.Where(_ => _.ConfigurationMetadata is object)
+            var ordered = keyValueConfigurationItems.Where(_ => _.ConfigurationMetadata is object)
                 .ToArray();
 
             var readOnlyKeyMetadata =
                 uniqueKeys.Select(
-                        key => new
-                        {
-                            key,
-                            found = ordered.FirstOrDefault()
-                        })
+                        key => new {key, found = ordered.FirstOrDefault()})
                     .Where(item => item.found?.ConfigurationMetadata is object)
                     .Select(item => new KeyMetadata(item.key, item.found.ConfigurationMetadata))
                     .ToImmutableArray();

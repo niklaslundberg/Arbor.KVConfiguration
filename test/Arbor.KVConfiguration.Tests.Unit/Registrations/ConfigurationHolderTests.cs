@@ -46,11 +46,86 @@ namespace Arbor.KVConfiguration.Tests.Unit.Registrations
         public void WhenRegisteringSingleInstanceTryGet()
         {
             var holder = new ConfigurationInstanceHolder();
-            holder.Add(new NamedInstance<ValidatableOptional>(new ValidatableOptional("abc", 123), "abc-instance"));
+            var instance = new ValidatableOptional("abc", 123);
+            holder.Add(new NamedInstance<ValidatableOptional>(instance, "abc-instance"));
 
-            bool found = holder.TryGet("abc-instance", out ValidatableOptional _);
+            bool found = holder.TryGet("abc-instance", out ValidatableOptional foundInstance);
 
             Assert.True(found);
+            Assert.Same(instance, foundInstance);
+        }
+
+        [Fact]
+        public void WhenRegisteringSingleInstanceTryGetNonGeneric()
+        {
+            var holder = new ConfigurationInstanceHolder();
+            var instance = new ValidatableOptional("abc", 123);
+            holder.Add(new NamedInstance<ValidatableOptional>(instance, "abc-instance"));
+
+            bool found = holder.TryGet("abc-instance", typeof(ValidatableOptional), out var foundInstance);
+
+            Assert.True(found);
+
+            Assert.Same(instance, foundInstance);
+        }
+
+        [Fact]
+        public void WhenRemovingExistingInstance()
+        {
+            var holder = new ConfigurationInstanceHolder();
+            holder.Add(new NamedInstance<ValidatableOptional>(new ValidatableOptional("abc", 123), "abc-instance"));
+
+            bool found = holder.TryGet("abc-instance", out ValidatableOptional instance);
+
+            Assert.True(found);
+
+            Assert.NotNull(instance);
+
+            bool isRemoved = holder.TryRemove("abc-instance", typeof(ValidatableOptional), out var removed);
+
+            Assert.True(isRemoved);
+
+            Assert.NotNull(removed);
+
+            Assert.Same(instance, removed);
+        }
+
+        [Fact]
+        public void WhenRemovingNonExistingType()
+        {
+            var holder = new ConfigurationInstanceHolder();
+            holder.Add(new NamedInstance<ValidatableOptional>(new ValidatableOptional("abc", 123), "abc-instance"));
+
+            bool found = holder.TryGet("abc-instance", out ValidatableOptional instance);
+
+            Assert.True(found);
+
+            Assert.NotNull(instance);
+
+            bool isRemoved = holder.TryRemove("abc-instance", typeof(string), out var removed);
+
+            Assert.False(isRemoved);
+
+            Assert.Null(removed);
+        }
+
+        [Fact]
+        public void WhenRemovingNonExistingKey()
+        {
+            var holder = new ConfigurationInstanceHolder();
+            holder.Add(new NamedInstance<ValidatableOptional>(new ValidatableOptional("abc", 123), "abc-instance"));
+
+            bool found = holder.TryGet("abc-instance", out ValidatableOptional instance);
+
+            Assert.True(found);
+
+            Assert.NotNull(instance);
+
+            bool isRemoved = holder.TryRemove("abc-instance-2", typeof(ValidatableOptional), out var removed);
+
+            Assert.False(isRemoved);
+
+            Assert.Null(removed);
         }
     }
 }

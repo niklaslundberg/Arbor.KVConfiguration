@@ -14,10 +14,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 
         private Establish context = () =>
         {
-            var keys = new NameValueCollection
-            {
-                { "urn:a:type:with:string:params:instance1:values", "value1" }
-            };
+            var keys = new NameValueCollection {{"urn:a:type:with:string:params:instance1:values", "value1"}};
 
             configuration = new Core.InMemoryKeyValueConfiguration(keys);
         };
@@ -27,9 +24,9 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
             instance = configuration.GetInstance(typeof(TypeWithStringValues)) as TypeWithStringValues;
         };
 
-        private It should_have_one_value = () => instance.Values.ShouldContain("value1");
-
         private It should_have_collection_length_1 = () => instance.Values.Length.ShouldEqual(1);
+
+        private It should_have_one_value = () => instance.Values.ShouldContain("value1");
 
         private It should_not_be_null
             = () => instance.ShouldNotBeNull();

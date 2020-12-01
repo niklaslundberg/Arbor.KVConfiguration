@@ -27,6 +27,6 @@ namespace Arbor.KVConfiguration.Schema
             return enumerable?.ToImmutableArray() ?? ImmutableArray<T>.Empty;
         }
 
-        internal static ImmutableArray<T> ValueToImmutableArray<T>(this T item) => new[] { item }.ToImmutableArray();
+        internal static ImmutableArray<T> ValueToImmutableArray<T>(this T item) => new[] {item}.ToImmutableArray();
     }
 }

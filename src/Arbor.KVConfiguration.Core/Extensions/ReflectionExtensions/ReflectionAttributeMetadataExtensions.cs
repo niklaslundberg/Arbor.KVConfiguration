@@ -64,11 +64,7 @@ namespace Arbor.KVConfiguration.Core.Extensions.ReflectionExtensions
 
             var configurationMetadataFields = fields
                 .Select(
-                    field => new
-                    {
-                        Field = field,
-                        Attribute = field.GetCustomAttribute<MetadataAttribute>()
-                    })
+                    field => new {Field = field, Attribute = field.GetCustomAttribute<MetadataAttribute>()})
                 .Where(pair => pair.Attribute is object)
                 .ToArray();
 

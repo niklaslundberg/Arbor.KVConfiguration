@@ -36,7 +36,7 @@ namespace Arbor.KVConfiguration.Core
         }
 
         /// <summary>
-        /// Add new configuration, last one wins
+        ///     Add new configuration, last one wins
         /// </summary>
         /// <param name="keyValueConfiguration"></param>
         /// <returns></returns>
@@ -51,7 +51,7 @@ namespace Arbor.KVConfiguration.Core
         }
 
         /// <summary>
-        /// Add new configuration, last one wins
+        ///     Add new configuration, last one wins
         /// </summary>
         /// <param name="appSettingsBuilder"></param>
         /// <param name="keyValueConfiguration"></param>

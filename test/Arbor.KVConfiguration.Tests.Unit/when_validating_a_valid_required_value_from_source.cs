@@ -23,10 +23,11 @@ namespace Arbor.KVConfiguration.Tests.Unit
         private Establish context = () =>
         {
             configuration_validator = new ConfigurationValidator();
+
             configuration =
                 new Core.InMemoryKeyValueConfiguration(new NameValueCollection
                 {
-                    { "urn:a:dummy:key:field:constant:urn-value", "a-required-value-fulfilled" }
+                    {"urn:a:dummy:key:field:constant:urn-value", "a-required-value-fulfilled"}
                 });
 
             ImmutableArray<KeyValueConfigurationItem> configurationItems =

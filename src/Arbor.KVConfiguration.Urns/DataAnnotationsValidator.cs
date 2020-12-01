@@ -16,6 +16,7 @@ namespace Arbor.KVConfiguration.Urns
 
             var context = new ValidationContext(instance, null, null);
             var validationResults = new List<ValidationResult>();
+
             bool tryValidateObject = Validator.TryValidateObject(
                 instance,
                 context,

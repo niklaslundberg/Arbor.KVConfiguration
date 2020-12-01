@@ -9,6 +9,17 @@ namespace Arbor.KVConfiguration.Tests.Integration
     [UsedImplicitly]
     public class SimpleCtorType
     {
+        public SimpleCtorType(string name, int age)
+        {
+            Name = name;
+            Age = age;
+        }
+
+        public static IEqualityComparer<SimpleCtorType> NameAgeComparer { get; } = new NameAgeEqualityComparer();
+
+        public string Name { get; }
+        public int Age { get; }
+
         private sealed class NameAgeEqualityComparer : IEqualityComparer<SimpleCtorType>
         {
             public bool Equals(SimpleCtorType x, SimpleCtorType y)
@@ -43,17 +54,6 @@ namespace Arbor.KVConfiguration.Tests.Integration
                     return ((obj.Name?.GetHashCode() ?? 0) * 397) ^ obj.Age;
                 }
             }
-        }
-
-        public static IEqualityComparer<SimpleCtorType> NameAgeComparer { get; } = new NameAgeEqualityComparer();
-
-        public string Name { get; }
-        public int Age { get; }
-
-        public SimpleCtorType(string name, int age)
-        {
-            Name = name;
-            Age = age;
         }
     }
 }

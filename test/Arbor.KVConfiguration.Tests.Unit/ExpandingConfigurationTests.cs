@@ -11,27 +11,15 @@ namespace Arbor.KVConfiguration.Tests.Unit
 {
     public class ExpandingConfigurationTests
     {
-        [Urn("urn:test:testinstance")]
-        [UsedImplicitly]
-        private class TestInstance
-        {
-            public TestInstance(string test) => Test = test;
-
-            public string Test { get; }
-        }
-
         [Fact]
         public void ItShouldExpandCustomEnvironmentVariables()
         {
             Environment.SetEnvironmentVariable("abcvalue", "123");
 
 
-            var values = new NameValueCollection
-            {
-                ["Test"] = "%abcvalue%"
-            };
+            var values = new NameValueCollection {["Test"] = "%abcvalue%"};
 
-            MultiSourceKeyValueConfiguration multiSourceKeyValueConfiguration = KeyValueConfigurationManager
+            var multiSourceKeyValueConfiguration = KeyValueConfigurationManager
                 .Add(new Core.InMemoryKeyValueConfiguration(values))
                 .DecorateWith(new ExpandKeyValueConfigurationDecorator())
                 .Build();
@@ -50,12 +38,9 @@ namespace Arbor.KVConfiguration.Tests.Unit
 
             string valueWithPattern = $"{pattern} hello";
 
-            var values = new NameValueCollection
-            {
-                ["Test"] = valueWithPattern
-            };
+            var values = new NameValueCollection {["Test"] = valueWithPattern};
 
-            MultiSourceKeyValueConfiguration multiSourceKeyValueConfiguration = KeyValueConfigurationManager
+            var multiSourceKeyValueConfiguration = KeyValueConfigurationManager
                 .Add(new Core.InMemoryKeyValueConfiguration(values))
                 .DecorateWith(new ExpandKeyValueConfigurationDecorator())
                 .Build();
@@ -88,12 +73,9 @@ namespace Arbor.KVConfiguration.Tests.Unit
 
             string key = "urn:test:testinstance:0:test";
 
-            var values = new NameValueCollection
-            {
-                [key] = valueWithPattern
-            };
+            var values = new NameValueCollection {[key] = valueWithPattern};
 
-            MultiSourceKeyValueConfiguration multiSourceKeyValueConfiguration = KeyValueConfigurationManager
+            var multiSourceKeyValueConfiguration = KeyValueConfigurationManager
                 .Add(new Core.InMemoryKeyValueConfiguration(values))
                 .DecorateWith(new ExpandKeyValueConfigurationDecorator())
                 .Build();
@@ -105,6 +87,15 @@ namespace Arbor.KVConfiguration.Tests.Unit
             Assert.NotNull(testInstance);
 
             Assert.Equal(expected, FullPath(testInstance.Test));
+        }
+
+        [Urn("urn:test:testinstance")]
+        [UsedImplicitly]
+        private class TestInstance
+        {
+            public TestInstance(string test) => Test = test;
+
+            public string Test { get; }
         }
     }
 }

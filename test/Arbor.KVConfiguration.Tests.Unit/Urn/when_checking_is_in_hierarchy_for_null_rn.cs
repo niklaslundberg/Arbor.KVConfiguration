@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Machine.Specifications;
 
 namespace Arbor.KVConfiguration.Tests.Unit.Urn
@@ -6,7 +5,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
     [Subject(typeof(Primitives.Urn))]
     public class when_checking_is_in_hierarchy_for_null_rn
     {
-        private static string attempted_value = "urn:a:b:c";
+        private static readonly string attempted_value = "urn:a:b:c";
 
         protected static Primitives.Urn urn;
 
@@ -14,7 +13,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 
         private Establish context = () => { urn = new Primitives.Urn(attempted_value); };
 
-        private Because of = () => { result = urn.IsInHierarchy(null); };
+        private Because of = () => { result = urn.IsInHierarchy(null!); };
 
         private It should_false = () => result.ShouldBeFalse();
     }

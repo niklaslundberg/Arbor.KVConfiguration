@@ -8,14 +8,15 @@ using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core
 {
-    public sealed class InMemoryKeyValueConfiguration : IKeyValueConfiguration
+    public sealed class InMemoryKeyValueConfiguration : IKeyValueConfiguration, IDisposable
     {
         private readonly string _name;
-        private Dictionary<string, ImmutableArray<string>>? _keyValueDictionary;
-        private bool _disposed;
         private ImmutableArray<string> _allKeys;
+        private bool _disposed;
+        private Dictionary<string, ImmutableArray<string>>? _keyValueDictionary;
 
-        public InMemoryKeyValueConfiguration(NameValueCollection nameValueCollection) : this(nameValueCollection, string.Empty)
+        public InMemoryKeyValueConfiguration(NameValueCollection nameValueCollection) : this(nameValueCollection,
+            string.Empty)
         {
         }
 
@@ -82,8 +83,8 @@ namespace Arbor.KVConfiguration.Core
                 CheckDisposed();
 
                 return AllKeys
-                        .Select(key => new MultipleValuesStringPair(key, _keyValueDictionary![key]))
-                        .ToImmutableArray();
+                    .Select(key => new MultipleValuesStringPair(key, _keyValueDictionary![key]))
+                    .ToImmutableArray();
             }
         }
 

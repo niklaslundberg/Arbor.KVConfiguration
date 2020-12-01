@@ -11,8 +11,8 @@ namespace Arbor.KVConfiguration.JsonConfiguration
 {
     public sealed class JsonKeyValueConfiguration : IKeyValueConfigurationWithMetadata
     {
-        private readonly IKeyValueConfiguration _inMemoryKeyValueConfiguration;
         private readonly string? _fileFullPath;
+        private readonly IKeyValueConfiguration _inMemoryKeyValueConfiguration;
 
         public JsonKeyValueConfiguration([NotNull] IEnumerable<KeyValueConfigurationItem> keyValueConfigurationItems)
         {

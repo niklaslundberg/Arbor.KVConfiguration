@@ -7,8 +7,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Schema
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public static class DummyConfigurationConstants
     {
-        [Metadata(isRequired: true)]
-        public const string
+        [Metadata(isRequired: true)] public const string
             ADummyConfigurationKeyFieldName = "urn:a:dummy:key:field:constant:urn-value";
     }
 }

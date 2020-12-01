@@ -31,8 +31,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
                     "123",
                     new ConfigurationMetadata(
                         "abc",
-                        "string",
-                        isRequired: true))
+                        "string"))
             };
 
             metdata = configurationItems.GetMetadata();

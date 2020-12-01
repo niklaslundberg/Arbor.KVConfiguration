@@ -11,7 +11,7 @@ namespace Arbor.KVConfiguration.Schema.Json
         public KeyValue(
             [NotNull] string key,
             string? value,
-            [CanBeNull] ConfigurationMetadata configurationMetadata)
+            ConfigurationMetadata? configurationMetadata)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
@@ -23,16 +23,13 @@ namespace Arbor.KVConfiguration.Schema.Json
             ConfigurationMetadata = configurationMetadata;
         }
 
-        [JsonProperty(Order = 0)]
-        public string Key { get; }
+        [JsonProperty(Order = 0)] public string Key { get; }
 
-        [JsonProperty(Order = 2)]
-        public ConfigurationMetadata ConfigurationMetadata { get; }
+        [JsonProperty(Order = 2)] public ConfigurationMetadata? ConfigurationMetadata { get; }
 
-        [JsonProperty(Order = 1)]
-        public string? Value { get; }
+        [JsonProperty(Order = 1)] public string? Value { get; }
 
         [UsedImplicitly]
-        public bool ShouldSerializeConfigurationMetadata() => ConfigurationMetadata is object;
+        public bool ShouldSerializeConfigurationMetadata() => ConfigurationMetadata is { };
     }
 }

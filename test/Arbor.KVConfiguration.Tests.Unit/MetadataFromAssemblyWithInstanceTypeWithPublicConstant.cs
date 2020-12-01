@@ -7,17 +7,16 @@ namespace Arbor.KVConfiguration.Tests.Unit
 {
     public class MetadataFromAssemblyWithInstanceTypeWithPublicConstant
     {
-        [Metadata()]
-        public const string AbcConstantsInstance = "123";
+        [Metadata] public const string AbcConstantsInstance = "123";
 
         [Fact]
         public void Do()
         {
-            ImmutableArray<ConfigurationMetadata> metadataFromAssemblyTypes = GetType().Assembly.GetMetadataFromAssemblyTypes();
+            ImmutableArray<ConfigurationMetadata> metadataFromAssemblyTypes =
+                GetType().Assembly.GetMetadataFromAssemblyTypes();
 
-            Assert.Contains(metadataFromAssemblyTypes, metadata => metadata.MemberName.Equals(nameof(AbcConstantsInstance)) && metadata.Key.Equals("123"));
+            Assert.Contains(metadataFromAssemblyTypes,
+                metadata => metadata.MemberName.Equals(nameof(AbcConstantsInstance)) && metadata.Key.Equals("123"));
         }
     }
-
-
 }

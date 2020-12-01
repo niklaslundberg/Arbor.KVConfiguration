@@ -8,14 +8,6 @@ namespace Arbor.KVConfiguration.Core
         private static IKeyValueConfiguration? _appSettings;
         private static readonly object MutexLock = new object();
 
-        public static void Release()
-        {
-            if (_appSettings is object)
-            {
-                _appSettings = default;
-            }
-        }
-
         public static IKeyValueConfiguration AppSettings
         {
             get
@@ -31,6 +23,14 @@ namespace Arbor.KVConfiguration.Core
         }
 
         public static bool IsInitialized => _appSettings is object;
+
+        public static void Release()
+        {
+            if (_appSettings is object)
+            {
+                _appSettings = default;
+            }
+        }
 
         public static IKeyValueConfiguration Initialize([NotNull] IKeyValueConfiguration keyValueConfiguration)
         {

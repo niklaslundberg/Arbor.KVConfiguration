@@ -28,12 +28,12 @@ namespace Arbor.KVConfiguration.DependencyInjection
 
             if (assemblies.Length == 0)
             {
-                assemblies = new[] { Assembly.GetCallingAssembly() };
+                assemblies = new[] {Assembly.GetCallingAssembly()};
             }
 
-            ConfigurationRegistrations configurationRegistrations = keyValueConfiguration.ScanRegistrations(assemblies);
+            var configurationRegistrations = keyValueConfiguration.ScanRegistrations(assemblies);
 
-            ConfigurationInstanceHolder configurationInstanceHolder = configurationRegistrations.CreateHolder();
+            var configurationInstanceHolder = configurationRegistrations.CreateHolder();
 
             services.AddSingleton(configurationInstanceHolder);
 
@@ -46,7 +46,7 @@ namespace Arbor.KVConfiguration.DependencyInjection
         {
             foreach (Type holderRegisteredType in holder.RegisteredTypes)
             {
-                Type genericType = typeof(INamedInstance<>).MakeGenericType(holderRegisteredType);
+                var genericType = typeof(INamedInstance<>).MakeGenericType(holderRegisteredType);
 
                 foreach (KeyValuePair<string, object> instance in holder.GetInstances(holderRegisteredType))
                 {
@@ -54,7 +54,7 @@ namespace Arbor.KVConfiguration.DependencyInjection
                         provider => instance.Value,
                         ServiceLifetime.Transient));
 
-                    Type concreteGenericType = typeof(NamedInstance<>).MakeGenericType(holderRegisteredType);
+                    var concreteGenericType = typeof(NamedInstance<>).MakeGenericType(holderRegisteredType);
 
                     services.Add(new ServiceDescriptor(genericType,
                         provider => Activator.CreateInstance(concreteGenericType,

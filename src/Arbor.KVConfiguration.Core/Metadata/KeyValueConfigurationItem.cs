@@ -21,6 +21,7 @@ namespace Arbor.KVConfiguration.Core.Metadata
 
         public string? Value { get; }
 
-        public override string ToString() => $"{nameof(Key)}: {Key}, {nameof(Value)}: {Value}, {nameof(ConfigurationMetadata)}: {ConfigurationMetadata}";
+        public override string ToString() =>
+            $"{nameof(Key)}: {Key}, {nameof(Value)}: {Value}, {nameof(ConfigurationMetadata)}: {ConfigurationMetadata}";
     }
 }

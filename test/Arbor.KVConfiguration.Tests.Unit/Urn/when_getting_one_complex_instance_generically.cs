@@ -16,19 +16,16 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         {
             var keys = new NameValueCollection
             {
-                { "urn:test:a:complex:immutable:type:instance1:id", "myId1" },
-                { "urn:test:a:complex:immutable:type:instance1:name", "myName1" },
-                { "urn:test:a:complex:immutable:type:instance1:children", "myChild1.1" },
-                { "urn:test:a:complex:immutable:type:instance1:children", "myChild1.2" },
+                {"urn:test:a:complex:immutable:type:instance1:id", "myId1"},
+                {"urn:test:a:complex:immutable:type:instance1:name", "myName1"},
+                {"urn:test:a:complex:immutable:type:instance1:children", "myChild1.1"},
+                {"urn:test:a:complex:immutable:type:instance1:children", "myChild1.2"}
             };
 
             configuration = new Core.InMemoryKeyValueConfiguration(keys);
         };
 
         private Because of = () => { instance = configuration.GetInstance<AComplexImmutableType>(); };
-
-        private It should_not_be_null
-            = () => instance.ShouldNotBeNull();
 
         private It should_have_instance1_children1 =
             () => { instance.Children.ShouldContain("myChild1.1", "myChild1.2"); };
@@ -41,5 +38,8 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         };
 
         private It should_have_instance1_uri1 = () => { instance.Uri.ShouldBeNull(); };
+
+        private It should_not_be_null
+            = () => instance.ShouldNotBeNull();
     }
 }

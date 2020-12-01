@@ -1,36 +1,41 @@
 <?xml version="1.0"?>
-<package >
-  <metadata>
-    <id>Arbor.KVConfiguration.SystemConfiguration.Providers</id>
-    <version>0.0.1</version>
-    <title>Arbor.KVConfiguration.SystemConfiguration.Providers</title>
-    <authors>Niklas Lundberg</authors>
-    <owners></owners>
-    <description>
-      Key value configuration core library
-    </description>
-    <releaseNotes>
-    </releaseNotes>
-    <summary>
-      Arbor.KVConfiguration.SystemConfiguration.Providers
-    </summary>
-    <language>en-US</language>
-    <projectUrl>https://github.com/niklaslundberg/Arbor.KVConfiguration</projectUrl>
-    <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <license type="expression">MIT</license>
-    <copyright>Copyright Niklas Lundberg 2014 - 2019</copyright>
-    <dependencies>
-      <dependency id="Arbor.KVConfiguration.Core" version="[$version$]" />
-    </dependencies>
-    <references></references>
-    <frameworkAssemblies>
-      <frameworkAssembly assemblyName="System.Configuration" targetFramework="net472" />
-    </frameworkAssemblies>
-    <tags></tags>
-  </metadata>
-  <files>
-    <file src="bin\$configuration$\net471\Arbor.KVConfiguration.SystemConfiguration.Providers.dll" target="lib\net471" />
-    <file src="bin\$configuration$\net472\Arbor.KVConfiguration.SystemConfiguration.Providers.dll" target="lib\net472" />
-  </files>
+
+<package>
+    <metadata>
+        <id>Arbor.KVConfiguration.SystemConfiguration.Providers</id>
+        <version>0.0.1</version>
+        <title>Arbor.KVConfiguration.SystemConfiguration.Providers</title>
+        <authors>Niklas Lundberg</authors>
+        <owners></owners>
+        <description>
+            Key value configuration core library
+        </description>
+        <releaseNotes>
+        </releaseNotes>
+        <summary>
+            Arbor.KVConfiguration.SystemConfiguration.Providers
+        </summary>
+        <language>en-US</language>
+        <projectUrl>https://github.com/niklaslundberg/Arbor.KVConfiguration</projectUrl>
+        <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <license type="expression">MIT</license>
+        <copyright>Copyright Niklas Lundberg 2016 - 2020</copyright>
+        <dependencies>
+            <dependency id="Arbor.KVConfiguration.Core" version="[$version$]" />
+        </dependencies>
+        <references></references>
+        <frameworkAssemblies>
+            <frameworkAssembly assemblyName="System.Configuration" targetFramework="net472" />
+        </frameworkAssemblies>
+        <tags></tags>
+    </metadata>
+    <files>
+        <file src="bin\$configuration$\net471\Arbor.KVConfiguration.SystemConfiguration.Providers.dll"
+              target="lib\net471" />
+        <file src="bin\$configuration$\net472\Arbor.KVConfiguration.SystemConfiguration.Providers.dll"
+              target="lib\net472" />
+        <file src="bin\$configuration$\net48\Arbor.KVConfiguration.SystemConfiguration.Providers.dll"
+              target="lib\net48" />
+    </files>
 </package>

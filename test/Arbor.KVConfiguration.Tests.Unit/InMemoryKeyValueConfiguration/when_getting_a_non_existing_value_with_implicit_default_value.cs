@@ -12,7 +12,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.InMemoryKeyValueConfiguration
         private static string value;
 
         private Establish context =
-            () => { configuration = new Core.InMemoryKeyValueConfiguration(new NameValueCollection { { "a", "b" } }); };
+            () => { configuration = new Core.InMemoryKeyValueConfiguration(new NameValueCollection {{"a", "b"}}); };
 
         private Because of = () => { value = configuration.ValueOrDefault("d"); };
 

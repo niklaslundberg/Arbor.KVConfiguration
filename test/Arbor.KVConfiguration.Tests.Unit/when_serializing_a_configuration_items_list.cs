@@ -22,6 +22,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
                 new KeyValue("ghi", "345", null),
                 new KeyValue("ghi", "456", null)
             }.ToImmutableArray();
+
             configuration_items = new ConfigurationItems("1.0", keys);
         };
 

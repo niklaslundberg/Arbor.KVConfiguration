@@ -16,16 +16,13 @@ namespace Arbor.KVConfiguration.Tests.Unit
         {
             var userKeys = new NameValueCollection
             {
-                { "urn:test:a:complex:immutable:type:instance1:id", "myId1" },
-                { "urn:test:a:complex:immutable:type:instance1:name", "myName1" },
-                { "urn:test:a:complex:immutable:type:instance1:children", "myChild1.1" },
-                { "urn:test:a:complex:immutable:type:instance1:children", "myChild1.2" }
+                {"urn:test:a:complex:immutable:type:instance1:id", "myId1"},
+                {"urn:test:a:complex:immutable:type:instance1:name", "myName1"},
+                {"urn:test:a:complex:immutable:type:instance1:children", "myChild1.1"},
+                {"urn:test:a:complex:immutable:type:instance1:children", "myChild1.2"}
             };
 
-            var baseKeys = new NameValueCollection
-            {
-                { "urn:unrelated", "true" }
-            };
+            var baseKeys = new NameValueCollection {{"urn:unrelated", "true"}};
 
             multi_source_key_value_configuration = KeyValueConfigurationManager
                 .Add(new Core.InMemoryKeyValueConfiguration(baseKeys))
@@ -36,6 +33,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
         private Because of = () =>
             found_value = multi_source_key_value_configuration.AllValues;
 
-        private It should_find_the_previous_value = () => found_value.Select(s => s.Value).ShouldContain("true", "myId1", "myName1", "myChild1.1,myChild1.2");
+        private It should_find_the_previous_value = () =>
+            found_value.Select(s => s.Value).ShouldContain("true", "myId1", "myName1", "myChild1.1,myChild1.2");
     }
 }

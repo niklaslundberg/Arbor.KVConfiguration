@@ -18,22 +18,19 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         {
             var primaryKeys = new NameValueCollection
             {
-                { "urn:a:simple:type2:instance1:url", "myUrl1" },
-                { "urn:a:simple:type2:instance1:text", "myText1" },
-                { "unrelated1", "abc" },
+                {"urn:a:simple:type2:instance1:url", "myUrl1"},
+                {"urn:a:simple:type2:instance1:text", "myText1"},
+                {"unrelated1", "abc"}
             };
 
             var secondaryKeys = new NameValueCollection
             {
-                { "urn:a:simple:type:default1:url", "myUrl" },
-                { "urn:a:simple:type:default1:text", "myText" },
-                { "unrelated2", "123" },
+                {"urn:a:simple:type:default1:url", "myUrl"},
+                {"urn:a:simple:type:default1:text", "myText"},
+                {"unrelated2", "123"}
             };
 
-            var thirdKeys = new NameValueCollection
-            {
-                { "urn:a:simple:type3:instance2:url", "" }
-            };
+            var thirdKeys = new NameValueCollection {{"urn:a:simple:type3:instance2:url", ""}};
 
             configuration = KeyValueConfigurationManager
                 .Add(new Core.InMemoryKeyValueConfiguration(primaryKeys))
@@ -41,6 +38,9 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
                 .Add(new Core.InMemoryKeyValueConfiguration(thirdKeys))
                 .Build();
         };
+
+        private It first_instance_should_not_be_null
+            = () => instances[0].ShouldNotBeNull();
 
         private Because of = () =>
         {
@@ -50,10 +50,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
                 .ToImmutableArray();
         };
 
-        private It first_instance_should_not_be_null
-            = () => instances[0].ShouldNotBeNull();
-
-        private It should_have_instance1_url = () => { instances[0].Value.Url.ShouldEqual("myUrl"); };
+        private It should_have_1_instance = () => instances.Length.ShouldEqual(1);
 
         private It should_have_instance1_name = () => { instances[0].Name.ShouldEqual("default1"); };
 
@@ -62,6 +59,6 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
             instances[0].Value.Text.ShouldEqual("myText");
         };
 
-        private It should_have_1_instance = () => instances.Length.ShouldEqual(1);
+        private It should_have_instance1_url = () => { instances[0].Value.Url.ShouldEqual("myUrl"); };
     }
 }

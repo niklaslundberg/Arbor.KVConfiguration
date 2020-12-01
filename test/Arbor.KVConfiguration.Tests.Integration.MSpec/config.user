@@ -1,0 +1,9 @@
+﻿{
+    "urn:arbor:kvconfiguration:schema:version":  "1.0",
+    "keys": [
+        {
+            "key": "AnyKey",
+            "value": "A value"
+        }
+    ]
+}

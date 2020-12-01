@@ -11,6 +11,7 @@ namespace Arbor.KVConfiguration.Core
         {
             KeyValueConfiguration = keyValueConfiguration ??
                                     throw new ArgumentNullException(nameof(keyValueConfiguration));
+
             Previous = previous;
         }
 

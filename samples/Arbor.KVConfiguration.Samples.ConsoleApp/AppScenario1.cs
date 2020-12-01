@@ -16,14 +16,9 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
 
             KeyValueConfigurationManager.Add(appSettingsKeyValueConfiguration).Build();
 
-            var goodKeys = new List<string>
-            {
-                "a-non-existing-key",
-                "urn:test:key",
-                "urn:TEST:key"
-            };
+            var goodKeys = new List<string> {"a-non-existing-key", "urn:test:key", "urn:TEST:key"};
 
-            Dictionary<string, string> keys = Specials.Special;
+            var keys = Specials.Special;
 
             foreach (string goodKey in goodKeys)
             {
@@ -32,7 +27,7 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
 
             var builder = new StringBuilder();
 
-            foreach (KeyValuePair<string, string> pair in keys)
+            foreach (var pair in keys)
             {
                 builder.AppendFormat(CultureInfo.InvariantCulture, "Key: {0}", pair.Key).AppendLine();
 

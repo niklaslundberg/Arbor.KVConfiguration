@@ -5,9 +5,5 @@ namespace Arbor.KVConfiguration.Core.Decorators
         public DecoratorDelegator(AppSettingsBuilder appSettingsBuild) : base(appSettingsBuild, new NullDecorator())
         {
         }
-
-        protected override void Dispose(bool isDisposing)
-        {
-        }
     }
 }

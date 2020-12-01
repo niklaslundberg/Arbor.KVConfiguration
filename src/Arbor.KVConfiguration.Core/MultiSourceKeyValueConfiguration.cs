@@ -14,6 +14,8 @@ namespace Arbor.KVConfiguration.Core
         private const string Arrow = "-->";
         private readonly AppSettingsDecoratorBuilder _appSettingsDecoratorBuilder;
         private readonly Action<string>? _logAction;
+        private bool _isDisposed;
+        private readonly string _sourceChain;
 
         public MultiSourceKeyValueConfiguration(
             [NotNull] AppSettingsDecoratorBuilder appSettingsDecoratorBuilder,
@@ -21,18 +23,108 @@ namespace Arbor.KVConfiguration.Core
         {
             _appSettingsDecoratorBuilder = appSettingsDecoratorBuilder ??
                                            throw new ArgumentNullException(nameof(appSettingsDecoratorBuilder));
+
             _logAction = logAction;
 
             string decorators = BuildDecoratorsAsString(_appSettingsDecoratorBuilder);
 
-            SourceChain = "source chain: " + BuildChainAsString(_appSettingsDecoratorBuilder.AppSettingsBuilder) +
-                          (string.IsNullOrWhiteSpace(decorators) ? string.Empty : ", decorators: " + decorators);
+            _sourceChain = "source chain: " + BuildChainAsString(_appSettingsDecoratorBuilder.AppSettingsBuilder) +
+                          (string.IsNullOrWhiteSpace(decorators)
+                              ? string.Empty
+                              : ", decorators: " + decorators);
         }
 
         [PublicAPI]
-        public string SourceChain { get; }
+        public string SourceChain
+        {
+            get
+            {
+                CheckIsDisposed();
 
-        private string BuildDecoratorsAsString(AppSettingsDecoratorBuilder appSettingsDecoratorBuilder)
+                return _sourceChain;
+            }
+        }
+
+        public void Dispose()
+        {
+            if (_isDisposed)
+            {
+                return;
+            }
+
+            _isDisposed = true;
+            _appSettingsDecoratorBuilder.Dispose();
+        }
+
+        public ImmutableArray<string> AllKeys
+        {
+            get
+            {
+                CheckIsDisposed();
+
+                return GetAllKeys(_appSettingsDecoratorBuilder.AppSettingsBuilder)
+                    .Distinct(StringComparer.OrdinalIgnoreCase).ToImmutableArray();
+            }
+        }
+
+        public ImmutableArray<StringPair> AllValues
+        {
+            get
+            {
+                CheckIsDisposed();
+
+                IEnumerable<StringPair> stringPairs = AllKeys.Select(key => new StringPair(key,
+                    GetValue(_appSettingsDecoratorBuilder.AppSettingsBuilder, key, _logAction).Item2));
+
+                var immutableArray =
+                    stringPairs.Select(pair => new StringPair(pair.Key,
+                        DecorateValue(_appSettingsDecoratorBuilder, pair.Value))).ToImmutableArray();
+
+                return immutableArray;
+            }
+        }
+
+        private void CheckIsDisposed()
+        {
+            if (_isDisposed)
+            {
+                throw new ObjectDisposedException(ToString());
+            }
+        }
+
+        public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues
+        {
+            get
+            {
+                CheckIsDisposed();
+                ImmutableArray<MultipleValuesStringPair> values =
+                    GetMultipleValues(_appSettingsDecoratorBuilder.AppSettingsBuilder, AllKeys);
+
+                var multipleValuesStringPairs = values
+                    .Select(item => new MultipleValuesStringPair(item.Key,
+                        item.Values.Select(value => DecorateValue(_appSettingsDecoratorBuilder, value))
+                            .ToImmutableArray()))
+                    .ToImmutableArray();
+
+                return multipleValuesStringPairs;
+            }
+        }
+
+        public string this[string? key] => DecorateValue(_appSettingsDecoratorBuilder,
+            GetValue(_appSettingsDecoratorBuilder.AppSettingsBuilder, key, _logAction).Item2);
+
+        public ImmutableArray<KeyValueConfigurationItem> ConfigurationItems
+        {
+            get
+            {
+                CheckIsDisposed();
+
+                return GetConfigurationItems(
+                    _appSettingsDecoratorBuilder.AppSettingsBuilder).ToImmutableArray();
+            }
+        }
+
+        private string BuildDecoratorsAsString(AppSettingsDecoratorBuilder? appSettingsDecoratorBuilder)
         {
             if (appSettingsDecoratorBuilder?.Decorator is null)
             {
@@ -46,7 +138,7 @@ namespace Arbor.KVConfiguration.Core
 
             string result = appSettingsDecoratorBuilder.Decorator.ToString();
 
-            if (appSettingsDecoratorBuilder.Previous is object)
+            if (appSettingsDecoratorBuilder.Previous is {})
             {
                 result += Arrow + BuildDecoratorsAsString(appSettingsDecoratorBuilder.Previous);
             }
@@ -54,7 +146,7 @@ namespace Arbor.KVConfiguration.Core
             return result;
         }
 
-        private string BuildChainAsString(AppSettingsBuilder builder)
+        private string BuildChainAsString(AppSettingsBuilder? builder)
         {
             if (builder?.KeyValueConfiguration is null)
             {
@@ -63,7 +155,7 @@ namespace Arbor.KVConfiguration.Core
 
             string result = builder.KeyValueConfiguration.ToString();
 
-            if (builder.Previous is object)
+            if (builder.Previous is {})
             {
                 result += Arrow + BuildChainAsString(builder.Previous);
             }
@@ -71,7 +163,7 @@ namespace Arbor.KVConfiguration.Core
             return result;
         }
 
-        private static string[] GetAllKeys(AppSettingsBuilder appSettingsBuilder)
+        private static string[] GetAllKeys(AppSettingsBuilder? appSettingsBuilder)
         {
             if (appSettingsBuilder is null)
             {
@@ -98,7 +190,8 @@ namespace Arbor.KVConfiguration.Core
             }
 
             string? decorated = null;
-            if (decorator.Previous is object)
+
+            if (decorator.Previous is {})
             {
                 decorated = DecorateValue(decorator.Previous, value);
             }
@@ -108,17 +201,17 @@ namespace Arbor.KVConfiguration.Core
 
         private static (IKeyValueConfiguration, string) GetValue(
             AppSettingsBuilder? appSettingsBuilder,
-            string key,
+            string? key,
             Action<string>? logAction)
         {
             if (string.IsNullOrWhiteSpace(key))
             {
-                return new ValueTuple<IKeyValueConfiguration, string>(new NoConfiguration(), "");
+                return new ValueTuple<IKeyValueConfiguration, string>(NoConfiguration.Empty, "");
             }
 
             if (appSettingsBuilder is null)
             {
-                return new ValueTuple<IKeyValueConfiguration, string>(new NoConfiguration(), "");
+                return new ValueTuple<IKeyValueConfiguration, string>(NoConfiguration.Empty, "");
             }
 
             string value = appSettingsBuilder.KeyValueConfiguration[key];
@@ -145,7 +238,7 @@ namespace Arbor.KVConfiguration.Core
         {
             if (appSettingsBuilder is null)
             {
-                return new NoConfiguration();
+                return NoConfiguration.Empty;
             }
 
             if (appSettingsBuilder.KeyValueConfiguration.AllKeys.Contains(key, StringComparer.OrdinalIgnoreCase))
@@ -181,6 +274,7 @@ namespace Arbor.KVConfiguration.Core
             }
 
             var keysLeftAfterValues = keysLeft.Except(values.Select(t => t.Key)).ToImmutableArray();
+
             if (keysLeftAfterValues.Any())
             {
                 values.AddRange(GetMultipleValues(appSettingsBuilder.Previous, keysLeftAfterValues));
@@ -203,7 +297,7 @@ namespace Arbor.KVConfiguration.Core
         {
             var configurationItems = new List<KeyValueConfigurationItem>();
 
-            if (appSettingsBuilder.Previous is object)
+            if (appSettingsBuilder.Previous is {})
             {
                 configurationItems.AddRange(GetConfigurationItems(appSettingsBuilder.Previous));
             }
@@ -222,61 +316,32 @@ namespace Arbor.KVConfiguration.Core
         }
 
         [PublicAPI]
-        public IKeyValueConfiguration ConfiguratorFor(string key, Action<string>? logAction = null)
+        public IKeyValueConfiguration? ConfiguratorFor(string? key, Action<string>? logAction = null)
         {
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                return null;
+            }
+
             (IKeyValueConfiguration, string) tuple =
                 GetValue(_appSettingsDecoratorBuilder.AppSettingsBuilder, key, logAction);
 
             if (tuple.Item1 is NoConfiguration || tuple.Item1 is null)
             {
-                return GetConfiguratorDefining(_appSettingsDecoratorBuilder.AppSettingsBuilder, key);
+                return GetConfiguratorDefining(_appSettingsDecoratorBuilder.AppSettingsBuilder, key!);
             }
 
             return tuple.Item1;
         }
 
-        public override string ToString() => $"{base.ToString()} [{SourceChain}]";
-
-        public void Dispose() => _appSettingsDecoratorBuilder?.Dispose();
-
-        public ImmutableArray<string> AllKeys => GetAllKeys(_appSettingsDecoratorBuilder.AppSettingsBuilder)
-            .Distinct(StringComparer.OrdinalIgnoreCase).ToImmutableArray();
-
-        public ImmutableArray<StringPair> AllValues
+        public override string ToString()
         {
-            get
+            if (_isDisposed)
             {
-                IEnumerable<StringPair> stringPairs = AllKeys.Select(key => new StringPair(key,
-                    GetValue(_appSettingsDecoratorBuilder.AppSettingsBuilder, key, _logAction).Item2));
-                var immutableArray =
-                    stringPairs.Select(pair => new StringPair(pair.Key,
-                        DecorateValue(_appSettingsDecoratorBuilder, pair.Value))).ToImmutableArray();
-
-                return immutableArray;
+                return nameof(MultiSourceKeyValueConfiguration) + "[DISPOSED]";
             }
+
+            return $"{base.ToString()} [{SourceChain}]";
         }
-
-        public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues
-        {
-            get
-            {
-                ImmutableArray<MultipleValuesStringPair> values =
-                    GetMultipleValues(_appSettingsDecoratorBuilder.AppSettingsBuilder, AllKeys);
-
-                var multipleValuesStringPairs = values
-                    .Select(item => new MultipleValuesStringPair(item.Key,
-                        item.Values.Select(value => DecorateValue(_appSettingsDecoratorBuilder, value))
-                            .ToImmutableArray()))
-                    .ToImmutableArray();
-
-                return multipleValuesStringPairs;
-            }
-        }
-
-        public string this[string key] => DecorateValue(_appSettingsDecoratorBuilder,
-            GetValue(_appSettingsDecoratorBuilder.AppSettingsBuilder, key, _logAction).Item2);
-
-        public ImmutableArray<KeyValueConfigurationItem> ConfigurationItems => GetConfigurationItems(
-            _appSettingsDecoratorBuilder.AppSettingsBuilder).ToImmutableArray();
     }
 }

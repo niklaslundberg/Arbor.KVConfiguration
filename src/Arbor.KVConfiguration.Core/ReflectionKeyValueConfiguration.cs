@@ -40,7 +40,8 @@ namespace Arbor.KVConfiguration.Core
 
         public ImmutableArray<StringPair> AllValues => _inMemoryKeyValueConfiguration.AllValues;
 
-        public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues => _inMemoryKeyValueConfiguration.AllWithMultipleValues;
+        public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues =>
+            _inMemoryKeyValueConfiguration.AllWithMultipleValues;
 
         public string this[string key] => _inMemoryKeyValueConfiguration[key];
 

@@ -17,19 +17,18 @@ namespace Arbor.KVConfiguration.Tests.Integration
             var inMemoryKeyValueConfiguration =
                 new InMemoryKeyValueConfiguration(new NameValueCollection
                 {
-                    { "urn:test:simple:instance:name", "John" },
-                    { "urn:test:simple:instance:age", "42" }
+                    {"urn:test:simple:instance:name", "John"}, {"urn:test:simple:instance:age", "42"}
                 });
 
             IConfigurationRoot configurationRoot = new ConfigurationBuilder()
                 .AddInMemoryCollection(new Dictionary<string, string>
                 {
-                    ["urn:test:simple:agent:name"] = "James",
-                    ["urn:test:simple:agent:age"] = "50"
+                    ["urn:test:simple:agent:name"] = "James", ["urn:test:simple:agent:age"] = "50"
                 })
                 .AddKeyValueConfigurationSource(inMemoryKeyValueConfiguration).Build();
 
-            ImmutableArray<SimpleCtorType> simpleCtorType = configurationRoot.ToKeyValueConfigurator().GetInstances<SimpleCtorType>();
+            ImmutableArray<SimpleCtorType> simpleCtorType =
+                configurationRoot.ToKeyValueConfigurator().GetInstances<SimpleCtorType>();
 
             Assert.NotEmpty(simpleCtorType);
 
@@ -43,14 +42,13 @@ namespace Arbor.KVConfiguration.Tests.Integration
             var inMemoryKeyValueConfiguration =
                 new InMemoryKeyValueConfiguration(new NameValueCollection
                 {
-                    { "urn:test:simple:instance:name", "John" },
-                    { "urn:test:simple:instance:age", "42" }
+                    {"urn:test:simple:instance:name", "John"}, {"urn:test:simple:instance:age", "42"}
                 });
 
             IConfigurationRoot configurationRoot = new ConfigurationBuilder()
                 .AddKeyValueConfigurationSource(inMemoryKeyValueConfiguration).Build();
 
-            var simpleCtorType = configurationRoot.ToKeyValueConfigurator().GetInstance<SimpleCtorType>();
+            SimpleCtorType simpleCtorType = configurationRoot.ToKeyValueConfigurator().GetInstance<SimpleCtorType>();
 
             Assert.NotNull(simpleCtorType);
             Assert.Equal("John", simpleCtorType.Name);
@@ -61,10 +59,10 @@ namespace Arbor.KVConfiguration.Tests.Integration
         public void ItShouldUseOverrideValues()
         {
             var inMemoryKeyValueConfiguration =
-                new InMemoryKeyValueConfiguration(new NameValueCollection { { "a:b:c", "234" } });
+                new InMemoryKeyValueConfiguration(new NameValueCollection {{"a:b:c", "234"}});
 
             IConfigurationRoot configurationRoot = new ConfigurationBuilder()
-                .AddInMemoryCollection(new Dictionary<string, string> { ["a:b:c"] = "123" })
+                .AddInMemoryCollection(new Dictionary<string, string> {["a:b:c"] = "123"})
                 .AddKeyValueConfigurationSource(inMemoryKeyValueConfiguration).Build();
 
             IConfigurationSection configurationSection = configurationRoot.GetSection("a");
@@ -82,10 +80,10 @@ namespace Arbor.KVConfiguration.Tests.Integration
         public void ItShouldUseValuesDefined()
         {
             var inMemoryKeyValueConfiguration =
-                new InMemoryKeyValueConfiguration(new NameValueCollection { { "a:b:d", "234" } });
+                new InMemoryKeyValueConfiguration(new NameValueCollection {{"a:b:d", "234"}});
 
             IConfigurationRoot configurationRoot = new ConfigurationBuilder()
-                .AddInMemoryCollection(new Dictionary<string, string> { ["a:b:c"] = "123" })
+                .AddInMemoryCollection(new Dictionary<string, string> {["a:b:c"] = "123"})
                 .AddKeyValueConfigurationSource(inMemoryKeyValueConfiguration).Build();
 
             IConfigurationSection configurationSection = configurationRoot.GetSection("a");

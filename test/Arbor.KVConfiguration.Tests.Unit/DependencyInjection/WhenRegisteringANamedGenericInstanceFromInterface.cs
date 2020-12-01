@@ -7,13 +7,6 @@ namespace Arbor.KVConfiguration.Tests.Unit.DependencyInjection
 {
     public class WhenRegisteringANamedGenericInstanceFromInterface
     {
-        private class MyConfiguration
-        {
-            public MyConfiguration(int id) => Id = id;
-
-            public int Id { get; }
-        }
-
         [Fact]
         public void ItShouldBeResolvableByInterfaceAndItsWrappedType()
         {
@@ -38,6 +31,13 @@ namespace Arbor.KVConfiguration.Tests.Unit.DependencyInjection
             Assert.Equal(123, namedFromProviderInstance.Value.Id);
             Assert.Equal("myInstance", namedFromProviderInstance.Name);
             Assert.Equal(namedInstance, namedFromProviderInstance);
+        }
+
+        private class MyConfiguration
+        {
+            public MyConfiguration(int id) => Id = id;
+
+            public int Id { get; }
         }
     }
 }

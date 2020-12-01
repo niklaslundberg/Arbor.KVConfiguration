@@ -14,10 +14,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 
         private Establish context = () =>
         {
-            var keys = new NameValueCollection
-            {
-                { "urn:type:with:required:ctor:instance1:key", "abc" }
-            };
+            var keys = new NameValueCollection {{"urn:type:with:required:ctor:instance1:key", "abc"}};
 
             configuration = new Core.InMemoryKeyValueConfiguration(keys);
         };

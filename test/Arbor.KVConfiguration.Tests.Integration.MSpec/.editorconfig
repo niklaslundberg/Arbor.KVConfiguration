@@ -1,0 +1,71 @@
+# Remove the line below if you want to inherit .editorconfig settings from higher directories
+root = true
+
+# C# files
+[*.cs]
+
+#### Naming styles ####
+
+# Naming rules
+
+dotnet_naming_rule.private_or_internal_static_field_should_be_mspec.severity = warning
+dotnet_naming_rule.private_or_internal_static_field_should_be_mspec.symbols = private_or_internal_static_field
+dotnet_naming_rule.private_or_internal_static_field_should_be_mspec.style = mspec
+
+dotnet_naming_rule.classes.severity = warning
+dotnet_naming_rule.classes.symbols = all_classes
+dotnet_naming_rule.classes.style = mspec
+
+
+# Symbol specifications
+
+dotnet_naming_symbols.interface.applicable_kinds = interface
+dotnet_naming_symbols.interface.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
+dotnet_naming_symbols.interface.required_modifiers =
+
+dotnet_naming_symbols.private_or_internal_static_field.applicable_kinds = field
+dotnet_naming_symbols.private_or_internal_static_field.applicable_accessibilities = internal, private, private_protected
+dotnet_naming_symbols.private_or_internal_static_field.required_modifiers =
+
+dotnet_naming_symbols.types.applicable_kinds = class, struct, interface, enum
+dotnet_naming_symbols.types.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
+dotnet_naming_symbols.types.required_modifiers =
+
+dotnet_naming_symbols.non_field_members.applicable_kinds = property, event, method
+dotnet_naming_symbols.non_field_members.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
+dotnet_naming_symbols.non_field_members.required_modifiers =
+
+dotnet_naming_symbols.all_classes.applicable_kinds = class
+dotnet_naming_symbols.all_classes.applicable_accessibilities = public, internal, private, protected, protected_internal, private_protected
+
+
+# Naming styles
+
+dotnet_naming_style.mspec.required_prefix =
+dotnet_naming_style.mspec.required_suffix =
+dotnet_naming_style.mspec.word_separator =
+dotnet_naming_style.mspec.capitalization = all_lower
+
+dotnet_naming_style.all_lower_style.capitalization = all_lower
+dotnet_naming_style.all_lower_style.required_prefix =
+
+dotnet_naming_symbols.stylecop_private_fields_group.applicable_accessibilities = private
+dotnet_naming_symbols.stylecop_private_fields_group.applicable_kinds           = field
+dotnet_naming_rule.stylecop_private_fields_must_be_camel_case_rule.symbols     = stylecop_private_fields_group
+dotnet_naming_rule.stylecop_private_fields_must_be_camel_case_rule.style       = all_lower_style
+dotnet_naming_rule.stylecop_private_fields_must_be_camel_case_rule.severity    = warning
+
+# IDE0052: Remove unread private members
+dotnet_diagnostic.IDE0052.severity = none
+
+# S1144: Unused private types or members should be removed
+dotnet_diagnostic.S1144.severity = none
+
+# S2933: Fields that are only assigned in the constructor should be "readonly"
+dotnet_diagnostic.S2933.severity = none
+
+## IDE0040: Add accessibility modifiers
+dotnet_style_require_accessibility_modifiers = never:warning
+
+# S101: Types should be named in PascalCase
+dotnet_diagnostic.S101.severity = none

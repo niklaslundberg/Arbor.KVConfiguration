@@ -20,18 +20,18 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         {
             var keys = new NameValueCollection
             {
-                { "urn:test:a:complex:immutable:type:instance1:id", "myId1" },
-                { "urn:test:a:complex:immutable:type:instance1:name", "myName1" },
-                { "urn:test:a:complex:immutable:type:instance1:children", "myChild1.1" },
-                { "urn:test:a:complex:immutable:type:instance1:children", "myChild1.2" },
-                { "urn:test:a:complex:immutable:type:instance2:id", "myId2" },
-                { "urn:test:a:complex:immutable:type:instance2:name", "myName2" },
-                { "urn:test:a:complex:immutable:type:instance3:id", "myId3" },
-                { "urn:test:a:complex:immutable:type:instance3:name", "myName3" },
-                { "urn:test:a:complex:immutable:type:instance3:children", "myChild3.1" },
-                { "urn:test:a:complex:immutable:type:instance3:children", "myChild3.2" },
-                { "urn:test:a:complex:immutable:type:instance3:children", "myChild3.3" },
-                { "urn:test:a:complex:immutable:type:instance3:uri", "http://example.com/" }
+                {"urn:test:a:complex:immutable:type:instance1:id", "myId1"},
+                {"urn:test:a:complex:immutable:type:instance1:name", "myName1"},
+                {"urn:test:a:complex:immutable:type:instance1:children", "myChild1.1"},
+                {"urn:test:a:complex:immutable:type:instance1:children", "myChild1.2"},
+                {"urn:test:a:complex:immutable:type:instance2:id", "myId2"},
+                {"urn:test:a:complex:immutable:type:instance2:name", "myName2"},
+                {"urn:test:a:complex:immutable:type:instance3:id", "myId3"},
+                {"urn:test:a:complex:immutable:type:instance3:name", "myName3"},
+                {"urn:test:a:complex:immutable:type:instance3:children", "myChild3.1"},
+                {"urn:test:a:complex:immutable:type:instance3:children", "myChild3.2"},
+                {"urn:test:a:complex:immutable:type:instance3:children", "myChild3.3"},
+                {"urn:test:a:complex:immutable:type:instance3:uri", "http://example.com/"}
             };
 
             configuration = new Core.InMemoryKeyValueConfiguration(keys);

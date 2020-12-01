@@ -15,14 +15,12 @@ namespace Arbor.KVConfiguration.Schema.Validators
         public ConfigurationValidator() =>
             _validators = new List<IValueValidator>(10)
             {
-                new IntValidator(),
-                new UriValidator(),
-                new BoolValidator(),
-                new TimeSpanValidator()
+                new IntValidator(), new UriValidator(), new BoolValidator(), new TimeSpanValidator()
             }.ToImmutableArray();
 
         [UsedImplicitly]
-        public ConfigurationValidator(ImmutableArray<IValueValidator> validators) => _validators = validators.ThrowIfDefault();
+        public ConfigurationValidator(ImmutableArray<IValueValidator> validators) =>
+            _validators = validators.ThrowIfDefault();
 
         public KeyValueConfigurationValidationResult Validate(
             MultipleValuesStringPair multipleValuesStringPair,
@@ -55,6 +53,7 @@ namespace Arbor.KVConfiguration.Schema.Validators
                     if (valueValidator.CanValidate(metadataItem.ConfigurationMetadata.ValueType))
                     {
                         string valueToValidate = multipleValuesStringPair.Values.SingleOrDefault();
+
                         validationErrors.AddRange(valueValidator.Validate(metadataItem.ConfigurationMetadata.ValueType,
                             valueToValidate));
                     }

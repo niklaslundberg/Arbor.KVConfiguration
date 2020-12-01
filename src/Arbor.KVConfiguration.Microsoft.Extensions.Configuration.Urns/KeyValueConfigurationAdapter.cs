@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
 {
     /// <summary>
-    /// Adapter to use an existing IConfiguration with Arbor.KVConfiguration
+    ///     Adapter to use an existing IConfiguration with Arbor.KVConfiguration
     /// </summary>
     public sealed class KeyValueConfigurationAdapter : IKeyValueConfiguration, IDisposable
     {
@@ -34,6 +34,16 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
             }
 
             _inMemoryConfig = new InMemoryKeyValueConfiguration(nameValueCollection);
+        }
+
+        public void Dispose()
+        {
+            if (!_isDisposed)
+            {
+                _inMemoryConfig?.Dispose();
+                _inMemoryConfig = null;
+                _isDisposed = true;
+            }
         }
 
         public ImmutableArray<string> AllKeys
@@ -69,16 +79,6 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
             {
                 CheckDisposed();
                 return _inMemoryConfig![key];
-            }
-        }
-
-        public void Dispose()
-        {
-            if (!_isDisposed)
-            {
-                _inMemoryConfig?.Dispose();
-                _inMemoryConfig = null;
-                _isDisposed = true;
             }
         }
 

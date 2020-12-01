@@ -8,7 +8,7 @@ namespace Arbor.KVConfiguration.Core.Extensions.CommandLine
     public static class CommandLineAppExtensions
     {
         private const char SplitChar = '=';
-        private static readonly char[] VariableAssignmentCharacter = { SplitChar };
+        private static readonly char[] VariableAssignmentCharacter = {SplitChar};
 
         public static IKeyValueConfiguration ToKeyValueConfiguration(this IEnumerable<string> args)
         {
@@ -17,7 +17,7 @@ namespace Arbor.KVConfiguration.Core.Extensions.CommandLine
             foreach (string arg in args.Where(a =>
                 a.Count(c => c == SplitChar) == 1 && a.Length >= 3))
             {
-                string[] parts = arg.Split(VariableAssignmentCharacter, StringSplitOptions.RemoveEmptyEntries);
+                var parts = arg.Split(VariableAssignmentCharacter, StringSplitOptions.RemoveEmptyEntries);
 
                 if (parts.Length != 2)
                 {
@@ -44,7 +44,7 @@ namespace Arbor.KVConfiguration.Core.Extensions.CommandLine
                 return builder;
             }
 
-            IKeyValueConfiguration inMemoryKeyValueConfiguration = args.ToKeyValueConfiguration();
+            var inMemoryKeyValueConfiguration = args.ToKeyValueConfiguration();
 
             return builder.Add(inMemoryKeyValueConfiguration);
         }
