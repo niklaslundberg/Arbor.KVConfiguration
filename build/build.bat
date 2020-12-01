@@ -19,6 +19,7 @@ SET Arbor.Build.Tools.External.VisualStudio.Version.PreRelease.Enabled=true
 SET Arbor.Build.Tools.External.MSBuild.AllowPrerelease.Enabled=true
 SET Arbor.Build.Log.Level=Debug
 SET Arbor.Build.Tools.External.MSBuild.DotNet.Enabled=true
+SET Arbor.Build.Vcs.Branch.BranchModel=GitFlowBuildOnMain
 
 SET Fallback.Version.Build=0
 
