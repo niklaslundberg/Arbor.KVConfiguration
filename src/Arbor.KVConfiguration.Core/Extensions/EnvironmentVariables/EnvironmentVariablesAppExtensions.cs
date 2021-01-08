@@ -9,11 +9,6 @@ namespace Arbor.KVConfiguration.Core.Extensions.EnvironmentVariables
             this AppSettingsBuilder builder,
             IReadOnlyDictionary<string, string> environmentVariables)
         {
-            if (environmentVariables is null)
-            {
-                return builder;
-            }
-
             var nameValueCollection = new NameValueCollection();
 
             foreach (var environmentVariable in environmentVariables)

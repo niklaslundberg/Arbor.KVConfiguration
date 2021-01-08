@@ -20,7 +20,7 @@
         <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <license type="expression">MIT</license>
-        <copyright>Copyright Niklas Lundberg 2016 - 2020</copyright>
+        <copyright>Copyright Niklas Lundberg 2016 - 2021</copyright>
         <dependencies>
             <dependency id="Arbor.KVConfiguration.Core" version="[$version$]" />
             <dependency id="Newtonsoft.Json" version="[12.0.1,)" />
