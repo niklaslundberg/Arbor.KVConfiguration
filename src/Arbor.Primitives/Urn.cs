@@ -3,11 +3,12 @@ using System.Linq;
 
 namespace Arbor.Primitives
 {
-    public class Urn : IEquatable<Urn>
+    public sealed class Urn : IEquatable<Urn>
     {
         private const string DoubleSeparator = "::";
         public const char Separator = ':';
         private static readonly char[] InvalidCharacters = {'/', '\\'};
+        private static readonly string[] _componentChars = {"?=", "?+", "#"};
 
         public Urn(string originalValue)
         {
@@ -68,6 +69,7 @@ namespace Arbor.Primitives
             }
 
             Nid = nidSlice.ToString();
+            Nss = trimmed.Substring("urn".Length + "::".Length + Nid.Length);
 
             ReadOnlySpan<char> schemeSlice = chars.Slice(0, 3);
 #pragma warning disable CA1308 // Normalize strings to uppercase
@@ -75,7 +77,80 @@ namespace Arbor.Primitives
 #pragma warning restore CA1308 // Normalize strings to uppercase
 
             OriginalValue = trimmed;
+
+            Normalized = Normalize();
+
+            int fragmentIndex  = Normalized.IndexOf('#');
+
+            if (fragmentIndex >= 0 && Normalized.Length - fragmentIndex >= 0)
+            {
+                Fragment = Normalized.Substring(fragmentIndex + 1);
+            }
+            else
+            {
+                Fragment = "";
+            }
+
+            int qComponentIndex = Normalized.IndexOf("?=", StringComparison.Ordinal);
+            int rComponentIndex = Normalized.IndexOf("?+", StringComparison.Ordinal);
+
+            int qComponentLength = fragmentIndex >= 0 ? Normalized.Length - fragmentIndex -1 : Normalized.Length - qComponentIndex - 2;
+
+            if (qComponentLength > 0)
+            {
+                QComponent = qComponentIndex >= 0 ? Normalized.Substring(qComponentIndex + 2, qComponentLength) : "";
+            }
+            else
+            {
+                QComponent = "";
+            }
+
+            int rComponentLength = 0;
+
+            if (rComponentIndex >= 0)
+            {
+                if (qComponentIndex >= 0)
+                {
+                    rComponentLength = Normalized.Length - qComponentIndex - 2;
+                }
+                else if (fragmentIndex >= 0)
+                {
+                    rComponentLength = Normalized.Length - fragmentIndex - 2;
+                }
+                else
+                {
+                    rComponentLength = Normalized.Length - rComponentIndex - 2;
+                }
+            }
+
+            if (rComponentLength > 0)
+            {
+                if (qComponentIndex >= 0 && QComponent.Length > 0)
+                {
+                    RComponent = Normalized.Substring(rComponentIndex + 2, rComponentLength);
+                }
+                else if (qComponentIndex >= 0)
+                {
+                    RComponent = Normalized.Substring(rComponentIndex + 2, rComponentLength - 1);
+                }
+                else if (fragmentIndex >= 0)
+                {
+                    RComponent = Normalized.Substring(rComponentIndex + 2, rComponentLength + 1);
+                }
+                else
+                {
+                    RComponent = "";
+                }
+            }
+            else
+            {
+                RComponent = "";
+            }
         }
+
+        public string Normalized { get; }
+
+        private string Normalize() => "urn:" + Nid.ToLowerInvariant() + ":" + Nss;
 
         public string Scheme { get; }
 
@@ -111,7 +186,7 @@ namespace Arbor.Primitives
                     throw new InvalidOperationException($"Could not get parent from urn '{OriginalValue}'");
                 }
 
-                int separators = OriginalValue.Count(c => c.Equals(Separator));
+                int separators = OriginalValue.Count(character => character.Equals(Separator));
 
                 if (separators <= 1)
                 {
@@ -123,6 +198,11 @@ namespace Arbor.Primitives
                 return new Urn(parent);
             }
         }
+
+        public string Nss { get; }
+        public string QComponent { get; }
+        public string RComponent { get; }
+        public string Fragment { get; }
 
         public bool Equals(Urn? other)
         {
@@ -146,15 +226,10 @@ namespace Arbor.Primitives
                 return false;
             }
 
-            var caseSensitiveParts = CaseInsensitiveParts(this);
-            var otherParts = CaseInsensitiveParts(other);
+            var caseSensitiveParts = CaseInsensitiveParts(Nss);
+            var otherParts = CaseInsensitiveParts(other.Nss);
 
-            if (!caseSensitiveParts.SequenceEqual(otherParts))
-            {
-                return false;
-            }
-
-            return string.Equals(OriginalValue, other.OriginalValue, StringComparison.OrdinalIgnoreCase);
+            return caseSensitiveParts.SequenceEqual(otherParts);
         }
 
         public static bool operator ==(Urn left, Urn right) => Equals(left, right);
@@ -210,7 +285,7 @@ namespace Arbor.Primitives
             return true;
         }
 
-        public override string ToString() => OriginalValue;
+        public override string ToString() => Normalized;
 
         public bool IsInHierarchy(Urn? other)
         {
@@ -219,8 +294,8 @@ namespace Arbor.Primitives
                 return false;
             }
 
-            var parts = OriginalValue.Split(Separator);
-            var otherParts = other.OriginalValue.Split(Separator);
+            string[] parts = OriginalValue.Split(Separator);
+            string[] otherParts = other.OriginalValue.Split(Separator);
 
             if (parts.Length < otherParts.Length)
             {
@@ -241,28 +316,36 @@ namespace Arbor.Primitives
             return true;
         }
 
-        private static ReadOnlySpan<char> CaseInsensitiveParts(Urn urn) =>
-            urn.OriginalValue.AsSpan().Slice(urn.Scheme.Length + urn.Nid.Length + 1);
-
-        public override bool Equals(object? obj)
+        private static ReadOnlySpan<char> CaseInsensitiveParts(string nss)
         {
-            if (obj is null)
+            int firstIndex = -1;
+
+            foreach (var componentChar in _componentChars)
             {
-                return false;
+                int index = nss.IndexOf(componentChar, StringComparison.Ordinal);
+
+                if (index >= 0)
+                {
+                    if (firstIndex >= 0 && index <= firstIndex)
+                    {
+                        firstIndex = index;
+                    }
+                    else
+                    {
+                        firstIndex = index;
+                    }
+                }
             }
 
-            if (ReferenceEquals(this, obj))
+            if (firstIndex >= 0)
             {
-                return true;
+                return nss.AsSpan().Slice(0, firstIndex);
             }
 
-            if (obj.GetType() != GetType())
-            {
-                return false;
-            }
-
-            return Equals((Urn)obj);
+            return nss.AsSpan();
         }
+
+        public override bool Equals(object? obj) => Equals(obj as Urn);
 
         public override int GetHashCode() => StringComparer.OrdinalIgnoreCase.GetHashCode(OriginalValue);
 
