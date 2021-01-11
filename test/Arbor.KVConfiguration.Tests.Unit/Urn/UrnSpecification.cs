@@ -131,13 +131,25 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         }
 
         [Fact]
-        public void TryParseWithNullShouldReturnFalse() => Assert.False(Primitives.Urn.TryParse(null, out var _));
+        public void TryParseWithNullShouldReturnFalse() => Assert.False(Primitives.Urn.TryParse(null, out _));
 
         [Fact]
-        public void TryParseWithEmptyShouldReturnFalse() => Assert.False(Primitives.Urn.TryParse("", out var _));
+        public void TryParseWithEmptyShouldReturnFalse() => Assert.False(Primitives.Urn.TryParse("", out _));
 
         [Fact]
-        public void TryParseInvalidUriShouldReturnFalse() => Assert.False(Primitives.Urn.TryParse("urn:a{", out var _));
+        public void TryParseInvalidUriShouldReturnFalse() => Assert.False(Primitives.Urn.TryParse("urn:a{", out _));
+
+        [Fact]
+        public void TryParseInvalidUriWithQBeforeRShouldReturnFalse() => Assert.False(Primitives.Urn.TryParse("urn:abc:123?=abc?+", out _));
+
+        [Fact]
+        public void TryParseInvalidUriWithQInFragmentShouldReturnFalse() => Assert.False(Primitives.Urn.TryParse("urn:abc:123?=abc?+#?=", out _));
+
+        [Fact]
+        public void TryParseInvalidUriWithRInFragmentShouldReturnFalse() => Assert.False(Primitives.Urn.TryParse("urn:abc:123?+abc?+#?+", out _));
+
+        [Fact]
+        public void TryParseInvalidUriWithFragmentInFragmentShouldReturnFalse() => Assert.False(Primitives.Urn.TryParse("urn:abc:123#123#456", out _));
 
         [Fact]
         public void CtorWithInvalidUrnShouldThrow() =>
@@ -161,12 +173,28 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         [InlineData("urn:abc:123", "urn:abc:123")]
         [InlineData("URN:abc:123", "urn:abc:123")]
         [InlineData("URN:ABC:123", "urn:abc:123")]
+        [InlineData("URN:ABC:123?+", "urn:abc:123")]
+        [InlineData("URN:ABC:123?=", "urn:abc:123")]
+        [InlineData("URN:ABC:123#", "urn:abc:123")]
         public void ValidUrnShouldHaveNormalizedName(string urn, string expectedNormalized)
         {
             Primitives.Urn.TryParse(urn, out var parsed).ShouldBeTrue();
 
             parsed.Normalized.ShouldEqual(expectedNormalized);
-            parsed.ToString().ShouldEqual(expectedNormalized);
+        }
+
+        [Theory]
+        [InlineData("urn:abc:123", "urn:abc:123")]
+        [InlineData("URN:abc:123", "URN:abc:123")]
+        [InlineData("URN:ABC:123", "URN:ABC:123")]
+        [InlineData("URN:ABC:123?+", "URN:ABC:123?+")]
+        [InlineData("URN:ABC:123?=", "URN:ABC:123?=")]
+        [InlineData("URN:ABC:123#", "URN:ABC:123#")]
+        public void ValidUrnShouldHaveFullName(string urn, string expectedFullName)
+        {
+            Primitives.Urn.TryParse(urn, out var parsed).ShouldBeTrue();
+
+            parsed.FullName.ShouldEqual(expectedFullName);
         }
 
         [Theory]
@@ -187,6 +215,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         [Theory]
         [InlineData("urn:example:a123,z456?=abc", "", "abc", "")]
         [InlineData("urn:example:a123,z456?+abc?=def", "abc", "def", "")]
+        [InlineData("urn:example:a123,z456?+abc?=def#ghi", "abc", "def", "ghi")]
         [InlineData("urn:example:a123,z456?=abc#123", "", "abc", "123")]
         [InlineData("urn:example:a123,z456?+abc#123", "abc", "", "123")]
         [InlineData("urn:example:a123,z456?=", "", "", "")]

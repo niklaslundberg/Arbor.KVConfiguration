@@ -69,7 +69,7 @@ namespace Arbor.Primitives
             }
 
             Nid = nidSlice.ToString();
-            Nss = trimmed.Substring("urn".Length + "::".Length + Nid.Length);
+            string fullName = trimmed.Substring("urn".Length + "::".Length + Nid.Length);
 
             ReadOnlySpan<char> schemeSlice = chars.Slice(0, 3);
 #pragma warning disable CA1308 // Normalize strings to uppercase
@@ -78,31 +78,91 @@ namespace Arbor.Primitives
 
             OriginalValue = trimmed;
 
-            Normalized = Normalize();
+            bool parsed = TryParseComponents(fullName, out string? nss, out string? r, out string? q, out string? f);
 
-            int fragmentIndex  = Normalized.IndexOf('#');
-
-            if (fragmentIndex >= 0 && Normalized.Length - fragmentIndex >= 0)
+            if (!parsed)
             {
-                Fragment = Normalized.Substring(fragmentIndex + 1);
+                throw new FormatException("Could not get components");
+            }
+
+            Nss = nss!;
+
+            RComponent = r!;
+            QComponent = q!;
+            Fragment = f!;
+
+            Normalized = "urn:" + Nid.ToLowerInvariant() + ":" + Nss;
+            FullName = trimmed;
+        }
+
+        public string FullName { get; }
+
+        private static bool TryParseComponents(string fullName,
+            out string? nss,
+            out string? rComponent,
+            out string? qComponent,
+            out string? fragment)
+        {
+            int fragmentIndex = fullName.IndexOf('#');
+            int qComponentIndex = fullName.IndexOf("?=", StringComparison.Ordinal);
+            int rComponentIndex = fullName.IndexOf("?+", StringComparison.Ordinal);
+
+            if (qComponentIndex >= 0 && rComponentIndex >= 0 && qComponentIndex < rComponentIndex)
+            {
+                fragment = null;
+                qComponent = null;
+                rComponent = null;
+                nss = null;
+                return false;
+            }
+
+            if (fragmentIndex >= 0 && qComponentIndex >= 0 && fragmentIndex < qComponentIndex)
+            {
+                fragment = null;
+                qComponent = null;
+                rComponent = null;
+                nss = null;
+                return false;
+            }
+
+            if (fragmentIndex >= 0 && rComponentIndex >= 0 && fragmentIndex < rComponentIndex)
+            {
+                fragment = null;
+                qComponent = null;
+                rComponent = null;
+                nss = null;
+                return false;
+            }
+
+            if (fragmentIndex >= 0 && fullName.Length - fragmentIndex >= 0)
+            {
+                fragment = fullName.Substring(fragmentIndex + 1);
             }
             else
             {
-                Fragment = "";
+                fragment = "";
             }
 
-            int qComponentIndex = Normalized.IndexOf("?=", StringComparison.Ordinal);
-            int rComponentIndex = Normalized.IndexOf("?+", StringComparison.Ordinal);
+            if (fragment.Contains("?=") || fragment.Contains("?+") || fragment.Contains("#"))
+            {
+                fragment = null;
+                qComponent = null;
+                rComponent = null;
+                nss = null;
+                return false;
+            }
 
-            int qComponentLength = fragmentIndex >= 0 ? Normalized.Length - fragmentIndex -1 : Normalized.Length - qComponentIndex - 2;
+            int qComponentLength = fragmentIndex >= 0
+                ? fullName.Length - fragmentIndex - 1
+                : fullName.Length - qComponentIndex - 2;
 
             if (qComponentLength > 0)
             {
-                QComponent = qComponentIndex >= 0 ? Normalized.Substring(qComponentIndex + 2, qComponentLength) : "";
+                qComponent = qComponentIndex >= 0 ? fullName.Substring(qComponentIndex + 2, qComponentLength) : "";
             }
             else
             {
-                QComponent = "";
+                qComponent = "";
             }
 
             int rComponentLength = 0;
@@ -111,46 +171,63 @@ namespace Arbor.Primitives
             {
                 if (qComponentIndex >= 0)
                 {
-                    rComponentLength = Normalized.Length - qComponentIndex - 2;
+                    rComponentLength = fullName.Length - qComponentIndex - 2;
                 }
                 else if (fragmentIndex >= 0)
                 {
-                    rComponentLength = Normalized.Length - fragmentIndex - 2;
+                    rComponentLength = fullName.Length - fragmentIndex - 2;
                 }
                 else
                 {
-                    rComponentLength = Normalized.Length - rComponentIndex - 2;
+                    rComponentLength = fullName.Length - rComponentIndex - 2;
                 }
             }
 
             if (rComponentLength > 0)
             {
-                if (qComponentIndex >= 0 && QComponent.Length > 0)
+                if (qComponentIndex >= 0 && qComponent.Length > 0)
                 {
-                    RComponent = Normalized.Substring(rComponentIndex + 2, rComponentLength);
+                    rComponent = fullName.Substring(rComponentIndex + 2, qComponentIndex - rComponentIndex - 2);
                 }
                 else if (qComponentIndex >= 0)
                 {
-                    RComponent = Normalized.Substring(rComponentIndex + 2, rComponentLength - 1);
+                    rComponent = fullName.Substring(rComponentIndex + 2, rComponentLength - 1);
                 }
                 else if (fragmentIndex >= 0)
                 {
-                    RComponent = Normalized.Substring(rComponentIndex + 2, rComponentLength + 1);
+                    rComponent = fullName.Substring(rComponentIndex + 2, rComponentLength + 1);
                 }
                 else
                 {
-                    RComponent = "";
+                    rComponent = "";
                 }
             }
             else
             {
-                RComponent = "";
+                rComponent = "";
             }
+
+            if (rComponentIndex >= 0)
+            {
+                nss = fullName.Substring(0, rComponentIndex);
+            }
+            else if (qComponentIndex >= 0)
+            {
+                nss = fullName.Substring(0, qComponentIndex);
+            }
+            else if (fragmentIndex >= 0)
+            {
+                nss = fullName.Substring(0, fragmentIndex);
+            }
+            else
+            {
+                nss = fullName;
+            }
+
+            return true;
         }
 
         public string Normalized { get; }
-
-        private string Normalize() => "urn:" + Nid.ToLowerInvariant() + ":" + Nss;
 
         public string Scheme { get; }
 
@@ -280,12 +357,20 @@ namespace Arbor.Primitives
                 return false;
             }
 
+            bool parsedComponents = TryParseComponents(trimmed, out string? nss, out string? r, out string? q, out string? f);
+
+            if (!parsedComponents)
+            {
+                result = null;
+                return false;
+            }
+
             result = new Urn(trimmed);
 
             return true;
         }
 
-        public override string ToString() => Normalized;
+        public override string ToString() => FullName;
 
         public bool IsInHierarchy(Urn? other)
         {
