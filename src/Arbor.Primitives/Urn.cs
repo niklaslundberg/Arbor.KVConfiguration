@@ -3,11 +3,14 @@ using System.Linq;
 
 namespace Arbor.Primitives
 {
+    /// <summary>
+    /// Implements https://tools.ietf.org/html/rfc8141
+    /// </summary>
     public sealed class Urn : IEquatable<Urn>
     {
         private const string DoubleSeparator = "::";
         public const char Separator = ':';
-        private static readonly char[] InvalidCharacters = {'/', '\\'};
+        private static readonly char[] InvalidCharacters = {'\\'};
         private static readonly string[] _componentChars = {"?=", "?+", "#"};
 
         public Urn(string originalValue)
@@ -48,33 +51,35 @@ namespace Arbor.Primitives
 
             if (chars.IndexOf(Separator) < 0)
             {
-                throw new InvalidOperationException();
+                throw new FormatException();
             }
 
             ReadOnlySpan<char> nidSub = chars.Slice(chars.IndexOf(Separator) + 1);
 
             if (nidSub.IndexOf(Separator) < 0)
             {
-                throw new InvalidOperationException($"Attempted value '{originalValue}' is not a valid urn");
+                throw new FormatException($"Attempted value '{originalValue}' is not a valid urn");
             }
 
             ReadOnlySpan<char> nidSlice = nidSub.Slice(0, nidSub.IndexOf(Separator));
 
             foreach (char c in nidSlice)
             {
-                if (!c.IsAscii())
+                if (!(char.IsLetterOrDigit(c) || c == '-'))
                 {
-                    throw new InvalidOperationException("Only ascii characters allowed");
+                    throw new FormatException("Only alphanumeric characters allowed");
                 }
             }
 
-            Nid = nidSlice.ToString();
+            if (nidSlice.EndsWith("-".AsSpan()))
+            {
+                throw new FormatException("Nid cannot end with '-'");
+            }
+
+            Nid = nidSlice.ToString().ToLowerInvariant();
             string fullName = trimmed.Substring("urn".Length + "::".Length + Nid.Length);
 
-            ReadOnlySpan<char> schemeSlice = chars.Slice(0, 3);
-#pragma warning disable CA1308 // Normalize strings to uppercase
-            Scheme = schemeSlice.ToString().ToLowerInvariant();
-#pragma warning restore CA1308 // Normalize strings to uppercase
+            Scheme = "urn";
 
             OriginalValue = trimmed;
 
@@ -89,13 +94,13 @@ namespace Arbor.Primitives
 
             RComponent = r!;
             QComponent = q!;
-            Fragment = f!;
+            FComponent = f!;
 
-            Normalized = "urn:" + Nid.ToLowerInvariant() + ":" + Nss;
-            FullName = trimmed;
+            AssignedName = $"urn:{Nid}:{Nss}";
+            NameString = $"urn{trimmed.Substring(3)}";
         }
 
-        public string FullName { get; }
+        public string NameString { get; }
 
         private static bool TryParseComponents(string fullName,
             out string? nss,
@@ -227,7 +232,7 @@ namespace Arbor.Primitives
             return true;
         }
 
-        public string Normalized { get; }
+        public string AssignedName { get; }
 
         public string Scheme { get; }
 
@@ -279,7 +284,7 @@ namespace Arbor.Primitives
         public string Nss { get; }
         public string QComponent { get; }
         public string RComponent { get; }
-        public string Fragment { get; }
+        public string FComponent { get; }
 
         public bool Equals(Urn? other)
         {
@@ -370,7 +375,7 @@ namespace Arbor.Primitives
             return true;
         }
 
-        public override string ToString() => FullName;
+        public override string ToString() => NameString;
 
         public bool IsInHierarchy(Urn? other)
         {

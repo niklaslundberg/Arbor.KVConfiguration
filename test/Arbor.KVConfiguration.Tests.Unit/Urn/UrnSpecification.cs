@@ -27,7 +27,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 
         [Fact]
         public void UrnStringTooShortShouldThrowInCtor() =>
-            Assert.Throws<FormatException>(() => new Primitives.Urn("urn:/"));
+            Assert.Throws<FormatException>(() => new Primitives.Urn("urn:\\"));
 
         [Fact]
         public void UrnStringWithDoubleColonShouldThrowInCtor() =>
@@ -131,6 +131,36 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         }
 
         [Fact]
+        public void TryParseUrnWithEncodedCharactersShouldReturnTrue()
+        {
+            bool parsed = Primitives.Urn.TryParse("urn:example:a123%2Cz456", out var urn);
+
+            Assert.True(parsed);
+            Assert.Equal("urn:example:a123%2Cz456", urn.NameString);
+        }
+
+        [Fact]
+        public void EqualsShouldReturnFalseForEncodedCharacterDifference()
+        {
+            Primitives.Urn.TryParse("urn:example:a123%2Cz456", out var a);
+            Primitives.Urn.TryParse("urn:example:a123,Cz456", out var b);
+
+            Assert.NotEqual(a,b);
+        }
+
+        [Fact]
+        public void EqualsShouldReturnFalseForDifferentPartAfterSlash()
+        {
+            Primitives.Urn.TryParse("urn:example:a123,z456/foo", out var a);
+            Primitives.Urn.TryParse("urn:example:a123,z456/bar", out var b);
+            Primitives.Urn.TryParse("urn:example:a123,z456/baz", out var c);
+
+            Assert.NotEqual(a,b);
+            Assert.NotEqual(b,c);
+            Assert.NotEqual(a,c);
+        }
+
+        [Fact]
         public void TryParseWithNullShouldReturnFalse() => Assert.False(Primitives.Urn.TryParse(null, out _));
 
         [Fact]
@@ -180,21 +210,21 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         {
             Primitives.Urn.TryParse(urn, out var parsed).ShouldBeTrue();
 
-            parsed.Normalized.ShouldEqual(expectedNormalized);
+            parsed.AssignedName.ShouldEqual(expectedNormalized);
         }
 
         [Theory]
         [InlineData("urn:abc:123", "urn:abc:123")]
-        [InlineData("URN:abc:123", "URN:abc:123")]
-        [InlineData("URN:ABC:123", "URN:ABC:123")]
-        [InlineData("URN:ABC:123?+", "URN:ABC:123?+")]
-        [InlineData("URN:ABC:123?=", "URN:ABC:123?=")]
-        [InlineData("URN:ABC:123#", "URN:ABC:123#")]
+        [InlineData("URN:abc:123", "urn:abc:123")]
+        [InlineData("URN:ABC:123", "urn:ABC:123")]
+        [InlineData("URN:ABC:123?+", "urn:ABC:123?+")]
+        [InlineData("URN:ABC:123?=", "urn:ABC:123?=")]
+        [InlineData("URN:ABC:123#", "urn:ABC:123#")]
         public void ValidUrnShouldHaveFullName(string urn, string expectedFullName)
         {
             Primitives.Urn.TryParse(urn, out var parsed).ShouldBeTrue();
 
-            parsed.FullName.ShouldEqual(expectedFullName);
+            parsed.NameString.ShouldEqual(expectedFullName);
         }
 
         [Theory]
@@ -230,7 +260,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
             var urnItem = Primitives.Urn.Parse(urn);
             urnItem.QComponent.ShouldEqual(expectedQComponent);
             urnItem.RComponent.ShouldEqual(expectedRComponent);
-            urnItem.Fragment.ShouldEqual(expectedFragment);
+            urnItem.FComponent.ShouldEqual(expectedFragment);
         }
     }
 }
