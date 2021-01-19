@@ -229,6 +229,15 @@ namespace Arbor.Primitives
                 nss = fullName;
             }
 
+            if (!nss.All(c => c.IsAscii()))
+            {
+                fragment = null;
+                qComponent = null;
+                rComponent = null;
+                nss = null;
+                return false;
+            }
+
             return true;
         }
 
