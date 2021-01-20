@@ -160,13 +160,16 @@ namespace Arbor.Primitives
                 nss = fullName;
             }
 
-            if (!nss.All(c => c.IsAscii()))
+            foreach (char c in nss.Span)
             {
-                fragment = null;
-                qComponent = null;
-                rComponent = null;
-                nss = null;
-                return false;
+                if (!c.IsAscii())
+                {
+                    fragment = null;
+                    qComponent = null;
+                    rComponent = null;
+                    nss = null;
+                    return false;
+                }
             }
 
             return true;
