@@ -155,9 +155,10 @@ namespace Arbor.KVConfiguration.Urns
                         return null;
                     }
 
-                    return urn;
+                    return (Urn?) urn;
                 })
-                .Where(urn => urn is { })
+                .Where(urn => urn.HasValue)
+                .Select(urn => urn!.Value)
                 .ToArray()!;
 
             var filteredKeys = allKeys
@@ -414,17 +415,17 @@ namespace Arbor.KVConfiguration.Urns
                 return ImmutableArray<(object, string, IDictionary<string, object>)>.Empty;
             }
 
-            int parts = typeUrn.NamespaceParts();
+            int parts = typeUrn.Value.NamespaceParts();
 
             int expectedParts = parts + 2;
 
             IGrouping<Urn, Urn>[] instanceKeys =
                 keyValueConfiguration.AllKeys
                     .Where(key => key.IsUrn())
-                    .Select(key => new Urn(key))
+                    .Select(key => Urn.Parse(key))
                     .Where(
                         urn =>
-                            urn.IsInHierarchy(typeUrn))
+                            urn.IsInHierarchy(typeUrn.Value))
                     .Where(key => key.NamespaceParts() == expectedParts)
                     .ToLookup(urn => urn.Parent, urn => urn).ToArray();
 

@@ -8,9 +8,9 @@ namespace Arbor.KVConfiguration.Urns
     {
         public static int NamespaceParts(this Urn urn)
         {
-            if (urn is null)
+            if (urn.Nid.Length == 0)
             {
-                throw new ArgumentNullException(nameof(urn));
+                throw new ArgumentException(nameof(urn));
             }
 
             return urn.OriginalValue.Count(c => c == Urn.Separator) + 1;

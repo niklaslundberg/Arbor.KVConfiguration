@@ -12,31 +12,31 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         public UrnSpecification(ITestOutputHelper testOutputHelper) => _testOutputHelper = testOutputHelper;
 
         [Fact]
-        public void EmptyStringShouldThrowInCtor() => Assert.Throws<ArgumentException>(() => new Primitives.Urn(""));
+        public void ParseEmptyStringShouldThrow() => Assert.Throws<ArgumentException>(() => Primitives.Urn.Parse(""));
 
         [Fact]
-        public void InvalidUriStringShouldThrowInCtor() =>
-            Assert.Throws<FormatException>(() => new Primitives.Urn("-"));
+        public void ParseInvalidUriStringShouldThrow() =>
+            Assert.Throws<FormatException>(() => Primitives.Urn.Parse("-"));
 
         [Fact]
-        public void InvalidUrnStringShouldThrowInCtor() =>
-            Assert.Throws<FormatException>(() => new Primitives.Urn("http://abc"));
+        public void ParseInvalidUrnStringShouldThrow() =>
+            Assert.Throws<FormatException>(() => Primitives.Urn.Parse("http://abc"));
 
         [Fact]
-        public void NullStringShouldThrowInCtor() => Assert.Throws<ArgumentException>(() => new Primitives.Urn(null!));
+        public void ParseNullStringShouldThrow() => Assert.Throws<ArgumentException>(() => Primitives.Urn.Parse(null!));
 
         [Fact]
-        public void UrnStringTooShortShouldThrowInCtor() =>
-            Assert.Throws<FormatException>(() => new Primitives.Urn("urn:\\"));
+        public void ParseUrnStringTooShortShouldThrow() =>
+            Assert.Throws<FormatException>(() => Primitives.Urn.Parse("urn:\\"));
 
         [Fact]
-        public void UrnStringWithDoubleColonShouldThrowInCtor() =>
-            Assert.Throws<FormatException>(() => new Primitives.Urn("urn::"));
+        public void ParseUrnStringWithDoubleColonShouldThrow() =>
+            Assert.Throws<FormatException>(() => Primitives.Urn.Parse("urn::"));
 
         [Fact]
         public void EqualsForSameShouldEqualTrue()
         {
-            var urn = new Primitives.Urn("urn:a:b:c");
+            var urn = Primitives.Urn.Parse("urn:a:b:c");
 
             Assert.True(urn.Equals(urn));
         }
@@ -44,8 +44,8 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         [Fact]
         public void EqualsForOtherShouldEqualFalse()
         {
-            var a = new Primitives.Urn("urn:a:b:c");
-            var b = new Primitives.Urn("urn:a:b:d");
+            var a = Primitives.Urn.Parse("urn:a:b:c");
+            var b = Primitives.Urn.Parse("urn:a:b:d");
 
             Assert.False(a.Equals(b));
         }
@@ -53,8 +53,8 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         [Fact]
         public void EqualsForOtherWithDifferentNidCasingShouldEqualTrue()
         {
-            var a = new Primitives.Urn("urn:a:b:c");
-            var b = new Primitives.Urn("urn:A:b:c");
+            var a = Primitives.Urn.Parse("urn:a:b:c");
+            var b = Primitives.Urn.Parse("urn:A:b:c");
 
             Assert.True(a.Equals(b));
         }
@@ -62,7 +62,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         [Fact]
         public void NssShouldNotBeNonEmpty()
         {
-            var a = new Primitives.Urn("urn:a:b");
+            var a = Primitives.Urn.Parse("urn:a:b");
 
             Assert.Equal("b", a.Nss);
         }
@@ -70,7 +70,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         [Fact]
         public void NssShouldNotBeNonEmptyFor4PartUrn()
         {
-            var a = new Primitives.Urn("urn:a:b:c");
+            var a = Primitives.Urn.Parse("urn:a:b:c");
 
             Assert.Equal("b:c", a.Nss);
         }
@@ -78,8 +78,8 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         [Fact]
         public void EqualsForOtherWithDifferentUrnCasingShouldEqualTrue()
         {
-            var a = new Primitives.Urn("urn:a:b:c");
-            var b = new Primitives.Urn("URN:a:b:c");
+            var a = Primitives.Urn.Parse("urn:a:b:c");
+            var b = Primitives.Urn.Parse("URN:a:b:c");
 
             Assert.True(a.Equals(b));
         }
@@ -87,8 +87,8 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         [Fact]
         public void EqualsForOtherWithDifferentContentCasingShouldEqualFalse()
         {
-            var a = new Primitives.Urn("urn:a:b:c");
-            var b = new Primitives.Urn("urn:a:B:c");
+            var a = Primitives.Urn.Parse("urn:a:b:c");
+            var b = Primitives.Urn.Parse("urn:a:B:c");
 
             Assert.False(a.Equals(b));
         }
@@ -96,7 +96,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         [Fact]
         public void EqualsForOtherTypeShouldEqualFalse()
         {
-            var a = new Primitives.Urn("urn:a:b:c");
+            var a = Primitives.Urn.Parse("urn:a:b:c");
 
             Assert.False(a.Equals(new object()));
         }
@@ -104,7 +104,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         [Fact]
         public void EqualsForSameAsObjectShouldEqualTrue()
         {
-            var a = new Primitives.Urn("urn:a:b:c");
+            var a = Primitives.Urn.Parse("urn:a:b:c");
             object asAObject = a;
 
             Assert.True(a.Equals(asAObject));
@@ -113,7 +113,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         [Fact]
         public void EqualsForNullAsObjectShouldEqualFalse()
         {
-            var a = new Primitives.Urn("urn:a:b:c");
+            var a = Primitives.Urn.Parse("urn:a:b:c");
             object? b = null;
 
             // ReSharper disable once ExpressionIsAlwaysNull
@@ -123,7 +123,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         [Fact]
         public void EqualsForNullAsUrnShouldEqualFalse()
         {
-            var a = new Primitives.Urn("urn:a:b:c");
+            var a = Primitives.Urn.Parse("urn:a:b:c");
             Primitives.Urn? b = null;
 
             // ReSharper disable once ExpressionIsAlwaysNull
@@ -136,7 +136,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
             bool parsed = Primitives.Urn.TryParse("urn:example:a123%2Cz456", out var urn);
 
             Assert.True(parsed);
-            Assert.Equal("urn:example:a123%2Cz456", urn.NameString);
+            Assert.Equal("urn:example:a123%2Cz456", urn!.Value.NameString);
         }
 
         [Fact]
@@ -182,8 +182,8 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         public void TryParseInvalidUriWithFragmentInFragmentShouldReturnFalse() => Assert.False(Primitives.Urn.TryParse("urn:abc:123#123#456", out _));
 
         [Fact]
-        public void CtorWithInvalidUrnShouldThrow() =>
-            Assert.Throws<FormatException>(() => new Primitives.Urn("urn:a{"));
+        public void ParseInvalidUrnShouldThrow() =>
+            Assert.Throws<FormatException>(() => Primitives.Urn.Parse("urn:a{"));
 
         // Examples from https://en.wikipedia.org/wiki/Uniform_Resource_Name
         [Theory]
@@ -210,7 +210,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         {
             Primitives.Urn.TryParse(urn, out var parsed).ShouldBeTrue();
 
-            parsed.AssignedName.ShouldEqual(expectedNormalized);
+            parsed.Value.AssignedName.ShouldEqual(expectedNormalized);
         }
 
         [Theory]
@@ -224,7 +224,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         {
             Primitives.Urn.TryParse(urn, out var parsed).ShouldBeTrue();
 
-            parsed.NameString.ShouldEqual(expectedFullName);
+            parsed.Value.NameString.ShouldEqual(expectedFullName);
         }
 
         [Theory]

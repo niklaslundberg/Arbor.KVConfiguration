@@ -79,7 +79,7 @@ namespace Arbor.KVConfiguration.Urns
 
                 ImmutableArray<INamedInstance<object>> instances = keyValueConfiguration.GetNamedInstances(type);
 
-                var urnTypeMapping = new UrnTypeMapping(type, urnAttribute.Urn);
+                var urnTypeMapping = new UrnTypeMapping(type, urnAttribute.Urn.Value);
 
                 if (instances.IsDefaultOrEmpty)
                 {
