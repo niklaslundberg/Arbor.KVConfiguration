@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 
@@ -7,8 +9,33 @@ namespace Arbor.KVConfiguration.Urns
 {
     public static class UrnTypes
     {
-        public static ImmutableArray<UrnTypeMapping> GetUrnTypesInAssemblies(params Assembly[] assemblies)
+        public static ImmutableArray<UrnTypeMapping> GetUrnTypesInAssemblies(Action<Exception>? exceptionHandler, params Assembly[] assemblies)
         {
+            IEnumerable<UrnTypeMapping> TryGetTypes(Assembly assembly)
+            {
+                try
+                {
+                    return assembly.ExportedTypes
+                        .Where(type => !type.IsAbstract && type.IsPublic)
+                        .Select(HasUrnAttribute)
+                        .Where(item => item is not null)!;
+                }
+                catch (FileLoadException ex)
+                {
+                    exceptionHandler?.Invoke(ex);
+                }
+                catch (TypeLoadException ex)
+                {
+                    exceptionHandler?.Invoke(ex);
+                }
+                catch (ReflectionTypeLoadException ex)
+                {
+                    exceptionHandler?.Invoke(ex);
+                }
+
+                return ImmutableArray<UrnTypeMapping>.Empty;
+            }
+
             UrnTypeMapping? HasUrnAttribute(Type type)
             {
                 var customAttribute = type.GetCustomAttribute<UrnAttribute>();
@@ -19,11 +46,9 @@ namespace Arbor.KVConfiguration.Urns
             }
 
             ImmutableArray<UrnTypeMapping> urnMappedTypes = assemblies
-                .SelectMany(assembly =>
-                    assembly.ExportedTypes
-                        .Where(type => !type.IsAbstract && type.IsPublic)
-                        .Select(HasUrnAttribute))
-                .Where(mapping => mapping is object)
+                .Where(assembly => !assembly.IsDynamic)
+                .SelectMany(TryGetTypes)
+                .Where(mapping => mapping is not null)
                 .ToImmutableArray()!;
 
             return urnMappedTypes;

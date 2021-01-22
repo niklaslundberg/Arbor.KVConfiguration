@@ -14,6 +14,14 @@ namespace Arbor.KVConfiguration.DependencyInjection
         public static IServiceCollection AddConfigurationInstancesFromAssemblies(
             [NotNull] this IServiceCollection services,
             [NotNull] IKeyValueConfiguration keyValueConfiguration,
+            params Assembly[] assemblies) =>
+            AddConfigurationInstancesFromAssemblies(services, keyValueConfiguration, null, assemblies);
+
+        [PublicAPI]
+        public static IServiceCollection AddConfigurationInstancesFromAssemblies(
+            [NotNull] this IServiceCollection services,
+            [NotNull] IKeyValueConfiguration keyValueConfiguration,
+            Action<Exception>? exceptionHandler,
             params Assembly[] assemblies)
         {
             if (services is null)
@@ -31,7 +39,7 @@ namespace Arbor.KVConfiguration.DependencyInjection
                 assemblies = new[] {Assembly.GetCallingAssembly()};
             }
 
-            var configurationRegistrations = keyValueConfiguration.ScanRegistrations(assemblies);
+            var configurationRegistrations = keyValueConfiguration.ScanRegistrations(exceptionHandler, assemblies);
 
             var configurationInstanceHolder = configurationRegistrations.CreateHolder();
 

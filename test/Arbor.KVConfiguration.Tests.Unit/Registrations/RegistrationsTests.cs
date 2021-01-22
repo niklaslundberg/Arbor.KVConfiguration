@@ -1,4 +1,5 @@
-﻿using System.Collections.Specialized;
+﻿using System;
+using System.Collections.Specialized;
 using System.Linq;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Urns;
@@ -28,7 +29,12 @@ namespace Arbor.KVConfiguration.Tests.Unit.Registrations
         {
             var configuration = NoConfiguration.Empty;
 
-            var configurationRegistrations = configuration.ScanRegistrations();
+            void Handle(Exception ex)
+            {
+                output.WriteLine(ex.ToString());
+            }
+
+            var configurationRegistrations = configuration.ScanRegistrations(Handle, AppDomain.CurrentDomain.GetAssemblies());
 
             foreach (UrnTypeRegistration urnTypeRegistration in configurationRegistrations.UrnTypeRegistrations.Where(
                 s => s.ConfigurationRegistrationErrors.Length > 0))

@@ -13,6 +13,12 @@ namespace Arbor.KVConfiguration.Urns
     {
         public static ConfigurationRegistrations ScanRegistrations(
             this IKeyValueConfiguration keyValueConfiguration,
+            params Assembly[] assemblies) =>
+            ScanRegistrations(keyValueConfiguration, null, assemblies);
+
+        public static ConfigurationRegistrations ScanRegistrations(
+            this IKeyValueConfiguration keyValueConfiguration,
+            Action<Exception>? exceptionHandler,
             params Assembly[] assemblies)
         {
             if (assemblies.Length == 0)
@@ -20,7 +26,7 @@ namespace Arbor.KVConfiguration.Urns
                 assemblies = new[] {Assembly.GetCallingAssembly()};
             }
 
-            ImmutableArray<UrnTypeMapping> urnTypesInAssemblies = UrnTypes.GetUrnTypesInAssemblies(assemblies);
+            ImmutableArray<UrnTypeMapping> urnTypesInAssemblies = UrnTypes.GetUrnTypesInAssemblies(exceptionHandler, assemblies);
 
             IEnumerable<UrnTypeRegistration> configurationInstanceHolders =
                 urnTypesInAssemblies.SelectMany(urnType => GetInstancesForType(keyValueConfiguration, urnType.Type));
