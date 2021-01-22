@@ -20,7 +20,7 @@
         <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <license type="expression">MIT</license>
-        <copyright>Copyright Niklas Lundberg 2016 - 2020</copyright>
+        <copyright>Copyright Niklas Lundberg 2016 - 2021</copyright>
         <dependencies>
             <dependency id="System.Collections.Immutable" version="[1.5.0,6.0.0)" />
             <dependency id="Microsoft.Extensions.Primitives" version="[3.0.0,6.0.0)" />

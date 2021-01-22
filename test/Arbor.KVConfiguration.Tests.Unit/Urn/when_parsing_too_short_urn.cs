@@ -6,7 +6,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
     {
         private static string attempted_value;
 
-        protected static Primitives.Urn urn;
+        protected static Primitives.Urn? urn;
 
         private static bool parsed;
 

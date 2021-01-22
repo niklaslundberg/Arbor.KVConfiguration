@@ -3,83 +3,183 @@ using System.Linq;
 
 namespace Arbor.Primitives
 {
-    public class Urn : IEquatable<Urn>
+    /// <summary>
+    /// Implements https://tools.ietf.org/html/rfc8141
+    /// </summary>
+    public readonly struct Urn : IEquatable<Urn>
     {
         private const string DoubleSeparator = "::";
         public const char Separator = ':';
-        private static readonly char[] InvalidCharacters = {'/', '\\'};
+        private static readonly char[] InvalidCharacters = {'\\'};
+        private static readonly string[] _componentChars = {"?=", "?+", "#"};
+        private readonly ReadOnlyMemory<char> _nid;
+        private readonly ReadOnlyMemory<char> _nss;
+        private readonly ReadOnlyMemory<char> _rComponent;
+        private readonly ReadOnlyMemory<char> _qComponent;
+        private readonly ReadOnlyMemory<char> _fComponent;
 
-        public Urn(string originalValue)
+        private Urn(string originalValue, ReadOnlyMemory<char> nid, ReadOnlyMemory<char> nss, ReadOnlyMemory<char> r, ReadOnlyMemory<char> q, ReadOnlyMemory<char> f)
         {
-            if (string.IsNullOrWhiteSpace(originalValue))
+            _nid = nid;
+
+            OriginalValue = originalValue;
+
+            _nss = nss;
+
+            _rComponent = r;
+            _qComponent = q;
+            _fComponent = f;
+        }
+
+        public string NameString => _nid.Length == 0 ? "N/A" : $"urn{OriginalValue.Substring(3)}";
+
+        private static bool TryParseComponents(ReadOnlyMemory<char> fullName,
+            out ReadOnlyMemory<char> nss,
+            out ReadOnlyMemory<char> rComponent,
+            out ReadOnlyMemory<char> qComponent,
+            out ReadOnlyMemory<char> fragment)
+        {
+            int fragmentIndex = fullName.Span.IndexOf('#');
+            int qComponentIndex = fullName.ToString().IndexOf("?=", StringComparison.Ordinal);
+            int rComponentIndex = fullName.ToString().IndexOf("?+", StringComparison.Ordinal);
+
+            if (qComponentIndex >= 0 && rComponentIndex >= 0 && qComponentIndex < rComponentIndex)
             {
-                throw new ArgumentException(PrimitivesResources.ArgumentIsNullOrWhitespace, nameof(originalValue));
+                fragment = null;
+                qComponent = null;
+                rComponent = null;
+                nss = null;
+                return false;
             }
 
-            string trimmed = originalValue.Trim();
-
-            if (!IsUri(trimmed, out var uri))
+            if (fragmentIndex >= 0 && qComponentIndex >= 0 && fragmentIndex < qComponentIndex)
             {
-                throw new FormatException($"Invalid urn '{trimmed}'");
+                fragment = null;
+                qComponent = null;
+                rComponent = null;
+                nss = null;
+                return false;
             }
 
-            if (!HasUrnScheme(uri))
+            if (fragmentIndex >= 0 && rComponentIndex >= 0 && fragmentIndex < rComponentIndex)
             {
-                throw new FormatException($"Invalid urn '{trimmed}'");
+                fragment = null;
+                qComponent = null;
+                rComponent = null;
+                nss = null;
+                return false;
             }
 
-            if (trimmed.IndexOfAny(InvalidCharacters) >= 0)
+            if (fragmentIndex >= 0 && fullName.Length - fragmentIndex >= 0)
             {
-                throw new FormatException(PrimitivesResources.UrnContainsInvalidCharacters);
+                fragment = fullName.Slice(fragmentIndex + 1);
+            }
+            else
+            {
+                fragment = ReadOnlyMemory<char>.Empty;
             }
 
-            if (trimmed.IndexOf(DoubleSeparator, StringComparison.OrdinalIgnoreCase) >= 0)
+            if (fragment.ToString().Contains("?=") || fragment.ToString().Contains("?+") || fragment.ToString().Contains("#"))
             {
-                throw new FormatException("Urn contains invalid double colon");
+                fragment = null;
+                qComponent = null;
+                rComponent = null;
+                nss = null;
+                return false;
             }
 
-            if (!IsWellFormedUriString(trimmed))
+            int qComponentLength = fragmentIndex >= 0
+                ? fullName.Length - fragmentIndex - 1
+                : fullName.Length - qComponentIndex - 2;
+
+            if (qComponentLength > 0)
             {
-                throw new FormatException($"Invalid urn '{trimmed}'");
+                qComponent = qComponentIndex >= 0 ? fullName.Slice(qComponentIndex + 2, qComponentLength) : ReadOnlyMemory<char>.Empty;
+            }
+            else
+            {
+                qComponent = ReadOnlyMemory<char>.Empty;
             }
 
-            var chars = trimmed.AsSpan();
+            int rComponentLength = 0;
 
-            if (chars.IndexOf(Separator) < 0)
+            if (rComponentIndex >= 0)
             {
-                throw new InvalidOperationException();
-            }
-
-            ReadOnlySpan<char> nidSub = chars.Slice(chars.IndexOf(Separator) + 1);
-
-            if (nidSub.IndexOf(Separator) < 0)
-            {
-                throw new InvalidOperationException($"Attempted value '{originalValue}' is not a valid urn");
-            }
-
-            ReadOnlySpan<char> nidSlice = nidSub.Slice(0, nidSub.IndexOf(Separator));
-
-            foreach (char c in nidSlice)
-            {
-                if (!c.IsAscii())
+                if (qComponentIndex >= 0)
                 {
-                    throw new InvalidOperationException("Only ascii characters allowed");
+                    rComponentLength = fullName.Length - qComponentIndex - 2;
+                }
+                else if (fragmentIndex >= 0)
+                {
+                    rComponentLength = fullName.Length - fragmentIndex - 2;
+                }
+                else
+                {
+                    rComponentLength = fullName.Length - rComponentIndex - 2;
                 }
             }
 
-            Nid = nidSlice.ToString();
+            if (rComponentLength > 0)
+            {
+                if (qComponentIndex >= 0 && qComponent.Length > 0)
+                {
+                    rComponent = fullName.Slice(rComponentIndex + 2, qComponentIndex - rComponentIndex - 2);
+                }
+                else if (qComponentIndex >= 0)
+                {
+                    rComponent = fullName.Slice(rComponentIndex + 2, rComponentLength - 1);
+                }
+                else if (fragmentIndex >= 0)
+                {
+                    rComponent = fullName.Slice(rComponentIndex + 2, rComponentLength + 1);
+                }
+                else
+                {
+                    rComponent = ReadOnlyMemory<char>.Empty;
+                }
+            }
+            else
+            {
+                rComponent = ReadOnlyMemory<char>.Empty;
+            }
 
-            ReadOnlySpan<char> schemeSlice = chars.Slice(0, 3);
-#pragma warning disable CA1308 // Normalize strings to uppercase
-            Scheme = schemeSlice.ToString().ToLowerInvariant();
-#pragma warning restore CA1308 // Normalize strings to uppercase
+            if (rComponentIndex >= 0)
+            {
+                nss = fullName.Slice(0, rComponentIndex);
+            }
+            else if (qComponentIndex >= 0)
+            {
+                nss = fullName.Slice(0, qComponentIndex);
+            }
+            else if (fragmentIndex >= 0)
+            {
+                nss = fullName.Slice(0, fragmentIndex);
+            }
+            else
+            {
+                nss = fullName;
+            }
 
-            OriginalValue = trimmed;
+            foreach (char c in nss.Span)
+            {
+                if (!c.IsAscii())
+                {
+                    fragment = null;
+                    qComponent = null;
+                    rComponent = null;
+                    nss = null;
+                    return false;
+                }
+            }
+
+            return true;
         }
 
-        public string Scheme { get; }
+        public string AssignedName => $"urn:{Nid}:{Nss}";
 
-        public string Nid { get; }
+        public string Scheme => "urn";
+
+        public string Nid => _nid.ToString();
 
         public string? Name
         {
@@ -111,7 +211,7 @@ namespace Arbor.Primitives
                     throw new InvalidOperationException($"Could not get parent from urn '{OriginalValue}'");
                 }
 
-                int separators = OriginalValue.Count(c => c.Equals(Separator));
+                int separators = OriginalValue.Count(character => character.Equals(Separator));
 
                 if (separators <= 1)
                 {
@@ -120,41 +220,31 @@ namespace Arbor.Primitives
 
                 string parent = OriginalValue.Substring(0, lastSeparatorIndex);
 
-                return new Urn(parent);
+                return Parse(parent);
             }
         }
 
-        public bool Equals(Urn? other)
+        public string Nss => _nss.ToString();
+        public string QComponent => _qComponent.ToString();
+        public string RComponent => _rComponent.ToString();
+        public string FComponent => _fComponent.ToString();
+
+        public static bool Equals(Urn @this, Urn other)
         {
-            if (other is null)
+            if (!@this.Scheme.Equals(other.Scheme, StringComparison.OrdinalIgnoreCase))
             {
                 return false;
             }
 
-            if (ReferenceEquals(this, other))
-            {
-                return true;
-            }
-
-            if (!Scheme.Equals(other.Scheme, StringComparison.OrdinalIgnoreCase))
+            if (!@this.Nid.Equals(other.Nid, StringComparison.OrdinalIgnoreCase))
             {
                 return false;
             }
 
-            if (!Nid.Equals(other.Nid, StringComparison.OrdinalIgnoreCase))
-            {
-                return false;
-            }
+            var caseSensitiveParts = CaseInsensitiveParts(@this.Nss);
+            var otherParts = CaseInsensitiveParts(other.Nss);
 
-            var caseSensitiveParts = CaseInsensitiveParts(this);
-            var otherParts = CaseInsensitiveParts(other);
-
-            if (!caseSensitiveParts.SequenceEqual(otherParts))
-            {
-                return false;
-            }
-
-            return string.Equals(OriginalValue, other.OriginalValue, StringComparison.OrdinalIgnoreCase);
+            return caseSensitiveParts.SequenceEqual(otherParts);
         }
 
         public static bool operator ==(Urn left, Urn right) => Equals(left, right);
@@ -165,7 +255,7 @@ namespace Arbor.Primitives
         {
             if (originalValue is null || string.IsNullOrWhiteSpace(originalValue))
             {
-                result = null;
+                result = default;
                 return false;
             }
 
@@ -173,54 +263,90 @@ namespace Arbor.Primitives
 
             if (!IsUri(trimmed, out var uri))
             {
-                result = null;
+                result = default;
                 return false;
             }
 
             if (!HasUrnScheme(uri))
             {
-                result = null;
+                result = default;
                 return false;
             }
 
             if (!IsWellFormedUriString(trimmed))
             {
-                result = null;
+                result = default;
                 return false;
             }
 
-            var chars = trimmed.AsSpan();
-
-            if (chars.IndexOf(Separator) < 0)
+            if (trimmed.IndexOf(DoubleSeparator, StringComparison.OrdinalIgnoreCase) >= 0)
             {
-                result = null;
-                return false;
+                throw new FormatException("Urn contains invalid double colon");
             }
 
-            ReadOnlySpan<char> nidSub = chars.Slice(chars.IndexOf(Separator) + 1);
+            var chars = trimmed.AsMemory();
 
-            if (nidSub.IndexOf(Separator) < 0)
+            if (chars.Span.IndexOf(Separator) < 0)
             {
-                result = null;
+                result = default;
                 return false;
             }
 
-            result = new Urn(trimmed);
+            ReadOnlyMemory<char> nidSub = chars.Slice(chars.Span.IndexOf(Separator) + 1);
+
+            if (nidSub.Span.IndexOf(Separator) < 0)
+            {
+                result = default;
+                return false;
+            }
+
+            if (nidSub.Span.IndexOf(Separator) < 0)
+            {
+                throw new FormatException($"Attempted value '{originalValue}' is not a valid urn");
+            }
+
+            ReadOnlyMemory<char> nidSlice = nidSub.Slice(0, nidSub.Span.IndexOf(Separator));
+
+            foreach (char c in nidSlice.Span)
+            {
+                if (!(char.IsLetterOrDigit(c) || c == '-'))
+                {
+                    throw new FormatException("Only alphanumeric characters allowed");
+                }
+            }
+
+            if (nidSlice.Span.EndsWith("-".AsSpan()))
+            {
+                throw new FormatException("Nid cannot end with '-'");
+            }
+
+            bool parsedComponents = TryParseComponents(nidSub.Slice(nidSlice.Length + 1), out ReadOnlyMemory<char> nss, out ReadOnlyMemory<char> r, out ReadOnlyMemory<char> q, out ReadOnlyMemory<char> f);
+
+            if (!parsedComponents)
+            {
+                result = default;
+                return false;
+            }
+
+            char[] nidArray = new char[nidSlice.Length];
+            var nid = new Span<char>(nidArray );
+            nidSlice.Span.ToLowerInvariant(nid);
+            result = new Urn(trimmed, new ReadOnlyMemory<char>(nidArray), nss!, r, q,f);
 
             return true;
         }
 
-        public override string ToString() => OriginalValue;
+        public override string ToString() => _nid.Length == 0? "N/A" : NameString;
 
-        public bool IsInHierarchy(Urn? other)
+        public bool IsInHierarchy(Urn other)
         {
-            if (other is null)
+            if (other.Nid.Length == 0)
             {
                 return false;
             }
 
-            var parts = OriginalValue.Split(Separator);
-            var otherParts = other.OriginalValue.Split(Separator);
+            string[] parts = OriginalValue.Split(Separator);
+            string[] otherParts = other.OriginalValue.Split(Separator);
 
             if (parts.Length < otherParts.Length)
             {
@@ -241,28 +367,37 @@ namespace Arbor.Primitives
             return true;
         }
 
-        private static ReadOnlySpan<char> CaseInsensitiveParts(Urn urn) =>
-            urn.OriginalValue.AsSpan().Slice(urn.Scheme.Length + urn.Nid.Length + 1);
-
-        public override bool Equals(object? obj)
+        private static ReadOnlySpan<char> CaseInsensitiveParts(string nss)
         {
-            if (obj is null)
+            int firstIndex = -1;
+
+            foreach (string componentChar in _componentChars)
             {
-                return false;
+                int index = nss.IndexOf(componentChar, StringComparison.Ordinal);
+
+                if (index >= 0)
+                {
+                    if (firstIndex >= 0 && index <= firstIndex)
+                    {
+                        firstIndex = index;
+                    }
+                    else
+                    {
+                        firstIndex = index;
+                    }
+                }
             }
 
-            if (ReferenceEquals(this, obj))
+            if (firstIndex >= 0)
             {
-                return true;
+                return nss.AsSpan().Slice(0, firstIndex);
             }
 
-            if (obj.GetType() != GetType())
-            {
-                return false;
-            }
-
-            return Equals((Urn)obj);
+            return nss.AsSpan();
         }
+
+        public bool Equals(Urn other) => Equals(this, other);
+        public override bool Equals(object? obj) => obj is Urn urn && Equals(urn);
 
         public override int GetHashCode() => StringComparer.OrdinalIgnoreCase.GetHashCode(OriginalValue);
 
@@ -276,12 +411,17 @@ namespace Arbor.Primitives
 
         public static Urn Parse(string attemptedValue)
         {
+            if (string.IsNullOrWhiteSpace(attemptedValue))
+            {
+                throw new ArgumentException("Value cannot be null or whitespace.", nameof(attemptedValue));
+            }
+
             if (!TryParse(attemptedValue, out var urn))
             {
                 throw new FormatException($"The attempted value '{attemptedValue}' is not a valid URN");
             }
 
-            return urn!;
+            return urn!.Value;
         }
     }
 }
