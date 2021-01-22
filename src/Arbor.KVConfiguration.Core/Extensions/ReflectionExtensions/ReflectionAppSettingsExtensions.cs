@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
@@ -10,7 +11,8 @@ namespace Arbor.KVConfiguration.Core.Extensions.ReflectionExtensions
     {
         public static AppSettingsBuilder AddReflectionSettings(
             [NotNull] this AppSettingsBuilder appSettingsBuilder,
-            IEnumerable<Assembly> scanAssemblies)
+            IEnumerable<Assembly>? scanAssemblies,
+            Action<Exception>? exceptionHandler = null)
         {
             if (appSettingsBuilder is null)
             {
@@ -24,9 +26,29 @@ namespace Arbor.KVConfiguration.Core.Extensions.ReflectionExtensions
 
             foreach (var currentAssembly in scanAssemblies.OrderBy(assembly => assembly.FullName))
             {
-                appSettingsBuilder =
-                    appSettingsBuilder.Add(
-                        new ReflectionKeyValueConfiguration(currentAssembly));
+                if (currentAssembly.IsDynamic)
+                {
+                    continue;
+                }
+
+                try
+                {
+                    appSettingsBuilder =
+                        appSettingsBuilder.Add(
+                            new ReflectionKeyValueConfiguration(currentAssembly));
+                }
+                catch (FileLoadException ex)
+                {
+                    exceptionHandler?.Invoke(ex);
+                }
+                catch (TypeLoadException ex)
+                {
+                    exceptionHandler?.Invoke(ex);
+                }
+                catch (ReflectionTypeLoadException ex)
+                {
+                    exceptionHandler?.Invoke(ex);
+                }
             }
 
             return appSettingsBuilder;
