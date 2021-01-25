@@ -24,6 +24,10 @@ namespace Arbor.KVConfiguration.Urns
                 {
                     exceptionHandler?.Invoke(ex);
                 }
+                catch (FileNotFoundException ex)
+                {
+                    exceptionHandler?.Invoke(ex);
+                }
                 catch (TypeLoadException ex)
                 {
                     exceptionHandler?.Invoke(ex);

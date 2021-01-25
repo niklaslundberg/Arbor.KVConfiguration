@@ -41,6 +41,10 @@ namespace Arbor.KVConfiguration.Core.Extensions.ReflectionExtensions
                 {
                     exceptionHandler?.Invoke(ex);
                 }
+                catch (FileNotFoundException ex)
+                {
+                    exceptionHandler?.Invoke(ex);
+                }
                 catch (TypeLoadException ex)
                 {
                     exceptionHandler?.Invoke(ex);
