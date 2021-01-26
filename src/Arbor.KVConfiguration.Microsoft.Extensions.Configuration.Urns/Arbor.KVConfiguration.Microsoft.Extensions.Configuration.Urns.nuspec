@@ -40,5 +40,7 @@
               target="lib\net472" />
         <file src="bin\$configuration$\net48\Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns.dll"
               target="lib\net48" />
+        <file src="bin\$configuration$\net5.0\Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns.dll"
+              target="lib\net5.0" />
     </files>
 </package>
