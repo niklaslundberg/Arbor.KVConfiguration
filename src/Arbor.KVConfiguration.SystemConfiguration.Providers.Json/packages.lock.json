@@ -16,11 +16,11 @@
       },
       "Microsoft.CodeAnalysis.CSharp": {
         "type": "Direct",
-        "requested": "[3.9.0, )",
-        "resolved": "3.9.0",
-        "contentHash": "NTsiK3fnoZGemy4dBHrILwg9rL+jDnOJ7aixFu4EOWM1r6MZMrNCIhT2tO4AmIMdfICLPwj910uZRRLpbMnqHg==",
+        "requested": "[3.10.0, )",
+        "resolved": "3.10.0",
+        "contentHash": "GM83V29l0zsOLReyxpFs32Ujss3wkrVbWFTVjGANXxceycWmi7aLBNL4TQ3r3ZiG4m2b+/LIqwIVkDvZpjOnuw==",
         "dependencies": {
-          "Microsoft.CodeAnalysis.Common": "[3.9.0]"
+          "Microsoft.CodeAnalysis.Common": "[3.10.0]"
         }
       },
       "Microsoft.Configuration.ConfigurationBuilders.Base": {
@@ -31,10 +31,10 @@
       },
       "Microsoft.CodeAnalysis.Common": {
         "type": "Transitive",
-        "resolved": "3.9.0",
-        "contentHash": "HiWjF7PNIEngmFg2Xk8cZ/83lRIRkk9v+5ibbY5B7VvjNGdClGAMuWtZER9F5rGRR41VbJLco9ah73jFTh4vPw==",
+        "resolved": "3.10.0",
+        "contentHash": "Htsk5pJmKjTgUwAP5oyuIODX/b6Zl4RD0tpM62NEncxne/LiQvP50j9g8h+qFtp4lS4AmAYTVPBbXgBuC5zcQA==",
         "dependencies": {
-          "Microsoft.CodeAnalysis.Analyzers": "3.0.0",
+          "Microsoft.CodeAnalysis.Analyzers": "3.3.2",
           "System.Collections.Immutable": "5.0.0",
           "System.Memory": "4.5.4",
           "System.Reflection.Metadata": "5.0.0",
@@ -119,7 +119,7 @@
         "type": "Project",
         "dependencies": {
           "JetBrains.Annotations": "2021.1.0",
-          "Microsoft.CodeAnalysis.CSharp": "3.9.0",
+          "Microsoft.CodeAnalysis.CSharp": "3.10.0",
           "Microsoft.Extensions.Primitives": "5.0.1",
           "System.Collections.Immutable": "5.0.0"
         }
@@ -130,7 +130,7 @@
           "Arbor.KVConfiguration.Core": "1.0.0",
           "Arbor.KVConfiguration.Schema.Json": "1.0.0",
           "JetBrains.Annotations": "2021.1.0",
-          "Microsoft.CodeAnalysis.CSharp": "3.9.0",
+          "Microsoft.CodeAnalysis.CSharp": "3.10.0",
           "Newtonsoft.Json": "13.0.1",
           "System.Collections.Immutable": "5.0.0"
         }
@@ -140,7 +140,7 @@
         "dependencies": {
           "Arbor.KVConfiguration.Core": "1.0.0",
           "JetBrains.Annotations": "2021.1.0",
-          "Microsoft.CodeAnalysis.CSharp": "3.9.0",
+          "Microsoft.CodeAnalysis.CSharp": "3.10.0",
           "Newtonsoft.Json": "13.0.1",
           "System.Collections.Immutable": "5.0.0"
         }
@@ -150,7 +150,7 @@
         "dependencies": {
           "Arbor.KVConfiguration.Core": "1.0.0",
           "JetBrains.Annotations": "2021.1.0",
-          "Microsoft.CodeAnalysis.CSharp": "3.9.0",
+          "Microsoft.CodeAnalysis.CSharp": "3.10.0",
           "Microsoft.Configuration.ConfigurationBuilders.Base": "2.0.0"
         }
       }
@@ -170,11 +170,11 @@
       },
       "Microsoft.CodeAnalysis.CSharp": {
         "type": "Direct",
-        "requested": "[3.9.0, )",
-        "resolved": "3.9.0",
-        "contentHash": "NTsiK3fnoZGemy4dBHrILwg9rL+jDnOJ7aixFu4EOWM1r6MZMrNCIhT2tO4AmIMdfICLPwj910uZRRLpbMnqHg==",
+        "requested": "[3.10.0, )",
+        "resolved": "3.10.0",
+        "contentHash": "GM83V29l0zsOLReyxpFs32Ujss3wkrVbWFTVjGANXxceycWmi7aLBNL4TQ3r3ZiG4m2b+/LIqwIVkDvZpjOnuw==",
         "dependencies": {
-          "Microsoft.CodeAnalysis.Common": "[3.9.0]"
+          "Microsoft.CodeAnalysis.Common": "[3.10.0]"
         }
       },
       "Microsoft.Configuration.ConfigurationBuilders.Base": {
@@ -185,10 +185,10 @@
       },
       "Microsoft.CodeAnalysis.Common": {
         "type": "Transitive",
-        "resolved": "3.9.0",
-        "contentHash": "HiWjF7PNIEngmFg2Xk8cZ/83lRIRkk9v+5ibbY5B7VvjNGdClGAMuWtZER9F5rGRR41VbJLco9ah73jFTh4vPw==",
+        "resolved": "3.10.0",
+        "contentHash": "Htsk5pJmKjTgUwAP5oyuIODX/b6Zl4RD0tpM62NEncxne/LiQvP50j9g8h+qFtp4lS4AmAYTVPBbXgBuC5zcQA==",
         "dependencies": {
-          "Microsoft.CodeAnalysis.Analyzers": "3.0.0",
+          "Microsoft.CodeAnalysis.Analyzers": "3.3.2",
           "System.Collections.Immutable": "5.0.0",
           "System.Memory": "4.5.4",
           "System.Reflection.Metadata": "5.0.0",
@@ -273,7 +273,7 @@
         "type": "Project",
         "dependencies": {
           "JetBrains.Annotations": "2021.1.0",
-          "Microsoft.CodeAnalysis.CSharp": "3.9.0",
+          "Microsoft.CodeAnalysis.CSharp": "3.10.0",
           "Microsoft.Extensions.Primitives": "5.0.1",
           "System.Collections.Immutable": "5.0.0"
         }
@@ -284,7 +284,7 @@
           "Arbor.KVConfiguration.Core": "1.0.0",
           "Arbor.KVConfiguration.Schema.Json": "1.0.0",
           "JetBrains.Annotations": "2021.1.0",
-          "Microsoft.CodeAnalysis.CSharp": "3.9.0",
+          "Microsoft.CodeAnalysis.CSharp": "3.10.0",
           "Newtonsoft.Json": "13.0.1",
           "System.Collections.Immutable": "5.0.0"
         }
@@ -294,7 +294,7 @@
         "dependencies": {
           "Arbor.KVConfiguration.Core": "1.0.0",
           "JetBrains.Annotations": "2021.1.0",
-          "Microsoft.CodeAnalysis.CSharp": "3.9.0",
+          "Microsoft.CodeAnalysis.CSharp": "3.10.0",
           "Newtonsoft.Json": "13.0.1",
           "System.Collections.Immutable": "5.0.0"
         }
@@ -304,7 +304,7 @@
         "dependencies": {
           "Arbor.KVConfiguration.Core": "1.0.0",
           "JetBrains.Annotations": "2021.1.0",
-          "Microsoft.CodeAnalysis.CSharp": "3.9.0",
+          "Microsoft.CodeAnalysis.CSharp": "3.10.0",
           "Microsoft.Configuration.ConfigurationBuilders.Base": "2.0.0"
         }
       }
@@ -324,11 +324,11 @@
       },
       "Microsoft.CodeAnalysis.CSharp": {
         "type": "Direct",
-        "requested": "[3.9.0, )",
-        "resolved": "3.9.0",
-        "contentHash": "NTsiK3fnoZGemy4dBHrILwg9rL+jDnOJ7aixFu4EOWM1r6MZMrNCIhT2tO4AmIMdfICLPwj910uZRRLpbMnqHg==",
+        "requested": "[3.10.0, )",
+        "resolved": "3.10.0",
+        "contentHash": "GM83V29l0zsOLReyxpFs32Ujss3wkrVbWFTVjGANXxceycWmi7aLBNL4TQ3r3ZiG4m2b+/LIqwIVkDvZpjOnuw==",
         "dependencies": {
-          "Microsoft.CodeAnalysis.Common": "[3.9.0]"
+          "Microsoft.CodeAnalysis.Common": "[3.10.0]"
         }
       },
       "Microsoft.Configuration.ConfigurationBuilders.Base": {
@@ -339,10 +339,10 @@
       },
       "Microsoft.CodeAnalysis.Common": {
         "type": "Transitive",
-        "resolved": "3.9.0",
-        "contentHash": "HiWjF7PNIEngmFg2Xk8cZ/83lRIRkk9v+5ibbY5B7VvjNGdClGAMuWtZER9F5rGRR41VbJLco9ah73jFTh4vPw==",
+        "resolved": "3.10.0",
+        "contentHash": "Htsk5pJmKjTgUwAP5oyuIODX/b6Zl4RD0tpM62NEncxne/LiQvP50j9g8h+qFtp4lS4AmAYTVPBbXgBuC5zcQA==",
         "dependencies": {
-          "Microsoft.CodeAnalysis.Analyzers": "3.0.0",
+          "Microsoft.CodeAnalysis.Analyzers": "3.3.2",
           "System.Collections.Immutable": "5.0.0",
           "System.Memory": "4.5.4",
           "System.Reflection.Metadata": "5.0.0",
@@ -427,7 +427,7 @@
         "type": "Project",
         "dependencies": {
           "JetBrains.Annotations": "2021.1.0",
-          "Microsoft.CodeAnalysis.CSharp": "3.9.0",
+          "Microsoft.CodeAnalysis.CSharp": "3.10.0",
           "Microsoft.Extensions.Primitives": "5.0.1",
           "System.Collections.Immutable": "5.0.0"
         }
@@ -438,7 +438,7 @@
           "Arbor.KVConfiguration.Core": "1.0.0",
           "Arbor.KVConfiguration.Schema.Json": "1.0.0",
           "JetBrains.Annotations": "2021.1.0",
-          "Microsoft.CodeAnalysis.CSharp": "3.9.0",
+          "Microsoft.CodeAnalysis.CSharp": "3.10.0",
           "Newtonsoft.Json": "13.0.1",
           "System.Collections.Immutable": "5.0.0"
         }
@@ -448,7 +448,7 @@
         "dependencies": {
           "Arbor.KVConfiguration.Core": "1.0.0",
           "JetBrains.Annotations": "2021.1.0",
-          "Microsoft.CodeAnalysis.CSharp": "3.9.0",
+          "Microsoft.CodeAnalysis.CSharp": "3.10.0",
           "Newtonsoft.Json": "13.0.1",
           "System.Collections.Immutable": "5.0.0"
         }
@@ -458,7 +458,7 @@
         "dependencies": {
           "Arbor.KVConfiguration.Core": "1.0.0",
           "JetBrains.Annotations": "2021.1.0",
-          "Microsoft.CodeAnalysis.CSharp": "3.9.0",
+          "Microsoft.CodeAnalysis.CSharp": "3.10.0",
           "Microsoft.Configuration.ConfigurationBuilders.Base": "2.0.0"
         }
       }
