@@ -73,8 +73,8 @@
       },
       "JetBrains.Annotations": {
         "type": "Transitive",
-        "resolved": "2020.3.0",
-        "contentHash": "FnX06vtxuoZnhZdR6UHt5kJ7HUC/syODfGLnhPDn1x5sXvvepNyCl4jMtPUzJfsPWh7q0Jo+AIYz5xaVbbyikA=="
+        "resolved": "2021.1.0",
+        "contentHash": "n9JSw5Z+F+6gp9vSv4aLH6p/bx3GAYA6FZVq1wJq/TJySv/kPgFKLGFeS7A8Xa5X4/GWorh5gd43yjamUgnBNA=="
       },
       "Microsoft.CodeAnalysis.Common": {
         "type": "Transitive",
@@ -318,8 +318,11 @@
       },
       "Microsoft.Extensions.Primitives": {
         "type": "Transitive",
-        "resolved": "5.0.0",
-        "contentHash": "cI/VWn9G1fghXrNDagX9nYaaB/nokkZn0HYAawGaELQrl8InSezfe9OnfPZLcJq3esXxygh3hkq2c3qoV3SDyQ=="
+        "resolved": "5.0.1",
+        "contentHash": "5WPSmL4YeP7eW+Vc8XZ4DwjYWBAiSwDV9Hm63JJWcz1Ie3Xjv4KuJXzgCstj48LkLfVCYa7mLcx7y+q6yqVvtw==",
+        "dependencies": {
+          "System.Runtime.CompilerServices.Unsafe": "5.0.0"
+        }
       },
       "Microsoft.NETCore.Platforms": {
         "type": "Transitive",
@@ -596,9 +599,9 @@
       "arbor.kvconfiguration.core": {
         "type": "Project",
         "dependencies": {
-          "JetBrains.Annotations": "2020.3.0",
+          "JetBrains.Annotations": "2021.1.0",
           "Microsoft.CodeAnalysis.CSharp": "3.9.0",
-          "Microsoft.Extensions.Primitives": "5.0.0",
+          "Microsoft.Extensions.Primitives": "5.0.1",
           "System.Collections.Immutable": "5.0.0"
         }
       },
@@ -606,7 +609,7 @@
         "type": "Project",
         "dependencies": {
           "Arbor.KVConfiguration.Core": "1.0.0",
-          "JetBrains.Annotations": "2020.3.0",
+          "JetBrains.Annotations": "2021.1.0",
           "Microsoft.CodeAnalysis.CSharp": "3.9.0",
           "Newtonsoft.Json": "13.0.1",
           "System.Collections.Immutable": "5.0.0"
@@ -692,8 +695,8 @@
       },
       "JetBrains.Annotations": {
         "type": "Transitive",
-        "resolved": "2020.3.0",
-        "contentHash": "FnX06vtxuoZnhZdR6UHt5kJ7HUC/syODfGLnhPDn1x5sXvvepNyCl4jMtPUzJfsPWh7q0Jo+AIYz5xaVbbyikA=="
+        "resolved": "2021.1.0",
+        "contentHash": "n9JSw5Z+F+6gp9vSv4aLH6p/bx3GAYA6FZVq1wJq/TJySv/kPgFKLGFeS7A8Xa5X4/GWorh5gd43yjamUgnBNA=="
       },
       "Microsoft.CodeAnalysis.Common": {
         "type": "Transitive",
@@ -934,8 +937,8 @@
       },
       "Microsoft.Extensions.Primitives": {
         "type": "Transitive",
-        "resolved": "5.0.0",
-        "contentHash": "cI/VWn9G1fghXrNDagX9nYaaB/nokkZn0HYAawGaELQrl8InSezfe9OnfPZLcJq3esXxygh3hkq2c3qoV3SDyQ=="
+        "resolved": "5.0.1",
+        "contentHash": "5WPSmL4YeP7eW+Vc8XZ4DwjYWBAiSwDV9Hm63JJWcz1Ie3Xjv4KuJXzgCstj48LkLfVCYa7mLcx7y+q6yqVvtw=="
       },
       "Microsoft.NETCore.Platforms": {
         "type": "Transitive",
@@ -1199,9 +1202,9 @@
       "arbor.kvconfiguration.core": {
         "type": "Project",
         "dependencies": {
-          "JetBrains.Annotations": "2020.3.0",
+          "JetBrains.Annotations": "2021.1.0",
           "Microsoft.CodeAnalysis.CSharp": "3.9.0",
-          "Microsoft.Extensions.Primitives": "5.0.0",
+          "Microsoft.Extensions.Primitives": "5.0.1",
           "System.Collections.Immutable": "5.0.0"
         }
       },
@@ -1209,7 +1212,7 @@
         "type": "Project",
         "dependencies": {
           "Arbor.KVConfiguration.Core": "1.0.0",
-          "JetBrains.Annotations": "2020.3.0",
+          "JetBrains.Annotations": "2021.1.0",
           "Microsoft.CodeAnalysis.CSharp": "3.9.0",
           "Newtonsoft.Json": "13.0.1",
           "System.Collections.Immutable": "5.0.0"
