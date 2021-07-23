@@ -91,7 +91,7 @@
       "arbor.kvconfiguration.core": {
         "type": "Project",
         "dependencies": {
-          "JetBrains.Annotations": "0.0.0",
+          "JetBrains.Annotations": "2021.2.0",
           "Microsoft.CodeAnalysis.CSharp": "0.0.0",
           "Microsoft.Extensions.Primitives": "5.0.1"
         }
@@ -100,7 +100,7 @@
         "type": "Project",
         "dependencies": {
           "Arbor.KVConfiguration.Core": "1.0.0",
-          "JetBrains.Annotations": "0.0.0",
+          "JetBrains.Annotations": "2021.2.0",
           "Microsoft.CodeAnalysis.CSharp": "0.0.0",
           "Newtonsoft.Json": "13.0.1",
           "System.Collections.Immutable": "5.0.0"
