@@ -16,15 +16,15 @@ namespace Arbor.KVConfiguration.Core.Metadata
             string description = "",
             string partInvariantName = "",
             string partFullName = "",
-            [CallerLineNumber] int sourceLine = -1,
-            [CallerFilePath] string sourceFile = "",
             bool isRequired = true,
             string defaultValue = "",
             string notes = "",
             bool allowMultipleValues = false,
             string[]? examples = null,
             string[]? tags = null,
-            string keyType = "")
+            string keyType = "",
+            [CallerLineNumber] int sourceLine = -1,
+            [CallerFilePath] string sourceFile = "")
         {
             MemberName = memberName ?? "";
             Description = description ?? "";

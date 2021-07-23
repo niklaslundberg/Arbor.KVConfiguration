@@ -32,6 +32,6 @@ namespace Arbor.KVConfiguration.Tests.Benchmark
         }
 
         [Benchmark]
-        public ValidatableRequired Value() => _serviceProvider.GetService<ValidatableRequired>();
+        public ValidatableRequired Value() => _serviceProvider.GetRequiredService<ValidatableRequired>();
     }
 }

@@ -5,7 +5,7 @@ namespace Arbor.KVConfiguration.Core.Extensions.StringExtensions
 {
     public static class KeyValueConfigurationStringExtensions
     {
-        public static string ValueOrDefault(
+        public static string? ValueOrDefault(
             [NotNull] this IKeyValueConfiguration keyValueConfiguration,
             [NotNull] string key,
             [CanBeNull] string defaultValue = "")

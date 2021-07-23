@@ -67,7 +67,8 @@ namespace Arbor.KVConfiguration.DependencyInjection
                     services.Add(new ServiceDescriptor(genericType,
                         provider => Activator.CreateInstance(concreteGenericType,
                             instance.Value,
-                            instance.Key),
+                            instance.Key) ?? throw new InvalidOperationException(
+                            $"Could not create type {concreteGenericType.FullName}"),
                         ServiceLifetime.Transient));
                 }
             }

@@ -73,7 +73,7 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
             }
         }
 
-        public string this[string key]
+        public string this[string? key]
         {
             get
             {

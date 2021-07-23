@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Arbor.Primitives
@@ -10,8 +11,7 @@ namespace Arbor.Primitives
     {
         private const string DoubleSeparator = "::";
         public const char Separator = ':';
-        private static readonly char[] InvalidCharacters = {'\\'};
-        private static readonly string[] _componentChars = {"?=", "?+", "#"};
+        private static readonly string[] ComponentChars = {"?=", "?+", "#"};
         private readonly ReadOnlyMemory<char> _nid;
         private readonly ReadOnlyMemory<char> _nss;
         private readonly ReadOnlyMemory<char> _rComponent;
@@ -371,7 +371,7 @@ namespace Arbor.Primitives
         {
             int firstIndex = -1;
 
-            foreach (string componentChar in _componentChars)
+            foreach (string componentChar in ComponentChars)
             {
                 int index = nss.IndexOf(componentChar, StringComparison.Ordinal);
 
@@ -390,7 +390,7 @@ namespace Arbor.Primitives
 
             if (firstIndex >= 0)
             {
-                return nss.AsSpan().Slice(0, firstIndex);
+                return nss.AsSpan()[..firstIndex];
             }
 
             return nss.AsSpan();
@@ -406,7 +406,7 @@ namespace Arbor.Primitives
 
         private static bool HasUrnScheme(Uri uri) => uri.Scheme.Equals("urn", StringComparison.OrdinalIgnoreCase);
 
-        private static bool IsUri(string originalValue, out Uri uri) =>
+        private static bool IsUri(string originalValue, [NotNullWhen(true)] out Uri? uri) =>
             Uri.TryCreate(originalValue, UriKind.Absolute, out uri);
 
         public static Urn Parse(string attemptedValue)

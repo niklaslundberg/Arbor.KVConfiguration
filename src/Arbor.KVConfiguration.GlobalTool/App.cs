@@ -61,7 +61,7 @@ namespace Arbor.KVConfiguration.GlobalTool
             try
             {
                 logger.Debug("Building app");
-                app = await BuildApp(args, variables, logger).ConfigureAwait(false);
+                app = BuildApp(args, variables, logger);
             }
             catch (Exception ex)
             {
@@ -179,7 +179,7 @@ namespace Arbor.KVConfiguration.GlobalTool
 
                 while (true)
                 {
-                    string readLine = Console.ReadLine();
+                    string? readLine = Console.ReadLine();
 
                     if (string.IsNullOrWhiteSpace(readLine))
                     {
@@ -195,7 +195,7 @@ namespace Arbor.KVConfiguration.GlobalTool
             return usedArgs;
         }
 
-        private static async Task<App> BuildApp(string[] args,
+        private static App BuildApp(string[] args,
             IReadOnlyDictionary<string, string> variables,
             ILogger logger)
         {

@@ -23,7 +23,7 @@ namespace Arbor.KVConfiguration.Core
             string.Equals(Key, other.Key, StringComparison.OrdinalIgnoreCase) &&
             string.Equals(Value, other.Value, StringComparison.OrdinalIgnoreCase);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj is null)
             {
@@ -46,14 +46,14 @@ namespace Arbor.KVConfiguration.Core
             var toStringBuilder = new StringBuilder(Key?.Length + Value?.Length + 4 ?? 10);
             toStringBuilder.Append('[');
 
-            if (Key is object)
+            if (Key is {})
             {
                 toStringBuilder.Append(Key);
             }
 
             toStringBuilder.Append(", \"");
 
-            if (Value is object)
+            if (Value is {})
             {
                 toStringBuilder.Append(Value);
             }

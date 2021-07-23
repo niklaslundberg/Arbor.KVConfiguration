@@ -37,7 +37,7 @@ namespace Arbor.KVConfiguration.UserConfiguration
         public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues
             => _configuration.AllWithMultipleValues;
 
-        public string this[string key]
+        public string this[string? key]
         {
             get
             {

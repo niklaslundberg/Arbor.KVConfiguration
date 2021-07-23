@@ -36,7 +36,7 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
         public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues =>
             _keyValueConfiguration?.AllWithMultipleValues ?? ImmutableArray<MultipleValuesStringPair>.Empty;
 
-        public string this[string key] => _keyValueConfiguration?[key] ?? "";
+        public string this[string? key] => _keyValueConfiguration?[key] ?? "";
 
         public ImmutableArray<TOptions> GetInstances() =>
             _keyValueConfiguration?.GetInstances<TOptions>() ?? ImmutableArray<TOptions>.Empty;

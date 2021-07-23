@@ -24,7 +24,7 @@ namespace Arbor.KVConfiguration.Urns
 
         public string Name { get; }
 
-        public override bool Equals(object obj) => Equals(obj as NamedInstance<T>);
+        public override bool Equals(object? obj) => Equals(obj as NamedInstance<T>);
 
         public bool Equals(NamedInstance<T>? other)
         {
@@ -46,7 +46,7 @@ namespace Arbor.KVConfiguration.Urns
         {
             unchecked
             {
-                return (EqualityComparer<T>.Default.GetHashCode(Value) * 397) ^ Name.GetHashCode();
+                return (EqualityComparer<T>.Default.GetHashCode(Value!) * 397) ^ Name.GetHashCode();
             }
         }
 
