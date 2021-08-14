@@ -12,7 +12,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 
         protected static Primitives.Urn? urn2;
 
-        private It should_be_equal_as_object = () => urn1.Equals((object)urn2).ShouldBeTrue();
+        private It should_be_equal_as_object = () => urn1.Equals((object?)urn2).ShouldBeTrue();
 
         private It should_be_equal_with_method = () => urn1.Equals(urn2).ShouldBeTrue();
 

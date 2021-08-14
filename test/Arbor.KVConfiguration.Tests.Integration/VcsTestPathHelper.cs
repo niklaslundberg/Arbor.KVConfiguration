@@ -14,19 +14,19 @@ namespace Arbor.KVConfiguration.Tests.Integration
             {
                 Assembly ncrunchAssembly = AppDomain.CurrentDomain.Load("NCrunch.Framework");
 
-                Type ncrunchType =
+                Type? ncrunchType =
                     ncrunchAssembly.GetTypes()
                         .FirstOrDefault(
                             type => type.Name.Equals("NCrunchEnvironment",
                                 StringComparison.InvariantCultureIgnoreCase));
 
-                MethodInfo method = ncrunchType?.GetMethod("GetOriginalSolutionPath");
+                MethodInfo? method = ncrunchType?.GetMethod("GetOriginalSolutionPath");
 
-                string originalSolutionPath = method?.Invoke(null, null) as string;
+                string? originalSolutionPath = method?.Invoke(null, null) as string;
 
                 if (!string.IsNullOrWhiteSpace(originalSolutionPath))
                 {
-                    DirectoryInfo parent = new DirectoryInfo(originalSolutionPath).Parent;
+                    DirectoryInfo? parent = new DirectoryInfo(originalSolutionPath).Parent;
                     // ReSharper disable once PossibleNullReferenceException
                     return VcsPathHelper.FindVcsRootPath(parent.FullName);
                 }

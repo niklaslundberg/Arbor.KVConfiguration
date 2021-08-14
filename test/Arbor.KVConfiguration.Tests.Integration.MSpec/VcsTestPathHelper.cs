@@ -21,13 +21,13 @@ namespace Arbor.KVConfiguration.Tests.Integration.MSpec
 
                 var method = ncrunchType?.GetMethod("GetOriginalSolutionPath");
 
-                string originalSolutionPath = method?.Invoke(null, null) as string;
+                string? originalSolutionPath = method?.Invoke(null, null) as string;
 
                 if (!string.IsNullOrWhiteSpace(originalSolutionPath))
                 {
                     var parent = new DirectoryInfo(originalSolutionPath).Parent;
                     // ReSharper disable once PossibleNullReferenceException
-                    return VcsPathHelper.FindVcsRootPath(parent.FullName);
+                    return VcsPathHelper.FindVcsRootPath(parent?.FullName!);
                 }
             }
 #pragma warning disable RECS0022 // A catch clause that catches System.Exception and has an empty body

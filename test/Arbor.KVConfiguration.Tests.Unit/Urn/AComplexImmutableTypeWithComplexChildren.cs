@@ -13,7 +13,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         public AComplexImmutableTypeWithComplexChildren(string id,
             string name,
             IEnumerable<ComplexChild> children,
-            Uri uri = null)
+            Uri? uri = null)
         {
             Id = id;
             Name = name;
@@ -27,6 +27,6 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 
         public ImmutableArray<ComplexChild> Children { get; }
 
-        public Uri Uri { get; }
+        public Uri? Uri { get; }
     }
 }

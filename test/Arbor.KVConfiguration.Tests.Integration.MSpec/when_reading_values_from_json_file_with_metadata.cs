@@ -10,9 +10,9 @@ namespace Arbor.KVConfiguration.Tests.Integration.MSpec
     [Subject(typeof(JsonFileReader))]
     public class when_reading_values_from_json_file_with_metadata
     {
-        static string appsettings_full_path;
+        static string appsettings_full_path = null!;
 
-        static JsonKeyValueConfiguration json_key_value_configuration;
+        static JsonKeyValueConfiguration json_key_value_configuration = null!;
 
         Establish context =
             () =>

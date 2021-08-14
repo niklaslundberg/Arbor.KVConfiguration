@@ -36,6 +36,7 @@ namespace Arbor.KVConfiguration.Core
 
             var keys = nameValueCollection.AllKeys
                                           .Where(key => key is {})
+                                          .Cast<string>()
                                           .ToImmutableArray();
 
             foreach (string key in keys)

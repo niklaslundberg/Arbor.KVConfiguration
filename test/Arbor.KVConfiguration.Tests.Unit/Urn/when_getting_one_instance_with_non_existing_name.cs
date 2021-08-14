@@ -10,7 +10,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
     {
         private static IKeyValueConfiguration configuration;
 
-        private static TypeWithRequiredCtor instance;
+        private static TypeWithRequiredCtor? instance;
 
         private Establish context = () =>
         {

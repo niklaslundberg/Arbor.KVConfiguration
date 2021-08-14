@@ -9,11 +9,11 @@ namespace Arbor.KVConfiguration.Tests.Integration.MSpec
     [Subject(typeof(JsonFileReader))]
     public class when_reading_values_from_json_file_with_keys_only
     {
-        static string appsettings_full_path;
+        static string appsettings_full_path = null!;
 
-        static ConfigurationItems configuration_items;
+        static ConfigurationItems configuration_items = null!;
 
-        static JsonFileReader reader;
+        static JsonFileReader reader = null!;
 
         Establish context = () =>
         {

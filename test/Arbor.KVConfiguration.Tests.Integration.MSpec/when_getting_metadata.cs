@@ -10,11 +10,11 @@ namespace Arbor.KVConfiguration.Tests.Integration.MSpec
     [Subject(typeof(KeyValueConfigurationItemExtensions))]
     public class when_getting_metadata
     {
-        static string app_settings_full_path;
+        static string app_settings_full_path = null!;
 
         static ImmutableArray<KeyValueConfigurationItem> key_value_configuration_items;
 
-        static JsonFileReader json_file_reader;
+        static JsonFileReader json_file_reader = null!;
 
         static ImmutableArray<KeyMetadata> metadata;
 

@@ -8,9 +8,9 @@ namespace Arbor.KVConfiguration.Tests.Integration.MSpec
     [Subject(typeof(UserJsonConfiguration))]
     public class when_getting_user_settings_when_it_does_exist
     {
-        static MultiSourceKeyValueConfiguration configuration;
+        static MultiSourceKeyValueConfiguration configuration = null!;
 
-        static string base_path;
+        static string base_path = null!;
 
         Establish context = () =>
         {
