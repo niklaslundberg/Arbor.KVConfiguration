@@ -69,3 +69,6 @@ dotnet_style_require_accessibility_modifiers = never:warning
 
 # S101: Types should be named in PascalCase
 dotnet_diagnostic.S101.severity = none
+
+dotnet_diagnostic.IDE0044.severity = none
+dotnet_diagnostic.IDE0052.severity = none

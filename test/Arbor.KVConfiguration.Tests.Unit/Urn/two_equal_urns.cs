@@ -5,7 +5,6 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 {
 #pragma warning disable 0649
     [Behaviors]
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     internal class two_equal_urns
     {
         protected static Primitives.Urn? urn1;

@@ -11,12 +11,12 @@
 dotnet_diagnostic.CS8602.severity = silent
 dotnet_diagnostic.S2933.severity = silent
 dotnet_diagnostic.IDE0044.severity = silent
+dotnet_diagnostic.IDE0052.severity = silent
+dotnet_diagnostic.IDE0051.severity = silent
+dotnet_diagnostic.IDE1006.severity = silent
 dotnet_diagnostic.CA2211.severity = silent
 dotnet_diagnostic.CS8618.severity = silent
 dotnet_diagnostic.RCS1169.severity = silent
 dotnet_diagnostic.S1144.severity = silent
-dotnet_diagnostic.IDE044.severity = silent
 dotnet_diagnostic.RCS1213.severity = silent
-dotnet_diagnostic.IDE0051.severity = silent
-dotnet_diagnostic.IDE1006.severity = silent
 dotnet_diagnostic.S101.severity = silent

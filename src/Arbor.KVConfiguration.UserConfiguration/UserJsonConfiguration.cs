@@ -13,15 +13,13 @@ namespace Arbor.KVConfiguration.UserConfiguration
         private readonly IKeyValueConfiguration _configuration;
         private readonly string? _fileFullPath;
 
-#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
         public UserJsonConfiguration(string? basePath = null)
-#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
         {
             string? fileFullPath = TryGetConfigUser(basePath);
 
             if (!string.IsNullOrWhiteSpace(fileFullPath) && File.Exists(fileFullPath))
             {
-                var jsonConfiguration = new JsonKeyValueConfiguration(fileFullPath!);
+                var jsonConfiguration = new JsonKeyValueConfiguration(fileFullPath);
                 _configuration = jsonConfiguration!;
             }
 
@@ -63,7 +61,7 @@ namespace Arbor.KVConfiguration.UserConfiguration
 
                 var currentDirectory = fileInfo.Directory;
 
-                while (currentDirectory is object)
+                while (currentDirectory is {})
                 {
                     var configUserFiles = currentDirectory.GetFiles(ConfigUserFileName);
 

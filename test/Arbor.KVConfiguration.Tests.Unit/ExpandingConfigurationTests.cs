@@ -45,7 +45,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
                 .DecorateWith(new ExpandKeyValueConfigurationDecorator())
                 .Build();
 
-            string FullPath(string path)
+            static string FullPath(string path)
             {
                 return Path.GetFullPath(path);
             }
@@ -60,7 +60,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
         [Fact]
         public void ItShouldExpandEnvironmentVariablesForInstances()
         {
-            string FullPath(string path)
+            static string FullPath(string path)
             {
                 return Path.GetFullPath(path);
             }

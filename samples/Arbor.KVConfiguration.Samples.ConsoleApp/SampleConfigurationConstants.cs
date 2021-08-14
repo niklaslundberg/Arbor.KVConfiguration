@@ -3,7 +3,6 @@ using Arbor.KVConfiguration.Core.Metadata;
 
 namespace Arbor.KVConfiguration.Samples.ConsoleApp
 {
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public static class SampleConfigurationConstants
     {
         [Metadata("urn")] public const string

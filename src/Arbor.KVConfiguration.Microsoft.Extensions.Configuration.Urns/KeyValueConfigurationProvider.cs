@@ -58,8 +58,8 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
             int indexOf = key.IndexOf(ConfigurationPath.KeyDelimiter, prefixLength, StringComparison.OrdinalIgnoreCase);
 
             return indexOf < 0
-                ? key.Substring(prefixLength)
-                : key.Substring(prefixLength, indexOf - prefixLength);
+                ? key[prefixLength..]
+                : key[prefixLength..indexOf];
         }
     }
 }

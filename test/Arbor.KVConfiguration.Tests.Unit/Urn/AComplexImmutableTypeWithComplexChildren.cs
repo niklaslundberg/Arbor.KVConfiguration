@@ -7,7 +7,6 @@ using Arbor.KVConfiguration.Urns;
 namespace Arbor.KVConfiguration.Tests.Unit.Urn
 {
     [Urn("urn:test:a:complex:immutable:type-with-complex-children")]
-    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     public class AComplexImmutableTypeWithComplexChildren
     {
         public AComplexImmutableTypeWithComplexChildren(string id,

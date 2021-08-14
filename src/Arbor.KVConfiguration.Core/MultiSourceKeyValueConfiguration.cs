@@ -280,7 +280,7 @@ namespace Arbor.KVConfiguration.Core
                 values.AddRange(GetMultipleValues(appSettingsBuilder.Previous, keysLeftAfterValues));
             }
 
-            string FormatValue(MultipleValuesStringPair pair)
+            static string FormatValue(MultipleValuesStringPair pair)
             {
                 return $"\'{pair.Key}\': [{string.Join("; ", pair.Values.Select(theValue => $"'{theValue}'"))}]";
             }

@@ -31,7 +31,7 @@ namespace Arbor.Primitives
             _fComponent = f;
         }
 
-        public string NameString => _nid.Length == 0 ? "N/A" : $"urn{OriginalValue.Substring(3)}";
+        public string NameString => _nid.Length == 0 ? "N/A" : $"urn{OriginalValue[3..]}";
 
         private static bool TryParseComponents(ReadOnlyMemory<char> fullName,
             out ReadOnlyMemory<char> nss,
@@ -72,7 +72,7 @@ namespace Arbor.Primitives
 
             if (fragmentIndex >= 0 && fullName.Length - fragmentIndex >= 0)
             {
-                fragment = fullName.Slice(fragmentIndex + 1);
+                fragment = fullName[(fragmentIndex + 1)..];
             }
             else
             {
@@ -279,7 +279,7 @@ namespace Arbor.Primitives
                 return false;
             }
 
-            if (trimmed.IndexOf(DoubleSeparator, StringComparison.OrdinalIgnoreCase) >= 0)
+            if (trimmed.Contains(DoubleSeparator, StringComparison.OrdinalIgnoreCase))
             {
                 throw new FormatException("Urn contains invalid double colon");
             }
@@ -292,7 +292,7 @@ namespace Arbor.Primitives
                 return false;
             }
 
-            ReadOnlyMemory<char> nidSub = chars.Slice(chars.Span.IndexOf(Separator) + 1);
+            ReadOnlyMemory<char> nidSub = chars[(chars.Span.IndexOf(Separator) + 1)..];
 
             if (nidSub.Span.IndexOf(Separator) < 0)
             {
@@ -320,7 +320,7 @@ namespace Arbor.Primitives
                 throw new FormatException("Nid cannot end with '-'");
             }
 
-            bool parsedComponents = TryParseComponents(nidSub.Slice(nidSlice.Length + 1), out ReadOnlyMemory<char> nss, out ReadOnlyMemory<char> r, out ReadOnlyMemory<char> q, out ReadOnlyMemory<char> f);
+            bool parsedComponents = TryParseComponents(nidSub[(nidSlice.Length + 1)..], out ReadOnlyMemory<char> nss, out ReadOnlyMemory<char> r, out ReadOnlyMemory<char> q, out ReadOnlyMemory<char> f);
 
             if (!parsedComponents)
             {

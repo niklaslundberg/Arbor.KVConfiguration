@@ -30,9 +30,7 @@ namespace Arbor.KVConfiguration.Tests.Integration.MSpec
                     return VcsPathHelper.FindVcsRootPath(parent?.FullName!);
                 }
             }
-#pragma warning disable RECS0022 // A catch clause that catches System.Exception and has an empty body
             catch (Exception)
-#pragma warning restore RECS0022 // A catch clause that catches System.Exception and has an empty body
             {
                 // ignored
             }

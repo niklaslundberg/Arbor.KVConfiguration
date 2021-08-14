@@ -8,7 +8,7 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
         private readonly IConfigureConfigurationValue<TOptions> _configurator;
         private readonly Func<TOptions> _createCache;
         private bool _cacheInitialized;
-        private object _cacheLock = new object();
+        private object _cacheLock = new();
         private TOptions? _options;
 
         public OptionsCache(IConfigureConfigurationValue<TOptions> configurator)

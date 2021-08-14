@@ -6,7 +6,7 @@ namespace Arbor.KVConfiguration.Core
     public static class StaticKeyValueConfigurationManager
     {
         private static IKeyValueConfiguration? _appSettings;
-        private static readonly object MutexLock = new object();
+        private static readonly object MutexLock = new();
 
         public static IKeyValueConfiguration AppSettings
         {
