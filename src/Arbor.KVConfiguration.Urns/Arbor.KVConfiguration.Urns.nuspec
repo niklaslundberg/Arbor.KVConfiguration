@@ -22,9 +22,9 @@
         <license type="expression">MIT</license>
         <copyright>Copyright Niklas Lundberg 2016 - 2021</copyright>
         <dependencies>
-            <dependency id="Arbor.Primitives" version="[2.0.0,3.0.0)" />
-            <dependency id="Arbor.KVConfiguration.Core" version="[2.0.0,3.0.0)" />
-            <dependency id="Arbor.KVConfiguration.Schema" version="[2.0.0,3.0.0)" />
+            <dependency id="Arbor.Primitives" version="[2.0.0-*,3.0.0)" />
+            <dependency id="Arbor.KVConfiguration.Core" version="[2.0.0-*,3.0.0)" />
+            <dependency id="Arbor.KVConfiguration.Schema" version="[2.0.0-*,3.0.0)" />
             <dependency id="Newtonsoft.Json" version="[12.0.1,)" />
         </dependencies>
         <references></references>
