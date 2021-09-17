@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28729.10
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31710.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{D5A28CBE-A2A3-4F3A-BBF1-3B1016FE2A96}"
 EndProject
@@ -27,6 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{053568CA
 	ProjectSection(SolutionItems) = preProject
 		build\build.bat = build\build.bat
 		.github\workflows\ci.yml = .github\workflows\ci.yml
+		.github\dependabot.yml = .github\dependabot.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{B6593404-264C-4DCA-8E3B-BAA7A13F1489}"

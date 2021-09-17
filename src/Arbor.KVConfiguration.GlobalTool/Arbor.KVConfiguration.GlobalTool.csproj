@@ -5,7 +5,7 @@
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>dotnet-arborkv</ToolCommandName>
     <PackageId>Arbor.KVConfiguration.GlobalTool</PackageId>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
