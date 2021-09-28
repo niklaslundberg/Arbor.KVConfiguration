@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics;
+#if NET5_0_OR_GREATER
 using System.IO;
+#else
+using System.IO.Extensions;
+#endif
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
