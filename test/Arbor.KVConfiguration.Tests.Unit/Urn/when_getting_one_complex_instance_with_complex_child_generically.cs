@@ -10,7 +10,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
     {
         private static IKeyValueConfiguration configuration;
 
-        private static AComplexImmutableTypeWithComplexChild instance;
+        private static AComplexImmutableTypeWithComplexChild? instance;
 
         private Establish context = () =>
         {

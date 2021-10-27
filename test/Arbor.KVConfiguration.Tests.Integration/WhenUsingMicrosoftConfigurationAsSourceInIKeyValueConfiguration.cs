@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns;
 using Arbor.KVConfiguration.Urns;
@@ -21,7 +22,8 @@ namespace Arbor.KVConfiguration.Tests.Integration
             MultiSourceKeyValueConfiguration multiSourceKeyValueConfiguration = KeyValueConfigurationManager
                 .Add(new KeyValueConfigurationAdapter(configurationRoot)).Build();
 
-            SimpleCtorType actual = multiSourceKeyValueConfiguration.GetInstance<SimpleCtorType>();
+            SimpleCtorType actual = multiSourceKeyValueConfiguration.GetInstance<SimpleCtorType>() ?? throw new InvalidOperationException(
+                $"Could not get {nameof(SimpleCtorType)}");
 
             Assert.Equal(new SimpleCtorType("John", 42), actual, SimpleCtorType.NameAgeComparer);
         }

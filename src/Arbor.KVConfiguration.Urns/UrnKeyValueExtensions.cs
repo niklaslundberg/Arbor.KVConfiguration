@@ -17,25 +17,6 @@ namespace Arbor.KVConfiguration.Urns
 {
     public static class UrnKeyValueExtensions
     {
-        public static T GetInstance<T>(
-            [NotNull] this IKeyValueConfiguration keyValueConfiguration)
-        {
-            ImmutableArray<T> instances = GetInstances<T>(keyValueConfiguration);
-
-            if (instances.Length > 1)
-            {
-                throw new InvalidOperationException(
-                    $"Found multiple instances of type {typeof(T).FullName}, expected 0 or 1");
-            }
-
-            if (!instances.Any())
-            {
-                return default;
-            }
-
-            return instances.Single();
-        }
-
         [PublicAPI]
         public static ImmutableArray<INamedInstance<T>> GetNamedInstances<T>(
             [NotNull] this IKeyValueConfiguration keyValueConfiguration) =>
@@ -49,7 +30,7 @@ namespace Arbor.KVConfiguration.Urns
             [NotNull] this IKeyValueConfiguration keyValueConfiguration,
             [NotNull] Type type)
         {
-            ImmutableArray<(object, string, IDictionary<string, object>)> immutableArray =
+            ImmutableArray<(object?, string, IDictionary<string, object?>)> immutableArray =
                 GetInstancesInternal(keyValueConfiguration, type);
 
             var generic = typeof(NamedInstance<>);
@@ -69,12 +50,7 @@ namespace Arbor.KVConfiguration.Urns
         [PublicAPI]
         public static object? GetInstance(
             [NotNull] this IKeyValueConfiguration keyValueConfiguration,
-            [NotNull] Type type)
-        {
-            var instance = GetInstance(keyValueConfiguration, type, null);
-
-            return instance;
-        }
+            [NotNull] Type type) => GetInstance(keyValueConfiguration, type, null);
 
         [PublicAPI]
         public static object? GetInstance(
@@ -92,10 +68,10 @@ namespace Arbor.KVConfiguration.Urns
                 throw new ArgumentNullException(nameof(type));
             }
 
-            ImmutableArray<(object, string, IDictionary<string, object>)> instances =
+            ImmutableArray<(object?, string, IDictionary<string, object?>)> instances =
                 GetInstancesInternal(keyValueConfiguration, type);
 
-            ImmutableArray<(object, string, IDictionary<string, object>)> filtered =
+            ImmutableArray<(object?, string, IDictionary<string, object?>)> filtered =
                 string.IsNullOrWhiteSpace(instanceName)
                     ? instances
                     : instances
@@ -116,6 +92,25 @@ namespace Arbor.KVConfiguration.Urns
             return filtered.Single().Item1;
         }
 
+
+        public static T? GetInstance<T>(
+            [NotNull] this IKeyValueConfiguration keyValueConfiguration)
+        {
+            ImmutableArray<T> instances = GetInstances<T>(keyValueConfiguration);
+
+            if (instances.Length > 1)
+            {
+                throw new InvalidOperationException(
+                    $"Found multiple instances of type {typeof(T).FullName}, expected 0 or 1");
+            }
+
+            if (!instances.Any())
+            {
+                return default;
+            }
+
+            return instances.Single();
+        }
         public static ImmutableArray<T> GetInstances<T>(
             [NotNull] this IKeyValueConfiguration keyValueConfiguration) =>
             GetInstances(keyValueConfiguration, typeof(T))
@@ -123,14 +118,14 @@ namespace Arbor.KVConfiguration.Urns
                 .ToImmutableArray();
 
         [PublicAPI]
-        public static ImmutableArray<object> GetInstances(
+        public static ImmutableArray<object?> GetInstances(
             [NotNull] this IKeyValueConfiguration keyValueConfiguration,
             [NotNull] Type type) =>
             GetInstancesInternal(keyValueConfiguration, type)
                 .Select(item => item.Item1)
                 .ToImmutableArray();
 
-        private static (object, string, IDictionary<string, object>) GetItem(
+        private static (object?, string, IDictionary<string, object?>) GetItem(
             IKeyValueConfiguration keyValueConfiguration,
             IGrouping<Urn, Urn> keyValuePair,
             Type type)
@@ -143,9 +138,9 @@ namespace Arbor.KVConfiguration.Urns
 
             var instanceUri = keyValuePair.Key;
 
-            string instanceName = instanceUri.Name;
+            string? instanceName = instanceUri.Name;
 
-            var asDictionary = (IDictionary<string, object>)expando;
+            var asDictionary = (IDictionary<string, object?>)expando;
 
             Urn[] allKeys = keyValueConfiguration.AllKeys
                 .Select(key =>
@@ -155,17 +150,16 @@ namespace Arbor.KVConfiguration.Urns
                         return null;
                     }
 
-                    return (Urn?) urn;
+                    return urn;
                 })
                 .Where(urn => urn.HasValue)
                 .Select(urn => urn!.Value)
                 .ToArray()!;
 
-            var filteredKeys = allKeys
-                .Where(urnKey =>
-                    urnKey.IsInHierarchy(instanceUri))
-                .Where(urnKey => urnKey.NamespaceParts() - instanceUri.NamespaceParts() == 1)
-                .ToArray();
+            var filteredKeys = allKeys.Where(urnKey =>
+                urnKey.Name is { } &&
+                urnKey.IsInHierarchy(instanceUri) &&
+                urnKey.NamespaceParts() - instanceUri.NamespaceParts() == 1).ToArray();
 
             foreach (var itemValue in filteredKeys)
             {
@@ -173,7 +167,7 @@ namespace Arbor.KVConfiguration.Urns
                 Debug.WriteLine($"Found key {itemValue}");
 #endif
 
-                string normalizedPropertyName = itemValue.Name.Replace("-", string.Empty);
+                string normalizedPropertyName = itemValue.Name!.Replace("-", string.Empty);
 
                 string[] values = keyValueConfiguration.AllWithMultipleValues
                     .Select(t =>
@@ -233,40 +227,36 @@ namespace Arbor.KVConfiguration.Urns
                 var propertyInfo = typeProperties.SingleOrDefault(property =>
                     property.Name.Equals(subKeyGroup.Key.Parent.Name, StringComparison.OrdinalIgnoreCase));
 
-                if (propertyInfo is { })
+                if (propertyInfo is {}
+                    && typeof(IEnumerable).IsAssignableFrom(propertyInfo.PropertyType)
+                    && propertyInfo.PropertyType.IsGenericType)
                 {
-                    if (typeof(IEnumerable).IsAssignableFrom(propertyInfo.PropertyType))
+                    var propertyType = propertyInfo.PropertyType.GetGenericArguments().FirstOrDefault();
+
+                    if (propertyType is { })
                     {
-                        if (propertyInfo.PropertyType.IsGenericType)
+                        var subItem = GetItem(keyValueConfiguration,
+                            subKeyGroup,
+                            propertyType);
+
+                        string? name = subKeyGroup.Key.Parent.Name;
+
+                        if (name is null)
                         {
-                            var propertyType = propertyInfo.PropertyType.GetGenericArguments().FirstOrDefault();
+                            continue;
+                        }
 
-                            if (propertyType is { })
-                            {
-                                var subItem = GetItem(keyValueConfiguration,
-                                    subKeyGroup,
-                                    propertyType);
+                        if (!asDictionary.ContainsKey(name))
+                        {
+                            var list = new List<object>();
 
-                                var name = subKeyGroup.Key.Parent.Name;
+                            asDictionary.Add(
+                                new KeyValuePair<string, object?>(name, list));
+                        }
 
-                                if (name is null)
-                                {
-                                    continue;
-                                }
-
-                                if (!asDictionary.ContainsKey(name))
-                                {
-                                    var list = new List<object>();
-
-                                    asDictionary.Add(
-                                        new KeyValuePair<string, object>(name, list));
-                                }
-
-                                if (asDictionary[name] is List<object> childList)
-                                {
-                                    childList.Add(subItem.Item1);
-                                }
-                            }
+                        if (asDictionary[name] is List<object> childList && subItem.Item1 is {})
+                        {
+                            childList.Add(subItem.Item1);
                         }
                     }
                 }
@@ -327,11 +317,11 @@ namespace Arbor.KVConfiguration.Urns
                 throw invalidOperationException;
             }
 
-            return (item, instanceName, asDictionary);
+            return (item, instanceName ?? "", asDictionary);
         }
 
         private static InvalidOperationException CreateException(Type type,
-            IDictionary<string, object> asDictionary,
+            IDictionary<string, object?> asDictionary,
             string json,
             Exception ex)
         {
@@ -339,7 +329,7 @@ namespace Arbor.KVConfiguration.Urns
                 .GetProperties(BindingFlags.Public | BindingFlags.Instance)
                 .Select(property =>
                 {
-                    string matchingKey = asDictionary.Keys.SingleOrDefault(key =>
+                    string? matchingKey = asDictionary.Keys.SingleOrDefault(key =>
                         key.Equals(property.Name, StringComparison.OrdinalIgnoreCase));
 
                     if (matchingKey is null)
@@ -347,7 +337,7 @@ namespace Arbor.KVConfiguration.Urns
                         return ("", null)!;
                     }
 
-                    if (!asDictionary.TryGetValue(matchingKey, out var value))
+                    if (!asDictionary.TryGetValue(matchingKey, out object? value))
                     {
                         return ("", null)!;
                     }
@@ -356,7 +346,7 @@ namespace Arbor.KVConfiguration.Urns
                          || !typeof(IEnumerable).IsAssignableFrom(property.PropertyType))
                         && value is IEnumerable enumerable)
                     {
-                        var objects = enumerable.OfType<object>().ToArray();
+                        object[] objects = enumerable.OfType<object>().ToArray();
 
                         if (objects.Length > 1)
                         {
@@ -379,14 +369,12 @@ namespace Arbor.KVConfiguration.Urns
 
             string specifiedErrors = string.Join(", ", errorProperties.Select(ep => ep.Item2));
 
-            var invalidOperationException = new InvalidOperationException(
+            return new InvalidOperationException(
                 $"{specifiedErrors} Could not deserialize json '{json}' to target type {type.FullName}".Trim(),
                 ex);
-
-            return invalidOperationException;
         }
 
-        private static ImmutableArray<(object, string, IDictionary<string, object>)> GetInstancesInternal(
+        private static ImmutableArray<(object?, string, IDictionary<string, object?>)> GetInstancesInternal(
             [NotNull] this IKeyValueConfiguration keyValueConfiguration,
             [NotNull] Type type)
         {
@@ -412,7 +400,7 @@ namespace Arbor.KVConfiguration.Urns
 
             if (typeUrn is null)
             {
-                return ImmutableArray<(object, string, IDictionary<string, object>)>.Empty;
+                return ImmutableArray<(object?, string, IDictionary<string, object?>)>.Empty;
             }
 
             int parts = typeUrn.Value.NamespaceParts();
@@ -422,7 +410,7 @@ namespace Arbor.KVConfiguration.Urns
             IGrouping<Urn, Urn>[] instanceKeys =
                 keyValueConfiguration.AllKeys
                     .Where(key => key.IsUrn())
-                    .Select(key => Urn.Parse(key))
+                    .Select(Urn.Parse)
                     .Where(
                         urn =>
                             urn.IsInHierarchy(typeUrn.Value))

@@ -9,7 +9,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.InMemoryKeyValueConfiguration
     {
         private static Core.InMemoryKeyValueConfiguration configuration;
 
-        private static string value;
+        private static string? value;
 
         private Establish context = () =>
         {

@@ -10,7 +10,7 @@ namespace Arbor.KVConfiguration.Core
     [UsedImplicitly]
     public sealed class ReflectionKeyValueConfiguration : IKeyValueConfigurationWithMetadata
     {
-        private readonly string _assemblyName;
+        private readonly string? _assemblyName;
         private readonly IKeyValueConfiguration _inMemoryKeyValueConfiguration;
 
         public ReflectionKeyValueConfiguration([NotNull] Assembly assembly)
@@ -43,7 +43,7 @@ namespace Arbor.KVConfiguration.Core
         public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues =>
             _inMemoryKeyValueConfiguration.AllWithMultipleValues;
 
-        public string this[string key] => _inMemoryKeyValueConfiguration[key];
+        public string this[string? key] => _inMemoryKeyValueConfiguration[key];
 
         public ImmutableArray<KeyValueConfigurationItem> ConfigurationItems { get; }
 

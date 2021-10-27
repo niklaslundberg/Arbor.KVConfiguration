@@ -21,7 +21,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         {
             Primitives.Urn.TryParse(attempted_value, out var value);
             has_value = value.HasValue;
-            urn = value.Value;
+            urn = value!.Value;
         };
 
         private It should_not_be_null = () => has_value.ShouldBeTrue();

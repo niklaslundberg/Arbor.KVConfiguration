@@ -12,7 +12,8 @@ namespace Arbor.KVConfiguration.Urns
                 throw new ArgumentNullException(nameof(instance));
             }
 
-            return instance.GetType().GenericTypeArguments[0].FullName;
+            return instance.GetType().GenericTypeArguments[0].FullName ?? throw new InvalidOperationException(
+                $"Could not get enclosing full name for type {typeof(T).FullName}");
         }
     }
 }

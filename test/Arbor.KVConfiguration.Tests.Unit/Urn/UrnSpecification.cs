@@ -210,7 +210,9 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         {
             Primitives.Urn.TryParse(urn, out var parsed).ShouldBeTrue();
 
-            parsed.Value.AssignedName.ShouldEqual(expectedNormalized);
+            parsed.ShouldNotBeNull();
+
+            parsed!.Value.AssignedName.ShouldEqual(expectedNormalized);
         }
 
         [Theory]
@@ -224,7 +226,9 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         {
             Primitives.Urn.TryParse(urn, out var parsed).ShouldBeTrue();
 
-            parsed.Value.NameString.ShouldEqual(expectedFullName);
+            parsed.ShouldNotBeNull();
+
+            parsed!.Value.NameString.ShouldEqual(expectedFullName);
         }
 
         [Theory]

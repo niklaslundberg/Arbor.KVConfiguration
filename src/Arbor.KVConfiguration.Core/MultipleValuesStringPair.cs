@@ -45,7 +45,7 @@ namespace Arbor.KVConfiguration.Core
             string.Equals(Key, other.Key, StringComparison.OrdinalIgnoreCase) &&
             Values.SequenceEqual(other.Values, StringComparer.OrdinalIgnoreCase);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj is null)
             {

@@ -136,7 +136,7 @@ namespace Arbor.KVConfiguration.Core
                 return string.Empty;
             }
 
-            string result = appSettingsDecoratorBuilder.Decorator.ToString();
+            string result = appSettingsDecoratorBuilder.Decorator.ToString() ?? appSettingsDecoratorBuilder.Decorator.GetType().Name;
 
             if (appSettingsDecoratorBuilder.Previous is {})
             {
@@ -153,7 +153,7 @@ namespace Arbor.KVConfiguration.Core
                 return string.Empty;
             }
 
-            string result = builder.KeyValueConfiguration.ToString();
+            string result = builder.KeyValueConfiguration.ToString() ?? builder.KeyValueConfiguration.GetType().Name;
 
             if (builder.Previous is {})
             {
@@ -280,7 +280,7 @@ namespace Arbor.KVConfiguration.Core
                 values.AddRange(GetMultipleValues(appSettingsBuilder.Previous, keysLeftAfterValues));
             }
 
-            string FormatValue(MultipleValuesStringPair pair)
+            static string FormatValue(MultipleValuesStringPair pair)
             {
                 return $"\'{pair.Key}\': [{string.Join("; ", pair.Values.Select(theValue => $"'{theValue}'"))}]";
             }
@@ -323,10 +323,10 @@ namespace Arbor.KVConfiguration.Core
                 return null;
             }
 
-            (IKeyValueConfiguration, string) tuple =
+            (IKeyValueConfiguration?, string) tuple =
                 GetValue(_appSettingsDecoratorBuilder.AppSettingsBuilder, key, logAction);
 
-            if (tuple.Item1 is NoConfiguration || tuple.Item1 is null)
+            if (tuple.Item1 is NoConfiguration or null)
             {
                 return GetConfiguratorDefining(_appSettingsDecoratorBuilder.AppSettingsBuilder, key!);
             }

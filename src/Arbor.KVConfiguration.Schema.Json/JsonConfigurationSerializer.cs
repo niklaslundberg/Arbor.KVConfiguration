@@ -15,22 +15,16 @@ namespace Arbor.KVConfiguration.Schema.Json
                 throw new ArgumentException(KeyValueResources.ArgumentIsNullOrWhitespace, nameof(json));
             }
 
-            var configurationItems = JsonConvert.DeserializeObject<ConfigurationItems>(json);
-
-            return configurationItems;
+            return JsonConvert.DeserializeObject<ConfigurationItems>(json) ??
+                   throw new InvalidOperationException(
+                       $"Could not deserialize JSON to {nameof(ConfigurationItems)}, value is null");
         }
 
-        public static string Serialize(ConfigurationItems configurationItems)
-        {
-            string json = JsonConvert.SerializeObject(
-                configurationItems,
-                new JsonSerializerSettings
-                {
-                    Formatting = Formatting.Indented,
-                    ContractResolver = new CamelCasePropertyNamesContractResolver()
-                });
-
-            return json;
-        }
+        public static string Serialize(ConfigurationItems configurationItems) => JsonConvert.SerializeObject(
+            configurationItems,
+            new JsonSerializerSettings
+            {
+                Formatting = Formatting.Indented, ContractResolver = new CamelCasePropertyNamesContractResolver()
+            });
     }
 }

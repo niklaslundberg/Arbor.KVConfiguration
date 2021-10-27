@@ -22,13 +22,8 @@ namespace Arbor.KVConfiguration.Tests.Integration
 
         private sealed class NameAgeEqualityComparer : IEqualityComparer<SimpleCtorType>
         {
-            public bool Equals(SimpleCtorType x, SimpleCtorType y)
+            public bool Equals(SimpleCtorType? x, SimpleCtorType? y)
             {
-                if (ReferenceEquals(x, y))
-                {
-                    return true;
-                }
-
                 if (x is null)
                 {
                     return false;
@@ -37,6 +32,11 @@ namespace Arbor.KVConfiguration.Tests.Integration
                 if (y is null)
                 {
                     return false;
+                }
+
+                if (ReferenceEquals(x, y))
+                {
+                    return true;
                 }
 
                 if (x.GetType() != y.GetType())

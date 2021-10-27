@@ -14,7 +14,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Registrations
             holder.Add(new NamedInstance<ValidatableOptional>(new ValidatableOptional("abc", 123), "abc-instance"));
             holder.Add(new NamedInstance<ValidatableOptional>(new ValidatableOptional("def", 234), "def-instance"));
 
-            ImmutableDictionary<string, ValidatableOptional> instances = holder.GetInstances<ValidatableOptional>();
+            ImmutableDictionary<string, ValidatableOptional?> instances = holder.GetInstances<ValidatableOptional>();
 
             Assert.Equal(2, instances.Count);
 
@@ -33,7 +33,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Registrations
             var holder = new ConfigurationInstanceHolder();
             holder.Add(new NamedInstance<ValidatableOptional>(new ValidatableOptional("abc", 123), "abc-instance"));
 
-            ImmutableDictionary<string, ValidatableOptional> instances = holder.GetInstances<ValidatableOptional>();
+            ImmutableDictionary<string, ValidatableOptional?> instances = holder.GetInstances<ValidatableOptional>();
 
             Assert.Single(instances);
 
@@ -49,7 +49,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Registrations
             var instance = new ValidatableOptional("abc", 123);
             holder.Add(new NamedInstance<ValidatableOptional>(instance, "abc-instance"));
 
-            bool found = holder.TryGet("abc-instance", out ValidatableOptional foundInstance);
+            bool found = holder.TryGet("abc-instance", out ValidatableOptional? foundInstance);
 
             Assert.True(found);
             Assert.Same(instance, foundInstance);
@@ -62,7 +62,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Registrations
             var instance = new ValidatableOptional("abc", 123);
             holder.Add(new NamedInstance<ValidatableOptional>(instance, "abc-instance"));
 
-            bool found = holder.TryGet("abc-instance", typeof(ValidatableOptional), out var foundInstance);
+            bool found = holder.TryGet("abc-instance", typeof(ValidatableOptional), out object? foundInstance);
 
             Assert.True(found);
 
@@ -75,13 +75,13 @@ namespace Arbor.KVConfiguration.Tests.Unit.Registrations
             var holder = new ConfigurationInstanceHolder();
             holder.Add(new NamedInstance<ValidatableOptional>(new ValidatableOptional("abc", 123), "abc-instance"));
 
-            bool found = holder.TryGet("abc-instance", out ValidatableOptional instance);
+            bool found = holder.TryGet("abc-instance", out ValidatableOptional? instance);
 
             Assert.True(found);
 
             Assert.NotNull(instance);
 
-            bool isRemoved = holder.TryRemove("abc-instance", typeof(ValidatableOptional), out var removed);
+            bool isRemoved = holder.TryRemove("abc-instance", typeof(ValidatableOptional), out object? removed);
 
             Assert.True(isRemoved);
 
@@ -96,13 +96,13 @@ namespace Arbor.KVConfiguration.Tests.Unit.Registrations
             var holder = new ConfigurationInstanceHolder();
             holder.Add(new NamedInstance<ValidatableOptional>(new ValidatableOptional("abc", 123), "abc-instance"));
 
-            bool found = holder.TryGet("abc-instance", out ValidatableOptional instance);
+            bool found = holder.TryGet("abc-instance", out ValidatableOptional? instance);
 
             Assert.True(found);
 
             Assert.NotNull(instance);
 
-            bool isRemoved = holder.TryRemove("abc-instance", typeof(string), out var removed);
+            bool isRemoved = holder.TryRemove("abc-instance", typeof(string), out object? removed);
 
             Assert.False(isRemoved);
 
@@ -115,13 +115,13 @@ namespace Arbor.KVConfiguration.Tests.Unit.Registrations
             var holder = new ConfigurationInstanceHolder();
             holder.Add(new NamedInstance<ValidatableOptional>(new ValidatableOptional("abc", 123), "abc-instance"));
 
-            bool found = holder.TryGet("abc-instance", out ValidatableOptional instance);
+            bool found = holder.TryGet("abc-instance", out ValidatableOptional? instance);
 
             Assert.True(found);
 
             Assert.NotNull(instance);
 
-            bool isRemoved = holder.TryRemove("abc-instance-2", typeof(ValidatableOptional), out var removed);
+            bool isRemoved = holder.TryRemove("abc-instance-2", typeof(ValidatableOptional), out object? removed);
 
             Assert.False(isRemoved);
 

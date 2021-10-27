@@ -48,15 +48,12 @@ namespace Arbor.KVConfiguration.Schema.Validators
             foreach (IValueValidator valueValidator in _validators)
             {
                 if (!string.IsNullOrWhiteSpace(metadataItem.ConfigurationMetadata.ValueType) &&
-                    multipleValuesStringPair.HasNonEmptyValue && multipleValuesStringPair.HasSingleValue)
+                    multipleValuesStringPair.HasNonEmptyValue && multipleValuesStringPair.HasSingleValue && valueValidator.CanValidate(metadataItem.ConfigurationMetadata.ValueType))
                 {
-                    if (valueValidator.CanValidate(metadataItem.ConfigurationMetadata.ValueType))
-                    {
-                        string valueToValidate = multipleValuesStringPair.Values.SingleOrDefault();
+                    string? valueToValidate = multipleValuesStringPair.Values.SingleOrDefault();
 
-                        validationErrors.AddRange(valueValidator.Validate(metadataItem.ConfigurationMetadata.ValueType,
-                            valueToValidate));
-                    }
+                    validationErrors.AddRange(valueValidator.Validate(metadataItem.ConfigurationMetadata.ValueType,
+                        valueToValidate));
                 }
             }
 

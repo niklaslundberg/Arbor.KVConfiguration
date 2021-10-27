@@ -21,7 +21,7 @@ namespace Arbor.KVConfiguration.Core
         }
 
         [PublicAPI]
-        public InMemoryKeyValueConfiguration(NameValueCollection nameValueCollection, string name)
+        public InMemoryKeyValueConfiguration(NameValueCollection nameValueCollection, string? name)
         {
             if (nameValueCollection is null)
             {
@@ -34,11 +34,14 @@ namespace Arbor.KVConfiguration.Core
                 new Dictionary<string, ImmutableArray<string>>(nameValueCollection.Count + 1,
                     StringComparer.OrdinalIgnoreCase);
 
-            var keys = nameValueCollection.AllKeys.ToImmutableArray();
+            var keys = nameValueCollection.AllKeys
+                                          .Where(key => key is {})
+                                          .Cast<string>()
+                                          .ToImmutableArray();
 
             foreach (string key in keys)
             {
-                ImmutableArray<string> values = nameValueCollection.GetValues(key).SafeToImmutableArray();
+                ImmutableArray<string> values = nameValueCollection.GetValues(key!).SafeToImmutableArray();
 
                 if (!string.IsNullOrWhiteSpace(key))
                 {
@@ -88,9 +91,9 @@ namespace Arbor.KVConfiguration.Core
             }
         }
 
-        public string this[string key] => GetCombinedValues(key);
+        public string this[string? key] => GetCombinedValues(key);
 
-        private string GetCombinedValues(string key)
+        private string GetCombinedValues(string? key)
         {
             CheckDisposed();
 

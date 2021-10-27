@@ -2,7 +2,6 @@
 
 namespace Arbor.KVConfiguration.Schema.Json
 {
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public static class JsonSchemaConstants
     {
         public const string VersionPropertyKey = "urn:arbor:kvconfiguration:schema:version";

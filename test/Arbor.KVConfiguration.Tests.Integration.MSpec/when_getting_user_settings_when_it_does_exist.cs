@@ -1,4 +1,5 @@
 using System.IO;
+using Arbor.Aesculus.NCrunch;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.UserConfiguration;
 using Machine.Specifications;
@@ -8,13 +9,13 @@ namespace Arbor.KVConfiguration.Tests.Integration.MSpec
     [Subject(typeof(UserJsonConfiguration))]
     public class when_getting_user_settings_when_it_does_exist
     {
-        static MultiSourceKeyValueConfiguration configuration;
+        static MultiSourceKeyValueConfiguration configuration = null!;
 
-        static string base_path;
+        static string base_path = null!;
 
         Establish context = () =>
         {
-            base_path = Path.Combine(VcsTestPathHelper.FindVcsRootPath(), "test",
+            base_path = Path.Combine(VcsTestPathHelper.TryFindVcsRootPath()!, "test",
                 "Arbor.KVConfiguration.Tests.Integration.MSpec");
         };
 

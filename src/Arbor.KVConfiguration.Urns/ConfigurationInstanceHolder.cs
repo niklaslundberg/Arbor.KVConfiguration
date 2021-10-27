@@ -8,8 +8,7 @@ namespace Arbor.KVConfiguration.Urns
 {
     public class ConfigurationInstanceHolder
     {
-        private readonly ConcurrentDictionary<Type, ConcurrentDictionary<string, object>> _configurationInstances =
-            new ConcurrentDictionary<Type, ConcurrentDictionary<string, object>>();
+        private readonly ConcurrentDictionary<Type, ConcurrentDictionary<string, object>> _configurationInstances = new();
 
         public ImmutableArray<Type> RegisteredTypes => _configurationInstances.Keys.ToImmutableArray();
 
@@ -29,7 +28,7 @@ namespace Arbor.KVConfiguration.Urns
 
         public bool TryGet<T>(string key, out T? instance) where T : class
         {
-            var foundInstance = Get(typeof(T), key);
+            object? foundInstance = Get(typeof(T), key);
 
             if (foundInstance is T returnInstance)
             {
@@ -53,7 +52,7 @@ namespace Arbor.KVConfiguration.Urns
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(key));
             }
 
-            var foundInstance = Get(type, key);
+            object? foundInstance = Get(type, key);
 
             if (foundInstance is null)
             {
@@ -78,7 +77,7 @@ namespace Arbor.KVConfiguration.Urns
                 return default;
             }
 
-            instances.TryGetValue(key, out var instance);
+            instances.TryGetValue(key, out object? instance);
 
             return instance;
         }
@@ -96,7 +95,7 @@ namespace Arbor.KVConfiguration.Urns
             }
 
             if (_configurationInstances.TryGetValue(type, out var instances)
-                && instances.TryRemove(key, out var removedItem))
+                && instances.TryRemove(key, out object? removedItem))
             {
                 removed = removedItem;
                 return true;

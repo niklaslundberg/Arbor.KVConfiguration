@@ -34,19 +34,20 @@ namespace Arbor.KVConfiguration.Urns
         public override object ReadJson(
             JsonReader reader,
             Type objectType,
-            object existingValue,
+            object? existingValue,
             JsonSerializer serializer)
         {
             if (reader.TokenType == JsonToken.StartArray)
             {
                 var array = JArray.Load(reader);
 
-                var values = array.ToObject<string[]>();
+                string[]? values = array.ToObject<string[]>();
 
                 return new StringValues(values);
             }
 
-            return new JsonSerializer().Deserialize(reader, objectType);
+            return new JsonSerializer().Deserialize(reader, objectType) ?? throw new InvalidOperationException(
+                $"Could not deserialize JSON to {nameof(StringValues)}, value is null");
         }
 
         /// <summary>
@@ -55,7 +56,7 @@ namespace Arbor.KVConfiguration.Urns
         /// <param name="writer">The <see cref="Newtonsoft.Json.JsonWriter" /> to write to.</param>
         /// <param name="value">The value.</param>
         /// <param name="serializer">The calling serializer.</param>
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
         }
     }

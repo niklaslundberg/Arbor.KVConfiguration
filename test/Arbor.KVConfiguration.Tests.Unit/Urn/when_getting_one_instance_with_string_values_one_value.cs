@@ -21,7 +21,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 
         private Because of = () =>
         {
-            instance = configuration.GetInstance(typeof(TypeWithStringValues)) as TypeWithStringValues;
+            instance = (TypeWithStringValues)configuration.GetInstance(typeof(TypeWithStringValues))!;
         };
 
         private It should_have_collection_length_1 = () => instance.Values.Length.ShouldEqual(1);

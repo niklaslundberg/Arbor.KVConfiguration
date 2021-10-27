@@ -27,7 +27,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 
         private Because of = () =>
         {
-            instance = configuration.GetInstance(typeof(AComplexImmutableType)) as AComplexImmutableType;
+            instance = (AComplexImmutableType)configuration.GetInstance(typeof(AComplexImmutableType))!;
         };
 
         private It should_have_instance1_children1 =

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Arbor.Aesculus.NCrunch;
 using Arbor.KVConfiguration.JsonConfiguration;
 using Arbor.KVConfiguration.Schema.Json;
 using Machine.Specifications;
@@ -9,16 +10,16 @@ namespace Arbor.KVConfiguration.Tests.Integration.MSpec
     [Subject(typeof(JsonFileReader))]
     public class when_reading_version_from_file_with_version
     {
-        static string appsettings_full_path;
+        static string appsettings_full_path = null!;
 
-        static ConfigurationItems configuration_items;
+        static ConfigurationItems configuration_items = null!;
 
-        static JsonFileReader reader;
+        static JsonFileReader reader = null!;
 
         Establish context = () =>
         {
             appsettings_full_path = Path.Combine(
-                VcsTestPathHelper.FindVcsRootPath(),
+                VcsTestPathHelper.TryFindVcsRootPath()!,
                 "test",
                 "Arbor.KVConfiguration.Tests.Integration",
                 "appsettings.json");

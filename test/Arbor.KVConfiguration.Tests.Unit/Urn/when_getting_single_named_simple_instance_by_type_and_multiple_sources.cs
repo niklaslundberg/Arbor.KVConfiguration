@@ -46,7 +46,8 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         {
             instances = configuration.GetNamedInstances(typeof(ASimpleType))
                 .Select(s => s as INamedInstance<ASimpleType>)
-                .Where(s => s is object)
+                .Where(s => s is {})
+                .OfType<INamedInstance<ASimpleType>>()
                 .ToImmutableArray();
         };
 

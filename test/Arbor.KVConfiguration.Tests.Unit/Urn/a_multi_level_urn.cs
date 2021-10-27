@@ -4,7 +4,6 @@ using Machine.Specifications;
 namespace Arbor.KVConfiguration.Tests.Unit.Urn
 {
     [Behaviors]
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public class a_multi_level_urn
     {
         protected static Primitives.Urn urn;

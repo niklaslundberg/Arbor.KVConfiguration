@@ -38,7 +38,7 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
             };
 
             var keys = Specials.Special.ToList();
-            keys.AddRange(goodKeys.Select(goodKey => new KeyValuePair<string, string>(goodKey, goodKey)));
+            keys.AddRange(goodKeys.Select(goodKey => new KeyValuePair<string, string?>(goodKey, goodKey)));
 
             var builder = new StringBuilder();
 
@@ -46,9 +46,9 @@ namespace Arbor.KVConfiguration.Samples.ConsoleApp
             {
                 builder.Append("Key: ").AppendLine(pair.Key);
 
-                string value = appSettingsKeyValueConfiguration.ValueOrDefault(pair.Value);
+                string? value = appSettingsKeyValueConfiguration.ValueOrDefault(pair.Value!);
 
-                string displayValue = Specials.GetDisplayValue(value);
+                string displayValue = Specials.GetDisplayValue(value!);
 
                 builder.Append("\t Instance: ").AppendLine(displayValue);
 

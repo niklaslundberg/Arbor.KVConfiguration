@@ -46,7 +46,7 @@ namespace Arbor.KVConfiguration.JsonConfiguration
         public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues
             => _inMemoryKeyValueConfiguration.AllWithMultipleValues;
 
-        public string this[string key] => _inMemoryKeyValueConfiguration[key];
+        public string this[string? key] => _inMemoryKeyValueConfiguration[key];
 
         public ImmutableArray<KeyValueConfigurationItem> ConfigurationItems { get; }
 

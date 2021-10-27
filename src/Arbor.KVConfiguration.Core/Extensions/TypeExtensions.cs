@@ -28,21 +28,6 @@ namespace Arbor.KVConfiguration.Core.Extensions
             return type.IsClass && (type.IsPublic || type.IsNestedPublic);
         }
 
-        internal static ImmutableArray<FieldInfo> GetPublicConstantStringFields([NotNull] this Assembly assembly)
-        {
-            if (assembly is null)
-            {
-                throw new ArgumentNullException(nameof(assembly));
-            }
-
-            var fields = assembly.GetLoadableTypes()
-                .Where(IsPublicClass)
-                .SelectMany(type => type.GetFields(BindingFlags.Public | BindingFlags.Static))
-                .Where(field => field.IsPublicConstantStringField())
-                .ToImmutableArray();
-
-            return fields;
-        }
 
         private static ImmutableArray<Type> GetLoadableTypes([NotNull] this Assembly assembly)
         {
@@ -57,8 +42,23 @@ namespace Arbor.KVConfiguration.Core.Extensions
             }
             catch (ReflectionTypeLoadException ex)
             {
-                return ex.Types.Where(type => type is object).ToImmutableArray();
+                return ex.Types.Where(type => type is {}).ToImmutableArray()!;
             }
+        }
+        internal static ImmutableArray<FieldInfo> GetPublicConstantStringFields([NotNull] this Assembly assembly)
+        {
+            if (assembly is null)
+            {
+                throw new ArgumentNullException(nameof(assembly));
+            }
+
+            var fields = assembly.GetLoadableTypes()
+                .Where(IsPublicClass)
+                .SelectMany(type => type.GetFields(BindingFlags.Public | BindingFlags.Static))
+                .Where(field => field.IsPublicConstantStringField())
+                .ToImmutableArray();
+
+            return fields;
         }
 
         internal static ImmutableArray<FieldInfo> GetPublicConstantStringFields([NotNull] this Type type)

@@ -65,7 +65,7 @@ namespace Arbor.KVConfiguration.Core.Extensions.ReflectionExtensions
             var configurationMetadataFields = fields
                 .Select(
                     field => new {Field = field, Attribute = field.GetCustomAttribute<MetadataAttribute>()})
-                .Where(pair => pair.Attribute is object)
+                .Where(pair => pair.Attribute is {})
                 .ToArray();
 
             if (!configurationMetadataFields.Any())
@@ -78,7 +78,7 @@ namespace Arbor.KVConfiguration.Core.Extensions.ReflectionExtensions
                     pair =>
                         new ConfigurationMetadata(pair.Field.GetValue(null) as string ??
                                                   "INVALID_VALUE_NOT_A_STRING",
-                            pair.Attribute.ValueType,
+                            pair.Attribute!.ValueType,
                             pair.Field.Name,
                             pair.Attribute.Description,
                             pair.Attribute.PartInvariantName,

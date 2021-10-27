@@ -17,22 +17,19 @@ namespace Arbor.Primitives
         {
             var environmentVariables = Environment.GetEnvironmentVariables();
 
-            var all = environmentVariables
+            return environmentVariables
                 .OfType<DictionaryEntry>()
-                .ToImmutableDictionary(entry => (string)entry.Key,
-                    entry => (string)entry.Value,
+                     .ToImmutableDictionary(entry => (string)entry.Key,
+                    entry => (string?)entry.Value ?? "",
                     stringComparer);
-
-            return all;
         }
 
         public static readonly StringComparer DefaultStringComparer =
-            Environment.OSVersion.Platform == PlatformID.Unix ||
-            Environment.OSVersion.Platform == PlatformID.MacOSX
+            Environment.OSVersion.Platform is PlatformID.Unix or PlatformID.MacOSX
                 ? StringComparer.Ordinal
                 : StringComparer.OrdinalIgnoreCase;
 
-        public static EnvironmentVariables GetEnvironmentVariables() => new EnvironmentVariables(GetAll(DefaultStringComparer));
+        public static EnvironmentVariables GetEnvironmentVariables() => new(GetAll(DefaultStringComparer));
         public static EnvironmentVariables GetEnvironmentVariables(StringComparer stringComparer)
         {
             if (stringComparer is null)

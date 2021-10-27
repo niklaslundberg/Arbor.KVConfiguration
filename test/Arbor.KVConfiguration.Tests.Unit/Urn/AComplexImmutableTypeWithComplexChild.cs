@@ -7,10 +7,9 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 {
     [PublicAPI]
     [Urn("urn:test:a:complex:immutable:type-with-complex-child")]
-    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
     public class AComplexImmutableTypeWithComplexChild
     {
-        public AComplexImmutableTypeWithComplexChild(string id, string name, ComplexChild child, Uri uri = null)
+        public AComplexImmutableTypeWithComplexChild(string id, string name, ComplexChild child, Uri? uri = null)
         {
             Id = id;
             Name = name;
@@ -24,6 +23,6 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 
         public ComplexChild Child { get; }
 
-        public Uri Uri { get; }
+        public Uri? Uri { get; }
     }
 }
