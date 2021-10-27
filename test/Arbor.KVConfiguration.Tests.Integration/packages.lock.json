@@ -4,9 +4,9 @@
     "net6.0": {
       "Arbor.Aesculus": {
         "type": "Direct",
-        "requested": "[3.2.0, )",
-        "resolved": "3.2.0",
-        "contentHash": "bguLsxf5ntYjX4z3SeXbQkwKskDSL5au9lWV8VQCYb6oN0TXPHv5LSfOlbT+emm4X6Xodvy3R293PzFdp1RK8A=="
+        "requested": "[3.3.0, )",
+        "resolved": "3.3.0",
+        "contentHash": "TE7S3GMUoA+jxIU4TaAa5K2OLyXvVr27Ry3b9U/lkEFFJ1vl9xr0UG8AzrYKsUARLOnsb6xx4nsqd5bbeDczKw=="
       },
       "JetBrains.Annotations": {
         "type": "Direct",
@@ -16,27 +16,27 @@
       },
       "Microsoft.CodeAnalysis.Analyzers": {
         "type": "Direct",
-        "requested": "[*, )",
-        "resolved": "3.3.2",
-        "contentHash": "7xt6zTlIEizUgEsYAIgm37EbdkiMmr6fP6J9pDoKEpiGM4pi32BCPGr/IczmSJI9Zzp0a6HOzpr9OvpMP+2veA=="
+        "requested": "[3.3.3, )",
+        "resolved": "3.3.3",
+        "contentHash": "j/rOZtLMVJjrfLRlAMckJLPW/1rze9MT1yfWqSIbUPGRu1m1P0fuo9PmqapwsmePfGB5PJrudQLvmUOAMF0DqQ=="
       },
       "Microsoft.CodeAnalysis.CSharp": {
         "type": "Direct",
         "requested": "[*, )",
-        "resolved": "3.11.0",
-        "contentHash": "aDRRb7y/sXoJyDqFEQ3Il9jZxyUMHkShzZeCRjQf3SS84n2J0cTEi3TbwVZE9XJvAeMJhGfVVxwOdjYBg6ljmw==",
+        "resolved": "4.0.0",
+        "contentHash": "2UVTGtyQGgTCazvnT6t82f+7AV2L+kqJdyb61rT9GQed4yK+tVh5IkaKcsm70VqyZQhBbDqsfZFNHnY65xhrRw==",
         "dependencies": {
-          "Microsoft.CodeAnalysis.Common": "[3.11.0]"
+          "Microsoft.CodeAnalysis.Common": "[4.0.0]"
         }
       },
       "Microsoft.NET.Test.Sdk": {
         "type": "Direct",
-        "requested": "[16.11.0, )",
-        "resolved": "16.11.0",
-        "contentHash": "f4mbG1SUSkNWF5p7B3Y8ZxMsvKhxCmpZhdl+w6tMtLSUGE7Izi1syU6TkmKOvB2BV66pdbENConFAISOix4ohQ==",
+        "requested": "[17.0.0, )",
+        "resolved": "17.0.0",
+        "contentHash": "fJcnMY3jX1MzJvhGvUWauRhU5eQsOaHdwlrcnI3NabBhbi8WLAkMFI8d0YnewA/+b9q/U7vbhp8Xmh1vJ05FYQ==",
         "dependencies": {
-          "Microsoft.CodeCoverage": "16.11.0",
-          "Microsoft.TestPlatform.TestHost": "16.11.0"
+          "Microsoft.CodeCoverage": "17.0.0",
+          "Microsoft.TestPlatform.TestHost": "17.0.0"
         }
       },
       "NCrunch.Framework": {
@@ -84,6 +84,15 @@
         "resolved": "2.4.3",
         "contentHash": "kZZSmOmKA8OBlAJaquPXnJJLM9RwQ27H7BMVqfMLUcTi9xHinWGJiWksa3D4NEtz0wZ/nxd2mogObvBgJKCRhQ=="
       },
+      "Arbor.Aesculus.NCrunch": {
+        "type": "Transitive",
+        "resolved": "3.3.0",
+        "contentHash": "CZ1i/2Ox3e3qcKBiqni14CyfwHol4duYPV8gdQvlNtI5S7XFilux6lYrS/nzEtr96NNUjH2ZixeCISp7DH6KJw==",
+        "dependencies": {
+          "Arbor.Aesculus": "3.3.0",
+          "NCrunch.Framework": "4.7.0"
+        }
+      },
       "Machine.Specifications": {
         "type": "Transitive",
         "resolved": "1.0.0",
@@ -110,8 +119,8 @@
       },
       "Microsoft.CodeAnalysis.Common": {
         "type": "Transitive",
-        "resolved": "3.11.0",
-        "contentHash": "FDKSkRRXnaEWMa2ONkLMo0ZAt/uiV1XIXyodwKIgP1AMIKA7JJKXx/OwFVsvkkUT4BeobLwokoxFw70fICahNg==",
+        "resolved": "4.0.0",
+        "contentHash": "d02ybMhUJl1r/dI6SkJPHrTiTzXBYCZeJdOLMckV+jyoMU/GGkjqFX/sRbv1K0QmlpwwKuLTiYVQvfYC+8ox2g==",
         "dependencies": {
           "Microsoft.CodeAnalysis.Analyzers": "3.3.2",
           "System.Collections.Immutable": "5.0.0",
@@ -124,8 +133,8 @@
       },
       "Microsoft.CodeCoverage": {
         "type": "Transitive",
-        "resolved": "16.11.0",
-        "contentHash": "wf6lpAeCqP0KFfbDVtfL50lr7jY1gq0+0oSphyksfLOEygMDXqnaxHK5LPFtMEhYSEtgXdNyXNnEddOqQQUdlQ=="
+        "resolved": "17.0.0",
+        "contentHash": "+B+09FPYBtf+cXfZOPIgpnP5mzLq5QdlBo+JEFy9CdqBaWHWE/YMY0Mos9uDsZhcgFegJm9GigAgMyqBZyfq+Q=="
       },
       "Microsoft.CSharp": {
         "type": "Transitive",
@@ -171,8 +180,8 @@
       },
       "Microsoft.TestPlatform.ObjectModel": {
         "type": "Transitive",
-        "resolved": "16.11.0",
-        "contentHash": "EiknJx9N9Z30gs7R+HHhki7fA8EiiM3pwD1vkw3bFsBC8kdVq/O7mHf1hrg5aJp+ASO6BoOzQueD2ysfTOy/Bg==",
+        "resolved": "17.0.0",
+        "contentHash": "WMugCdPkA8U/BsSRc+3RN+DXcaYSDvp/s0MofVld08iF1O5fek4iKecygk6NruNf1rgJsv4LK71mrwbyeqhzHA==",
         "dependencies": {
           "NuGet.Frameworks": "5.0.0",
           "System.Reflection.Metadata": "1.6.0"
@@ -180,10 +189,10 @@
       },
       "Microsoft.TestPlatform.TestHost": {
         "type": "Transitive",
-        "resolved": "16.11.0",
-        "contentHash": "/Q+R0EcCJE8JaYCk+bGReicw/xrB0HhecrYrUcLbn95BnAlaTJrZhoLkUhvtKTAVtqX/AIKWXYtutiU/Q6QUgg==",
+        "resolved": "17.0.0",
+        "contentHash": "xkKFzm0hylHF0SlDj78ACYMJC/i8fQ3i16sDDNYoKnjTsstGSQfuSBJ+QT4nqRXk/fOiYTh+iY0KIX5N7HTLuQ==",
         "dependencies": {
-          "Microsoft.TestPlatform.ObjectModel": "16.11.0",
+          "Microsoft.TestPlatform.ObjectModel": "17.0.0",
           "Newtonsoft.Json": "9.0.1"
         }
       },
@@ -1277,7 +1286,7 @@
       "arbor.kvconfiguration.tests.integration.mspec": {
         "type": "Project",
         "dependencies": {
-          "Arbor.Aesculus": "3.2.0",
+          "Arbor.Aesculus.NCrunch": "3.3.0",
           "Arbor.KVConfiguration.Core": "1.0.0",
           "Arbor.KVConfiguration.JsonConfiguration": "1.0.0",
           "Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns": "1.0.0",
@@ -1288,7 +1297,7 @@
           "Machine.Specifications": "1.0.0",
           "Machine.Specifications.Should": "1.0.0",
           "Microsoft.CodeAnalysis.CSharp": "0.0.0",
-          "Microsoft.NET.Test.Sdk": "16.11.0",
+          "Microsoft.NET.Test.Sdk": "17.0.0",
           "NCrunch.Framework": "4.7.0.4",
           "Newtonsoft.Json": "13.0.1",
           "System.Collections.Immutable": "5.0.0"

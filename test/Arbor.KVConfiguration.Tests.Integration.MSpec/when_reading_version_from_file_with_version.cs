@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Arbor.Aesculus.NCrunch;
 using Arbor.KVConfiguration.JsonConfiguration;
 using Arbor.KVConfiguration.Schema.Json;
 using Machine.Specifications;
@@ -18,7 +19,7 @@ namespace Arbor.KVConfiguration.Tests.Integration.MSpec
         Establish context = () =>
         {
             appsettings_full_path = Path.Combine(
-                VcsTestPathHelper.FindVcsRootPath(),
+                VcsTestPathHelper.TryFindVcsRootPath()!,
                 "test",
                 "Arbor.KVConfiguration.Tests.Integration",
                 "appsettings.json");

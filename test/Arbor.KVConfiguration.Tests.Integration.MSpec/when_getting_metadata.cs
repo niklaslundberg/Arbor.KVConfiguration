@@ -21,7 +21,7 @@ namespace Arbor.KVConfiguration.Tests.Integration.MSpec
         Establish context = () =>
         {
             app_settings_full_path = Path.Combine(
-                VcsTestPathHelper.FindVcsRootPath(),
+                Aesculus.NCrunch.VcsTestPathHelper.TryFindVcsRootPath()!,
                 "test",
                 "Arbor.KVConfiguration.Tests.Integration",
                 "appsettings.json");

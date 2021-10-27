@@ -1,4 +1,5 @@
 using System.IO;
+using Arbor.Aesculus.NCrunch;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.UserConfiguration;
 using Machine.Specifications;
@@ -14,7 +15,7 @@ namespace Arbor.KVConfiguration.Tests.Integration.MSpec
 
         Establish context = () =>
         {
-            base_path = Path.Combine(VcsTestPathHelper.FindVcsRootPath(), "test",
+            base_path = Path.Combine(VcsTestPathHelper.TryFindVcsRootPath()!, "test",
                 "Arbor.KVConfiguration.Tests.Integration.MSpec");
         };
 
