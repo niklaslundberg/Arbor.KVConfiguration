@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2021.2.0" />
+    <PackageReference Include="JetBrains.Annotations" Version="2021.3.0" />
     <PackageReference Include="Arbor.Aesculus.NCrunch" Version="3.3.0" />
     <PackageReference Include="Machine.Specifications" Version="1.0.0" />
     <PackageReference Include="Machine.Specifications.Should" Version="1.0.0" />
