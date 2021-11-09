@@ -14,7 +14,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="*" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.*" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.*" />
     <PackageReference Include="Serilog.Extensions.Hosting" Version="*" />
     <PackageReference Include="Serilog.Sinks.Console" Version="*" />
   </ItemGroup>
