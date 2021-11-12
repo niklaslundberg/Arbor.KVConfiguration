@@ -4,9 +4,9 @@
     "net6.0": {
       "Arbor.Aesculus": {
         "type": "Direct",
-        "requested": "[3.3.0, )",
-        "resolved": "3.3.0",
-        "contentHash": "TE7S3GMUoA+jxIU4TaAa5K2OLyXvVr27Ry3b9U/lkEFFJ1vl9xr0UG8AzrYKsUARLOnsb6xx4nsqd5bbeDczKw=="
+        "requested": "[3.4.0, )",
+        "resolved": "3.4.0",
+        "contentHash": "lh8AQaQ/nv8iZSVIpkciOJWg79rqHA14TgzlbUDuS+ISYfUrmyKJYhML1AzZhy7g2CQwdLjNekTTzkHsWYDfYg=="
       },
       "JetBrains.Annotations": {
         "type": "Direct",
@@ -89,10 +89,10 @@
       },
       "Arbor.Aesculus.NCrunch": {
         "type": "Transitive",
-        "resolved": "3.3.0",
-        "contentHash": "CZ1i/2Ox3e3qcKBiqni14CyfwHol4duYPV8gdQvlNtI5S7XFilux6lYrS/nzEtr96NNUjH2ZixeCISp7DH6KJw==",
+        "resolved": "3.4.0",
+        "contentHash": "CpDPaEMmk6/HwFVCq1JvQfYRD2v8G2lygNAcQilI91CXMjNY8yS1gprkCJtU6tB6+ofJiwmMa3OgcKjtar3tnQ==",
         "dependencies": {
-          "Arbor.Aesculus": "3.3.0",
+          "Arbor.Aesculus": "3.4.0",
           "NCrunch.Framework": "4.7.0"
         }
       },
@@ -1292,7 +1292,7 @@
       "arbor.kvconfiguration.tests.integration.mspec": {
         "type": "Project",
         "dependencies": {
-          "Arbor.Aesculus.NCrunch": "3.3.0",
+          "Arbor.Aesculus.NCrunch": "3.4.0",
           "Arbor.KVConfiguration.Core": "1.0.0",
           "Arbor.KVConfiguration.JsonConfiguration": "1.0.0",
           "Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns": "1.0.0",
