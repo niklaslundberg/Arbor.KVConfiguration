@@ -22,6 +22,9 @@
         <license type="expression">MIT</license>
         <copyright>Copyright Niklas Lundberg 2016 - 2021</copyright>
         <dependencies>
+           <group targetFramework="netstandard2.0" />
+           <group targetFramework="net5.0" />
+           <group targetFramework="net6.0" />
         </dependencies>
         <references></references>
         <tags></tags>
