@@ -22,9 +22,21 @@
         <license type="expression">MIT</license>
         <copyright>Copyright Niklas Lundberg 2016 - 2021</copyright>
         <dependencies>
+          <group targetFramework="netstandard2.0">
             <dependency id="Arbor.KVConfiguration.Core" version="[2.0.0,3.0.0)" />
             <dependency id="Arbor.KVConfiguration.JsonConfiguration" version="[2.0.0,3.0.0)" />
             <dependency id="Arbor.KVConfiguration.Schema" version="[2.0.0,3.0.0)" />
+          </group>
+          <group targetFramework="net5.0">
+            <dependency id="Arbor.KVConfiguration.Core" version="[2.0.0,3.0.0)" />
+            <dependency id="Arbor.KVConfiguration.JsonConfiguration" version="[2.0.0,3.0.0)" />
+            <dependency id="Arbor.KVConfiguration.Schema" version="[2.0.0,3.0.0)" />
+          </group>
+          <group targetFramework="net6.0">
+            <dependency id="Arbor.KVConfiguration.Core" version="[2.0.0,3.0.0)" />
+            <dependency id="Arbor.KVConfiguration.JsonConfiguration" version="[2.0.0,3.0.0)" />
+            <dependency id="Arbor.KVConfiguration.Schema" version="[2.0.0,3.0.0)" />
+          </group>
         </dependencies>
         <references></references>
         <tags></tags>
