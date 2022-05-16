@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net5.0;net6.0;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2021.3.0" />
@@ -18,5 +18,13 @@
   <ItemGroup>
     <ProjectReference Include="..\Arbor.KVConfiguration.Core\Arbor.KVConfiguration.Core.csproj" />
     <ProjectReference Include="..\Arbor.KVConfiguration.Urns\Arbor.KVConfiguration.Urns.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Shims\*.generated.cs" Condition="'$(TargetFramework)' == 'net6.0'" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Shims\*.generated.cs" Condition="'$(TargetFramework)' == 'net6.0'" />
   </ItemGroup>
 </Project>
