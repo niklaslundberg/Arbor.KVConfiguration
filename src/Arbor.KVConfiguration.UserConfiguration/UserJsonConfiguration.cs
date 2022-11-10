@@ -19,7 +19,7 @@ namespace Arbor.KVConfiguration.UserConfiguration
 
             if (!string.IsNullOrWhiteSpace(fileFullPath) && File.Exists(fileFullPath))
             {
-                var jsonConfiguration = new JsonKeyValueConfiguration(fileFullPath);
+                var jsonConfiguration = new JsonKeyValueConfiguration(fileFullPath!);
                 _configuration = jsonConfiguration!;
             }
 

@@ -26,7 +26,7 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
 
             var nameValueCollection = new NameValueCollection();
 
-            foreach (KeyValuePair<string, string> configurationSection in config.AsEnumerable()
+            foreach (KeyValuePair<string, string?> configurationSection in config.AsEnumerable()
                 .Where(pair => !string.IsNullOrWhiteSpace(pair.Key)
                                && !string.IsNullOrWhiteSpace(pair.Value)))
             {
