@@ -26,7 +26,7 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
             return true;
         }
 
-        public void Set(string key, string value)
+        public void Set(string key, string? value)
         {
             // Not supported
         }
@@ -40,7 +40,7 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
 
         public IEnumerable<string> GetChildKeys(
             IEnumerable<string> earlierKeys,
-            string parentPath)
+            string? parentPath)
         {
             string prefix = parentPath is null
                 ? string.Empty

@@ -14,7 +14,7 @@ namespace Arbor.KVConfiguration.Tests.Integration
         public void ItShouldResolveSingleInstanceFromUrn()
         {
             IConfigurationRoot configurationRoot = new ConfigurationBuilder()
-                .AddInMemoryCollection(new Dictionary<string, string>
+                .AddInMemoryCollection(new Dictionary<string, string?>
                 {
                     ["urn:test:simple:instance:name"] = "John", ["urn:test:simple:instance:age"] = "42"
                 }).Build();
@@ -32,7 +32,7 @@ namespace Arbor.KVConfiguration.Tests.Integration
         public void ItShouldUseValuesDefined()
         {
             IConfigurationRoot configurationRoot = new ConfigurationBuilder()
-                .AddInMemoryCollection(new Dictionary<string, string> {["a:b:c"] = "123"}).Build();
+                .AddInMemoryCollection(new Dictionary<string, string?> {["a:b:c"] = "123"}).Build();
 
             MultiSourceKeyValueConfiguration multiSourceKeyValueConfiguration = KeyValueConfigurationManager
                 .Add(new KeyValueConfigurationAdapter(configurationRoot)).Build();

@@ -21,7 +21,7 @@ namespace Arbor.KVConfiguration.Tests.Integration
                 });
 
             IConfigurationRoot configurationRoot = new ConfigurationBuilder()
-                .AddInMemoryCollection(new Dictionary<string, string>
+                .AddInMemoryCollection(new Dictionary<string, string?>
                 {
                     ["urn:test:simple:agent:name"] = "James", ["urn:test:simple:agent:age"] = "50"
                 })
@@ -62,7 +62,7 @@ namespace Arbor.KVConfiguration.Tests.Integration
                 new InMemoryKeyValueConfiguration(new NameValueCollection {{"a:b:c", "234"}});
 
             IConfigurationRoot configurationRoot = new ConfigurationBuilder()
-                .AddInMemoryCollection(new Dictionary<string, string> {["a:b:c"] = "123"})
+                .AddInMemoryCollection(new Dictionary<string, string?> {["a:b:c"] = "123"})
                 .AddKeyValueConfigurationSource(inMemoryKeyValueConfiguration).Build();
 
             IConfigurationSection configurationSection = configurationRoot.GetSection("a");
@@ -83,7 +83,7 @@ namespace Arbor.KVConfiguration.Tests.Integration
                 new InMemoryKeyValueConfiguration(new NameValueCollection {{"a:b:d", "234"}});
 
             IConfigurationRoot configurationRoot = new ConfigurationBuilder()
-                .AddInMemoryCollection(new Dictionary<string, string> {["a:b:c"] = "123"})
+                .AddInMemoryCollection(new Dictionary<string, string?> {["a:b:c"] = "123"})
                 .AddKeyValueConfigurationSource(inMemoryKeyValueConfiguration).Build();
 
             IConfigurationSection configurationSection = configurationRoot.GetSection("a");
