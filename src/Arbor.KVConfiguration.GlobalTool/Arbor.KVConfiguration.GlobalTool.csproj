@@ -5,11 +5,12 @@
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>dotnet-arborkv</ToolCommandName>
     <PackageId>Arbor.KVConfiguration.GlobalTool</PackageId>
-    <TargetFrameworks>net6.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="Shims\*.generated.cs" Condition="'$(TargetFramework)' == 'net6.0'" />
+    <Compile Remove="Shims\*.generated.cs" Condition="'$(TargetFramework)' == 'net7.0'" />
   </ItemGroup>
 
   <ItemGroup>
