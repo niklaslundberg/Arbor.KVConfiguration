@@ -19,10 +19,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
             configuration = new Core.InMemoryKeyValueConfiguration(keys);
         };
 
-        private Because of = () =>
-        {
-            instance = configuration.GetInstance(typeof(TypeWithRequiredCtor)) as TypeWithRequiredCtor;
-        };
+        private Because of = () => instance = configuration.GetInstance(typeof(TypeWithRequiredCtor)) as TypeWithRequiredCtor;
 
         private It should_be_null = () => instance.ShouldBeNull();
     }

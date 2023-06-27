@@ -19,10 +19,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
             configuration = new Core.InMemoryKeyValueConfiguration(keys);
         };
 
-        private Because of = () =>
-        {
-            instance = (TypeWithStringValues)configuration.GetInstance(typeof(TypeWithStringValues))!;
-        };
+        private Because of = () => instance = (TypeWithStringValues)configuration.GetInstance(typeof(TypeWithStringValues))!;
 
         private It should_have_collection_length_1 = () => instance.Values.Length.ShouldEqual(1);
 

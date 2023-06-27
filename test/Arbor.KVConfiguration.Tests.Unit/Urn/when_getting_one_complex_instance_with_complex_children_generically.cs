@@ -33,10 +33,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
             configuration = new Core.InMemoryKeyValueConfiguration(keys);
         };
 
-        private Because of = () =>
-        {
-            instance = configuration.GetInstance<AComplexImmutableTypeWithComplexChildren>();
-        };
+        private Because of = () => instance = configuration.GetInstance<AComplexImmutableTypeWithComplexChildren>();
 
         private It should_have_instance1_children1 =
             () => instance.Children[0]?.ShouldNotBeNull();
@@ -56,14 +53,11 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         private It should_have_instance1_children2_name =
             () => instance.Children[1]?.Name?.ShouldEqual("child2Name");
 
-        private It should_have_instance1_id1 = () => { instance.Id.ShouldEqual("myId1"); };
+        private It should_have_instance1_id1 = () => instance.Id.ShouldEqual("myId1");
 
-        private It should_have_instance1_name1 = () =>
-        {
-            instance.Name.ShouldEqual("myName1");
-        };
+        private It should_have_instance1_name1 = () => instance.Name.ShouldEqual("myName1");
 
-        private It should_have_instance1_uri1 = () => { instance.Uri.ShouldBeNull(); };
+        private It should_have_instance1_uri1 = () => instance.Uri.ShouldBeNull();
 
         private It should_not_be_null
             = () => instance.ShouldNotBeNull();

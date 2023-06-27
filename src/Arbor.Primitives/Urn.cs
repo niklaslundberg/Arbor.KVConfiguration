@@ -79,7 +79,7 @@ namespace Arbor.Primitives
                 fragment = ReadOnlyMemory<char>.Empty;
             }
 
-            if (fragment.ToString().Contains("?=") || fragment.ToString().Contains("?+") || fragment.ToString().Contains("#"))
+            if (fragment.ToString().Contains("?=") || fragment.ToString().Contains("?+") || fragment.ToString().Contains('#'))
             {
                 fragment = null;
                 qComponent = null;
@@ -145,15 +145,15 @@ namespace Arbor.Primitives
 
             if (rComponentIndex >= 0)
             {
-                nss = fullName.Slice(0, rComponentIndex);
+                nss = fullName[..rComponentIndex];
             }
             else if (qComponentIndex >= 0)
             {
-                nss = fullName.Slice(0, qComponentIndex);
+                nss = fullName[..qComponentIndex];
             }
             else if (fragmentIndex >= 0)
             {
-                nss = fullName.Slice(0, fragmentIndex);
+                nss = fullName[..fragmentIndex];
             }
             else
             {
@@ -177,11 +177,11 @@ namespace Arbor.Primitives
 
         public string AssignedName => $"urn:{Nid}:{Nss}";
 
-        public string Scheme => "urn";
+        public static string Scheme => "urn";
 
         public string Nid => _nid.ToString();
 
-        public string? Name
+        public string Name
         {
             get
             {
@@ -218,7 +218,7 @@ namespace Arbor.Primitives
                     throw new InvalidOperationException($"The urn '{OriginalValue}' has no parent");
                 }
 
-                string parent = OriginalValue.Substring(0, lastSeparatorIndex);
+                string parent = OriginalValue[..lastSeparatorIndex];
 
                 return Parse(parent);
             }
@@ -231,11 +231,6 @@ namespace Arbor.Primitives
 
         public static bool Equals(Urn @this, Urn other)
         {
-            if (!@this.Scheme.Equals(other.Scheme, StringComparison.OrdinalIgnoreCase))
-            {
-                return false;
-            }
-
             if (!@this.Nid.Equals(other.Nid, StringComparison.OrdinalIgnoreCase))
             {
                 return false;
@@ -305,7 +300,7 @@ namespace Arbor.Primitives
                 throw new FormatException($"Attempted value '{originalValue}' is not a valid urn");
             }
 
-            ReadOnlyMemory<char> nidSlice = nidSub.Slice(0, nidSub.Span.IndexOf(Separator));
+            ReadOnlyMemory<char> nidSlice = nidSub[..nidSub.Span.IndexOf(Separator)];
 
             foreach (char c in nidSlice.Span)
             {
@@ -331,7 +326,7 @@ namespace Arbor.Primitives
             char[] nidArray = new char[nidSlice.Length];
             var nid = new Span<char>(nidArray );
             nidSlice.Span.ToLowerInvariant(nid);
-            result = new Urn(trimmed, new ReadOnlyMemory<char>(nidArray), nss!, r, q,f);
+            result = new Urn(trimmed, new ReadOnlyMemory<char>(nidArray), nss, r, q,f);
 
             return true;
         }

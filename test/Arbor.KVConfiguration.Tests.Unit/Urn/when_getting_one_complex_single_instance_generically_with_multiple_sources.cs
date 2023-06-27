@@ -32,16 +32,16 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
             configuration = multiSourceKeyValueConfiguration;
         };
 
-        private Because of = () => { instance = configuration.GetInstance<AComplexImmutableType>(); };
+        private Because of = () => instance = configuration.GetInstance<AComplexImmutableType>();
 
         private It should_have_instance1_children1 =
-            () => { instance.Children.ShouldContain("myChild1.1", "myChild1.2"); };
+            () => instance.Children.ShouldContain("myChild1.1", "myChild1.2");
 
-        private It should_have_instance1_id1 = () => { instance.Id.ShouldEqual("myId1"); };
+        private It should_have_instance1_id1 = () => instance.Id.ShouldEqual("myId1");
 
-        private It should_have_instance1_name1 = () => { instance.Name.ShouldEqual("myName1"); };
+        private It should_have_instance1_name1 = () => instance.Name.ShouldEqual("myName1");
 
-        private It should_have_instance1_uri1 = () => { instance.Uri.ShouldBeNull(); };
+        private It should_have_instance1_uri1 = () => instance.Uri.ShouldBeNull();
 
         private It should_not_be_null
             = () => instance.ShouldNotBeNull();

@@ -41,38 +41,29 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
                 .Add(new Core.InMemoryKeyValueConfiguration(secondaryKeys)).Build();
         };
 
-        private Because of = () => { instances = configuration.GetInstances<AComplexImmutableType>(); };
+        private Because of = () => instances = configuration.GetInstances<AComplexImmutableType>();
 
         private It should_be_a_non_empty_list
             = () => instances.ShouldNotBeEmpty();
 
         private It should_have_instance1_children1 =
-            () => { instances.OrderBy(i => i.Id).First().Children.ShouldContain("myChild1.1", "myChild1.2"); };
+            () => instances.OrderBy(i => i.Id).First().Children.ShouldContain("myChild1.1", "myChild1.2");
 
-        private It should_have_instance1_id1 = () => { instances.OrderBy(i => i.Id).First().Id.ShouldEqual("myId1"); };
+        private It should_have_instance1_id1 = () => instances.OrderBy(i => i.Id).First().Id.ShouldEqual("myId1");
 
-        private It should_have_instance1_name1 = () =>
-        {
-            instances.OrderBy(i => i.Id).First().Name.ShouldEqual("myName1");
-        };
+        private It should_have_instance1_name1 = () => instances.OrderBy(i => i.Id).First().Name.ShouldEqual("myName1");
 
-        private It should_have_instance1_uri1 = () => { instances.OrderBy(i => i.Id).First().Uri.ShouldBeNull(); };
+        private It should_have_instance1_uri1 = () => instances.OrderBy(i => i.Id).First().Uri.ShouldBeNull();
 
         private It should_have_instance2_children2 =
-            () => { instances.OrderBy(i => i.Id).Skip(1).First().Children.ShouldBeEmpty(); };
+            () => instances.OrderBy(i => i.Id).Skip(1).First().Children.ShouldBeEmpty();
 
-        private It should_have_instance2_id2 = () =>
-        {
-            instances.OrderBy(i => i.Id).Skip(1).First().Id.ShouldEqual("myId2");
-        };
+        private It should_have_instance2_id2 = () => instances.OrderBy(i => i.Id).Skip(1).First().Id.ShouldEqual("myId2");
 
         private It should_have_instance2_name2 =
-            () => { instances.OrderBy(i => i.Id).Skip(1).First().Name.ShouldEqual("myName2"); };
+            () => instances.OrderBy(i => i.Id).Skip(1).First().Name.ShouldEqual("myName2");
 
-        private It should_have_instance2_uri2 = () =>
-        {
-            instances.OrderBy(i => i.Id).Skip(1).First().Uri.ShouldBeNull();
-        };
+        private It should_have_instance2_uri2 = () => instances.OrderBy(i => i.Id).Skip(1).First().Uri.ShouldBeNull();
 
         private It should_have_instance3_children3 =
             () =>
@@ -83,16 +74,13 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
                     .Children.ShouldContain("myChild3.1", "myChild3.2", "myChild3.3");
             };
 
-        private It should_have_instance3_id3 = () =>
-        {
-            instances.OrderBy(i => i.Id).Skip(2).First().Id.ShouldEqual("myId3");
-        };
+        private It should_have_instance3_id3 = () => instances.OrderBy(i => i.Id).Skip(2).First().Id.ShouldEqual("myId3");
 
         private It should_have_instance3_name3 =
-            () => { instances.OrderBy(i => i.Id).Skip(2).First().Name.ShouldEqual("myName3"); };
+            () => instances.OrderBy(i => i.Id).Skip(2).First().Name.ShouldEqual("myName3");
 
         private It should_have_instance3_uri3 =
-            () => { instances.OrderBy(i => i.Id).Skip(2).First().Uri.ToString().ShouldEqual("http://example.com/"); };
+            () => instances.OrderBy(i => i.Id).Skip(2).First().Uri.ToString().ShouldEqual("http://example.com/");
 
         private It should_return_a_list_with_3_elements = () =>
         {

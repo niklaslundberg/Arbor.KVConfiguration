@@ -10,7 +10,6 @@ namespace Arbor.KVConfiguration.Core
 
         private NoConfiguration()
         {
-
         }
 
         public ImmutableArray<string> AllKeys => ImmutableArray<string>.Empty;

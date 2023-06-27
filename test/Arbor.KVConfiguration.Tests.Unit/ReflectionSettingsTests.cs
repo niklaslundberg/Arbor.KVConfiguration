@@ -16,7 +16,6 @@ namespace Arbor.KVConfiguration.Tests.Unit
                 .Build();
 
             multiSourceKeyValueConfiguration.ShouldNotBeNull();
-
         }
     }
 }

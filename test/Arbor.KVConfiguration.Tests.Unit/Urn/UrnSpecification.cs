@@ -142,8 +142,8 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         [Fact]
         public void EqualsShouldReturnFalseForEncodedCharacterDifference()
         {
-            Primitives.Urn.TryParse("urn:example:a123%2Cz456", out var a);
-            Primitives.Urn.TryParse("urn:example:a123,Cz456", out var b);
+            _ =Primitives.Urn.TryParse("urn:example:a123%2Cz456", out var a);
+            _ = Primitives.Urn.TryParse("urn:example:a123,Cz456", out var b);
 
             Assert.NotEqual(a,b);
         }
@@ -151,9 +151,9 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         [Fact]
         public void EqualsShouldReturnFalseForDifferentPartAfterSlash()
         {
-            Primitives.Urn.TryParse("urn:example:a123,z456/foo", out var a);
-            Primitives.Urn.TryParse("urn:example:a123,z456/bar", out var b);
-            Primitives.Urn.TryParse("urn:example:a123,z456/baz", out var c);
+            _ = Primitives.Urn.TryParse("urn:example:a123,z456/foo", out var a);
+            _ = Primitives.Urn.TryParse("urn:example:a123,z456/bar", out var b);
+            _ = Primitives.Urn.TryParse("urn:example:a123,z456/baz", out var c);
 
             Assert.NotEqual(a,b);
             Assert.NotEqual(b,c);

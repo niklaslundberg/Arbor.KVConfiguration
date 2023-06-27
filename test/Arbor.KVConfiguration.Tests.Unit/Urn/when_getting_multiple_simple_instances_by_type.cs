@@ -44,28 +44,19 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         private It first_instance_should_not_be_null
             = () => instances[0].ShouldNotBeNull();
 
-        private Because of = () =>
-        {
-            instances = configuration.GetInstances(typeof(ASimpleType)).OfType<ASimpleType>().ToImmutableArray();
-        };
+        private Because of = () => instances = configuration.GetInstances(typeof(ASimpleType)).OfType<ASimpleType>().ToImmutableArray();
 
         private It second_instance_should_not_be_null
             = () => instances[1].ShouldNotBeNull();
 
         private It should_have_2_instances = () => instances.Length.ShouldEqual(2);
 
-        private It should_have_instance1_text = () =>
-        {
-            instances[0].Text.ShouldEqual("myText1");
-        };
+        private It should_have_instance1_text = () => instances[0].Text.ShouldEqual("myText1");
 
-        private It should_have_instance1_url = () => { instances[0].Url.ShouldEqual("myUrl1"); };
+        private It should_have_instance1_url = () => instances[0].Url.ShouldEqual("myUrl1");
 
-        private It should_have_instance2_text = () =>
-        {
-            instances[1].Text.ShouldEqual("myText2");
-        };
+        private It should_have_instance2_text = () => instances[1].Text.ShouldEqual("myText2");
 
-        private It should_have_instance2_url = () => { instances[1].Url.ShouldEqual("myUrl2"); };
+        private It should_have_instance2_url = () => instances[1].Url.ShouldEqual("myUrl2");
     }
 }

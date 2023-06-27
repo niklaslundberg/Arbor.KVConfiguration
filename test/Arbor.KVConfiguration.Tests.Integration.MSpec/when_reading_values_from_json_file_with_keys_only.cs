@@ -27,12 +27,9 @@ namespace Arbor.KVConfiguration.Tests.Integration.MSpec
             reader = new JsonFileReader(appsettings_full_path);
         };
 
-        Because of = () => { configuration_items = reader.GetConfigurationItems(); };
+        Because of = () => configuration_items = reader.GetConfigurationItems();
 
-        It should_have_implicit_version = () =>
-        {
-            configuration_items.Version.ShouldEqual(JsonSchemaConstants.Version1_0);
-        };
+        It should_have_implicit_version = () => configuration_items.Version.ShouldEqual(JsonSchemaConstants.Version1_0);
 
         It should_have_three_values = () =>
         {

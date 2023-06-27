@@ -42,10 +42,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
             configuration = new JsonKeyValueConfiguration(configurationItems);
         };
 
-        private Because of = () =>
-        {
-            summary = configuration.AllWithMultipleValues.Validate(configuration_validator, metadata);
-        };
+        private Because of = () => summary = configuration.AllWithMultipleValues.Validate(configuration_validator, metadata);
 
         private It should_have_validation_errors = () =>
         {

@@ -43,29 +43,23 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
         private It first_instance_should_not_be_null
             = () => instances[0].ShouldNotBeNull();
 
-        private Because of = () => { instances = configuration.GetNamedInstances<ASimpleType>(); };
+        private Because of = () => instances = configuration.GetNamedInstances<ASimpleType>();
 
-        private It second_have_instance2_name = () => { instances[1].Name.ShouldEqual("default1"); };
+        private It second_have_instance2_name = () => instances[1].Name.ShouldEqual("default1");
 
-        private It second_have_instance2_text = () =>
-        {
-            instances[1].Value.Text.ShouldEqual("myText1");
-        };
+        private It second_have_instance2_text = () => instances[1].Value.Text.ShouldEqual("myText1");
 
-        private It second_have_instance2_url = () => { instances[1].Value.Url.ShouldEqual("myUrl1"); };
+        private It second_have_instance2_url = () => instances[1].Value.Url.ShouldEqual("myUrl1");
 
         private It second_instance_should_not_be_null
             = () => instances[1].ShouldNotBeNull();
 
         private It should_have_2_instances = () => instances.Length.ShouldEqual(2);
 
-        private It should_have_instance1_name = () => { instances[0].Name.ShouldEqual("default0"); };
+        private It should_have_instance1_name = () => instances[0].Name.ShouldEqual("default0");
 
-        private It should_have_instance1_text = () =>
-        {
-            instances[0].Value.Text.ShouldEqual("myText0");
-        };
+        private It should_have_instance1_text = () => instances[0].Value.Text.ShouldEqual("myText0");
 
-        private It should_have_instance1_url = () => { instances[0].Value.Url.ShouldEqual("myUrl0"); };
+        private It should_have_instance1_url = () => instances[0].Value.Url.ShouldEqual("myUrl0");
     }
 }

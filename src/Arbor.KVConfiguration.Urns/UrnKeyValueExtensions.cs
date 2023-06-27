@@ -92,7 +92,6 @@ namespace Arbor.KVConfiguration.Urns
             return filtered.Single().Item1;
         }
 
-
         public static T? GetInstance<T>(
             [NotNull] this IKeyValueConfiguration keyValueConfiguration)
         {
@@ -216,8 +215,7 @@ namespace Arbor.KVConfiguration.Urns
 
             var subKeys = allKeys
                 .Where(urnKey =>
-                    urnKey.IsInHierarchy(instanceUri))
-                .Where(urnKey => urnKey.NamespaceParts() - instanceUri.NamespaceParts() == 3)
+                    urnKey.IsInHierarchy(instanceUri) && urnKey.NamespaceParts() - instanceUri.NamespaceParts() == 3)
                 .ToArray();
 
             var typeProperties = type.GetProperties();
@@ -264,8 +262,7 @@ namespace Arbor.KVConfiguration.Urns
 
             var subProperties = allKeys
                 .Where(urnKey =>
-                    urnKey.IsInHierarchy(instanceUri))
-                .Where(urnKey => urnKey.NamespaceParts() - instanceUri.NamespaceParts() == 2)
+                    urnKey.IsInHierarchy(instanceUri) && urnKey.NamespaceParts() - instanceUri.NamespaceParts() == 2)
                 .ToArray();
 
             var subGroups = subProperties.GroupBy(x => x.Parent);
@@ -388,13 +385,8 @@ namespace Arbor.KVConfiguration.Urns
                 throw new ArgumentNullException(nameof(type));
             }
 
-            var urnAttribute = type.GetCustomAttribute<UrnAttribute>();
-
-            if (urnAttribute is null)
-            {
-                throw new ArgumentException(
+            var urnAttribute = type.GetCustomAttribute<UrnAttribute>() ?? throw new ArgumentException(
                     $"Could not get instance of type {type.FullName}. Found no {nameof(Urn).ToUpper(CultureInfo.InvariantCulture)}. Expected class attribute {typeof(UrnAttribute).FullName}");
-            }
 
             var typeUrn = urnAttribute.Urn;
 

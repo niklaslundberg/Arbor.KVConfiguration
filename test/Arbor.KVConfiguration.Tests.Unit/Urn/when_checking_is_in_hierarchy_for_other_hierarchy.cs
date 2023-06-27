@@ -11,9 +11,9 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 
         private static bool result;
 
-        private Establish context = () => { urn = Primitives.Urn.Parse(attempted_value); };
+        private Establish context = () => urn = Primitives.Urn.Parse(attempted_value);
 
-        private Because of = () => { result = urn.IsInHierarchy(Primitives.Urn.Parse("urn:a:d:c")); };
+        private Because of = () => result = urn.IsInHierarchy(Primitives.Urn.Parse("urn:a:d:c"));
 
         private It should_be_false = () => result.ShouldBeFalse();
     }

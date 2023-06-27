@@ -16,7 +16,6 @@ namespace Arbor.KVConfiguration.Tests.Unit
         {
             Environment.SetEnvironmentVariable("abcvalue", "123");
 
-
             var values = new NameValueCollection {["Test"] = "%abcvalue%"};
 
             var multiSourceKeyValueConfiguration = KeyValueConfigurationManager
