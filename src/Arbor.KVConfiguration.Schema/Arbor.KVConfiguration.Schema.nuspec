@@ -20,7 +20,7 @@
         <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <license type="expression">MIT</license>
-        <copyright>Copyright Niklas Lundberg 2016 - 2022</copyright>
+        <copyright>Copyright Niklas Lundberg 2016 - 2023</copyright>
         <dependencies>
           <group targetFramework="netstandard2.0">
             <dependency id="Arbor.KVConfiguration.Core" version="[2.0.0,3.0.0)" />
