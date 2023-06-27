@@ -28,7 +28,6 @@ namespace Arbor.KVConfiguration.Core.Extensions
             return type.IsClass && (type.IsPublic || type.IsNestedPublic);
         }
 
-
         private static ImmutableArray<Type> GetLoadableTypes([NotNull] this Assembly assembly)
         {
             if (assembly is null)

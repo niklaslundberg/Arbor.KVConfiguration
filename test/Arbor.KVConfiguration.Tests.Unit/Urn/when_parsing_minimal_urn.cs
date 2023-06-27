@@ -15,7 +15,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 
         private Behaves_like<a_one_level_urn> a_one_level_urn;
 
-        private Establish context = () => { attempted_value = "urn:abc:123"; };
+        private Establish context = () => attempted_value = "urn:abc:123";
 
         private Because of = () =>
         {

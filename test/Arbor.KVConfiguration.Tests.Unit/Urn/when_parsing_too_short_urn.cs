@@ -10,9 +10,9 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 
         private static bool parsed;
 
-        private Establish context = () => { attempted_value = "urn:logLevel"; };
+        private Establish context = () => attempted_value = "urn:logLevel";
 
-        private Because of = () => { parsed = Primitives.Urn.TryParse(attempted_value, out urn); };
+        private Because of = () => parsed = Primitives.Urn.TryParse(attempted_value, out urn);
 
         private It should_be_null = () => urn.ShouldBeNull();
 

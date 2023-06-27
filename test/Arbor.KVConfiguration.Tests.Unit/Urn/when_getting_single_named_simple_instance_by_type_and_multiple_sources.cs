@@ -53,13 +53,10 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
 
         private It should_have_1_instance = () => instances.Length.ShouldEqual(1);
 
-        private It should_have_instance1_name = () => { instances[0].Name.ShouldEqual("default1"); };
+        private It should_have_instance1_name = () => instances[0].Name.ShouldEqual("default1");
 
-        private It should_have_instance1_text = () =>
-        {
-            instances[0].Value.Text.ShouldEqual("myText");
-        };
+        private It should_have_instance1_text = () => instances[0].Value.Text.ShouldEqual("myText");
 
-        private It should_have_instance1_url = () => { instances[0].Value.Url.ShouldEqual("myUrl"); };
+        private It should_have_instance1_url = () => instances[0].Value.Url.ShouldEqual("myUrl");
     }
 }

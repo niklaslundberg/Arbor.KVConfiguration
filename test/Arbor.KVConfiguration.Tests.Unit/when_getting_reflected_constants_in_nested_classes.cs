@@ -19,10 +19,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
                 new ReflectionKeyValueConfiguration(typeof(ClassWithNestedClasses).Assembly);
         };
 
-        private Because of = () =>
-        {
-            configuration_items = reflection_key_value_configuration.ConfigurationItems;
-        };
+        private Because of = () => configuration_items = reflection_key_value_configuration.ConfigurationItems;
 
         private It should_find_nested_key = () =>
         {
@@ -30,10 +27,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
                 .ShouldNotBeNull();
         };
 
-        private It should_find_plain_key = () =>
-        {
-            configuration_items.FirstOrDefault(x => x.Key == ClassWithNestedClasses.PlainKey).Value.ShouldNotBeNull();
-        };
+        private It should_find_plain_key = () => configuration_items.FirstOrDefault(x => x.Key == ClassWithNestedClasses.PlainKey).Value.ShouldNotBeNull();
 
         private It should_find_second_nested_key = () =>
         {

@@ -17,8 +17,8 @@ namespace Arbor.KVConfiguration.Tests.Unit.InMemoryKeyValueConfiguration
                 new NameValueCollection {{"a", "b"}});
         };
 
-        private Because of = () => { value = configuration.ValueOrDefault("d", "e"); };
+        private Because of = () => value = configuration.ValueOrDefault("d", "e");
 
-        private It return_existing_value = () => { value.ShouldEqual("e"); };
+        private It return_existing_value = () => value.ShouldEqual("e");
     }
 }

@@ -26,10 +26,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
             configuration = multiSourceKeyValueConfiguration;
         };
 
-        private Because of = () =>
-        {
-            chain = configuration.SourceChain;
-        };
+        private Because of = () => chain = configuration.SourceChain;
 
         private It should_return_the_chain_as_string = () =>
         {

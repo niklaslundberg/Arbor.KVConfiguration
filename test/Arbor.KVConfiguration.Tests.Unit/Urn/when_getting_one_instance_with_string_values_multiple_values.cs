@@ -23,10 +23,7 @@ namespace Arbor.KVConfiguration.Tests.Unit.Urn
             configuration = new Core.InMemoryKeyValueConfiguration(keys);
         };
 
-        private Because of = () =>
-        {
-            instance = configuration.GetInstance(typeof(TypeWithStringValues)) as TypeWithStringValues;
-        };
+        private Because of = () => instance = configuration.GetInstance(typeof(TypeWithStringValues)) as TypeWithStringValues;
 
         private It should_have_multiple_values = () => instance.Values.ShouldContain("value1", "value2");
 

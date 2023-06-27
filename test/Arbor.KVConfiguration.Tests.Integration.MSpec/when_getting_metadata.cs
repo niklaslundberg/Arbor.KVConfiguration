@@ -30,7 +30,7 @@ namespace Arbor.KVConfiguration.Tests.Integration.MSpec
             key_value_configuration_items = json_file_reader.ReadConfiguration();
         };
 
-        Because of = () => { metadata = key_value_configuration_items.GetMetadata(); };
+        Because of = () => metadata = key_value_configuration_items.GetMetadata();
 
         It should_get_metadata_for_every_first_unique_key = () =>
         {

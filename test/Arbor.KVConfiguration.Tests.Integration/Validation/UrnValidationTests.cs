@@ -14,7 +14,7 @@ namespace Arbor.KVConfiguration.Tests.Integration.Validation
         {
             IValueValidator urnValidator = new UrnValidator();
 
-            Assert.Throws<ArgumentException>(() => { urnValidator.CanValidate(""); });
+            Assert.Throws<ArgumentException>(() => urnValidator.CanValidate(""));
         }
 
         [Fact]
@@ -23,7 +23,7 @@ namespace Arbor.KVConfiguration.Tests.Integration.Validation
             IValueValidator urnValidator = new UrnValidator();
 
             // ReSharper disable once AssignNullToNotNullAttribute
-            Assert.Throws<ArgumentException>(() => { urnValidator.CanValidate(null!); });
+            Assert.Throws<ArgumentException>(() => urnValidator.CanValidate(null!));
         }
 
         [Fact]
@@ -71,7 +71,7 @@ namespace Arbor.KVConfiguration.Tests.Integration.Validation
         {
             IValueValidator urnValidator = new UrnValidator();
 
-            Assert.Throws<InvalidOperationException>(() => { urnValidator.Validate("bool", "urn:abc"); });
+            Assert.Throws<InvalidOperationException>(() => urnValidator.Validate("bool", "urn:abc"));
         }
     }
 }

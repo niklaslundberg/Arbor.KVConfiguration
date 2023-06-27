@@ -232,3 +232,4 @@ pip-log.txt
 **/PostgreSql.Binaries.Lite.*.nupkg
 **/nCrunchTemp_*
 !test/Arbor.KVConfiguration.Tests.Integration.MSpec/config.user
+**/.cr/**/*

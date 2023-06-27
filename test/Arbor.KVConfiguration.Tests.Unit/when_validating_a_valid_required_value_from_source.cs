@@ -37,10 +37,7 @@ namespace Arbor.KVConfiguration.Tests.Unit
             metdata = configurationItems.GetMetadata();
         };
 
-        private Because of = () =>
-        {
-            summary = configuration.AllWithMultipleValues.Validate(configuration_validator, metdata);
-        };
+        private Because of = () => summary = configuration.AllWithMultipleValues.Validate(configuration_validator, metdata);
 
         private It should_have_no_validation_errors = () =>
         {

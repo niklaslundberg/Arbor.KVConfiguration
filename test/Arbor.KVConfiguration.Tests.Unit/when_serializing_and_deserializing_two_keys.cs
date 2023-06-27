@@ -50,24 +50,18 @@ namespace Arbor.KVConfiguration.Tests.Unit
             json = JsonConfigurationSerializer.Serialize(configuration_items);
         };
 
-        private Because of = () => { restored_configuration = JsonConfigurationSerializer.Deserialize(json); };
+        private Because of = () => restored_configuration = JsonConfigurationSerializer.Deserialize(json);
 
-        private It should_have_first_correct_key = () => { restored_configuration.Keys.First().Key.ShouldEqual("a"); };
+        private It should_have_first_correct_key = () => restored_configuration.Keys[0].Key.ShouldEqual("a");
 
-        private It should_have_first_correct_value = () =>
-        {
-            restored_configuration.Keys.First().Value.ShouldEqual("1");
-        };
+        private It should_have_first_correct_value = () => restored_configuration.Keys[0].Value.ShouldEqual("1");
 
-        private It should_have_last_correct_key = () => { restored_configuration.Keys.Last().Key.ShouldEqual("b"); };
+        private It should_have_last_correct_key = () => restored_configuration.Keys.Last().Key.ShouldEqual("b");
 
-        private It should_have_last_correct_value = () =>
-        {
-            restored_configuration.Keys.Last().Value.ShouldEqual("2");
-        };
+        private It should_have_last_correct_value = () => restored_configuration.Keys.Last().Value.ShouldEqual("2");
 
         private It should_have_metadata_for_the_first_item =
-            () => { restored_configuration.Keys.First().ConfigurationMetadata.ShouldNotBeNull(); };
+            () => restored_configuration.Keys[0].ConfigurationMetadata.ShouldNotBeNull();
 
         private It should_have_two_keys = () =>
         {

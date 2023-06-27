@@ -25,10 +25,7 @@ namespace Arbor.KVConfiguration.Tests.Integration.MSpec
                     "appsettings.json");
             };
 
-        Because of = () =>
-        {
-            json_key_value_configuration = new JsonKeyValueConfiguration(appsettings_full_path);
-        };
+        Because of = () => json_key_value_configuration = new JsonKeyValueConfiguration(appsettings_full_path);
 
         It should_have_three_values = () =>
         {

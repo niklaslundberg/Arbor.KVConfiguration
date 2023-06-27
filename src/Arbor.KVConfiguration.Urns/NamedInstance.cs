@@ -18,7 +18,6 @@ namespace Arbor.KVConfiguration.Urns
             Name = name;
         }
 
-
         [NotNull]
         public T Value { get; }
 
