@@ -25,6 +25,7 @@
            <group targetFramework="netstandard2.0" />
            <group targetFramework="net6.0" />
            <group targetFramework="net7.0" />
+           <group targetFramework="net8.0" />
         </dependencies>
         <references></references>
         <tags></tags>
@@ -33,5 +34,6 @@
         <file src="bin\$configuration$\netstandard2.0\Arbor.Primitives.dll" target="lib\netstandard2.0" />
         <file src="bin\$configuration$\net6.0\Arbor.Primitives.dll" target="lib\net6.0" />
         <file src="bin\$configuration$\net7.0\Arbor.Primitives.dll" target="lib\net7.0" />
+        <file src="bin\$configuration$\net8.0\Arbor.Primitives.dll" target="lib\net8.0" />
     </files>
 </package>

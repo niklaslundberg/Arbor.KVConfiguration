@@ -9,21 +9,28 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
     - uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '6.0.x'
+        dotnet-version: |
+            6.0.x
+            7.0.x
     - uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '7.0.x'
-        include-prerelease: false
+        dotnet-version: 8.0.x
+        cache: true
+        cache-dependency-path: test/Arbor.KVConfiguration.Tests.Integration
     - name: install-tools
       run: |
         dotnet tool install --global Arbor.Tooler.GlobalTool --version "*-*"
         dotnet tool install --global Arbor.Build.Bootstrapper --version "*-*"
     - name: build
+      shell: cmd
       env:
         Arbor.Build.NuGet.PackageUpload.Server.ApiKey: ${{ secrets.myget }}
         Arbor.Build.NuGet.PackageUpload.Server.Uri: "https://www.myget.org/F/arbor/api/v2/package"
         Arbor.Build.NuGet.PackageUpload.Enabled: "true"
         Arbor.Build.NuGet.PackageUpload.ForceUploadEnabled: "true"
-      run: build\build.bat
+      run: |
+        build\build.bat
