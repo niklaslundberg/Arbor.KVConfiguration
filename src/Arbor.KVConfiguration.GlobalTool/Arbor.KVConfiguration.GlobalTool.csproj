@@ -5,27 +5,15 @@
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>dotnet-arborkv</ToolCommandName>
     <PackageId>Arbor.KVConfiguration.GlobalTool</PackageId>
-    <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Shims\*.generated.cs" Condition="'$(TargetFramework)' == 'net6.0'" />
-    <Compile Remove="Shims\*.generated.cs" Condition="'$(TargetFramework)' == 'net7.0'" />
-    <Compile Remove="Shims\*.generated.cs" Condition="'$(TargetFramework)' == 'net8.0'" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Shims\*.generated.cs" Condition="'$(TargetFramework)' == 'net6.0'" />
-    <None Include="Shims\*.generated.cs" Condition="'$(TargetFramework)' == 'net7.0'" />
-    <None Include="Shims\*.generated.cs" Condition="'$(TargetFramework)' == 'net8.0'" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.8.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.9.2" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
     <PackageReference Include="Serilog.Extensions.Hosting" Version="8.0.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
