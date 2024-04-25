@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net7.0;netstandard2.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;netstandard2.0;net8.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2023.3.0" />
@@ -22,13 +22,11 @@
 
   <ItemGroup>
     <Compile Remove="Shims\*.generated.cs" Condition="'$(TargetFramework)' == 'net6.0'" />
-    <Compile Remove="Shims\*.generated.cs" Condition="'$(TargetFramework)' == 'net7.0'" />
     <Compile Remove="Shims\*.generated.cs" Condition="'$(TargetFramework)' == 'net8.0'" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="Shims\*.generated.cs" Condition="'$(TargetFramework)' == 'net6.0'" />
-    <None Include="Shims\*.generated.cs" Condition="'$(TargetFramework)' == 'net7.0'" />
     <None Include="Shims\*.generated.cs" Condition="'$(TargetFramework)' == 'net8.0'" />
   </ItemGroup>
 </Project>

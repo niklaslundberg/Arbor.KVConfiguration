@@ -20,7 +20,7 @@
         <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <license type="expression">MIT</license>
-        <copyright>Copyright Niklas Lundberg 2016 - 2023</copyright>
+        <copyright>Copyright Niklas Lundberg 2016 - 2024</copyright>
         <dependencies>
           <group targetFramework="netstandard2.0">
             <dependency id="Arbor.Primitives" version="[2.0.0,3.0.0)" />
@@ -29,12 +29,6 @@
             <dependency id="Newtonsoft.Json" version="[13.0.3,)" />
           </group>
           <group targetFramework="net6.0">
-            <dependency id="Arbor.Primitives" version="[2.0.0,3.0.0)" />
-            <dependency id="Arbor.KVConfiguration.Core" version="[2.0.0,3.0.0)" />
-            <dependency id="Arbor.KVConfiguration.Schema" version="[2.0.0,3.0.0)" />
-            <dependency id="Newtonsoft.Json" version="[13.0.3,)" />
-          </group>
-          <group targetFramework="net7.0">
             <dependency id="Arbor.Primitives" version="[2.0.0,3.0.0)" />
             <dependency id="Arbor.KVConfiguration.Core" version="[2.0.0,3.0.0)" />
             <dependency id="Arbor.KVConfiguration.Schema" version="[2.0.0,3.0.0)" />
@@ -53,7 +47,6 @@
     <files>
         <file src="bin\$configuration$\netstandard2.0\Arbor.KVConfiguration.Urns.dll" target="lib\netstandard2.0" />
         <file src="bin\$configuration$\net6.0\Arbor.KVConfiguration.Urns.dll" target="lib\net6.0" />
-        <file src="bin\$configuration$\net7.0\Arbor.KVConfiguration.Urns.dll" target="lib\net7.0" />
         <file src="bin\$configuration$\net8.0\Arbor.KVConfiguration.Urns.dll" target="lib\net8.0" />
     </files>
 </package>
