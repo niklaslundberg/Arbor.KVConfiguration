@@ -8,14 +8,13 @@ jobs:
     runs-on: windows-2022
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-    - uses: actions/setup-dotnet@v3
+    - uses: actions/setup-dotnet@v4
       with:
         dotnet-version: |
             6.0.x
-            7.0.x
     - uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 8.0.x
@@ -29,8 +28,12 @@ jobs:
       shell: cmd
       env:
         Arbor.Build.NuGet.PackageUpload.Server.ApiKey: ${{ secrets.myget }}
-        Arbor.Build.NuGet.PackageUpload.Server.Uri: "https://www.myget.org/F/arbor/api/v2/package"
+        Arbor.Build.NuGet.PackageUpload.Server.Uri: "https://www.myget.org/F/arbor/api/v3/index.json"
         Arbor.Build.NuGet.PackageUpload.Enabled: "true"
         Arbor.Build.NuGet.PackageUpload.ForceUploadEnabled: "true"
+        Arbor.Build.Tools.External.SymbolServer.Enabled: "true"
+        Arbor.Build.Tools.External.SymbolServer.Uri: "https://www.myget.org/F/arbor/api/v2/package"
+        Arbor.Build.Tools.External.SymbolServer.ApiKey: ${{ secrets.myget }}
+        Arbor.Build.Tools.External.SymbolServer.ForceUploadEnabled: "true"
       run: |
         build\build.bat
