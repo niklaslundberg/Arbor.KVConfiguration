@@ -23,20 +23,14 @@
     <copyright>Copyright Niklas Lundberg 2016 - 2024</copyright>
     <dependencies>
       <group targetFramework="netstandard2.0">
-        <dependency id="Arbor.KVConfiguration.Core" version="[2.0.0,3.0.0)" />
-        <dependency id="Arbor.KVConfiguration.Schema" version="[2.0.0,3.0.0)" />
-        <dependency id="Arbor.KVConfiguration.Schema.Json" version="[2.0.0,3.0.0)" />
-        <dependency id="Newtonsoft.Json" version="[13.0.3,14.0.0)" />
-      </group>
-      <group targetFramework="net6.0">
-        <dependency id="Arbor.KVConfiguration.Core" version="[2.0.0,3.0.0)" />
-        <dependency id="Arbor.KVConfiguration.Schema" version="[2.0.0,3.0.0)" />
         <dependency id="Arbor.KVConfiguration.Schema.Json" version="[2.0.0,3.0.0)" />
         <dependency id="Newtonsoft.Json" version="[13.0.3,14.0.0)" />
       </group>
       <group targetFramework="net8.0">
-        <dependency id="Arbor.KVConfiguration.Core" version="[2.0.0,3.0.0)" />
-        <dependency id="Arbor.KVConfiguration.Schema" version="[2.0.0,3.0.0)" />
+        <dependency id="Arbor.KVConfiguration.Schema.Json" version="[2.0.0,3.0.0)" />
+        <dependency id="Newtonsoft.Json" version="[13.0.3,14.0.0)" />
+      </group>
+      <group targetFramework="net9.0">
         <dependency id="Arbor.KVConfiguration.Schema.Json" version="[2.0.0,3.0.0)" />
         <dependency id="Newtonsoft.Json" version="[13.0.3,14.0.0)" />
       </group>
@@ -46,7 +40,7 @@
   </metadata>
   <files>
     <file src="bin\$configuration$\netstandard2.0\Arbor.KVConfiguration.JsonConfiguration.dll" target="lib\netstandard2.0" />
-    <file src="bin\$configuration$\net6.0\Arbor.KVConfiguration.JsonConfiguration.dll" target="lib\net6.0" />
     <file src="bin\$configuration$\net8.0\Arbor.KVConfiguration.JsonConfiguration.dll" target="lib\net8.0" />
+    <file src="bin\$configuration$\net9.0\Arbor.KVConfiguration.JsonConfiguration.dll" target="lib\net9.0" />
   </files>
 </package>

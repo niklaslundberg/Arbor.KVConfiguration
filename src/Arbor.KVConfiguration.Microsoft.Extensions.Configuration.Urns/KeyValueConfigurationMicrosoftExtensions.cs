@@ -14,7 +14,7 @@ namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
             {
                 throw new ArgumentNullException(nameof(builder));
             }
-
+            
             return builder.Add(new KeyValueConfigurationSourceAdapter(keyValueConfiguration));
         }
     }
