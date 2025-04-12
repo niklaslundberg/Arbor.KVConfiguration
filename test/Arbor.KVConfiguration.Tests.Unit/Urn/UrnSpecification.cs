@@ -1,7 +1,6 @@
 ﻿using System;
 using Machine.Specifications;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace Arbor.KVConfiguration.Tests.Unit.Urn
 {
