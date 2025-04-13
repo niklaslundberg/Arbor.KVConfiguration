@@ -7,44 +7,43 @@ using Arbor.KVConfiguration.Schema;
 using Arbor.KVConfiguration.Schema.Validators;
 using Machine.Specifications;
 
-namespace Arbor.KVConfiguration.Tests.Unit
+namespace Arbor.KVConfiguration.Tests.Unit;
+
+[Subject(typeof(ConfigurationValidator))]
+public class when_validating_a_missing_required_value
 {
-    [Subject(typeof(ConfigurationValidator))]
-    public class when_validating_a_missing_required_value
+    private static ConfigurationValidator configuration_validator;
+
+    private static JsonKeyValueConfiguration configuration;
+
+    private static KeyValueConfigurationValidationSummary summary;
+
+    private static ImmutableArray<KeyMetadata> metdata;
+
+    private Establish context = () =>
     {
-        private static ConfigurationValidator configuration_validator;
+        configuration_validator = new ConfigurationValidator();
 
-        private static JsonKeyValueConfiguration configuration;
-
-        private static KeyValueConfigurationValidationSummary summary;
-
-        private static ImmutableArray<KeyMetadata> metdata;
-
-        private Establish context = () =>
+        var configurationItems = new List<KeyValueConfigurationItem>
         {
-            configuration_validator = new ConfigurationValidator();
-
-            var configurationItems = new List<KeyValueConfigurationItem>
-            {
-                new KeyValueConfigurationItem(
+            new KeyValueConfigurationItem(
+                "abc",
+                string.Empty,
+                new ConfigurationMetadata(
                     "abc",
-                    string.Empty,
-                    new ConfigurationMetadata(
-                        "abc",
-                        "string"))
-            };
-
-            metdata = configurationItems.GetMetadata();
-
-            configuration = new JsonKeyValueConfiguration(configurationItems);
+                    "string"))
         };
 
-        private Because of = () => summary = configuration.AllWithMultipleValues.Validate(configuration_validator, metdata);
+        metdata = configurationItems.GetMetadata();
 
-        private It should_have_validation_errors = () =>
-        {
-            Console.WriteLine(summary.Print());
-            summary.IsValid.ShouldBeFalse();
-        };
-    }
+        configuration = new JsonKeyValueConfiguration(configurationItems);
+    };
+
+    private Because of = () => summary = configuration.AllWithMultipleValues.Validate(configuration_validator, metdata);
+
+    private It should_have_validation_errors = () =>
+    {
+        Console.WriteLine(summary.Print());
+        summary.IsValid.ShouldBeFalse();
+    };
 }

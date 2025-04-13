@@ -1,30 +1,25 @@
-﻿using System;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using System.Linq;
 using System.Reflection;
+using Arbor.KVConfiguration.Core.Extensions;
 using Arbor.KVConfiguration.Core.Extensions.ReflectionExtensions;
 using Arbor.KVConfiguration.Core.Metadata;
-using JetBrains.Annotations;
 
-namespace Arbor.KVConfiguration.Core
+namespace Arbor.KVConfiguration.Core;
+
+internal static class ReflectionConfigurationReader
 {
-    internal static class ReflectionConfigurationReader
+    public static ImmutableArray<KeyValueConfigurationItem> ReadConfiguration(Assembly assembly)
     {
-        public static ImmutableArray<KeyValueConfigurationItem> ReadConfiguration([NotNull] Assembly assembly)
-        {
-            if (assembly is null)
-            {
-                throw new ArgumentNullException(nameof(assembly));
-            }
+        assembly.ThrowIfNull();
 
-            ImmutableArray<ConfigurationMetadata> metadataFromAssemblyTypes = assembly.GetMetadataFromAssemblyTypes();
+        ImmutableArray<ConfigurationMetadata> metadataFromAssemblyTypes = assembly.GetMetadataFromAssemblyTypes();
 
-            var configurationItems =
-                metadataFromAssemblyTypes
-                    .Select(item => new KeyValueConfigurationItem(item.Key, item.DefaultValue, item))
-                    .ToImmutableArray();
+        var configurationItems =
+            metadataFromAssemblyTypes
+                .Select(item => new KeyValueConfigurationItem(item.Key, item.DefaultValue, item))
+                .ToImmutableArray();
 
-            return configurationItems;
-        }
+        return configurationItems;
     }
 }

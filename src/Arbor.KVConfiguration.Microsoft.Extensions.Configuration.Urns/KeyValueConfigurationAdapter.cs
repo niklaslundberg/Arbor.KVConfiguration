@@ -4,90 +4,85 @@ using System.Collections.Immutable;
 using System.Collections.Specialized;
 using System.Linq;
 using Arbor.KVConfiguration.Core;
-using JetBrains.Annotations;
 using Microsoft.Extensions.Configuration;
 
-namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
+namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns;
+
+/// <summary>
+///     Adapter to use an existing IConfiguration with Arbor.KVConfiguration
+/// </summary>
+public sealed class KeyValueConfigurationAdapter : IKeyValueConfiguration, IDisposable
 {
-    /// <summary>
-    ///     Adapter to use an existing IConfiguration with Arbor.KVConfiguration
-    /// </summary>
-    public sealed class KeyValueConfigurationAdapter : IKeyValueConfiguration, IDisposable
+    private InMemoryKeyValueConfiguration? _inMemoryConfig;
+    private bool _isDisposed;
+
+    public KeyValueConfigurationAdapter(IConfiguration config)
     {
-        private InMemoryKeyValueConfiguration? _inMemoryConfig;
-        private bool _isDisposed;
+        config.ThrowIfNull();
 
-        public KeyValueConfigurationAdapter([NotNull] IConfiguration config)
+        var nameValueCollection = new NameValueCollection();
+
+        foreach (KeyValuePair<string, string?> configurationSection in config.AsEnumerable()
+                     .Where(pair => !string.IsNullOrWhiteSpace(pair.Key)
+                                    && !string.IsNullOrWhiteSpace(pair.Value)))
         {
-            if (config is null)
-            {
-                throw new ArgumentNullException(nameof(config));
-            }
-
-            var nameValueCollection = new NameValueCollection();
-
-            foreach (KeyValuePair<string, string?> configurationSection in config.AsEnumerable()
-                .Where(pair => !string.IsNullOrWhiteSpace(pair.Key)
-                               && !string.IsNullOrWhiteSpace(pair.Value)))
-            {
-                nameValueCollection.Add(configurationSection.Key, configurationSection.Value);
-            }
-
-            _inMemoryConfig = new InMemoryKeyValueConfiguration(nameValueCollection);
+            nameValueCollection.Add(configurationSection.Key, configurationSection.Value);
         }
 
-        public void Dispose()
-        {
-            if (!_isDisposed)
-            {
-                _inMemoryConfig?.Dispose();
-                _inMemoryConfig = null;
-                _isDisposed = true;
-            }
-        }
+        _inMemoryConfig = new InMemoryKeyValueConfiguration(nameValueCollection);
+    }
 
-        public ImmutableArray<string> AllKeys
+    public void Dispose()
+    {
+        if (!_isDisposed)
         {
-            get
-            {
-                CheckDisposed();
-                return _inMemoryConfig!.AllKeys;
-            }
+            _inMemoryConfig?.Dispose();
+            _inMemoryConfig = null;
+            _isDisposed = true;
         }
+    }
 
-        public ImmutableArray<StringPair> AllValues
+    public ImmutableArray<string> AllKeys
+    {
+        get
         {
-            get
-            {
-                CheckDisposed();
-                return _inMemoryConfig!.AllValues;
-            }
+            CheckDisposed();
+            return _inMemoryConfig!.AllKeys;
         }
+    }
 
-        public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues
+    public ImmutableArray<StringPair> AllValues
+    {
+        get
         {
-            get
-            {
-                CheckDisposed();
-                return _inMemoryConfig!.AllWithMultipleValues;
-            }
+            CheckDisposed();
+            return _inMemoryConfig!.AllValues;
         }
+    }
 
-        public string this[string? key]
+    public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues
+    {
+        get
         {
-            get
-            {
-                CheckDisposed();
-                return _inMemoryConfig![key];
-            }
+            CheckDisposed();
+            return _inMemoryConfig!.AllWithMultipleValues;
         }
+    }
 
-        private void CheckDisposed()
+    public string this[string? key]
+    {
+        get
         {
-            if (_isDisposed)
-            {
-                throw new ObjectDisposedException(GetType().FullName);
-            }
+            CheckDisposed();
+            return _inMemoryConfig![key];
+        }
+    }
+
+    private void CheckDisposed()
+    {
+        if (_isDisposed)
+        {
+            throw new ObjectDisposedException(GetType().FullName);
         }
     }
 }

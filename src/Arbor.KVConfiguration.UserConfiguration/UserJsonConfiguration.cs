@@ -4,91 +4,90 @@ using System.IO;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.JsonConfiguration;
 
-namespace Arbor.KVConfiguration.UserConfiguration
+namespace Arbor.KVConfiguration.UserConfiguration;
+
+public class UserJsonConfiguration : IKeyValueConfiguration
 {
-    public class UserJsonConfiguration : IKeyValueConfiguration
+    private const string ConfigUserFileName = "config.user";
+
+    private readonly IKeyValueConfiguration _configuration;
+    private readonly string? _fileFullPath;
+
+    public UserJsonConfiguration(string? basePath = null)
     {
-        private const string ConfigUserFileName = "config.user";
+        string? fileFullPath = TryGetConfigUser(basePath);
 
-        private readonly IKeyValueConfiguration _configuration;
-        private readonly string? _fileFullPath;
-
-        public UserJsonConfiguration(string? basePath = null)
+        if (!string.IsNullOrWhiteSpace(fileFullPath) && File.Exists(fileFullPath))
         {
-            string? fileFullPath = TryGetConfigUser(basePath);
-
-            if (!string.IsNullOrWhiteSpace(fileFullPath) && File.Exists(fileFullPath))
-            {
-                var jsonConfiguration = new JsonKeyValueConfiguration(fileFullPath!);
-                _configuration = jsonConfiguration!;
-            }
-
-            _configuration ??= NoConfiguration.Empty!;
-
-            _fileFullPath = fileFullPath;
+            var jsonConfiguration = new JsonKeyValueConfiguration(fileFullPath!);
+            _configuration = jsonConfiguration!;
         }
 
-        public ImmutableArray<string> AllKeys => _configuration.AllKeys;
+        _configuration ??= NoConfiguration.Empty!;
 
-        public ImmutableArray<StringPair> AllValues => _configuration.AllValues;
+        _fileFullPath = fileFullPath;
+    }
 
-        public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues
-            => _configuration.AllWithMultipleValues;
+    public ImmutableArray<string> AllKeys => _configuration.AllKeys;
 
-        public string this[string? key]
+    public ImmutableArray<StringPair> AllValues => _configuration.AllValues;
+
+    public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues
+        => _configuration.AllWithMultipleValues;
+
+    public string this[string? key]
+    {
+        get
         {
-            get
+            if (string.IsNullOrWhiteSpace(key))
             {
-                if (string.IsNullOrWhiteSpace(key))
+                return string.Empty;
+            }
+
+            return _configuration[key];
+        }
+    }
+
+    private static string? TryGetConfigUser(string? basePath)
+    {
+        basePath ??= AppDomain.CurrentDomain.BaseDirectory;
+
+        try
+        {
+            string fileFullPath =
+                Path.Combine(basePath, ConfigUserFileName);
+
+            var fileInfo = new FileInfo(fileFullPath);
+
+            var currentDirectory = fileInfo.Directory;
+
+            while (currentDirectory is {})
+            {
+                var configUserFiles = currentDirectory.GetFiles(ConfigUserFileName);
+
+                if (configUserFiles.Length == 1)
                 {
-                    return string.Empty;
+                    return configUserFiles[0].FullName;
                 }
 
-                return _configuration[key];
+                currentDirectory = currentDirectory.Parent;
             }
-        }
 
-        private static string? TryGetConfigUser(string? basePath)
+            return null;
+        }
+        catch (Exception)
         {
-            basePath ??= AppDomain.CurrentDomain.BaseDirectory;
-
-            try
-            {
-                string fileFullPath =
-                    Path.Combine(basePath, ConfigUserFileName);
-
-                var fileInfo = new FileInfo(fileFullPath);
-
-                var currentDirectory = fileInfo.Directory;
-
-                while (currentDirectory is {})
-                {
-                    var configUserFiles = currentDirectory.GetFiles(ConfigUserFileName);
-
-                    if (configUserFiles.Length == 1)
-                    {
-                        return configUserFiles[0].FullName;
-                    }
-
-                    currentDirectory = currentDirectory.Parent;
-                }
-
-                return null;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
+            return null;
         }
+    }
 
-        public override string ToString()
+    public override string ToString()
+    {
+        if (!string.IsNullOrWhiteSpace(_fileFullPath))
         {
-            if (!string.IsNullOrWhiteSpace(_fileFullPath))
-            {
-                return $"{base.ToString()} [json file source: '{_fileFullPath}', exists: {File.Exists(_fileFullPath)}]";
-            }
-
-            return $"{base.ToString()} [no json file source]";
+            return $"{base.ToString()} [json file source: '{_fileFullPath}', exists: {File.Exists(_fileFullPath)}]";
         }
+
+        return $"{base.ToString()} [no json file source]";
     }
 }

@@ -1,18 +1,17 @@
 using JetBrains.Annotations;
 
-namespace Arbor.KVConfiguration.Tests.Unit.Urn
+namespace Arbor.KVConfiguration.Tests.Unit.Urn;
+
+[UsedImplicitly]
+public class ComplexChild
 {
-    [UsedImplicitly]
-    public class ComplexChild
+    public ComplexChild(string name, int count)
     {
-        public ComplexChild(string name, int count)
-        {
-            Name = name;
-            Count = count;
-        }
-
-        public string Name { get; }
-
-        public int Count { get; }
+        Name = name;
+        Count = count;
     }
+
+    public string Name { get; }
+
+    public int Count { get; }
 }

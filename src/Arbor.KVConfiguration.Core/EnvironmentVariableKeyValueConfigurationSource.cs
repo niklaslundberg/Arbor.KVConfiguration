@@ -5,38 +5,37 @@ using System.Collections.Specialized;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Arbor.KVConfiguration.Core
+namespace Arbor.KVConfiguration.Core;
+
+[UsedImplicitly]
+public sealed class EnvironmentVariableKeyValueConfigurationSource : IKeyValueConfiguration
 {
-    [UsedImplicitly]
-    public sealed class EnvironmentVariableKeyValueConfigurationSource : IKeyValueConfiguration
+    private readonly InMemoryKeyValueConfiguration _inMemoryKeyValueConfiguration;
+
+    public EnvironmentVariableKeyValueConfigurationSource()
     {
-        private readonly InMemoryKeyValueConfiguration _inMemoryKeyValueConfiguration;
+        var collection = new NameValueCollection();
 
-        public EnvironmentVariableKeyValueConfigurationSource()
+        foreach (var item in Environment.GetEnvironmentVariables().OfType<DictionaryEntry>())
         {
-            var collection = new NameValueCollection();
+            var pair = (item.Key as string ?? item.Key.ToString(),
+                item.Value as string ?? item.Value?.ToString());
 
-            foreach (var item in Environment.GetEnvironmentVariables().OfType<DictionaryEntry>())
+            if (!string.IsNullOrWhiteSpace(pair.Item2))
             {
-                var pair = (item.Key as string ?? item.Key.ToString(),
-                    item.Value as string ?? item.Value?.ToString());
-
-                if (!string.IsNullOrWhiteSpace(pair.Item2))
-                {
-                    collection.Add(pair.Item1, pair.Item2);
-                }
+                collection.Add(pair.Item1, pair.Item2);
             }
-
-            _inMemoryKeyValueConfiguration = new InMemoryKeyValueConfiguration(collection);
         }
 
-        public ImmutableArray<string> AllKeys => _inMemoryKeyValueConfiguration.AllKeys;
-
-        public ImmutableArray<StringPair> AllValues => _inMemoryKeyValueConfiguration.AllValues;
-
-        public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues
-            => _inMemoryKeyValueConfiguration.AllWithMultipleValues;
-
-        public string this[string? key] => _inMemoryKeyValueConfiguration[key];
+        _inMemoryKeyValueConfiguration = new InMemoryKeyValueConfiguration(collection);
     }
+
+    public ImmutableArray<string> AllKeys => _inMemoryKeyValueConfiguration.AllKeys;
+
+    public ImmutableArray<StringPair> AllValues => _inMemoryKeyValueConfiguration.AllValues;
+
+    public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues
+        => _inMemoryKeyValueConfiguration.AllWithMultipleValues;
+
+    public string this[string? key] => _inMemoryKeyValueConfiguration[key];
 }

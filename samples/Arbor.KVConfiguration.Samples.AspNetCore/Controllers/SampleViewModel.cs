@@ -1,10 +1,9 @@
-﻿namespace Arbor.KVConfiguration.Samples.AspNetCore.Controllers
-{
-    public class SampleViewModel
-    {
-        public SampleViewModel(MySampleConfiguration mySampleConfiguration) =>
-            MySampleConfiguration = mySampleConfiguration;
+﻿namespace Arbor.KVConfiguration.Samples.AspNetCore.Controllers;
 
-        public MySampleConfiguration MySampleConfiguration { get; }
-    }
+public class SampleViewModel
+{
+    public SampleViewModel(MySampleConfiguration mySampleConfiguration) =>
+        MySampleConfiguration = mySampleConfiguration;
+
+    public MySampleConfiguration MySampleConfiguration { get; }
 }

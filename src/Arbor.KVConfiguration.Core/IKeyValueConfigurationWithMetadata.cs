@@ -1,10 +1,9 @@
 ﻿using System.Collections.Immutable;
 using Arbor.KVConfiguration.Core.Metadata;
 
-namespace Arbor.KVConfiguration.Core
+namespace Arbor.KVConfiguration.Core;
+
+public interface IKeyValueConfigurationWithMetadata : IKeyValueConfiguration
 {
-    public interface IKeyValueConfigurationWithMetadata : IKeyValueConfiguration
-    {
-        ImmutableArray<KeyValueConfigurationItem> ConfigurationItems { get; }
-    }
+    ImmutableArray<KeyValueConfigurationItem> ConfigurationItems { get; }
 }

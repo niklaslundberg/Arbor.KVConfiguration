@@ -1,9 +1,8 @@
 ﻿using System;
 
-namespace Arbor.KVConfiguration.Urns
+namespace Arbor.KVConfiguration.Urns;
+
+[AttributeUsage(AttributeTargets.Class)]
+public sealed class OptionalAttribute : Attribute
 {
-    [AttributeUsage(AttributeTargets.Class)]
-    public sealed class OptionalAttribute : Attribute
-    {
-    }
 }

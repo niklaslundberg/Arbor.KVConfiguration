@@ -1,13 +1,11 @@
 ﻿using System.Collections.Immutable;
 using Arbor.KVConfiguration.Core;
-using JetBrains.Annotations;
 
-namespace Arbor.KVConfiguration.Schema.Validators
+namespace Arbor.KVConfiguration.Schema.Validators;
+
+public interface IValueValidator
 {
-    public interface IValueValidator
-    {
-        bool CanValidate([NotNull] string type);
+    bool CanValidate(string type);
 
-        ImmutableArray<ValidationError> Validate([NotNull] string type, string? value);
-    }
+    ImmutableArray<ValidationError> Validate(string type, string? value);
 }

@@ -1,24 +1,18 @@
-﻿using System;
-using Arbor.KVConfiguration.Core;
-using JetBrains.Annotations;
+﻿using Arbor.KVConfiguration.Core;
 
-namespace Arbor.KVConfiguration.UserConfiguration
+namespace Arbor.KVConfiguration.UserConfiguration;
+
+public static class UserConfigurationAppSettingsExtensions
 {
-    public static class UserConfigurationAppSettingsExtensions
+    public static AppSettingsBuilder AddUserSettings(this AppSettingsBuilder builder, string basePath)
     {
-        public static AppSettingsBuilder AddUserSettings([NotNull] this AppSettingsBuilder builder, string basePath)
+        builder.ThrowIfNull(nameof(builder));
+
+        if (string.IsNullOrWhiteSpace(basePath))
         {
-            if (builder is null)
-            {
-                throw new ArgumentNullException(nameof(builder));
-            }
-
-            if (string.IsNullOrWhiteSpace(basePath))
-            {
-                return builder;
-            }
-
-            return builder.Add(new UserJsonConfiguration(basePath));
+            return builder;
         }
+
+        return builder.Add(new UserJsonConfiguration(basePath));
     }
 }

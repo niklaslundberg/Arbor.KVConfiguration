@@ -5,42 +5,41 @@ using Arbor.KVConfiguration.JsonConfiguration;
 using Arbor.KVConfiguration.Schema.Json;
 using Machine.Specifications;
 
-namespace Arbor.KVConfiguration.Tests.Integration.MSpec
+namespace Arbor.KVConfiguration.Tests.Integration.MSpec;
+
+[Subject(typeof(JsonFileReader))]
+public class when_reading_version_from_file_with_version
 {
-    [Subject(typeof(JsonFileReader))]
-    public class when_reading_version_from_file_with_version
+    static string appsettings_full_path = null!;
+
+    static ConfigurationItems configuration_items = null!;
+
+    static JsonFileReader reader = null!;
+
+    Establish context = () =>
     {
-        static string appsettings_full_path = null!;
+        appsettings_full_path = Path.Combine(
+            VcsTestPathHelper.TryFindVcsRootPath()!,
+            "test",
+            "Arbor.KVConfiguration.Tests.Integration",
+            "appsettings.json");
 
-        static ConfigurationItems configuration_items = null!;
+        reader = new JsonFileReader(appsettings_full_path);
+    };
 
-        static JsonFileReader reader = null!;
+    Because of = () => configuration_items = reader.GetConfigurationItems();
 
-        Establish context = () =>
+    It should_have_implicit_version = () => configuration_items.Version.ShouldEqual("99.0");
+
+    It should_have_three_values = () =>
+    {
+        foreach (KeyValue item in configuration_items.Keys)
         {
-            appsettings_full_path = Path.Combine(
-                VcsTestPathHelper.TryFindVcsRootPath()!,
-                "test",
-                "Arbor.KVConfiguration.Tests.Integration",
-                "appsettings.json");
+            Console.WriteLine(item.Key);
+            Console.WriteLine(": ");
+            Console.WriteLine(item.Value);
+        }
 
-            reader = new JsonFileReader(appsettings_full_path);
-        };
-
-        Because of = () => configuration_items = reader.GetConfigurationItems();
-
-        It should_have_implicit_version = () => configuration_items.Version.ShouldEqual("99.0");
-
-        It should_have_three_values = () =>
-        {
-            foreach (KeyValue item in configuration_items.Keys)
-            {
-                Console.WriteLine(item.Key);
-                Console.WriteLine(": ");
-                Console.WriteLine(item.Value);
-            }
-
-            configuration_items.Keys.Length.ShouldEqual(3);
-        };
-    }
+        configuration_items.Keys.Length.ShouldEqual(3);
+    };
 }

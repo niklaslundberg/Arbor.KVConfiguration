@@ -3,129 +3,128 @@ using System.Linq;
 using Arbor.KVConfiguration.Urns;
 using Xunit;
 
-namespace Arbor.KVConfiguration.Tests.Unit.Registrations
+namespace Arbor.KVConfiguration.Tests.Unit.Registrations;
+
+public class ConfigurationHolderTests
 {
-    public class ConfigurationHolderTests
+    [Fact]
+    public void WhenRegisteringMultipleInstances()
     {
-        [Fact]
-        public void WhenRegisteringMultipleInstances()
-        {
-            var holder = new ConfigurationInstanceHolder();
-            holder.Add(new NamedInstance<ValidatableOptional>(new ValidatableOptional("abc", 123), "abc-instance"));
-            holder.Add(new NamedInstance<ValidatableOptional>(new ValidatableOptional("def", 234), "def-instance"));
+        var holder = new ConfigurationInstanceHolder();
+        holder.Add(new NamedInstance<ValidatableOptional>(new ValidatableOptional("abc", 123), "abc-instance"));
+        holder.Add(new NamedInstance<ValidatableOptional>(new ValidatableOptional("def", 234), "def-instance"));
 
-            ImmutableDictionary<string, ValidatableOptional?> instances = holder.GetInstances<ValidatableOptional>();
+        ImmutableDictionary<string, ValidatableOptional?> instances = holder.GetInstances<ValidatableOptional>();
 
-            Assert.Equal(2, instances.Count);
+        Assert.Equal(2, instances.Count);
 
-            Assert.Contains("abc-instance", instances.Keys);
-            Assert.Equal("abc", instances["abc-instance"].Name);
-            Assert.Equal(123, instances["abc-instance"].Value);
+        Assert.Contains("abc-instance", instances.Keys);
+        Assert.Equal("abc", instances["abc-instance"].Name);
+        Assert.Equal(123, instances["abc-instance"].Value);
 
-            Assert.Contains("def-instance", instances.Keys);
-            Assert.Equal("def", instances["def-instance"].Name);
-            Assert.Equal(234, instances["def-instance"].Value);
-        }
+        Assert.Contains("def-instance", instances.Keys);
+        Assert.Equal("def", instances["def-instance"].Name);
+        Assert.Equal(234, instances["def-instance"].Value);
+    }
 
-        [Fact]
-        public void WhenRegisteringSingleInstance()
-        {
-            var holder = new ConfigurationInstanceHolder();
-            holder.Add(new NamedInstance<ValidatableOptional>(new ValidatableOptional("abc", 123), "abc-instance"));
+    [Fact]
+    public void WhenRegisteringSingleInstance()
+    {
+        var holder = new ConfigurationInstanceHolder();
+        holder.Add(new NamedInstance<ValidatableOptional>(new ValidatableOptional("abc", 123), "abc-instance"));
 
-            ImmutableDictionary<string, ValidatableOptional?> instances = holder.GetInstances<ValidatableOptional>();
+        ImmutableDictionary<string, ValidatableOptional?> instances = holder.GetInstances<ValidatableOptional>();
 
-            Assert.Single(instances);
+        Assert.Single(instances);
 
-            Assert.Equal("abc-instance", instances.Keys.Single());
-            Assert.Equal("abc", instances["abc-instance"].Name);
-            Assert.Equal(123, instances["abc-instance"].Value);
-        }
+        Assert.Equal("abc-instance", instances.Keys.Single());
+        Assert.Equal("abc", instances["abc-instance"].Name);
+        Assert.Equal(123, instances["abc-instance"].Value);
+    }
 
-        [Fact]
-        public void WhenRegisteringSingleInstanceTryGet()
-        {
-            var holder = new ConfigurationInstanceHolder();
-            var instance = new ValidatableOptional("abc", 123);
-            holder.Add(new NamedInstance<ValidatableOptional>(instance, "abc-instance"));
+    [Fact]
+    public void WhenRegisteringSingleInstanceTryGet()
+    {
+        var holder = new ConfigurationInstanceHolder();
+        var instance = new ValidatableOptional("abc", 123);
+        holder.Add(new NamedInstance<ValidatableOptional>(instance, "abc-instance"));
 
-            bool found = holder.TryGet("abc-instance", out ValidatableOptional? foundInstance);
+        bool found = holder.TryGet("abc-instance", out ValidatableOptional? foundInstance);
 
-            Assert.True(found);
-            Assert.Same(instance, foundInstance);
-        }
+        Assert.True(found);
+        Assert.Same(instance, foundInstance);
+    }
 
-        [Fact]
-        public void WhenRegisteringSingleInstanceTryGetNonGeneric()
-        {
-            var holder = new ConfigurationInstanceHolder();
-            var instance = new ValidatableOptional("abc", 123);
-            holder.Add(new NamedInstance<ValidatableOptional>(instance, "abc-instance"));
+    [Fact]
+    public void WhenRegisteringSingleInstanceTryGetNonGeneric()
+    {
+        var holder = new ConfigurationInstanceHolder();
+        var instance = new ValidatableOptional("abc", 123);
+        holder.Add(new NamedInstance<ValidatableOptional>(instance, "abc-instance"));
 
-            bool found = holder.TryGet("abc-instance", typeof(ValidatableOptional), out object? foundInstance);
+        bool found = holder.TryGet("abc-instance", typeof(ValidatableOptional), out object? foundInstance);
 
-            Assert.True(found);
+        Assert.True(found);
 
-            Assert.Same(instance, foundInstance);
-        }
+        Assert.Same(instance, foundInstance);
+    }
 
-        [Fact]
-        public void WhenRemovingExistingInstance()
-        {
-            var holder = new ConfigurationInstanceHolder();
-            holder.Add(new NamedInstance<ValidatableOptional>(new ValidatableOptional("abc", 123), "abc-instance"));
+    [Fact]
+    public void WhenRemovingExistingInstance()
+    {
+        var holder = new ConfigurationInstanceHolder();
+        holder.Add(new NamedInstance<ValidatableOptional>(new ValidatableOptional("abc", 123), "abc-instance"));
 
-            bool found = holder.TryGet("abc-instance", out ValidatableOptional? instance);
+        bool found = holder.TryGet("abc-instance", out ValidatableOptional? instance);
 
-            Assert.True(found);
+        Assert.True(found);
 
-            Assert.NotNull(instance);
+        Assert.NotNull(instance);
 
-            bool isRemoved = holder.TryRemove("abc-instance", typeof(ValidatableOptional), out object? removed);
+        bool isRemoved = holder.TryRemove("abc-instance", typeof(ValidatableOptional), out object? removed);
 
-            Assert.True(isRemoved);
+        Assert.True(isRemoved);
 
-            Assert.NotNull(removed);
+        Assert.NotNull(removed);
 
-            Assert.Same(instance, removed);
-        }
+        Assert.Same(instance, removed);
+    }
 
-        [Fact]
-        public void WhenRemovingNonExistingType()
-        {
-            var holder = new ConfigurationInstanceHolder();
-            holder.Add(new NamedInstance<ValidatableOptional>(new ValidatableOptional("abc", 123), "abc-instance"));
+    [Fact]
+    public void WhenRemovingNonExistingType()
+    {
+        var holder = new ConfigurationInstanceHolder();
+        holder.Add(new NamedInstance<ValidatableOptional>(new ValidatableOptional("abc", 123), "abc-instance"));
 
-            bool found = holder.TryGet("abc-instance", out ValidatableOptional? instance);
+        bool found = holder.TryGet("abc-instance", out ValidatableOptional? instance);
 
-            Assert.True(found);
+        Assert.True(found);
 
-            Assert.NotNull(instance);
+        Assert.NotNull(instance);
 
-            bool isRemoved = holder.TryRemove("abc-instance", typeof(string), out object? removed);
+        bool isRemoved = holder.TryRemove("abc-instance", typeof(string), out object? removed);
 
-            Assert.False(isRemoved);
+        Assert.False(isRemoved);
 
-            Assert.Null(removed);
-        }
+        Assert.Null(removed);
+    }
 
-        [Fact]
-        public void WhenRemovingNonExistingKey()
-        {
-            var holder = new ConfigurationInstanceHolder();
-            holder.Add(new NamedInstance<ValidatableOptional>(new ValidatableOptional("abc", 123), "abc-instance"));
+    [Fact]
+    public void WhenRemovingNonExistingKey()
+    {
+        var holder = new ConfigurationInstanceHolder();
+        holder.Add(new NamedInstance<ValidatableOptional>(new ValidatableOptional("abc", 123), "abc-instance"));
 
-            bool found = holder.TryGet("abc-instance", out ValidatableOptional? instance);
+        bool found = holder.TryGet("abc-instance", out ValidatableOptional? instance);
 
-            Assert.True(found);
+        Assert.True(found);
 
-            Assert.NotNull(instance);
+        Assert.NotNull(instance);
 
-            bool isRemoved = holder.TryRemove("abc-instance-2", typeof(ValidatableOptional), out object? removed);
+        bool isRemoved = holder.TryRemove("abc-instance-2", typeof(ValidatableOptional), out object? removed);
 
-            Assert.False(isRemoved);
+        Assert.False(isRemoved);
 
-            Assert.Null(removed);
-        }
+        Assert.Null(removed);
     }
 }

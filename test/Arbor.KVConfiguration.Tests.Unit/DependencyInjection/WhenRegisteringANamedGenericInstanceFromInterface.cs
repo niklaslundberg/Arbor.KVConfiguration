@@ -3,41 +3,40 @@ using Arbor.KVConfiguration.Urns;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace Arbor.KVConfiguration.Tests.Unit.DependencyInjection
+namespace Arbor.KVConfiguration.Tests.Unit.DependencyInjection;
+
+public class WhenRegisteringANamedGenericInstanceFromInterface
 {
-    public class WhenRegisteringANamedGenericInstanceFromInterface
+    [Fact]
+    public void ItShouldBeResolvableByInterfaceAndItsWrappedType()
     {
-        [Fact]
-        public void ItShouldBeResolvableByInterfaceAndItsWrappedType()
-        {
-            var configurationInstanceHolder = new ConfigurationInstanceHolder();
+        var configurationInstanceHolder = new ConfigurationInstanceHolder();
 
-            var configuration = new MyConfiguration(123);
-            var namedInstance = new NamedInstance<MyConfiguration>(configuration, "myInstance");
-            configurationInstanceHolder.Add(namedInstance);
+        var configuration = new MyConfiguration(123);
+        var namedInstance = new NamedInstance<MyConfiguration>(configuration, "myInstance");
+        configurationInstanceHolder.Add(namedInstance);
 
-            ServiceProvider serviceProvider = new ServiceCollection()
-                .AddConfigurationInstanceHolder(configurationInstanceHolder)
-                .BuildServiceProvider();
+        ServiceProvider serviceProvider = new ServiceCollection()
+            .AddConfigurationInstanceHolder(configurationInstanceHolder)
+            .BuildServiceProvider();
 
-            var myConfiguration = serviceProvider.GetService<MyConfiguration>();
+        var myConfiguration = serviceProvider.GetService<MyConfiguration>();
 
-            Assert.NotNull(myConfiguration);
-            Assert.Equal(123, myConfiguration.Id);
+        Assert.NotNull(myConfiguration);
+        Assert.Equal(123, myConfiguration.Id);
 
-            var namedFromProviderInstance = serviceProvider.GetService<INamedInstance<MyConfiguration>>();
+        var namedFromProviderInstance = serviceProvider.GetService<INamedInstance<MyConfiguration>>();
 
-            Assert.NotNull(namedFromProviderInstance);
-            Assert.Equal(123, namedFromProviderInstance.Value.Id);
-            Assert.Equal("myInstance", namedFromProviderInstance.Name);
-            Assert.Equal(namedInstance, namedFromProviderInstance);
-        }
+        Assert.NotNull(namedFromProviderInstance);
+        Assert.Equal(123, namedFromProviderInstance.Value.Id);
+        Assert.Equal("myInstance", namedFromProviderInstance.Name);
+        Assert.Equal(namedInstance, namedFromProviderInstance);
+    }
 
-        private class MyConfiguration
-        {
-            public MyConfiguration(int id) => Id = id;
+    private class MyConfiguration
+    {
+        public MyConfiguration(int id) => Id = id;
 
-            public int Id { get; }
-        }
+        public int Id { get; }
     }
 }

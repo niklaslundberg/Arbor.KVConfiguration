@@ -1,7 +1,6 @@
-﻿namespace Arbor.KVConfiguration.GlobalTool
+﻿namespace Arbor.KVConfiguration.GlobalTool;
+
+internal static class AppConstants
 {
-    internal static class AppConstants
-    {
-        public const string DebugArg = "--debug";
-    }
+    public const string DebugArg = "--debug";
 }

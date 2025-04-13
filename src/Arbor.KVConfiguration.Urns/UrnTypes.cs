@@ -5,57 +5,57 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 
-namespace Arbor.KVConfiguration.Urns
+namespace Arbor.KVConfiguration.Urns;
+
+public static class UrnTypes
 {
-    public static class UrnTypes
+    public static ImmutableArray<UrnTypeMapping> GetUrnTypesInAssemblies(Action<Exception>? exceptionHandler, params Assembly[] assemblies)
     {
-        public static ImmutableArray<UrnTypeMapping> GetUrnTypesInAssemblies(Action<Exception>? exceptionHandler, params Assembly[] assemblies)
+        IEnumerable<UrnTypeMapping> TryGetTypes(Assembly assembly)
         {
-            IEnumerable<UrnTypeMapping> TryGetTypes(Assembly assembly)
+            try
             {
-                try
-                {
-                    return assembly.ExportedTypes
-                        .Where(type => !type.IsAbstract && type.IsPublic)
-                        .Select(HasUrnAttribute)
-                        .Where(item => item is not null)!;
-                }
-                catch (FileLoadException ex)
-                {
-                    exceptionHandler?.Invoke(ex);
-                }
-                catch (FileNotFoundException ex)
-                {
-                    exceptionHandler?.Invoke(ex);
-                }
-                catch (TypeLoadException ex)
-                {
-                    exceptionHandler?.Invoke(ex);
-                }
-                catch (ReflectionTypeLoadException ex)
-                {
-                    exceptionHandler?.Invoke(ex);
-                }
-
-                return ImmutableArray<UrnTypeMapping>.Empty;
+                return assembly.ExportedTypes
+                    .Where(type => !type.IsAbstract && type.IsPublic)
+                    .Select(HasUrnAttribute)
+                    .Where(item => item is not null)!;
+            }
+            catch (FileLoadException ex)
+            {
+                exceptionHandler?.Invoke(ex);
+            }
+            catch (FileNotFoundException ex)
+            {
+                exceptionHandler?.Invoke(ex);
+            }
+            catch (TypeLoadException ex)
+            {
+                exceptionHandler?.Invoke(ex);
+            }
+            catch (ReflectionTypeLoadException ex)
+            {
+                exceptionHandler?.Invoke(ex);
             }
 
-            UrnTypeMapping? HasUrnAttribute(Type type)
-            {
-                var customAttribute = type.GetCustomAttribute<UrnAttribute>();
+            return ImmutableArray<UrnTypeMapping>.Empty;
+        }
 
-                return customAttribute?.Urn is null
-                    ? null
-                    : new UrnTypeMapping(type, customAttribute.Urn.Value);
-            }
+        UrnTypeMapping? HasUrnAttribute(Type type)
+        {
+            var customAttribute = type.GetCustomAttribute<UrnAttribute>();
 
-            ImmutableArray<UrnTypeMapping> urnMappedTypes = assemblies
+            return customAttribute?.Urn is null
+                ? null
+                : new UrnTypeMapping(type, customAttribute.Urn.Value);
+        }
+
+        ImmutableArray<UrnTypeMapping> urnMappedTypes = [
+            ..assemblies
                 .Where(assembly => !assembly.IsDynamic)
                 .SelectMany(TryGetTypes)
                 .Where(mapping => mapping is not null)
-                .ToImmutableArray()!;
+        ]!;
 
-            return urnMappedTypes;
-        }
+        return urnMappedTypes;
     }
 }

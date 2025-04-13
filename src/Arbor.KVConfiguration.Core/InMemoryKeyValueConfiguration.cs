@@ -6,149 +6,144 @@ using System.Linq;
 using Arbor.KVConfiguration.Core.Extensions;
 using JetBrains.Annotations;
 
-namespace Arbor.KVConfiguration.Core
+namespace Arbor.KVConfiguration.Core;
+
+public sealed class InMemoryKeyValueConfiguration : IKeyValueConfiguration, IDisposable
 {
-    public sealed class InMemoryKeyValueConfiguration : IKeyValueConfiguration, IDisposable
+    private readonly string _name;
+    private ImmutableArray<string> _allKeys;
+    private bool _disposed;
+    private Dictionary<string, ImmutableArray<string>>? _keyValueDictionary;
+
+    public InMemoryKeyValueConfiguration(NameValueCollection nameValueCollection) : this(nameValueCollection,
+        string.Empty)
     {
-        private readonly string _name;
-        private ImmutableArray<string> _allKeys;
-        private bool _disposed;
-        private Dictionary<string, ImmutableArray<string>>? _keyValueDictionary;
+    }
 
-        public InMemoryKeyValueConfiguration(NameValueCollection nameValueCollection) : this(nameValueCollection,
-            string.Empty)
+    [PublicAPI]
+    public InMemoryKeyValueConfiguration(NameValueCollection nameValueCollection, string? name)
+    {
+        nameValueCollection.ThrowIfNull();
+
+        _name = name ?? string.Empty;
+
+        _keyValueDictionary =
+            new Dictionary<string, ImmutableArray<string>>(nameValueCollection.Count + 1,
+                StringComparer.OrdinalIgnoreCase);
+
+        var keys = nameValueCollection.AllKeys
+            .Where(key => key is {})
+            .Cast<string>()
+            .ToImmutableArray();
+
+        foreach (string key in keys)
         {
-        }
+            ImmutableArray<string> values = nameValueCollection.GetValues(key!).SafeToImmutableArray();
 
-        [PublicAPI]
-        public InMemoryKeyValueConfiguration(NameValueCollection nameValueCollection, string? name)
-        {
-            if (nameValueCollection is null)
+            if (!string.IsNullOrWhiteSpace(key))
             {
-                throw new ArgumentNullException(nameof(nameValueCollection));
-            }
-
-            _name = name ?? string.Empty;
-
-            _keyValueDictionary =
-                new Dictionary<string, ImmutableArray<string>>(nameValueCollection.Count + 1,
-                    StringComparer.OrdinalIgnoreCase);
-
-            var keys = nameValueCollection.AllKeys
-                                          .Where(key => key is {})
-                                          .Cast<string>()
-                                          .ToImmutableArray();
-
-            foreach (string key in keys)
-            {
-                ImmutableArray<string> values = nameValueCollection.GetValues(key!).SafeToImmutableArray();
-
-                if (!string.IsNullOrWhiteSpace(key))
+                if (!_keyValueDictionary.TryGetValue(key, out ImmutableArray<string> value))
                 {
-                    if (!_keyValueDictionary.ContainsKey(key))
-                    {
-                        _keyValueDictionary.Add(key, values);
-                    }
-                    else
-                    {
-                        _keyValueDictionary[key] = _keyValueDictionary[key].AddRange(values);
-                    }
+                    _keyValueDictionary.Add(key, values);
+                }
+                else
+                {
+                    _keyValueDictionary[key] = value.AddRange(values);
                 }
             }
-
-            _allKeys = _keyValueDictionary.Keys.ToImmutableArray();
         }
 
-        public ImmutableArray<string> AllKeys
-        {
-            get
-            {
-                CheckDisposed();
+        _allKeys = [.._keyValueDictionary.Keys];
+    }
 
-                return _allKeys;
-            }
-        }
-
-        public ImmutableArray<StringPair> AllValues
-        {
-            get
-            {
-                CheckDisposed();
-
-                return AllKeys.Select(key => new StringPair(key, GetCombinedValues(key))).ToImmutableArray();
-            }
-        }
-
-        public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues
-        {
-            get
-            {
-                CheckDisposed();
-
-                return AllKeys
-                    .Select(key => new MultipleValuesStringPair(key, _keyValueDictionary![key]))
-                    .ToImmutableArray();
-            }
-        }
-
-        public string this[string? key] => GetCombinedValues(key);
-
-        private string GetCombinedValues(string? key)
+    public ImmutableArray<string> AllKeys
+    {
+        get
         {
             CheckDisposed();
 
-            if (key is null)
-            {
-                return string.Empty;
-            }
+            return _allKeys;
+        }
+    }
 
-            if (!_keyValueDictionary!.ContainsKey(key))
-            {
-                return string.Empty;
-            }
+    public ImmutableArray<StringPair> AllValues
+    {
+        get
+        {
+            CheckDisposed();
 
-            ImmutableArray<string> values = _keyValueDictionary[key];
+            return [..AllKeys.Select(key => new StringPair(key, GetCombinedValues(key)))];
+        }
+    }
 
-            if (values.IsEmpty)
-            {
-                return string.Empty;
-            }
+    public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues
+    {
+        get
+        {
+            CheckDisposed();
 
-            if (values.Length == 1)
-            {
-                return values[0];
-            }
+            return [
+                ..AllKeys
+                    .Select(key => new MultipleValuesStringPair(key, _keyValueDictionary![key]))
+            ];
+        }
+    }
 
-            return string.Join(",", values);
+    public string this[string? key] => GetCombinedValues(key);
+
+    private string GetCombinedValues(string? key)
+    {
+        CheckDisposed();
+
+        if (key is null)
+        {
+            return string.Empty;
         }
 
-        private void CheckDisposed()
+        if (!_keyValueDictionary!.TryGetValue(key, out ImmutableArray<string> values))
         {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException(ToString());
-            }
+            return string.Empty;
         }
 
-        public override string ToString()
+        if (values.IsEmpty)
         {
-            if (!string.IsNullOrWhiteSpace(_name))
-            {
-                return $"{base.ToString()} [name: '{_name}']";
-            }
-
-            return $"{base.ToString()} [name: 'unnamed']";
+            return string.Empty;
         }
 
-        public void Dispose()
+        if (values.Length == 1)
         {
-            if (!_disposed)
-            {
-                _keyValueDictionary?.Clear();
-                _keyValueDictionary = null;
-                _allKeys = default;
-                _disposed = true;
-            }
+            return values[0];
+        }
+
+        return string.Join(",", values);
+    }
+
+    private void CheckDisposed()
+    {
+        if (_disposed)
+        {
+            throw new ObjectDisposedException(ToString());
+        }
+    }
+
+    public override string ToString()
+    {
+        if (!string.IsNullOrWhiteSpace(_name))
+        {
+            return $"{base.ToString()} [name: '{_name}']";
+        }
+
+        return $"{base.ToString()} [name: 'unnamed']";
+    }
+
+    public void Dispose()
+    {
+        if (!_disposed)
+        {
+            _keyValueDictionary?.Clear();
+            _keyValueDictionary = null;
+            _allKeys = default;
+            _disposed = true;
         }
     }
 }

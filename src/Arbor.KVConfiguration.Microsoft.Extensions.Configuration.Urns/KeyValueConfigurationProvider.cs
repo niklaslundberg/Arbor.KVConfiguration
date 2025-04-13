@@ -1,65 +1,61 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
 
-namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
+namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns;
+
+public sealed class KeyValueConfigurationProvider(KeyValueConfigurationSourceAdapter adapter) : IConfigurationProvider
 {
-    public sealed class KeyValueConfigurationProvider : IConfigurationProvider
+    public bool TryGet(string key, out string? value)
     {
-        private readonly KeyValueConfigurationSourceAdapter _adapter;
+        string? foundValue = adapter.KeyValueConfiguration[key];
 
-        public KeyValueConfigurationProvider(KeyValueConfigurationSourceAdapter adapter) => _adapter = adapter;
-
-        public bool TryGet(string key, out string? value)
+        if (string.IsNullOrWhiteSpace(foundValue))
         {
-            string foundValue = _adapter.KeyValueConfiguration[key];
-
-            if (string.IsNullOrWhiteSpace(foundValue))
-            {
-                value = default;
-                return false;
-            }
-
-            value = foundValue;
-            return true;
+            value = null;
+            return false;
         }
 
-        public void Set(string key, string? value)
-        {
-            // Not supported
-        }
+        value = foundValue;
+        return true;
+    }
 
-        public IChangeToken GetReloadToken() => new CancellationChangeToken(default);
+    public void Set(string key, string? value)
+    {
+        // Not supported
+    }
 
-        public void Load()
-        {
-            // Data is already loaded
-        }
+    public IChangeToken GetReloadToken() => new CancellationChangeToken(CancellationToken.None);
 
-        public IEnumerable<string> GetChildKeys(
-            IEnumerable<string> earlierKeys,
-            string? parentPath)
-        {
-            string prefix = parentPath is null
-                ? string.Empty
-                : parentPath + ConfigurationPath.KeyDelimiter;
+    public void Load()
+    {
+        // Data is already loaded
+    }
 
-            return _adapter.KeyValueConfiguration.AllValues
-                .Where(kv => kv.Key.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
-                .Select(kv => Segment(kv.Key, prefix.Length))
-                .Concat(earlierKeys)
-                .OrderBy(k => k, ConfigurationKeyComparer.Instance);
-        }
+    public IEnumerable<string> GetChildKeys(
+        IEnumerable<string> earlierKeys,
+        string? parentPath)
+    {
+        string prefix = parentPath is null
+            ? string.Empty
+            : parentPath + ConfigurationPath.KeyDelimiter;
 
-        private static string Segment(string key, int prefixLength)
-        {
-            int indexOf = key.IndexOf(ConfigurationPath.KeyDelimiter, prefixLength, StringComparison.OrdinalIgnoreCase);
+        return adapter.KeyValueConfiguration.AllValues
+            .Where(kv => kv.Key.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+            .Select(kv => Segment(kv.Key, prefix.Length))
+            .Concat(earlierKeys)
+            .OrderBy(k => k, ConfigurationKeyComparer.Instance);
+    }
 
-            return indexOf < 0
-                ? key[prefixLength..]
-                : key[prefixLength..indexOf];
-        }
+    private static string Segment(string key, int prefixLength)
+    {
+        int indexOf = key.IndexOf(ConfigurationPath.KeyDelimiter, prefixLength, StringComparison.OrdinalIgnoreCase);
+
+        return indexOf < 0
+            ? key[prefixLength..]
+            : key[prefixLength..indexOf];
     }
 }

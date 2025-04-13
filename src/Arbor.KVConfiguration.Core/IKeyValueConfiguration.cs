@@ -1,16 +1,14 @@
 ﻿using System.Collections.Immutable;
-using JetBrains.Annotations;
 
-namespace Arbor.KVConfiguration.Core
+namespace Arbor.KVConfiguration.Core;
+
+public interface IKeyValueConfiguration
 {
-    public interface IKeyValueConfiguration
-    {
-        ImmutableArray<string> AllKeys { get; }
+    public ImmutableArray<string> AllKeys { get; }
 
-        ImmutableArray<StringPair> AllValues { get; }
+    public ImmutableArray<StringPair> AllValues { get; }
 
-        ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues { get; }
+    public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues { get; }
 
-        [CanBeNull] string this[string? key] { get; }
-    }
+    public string? this[string? key] { get; }
 }

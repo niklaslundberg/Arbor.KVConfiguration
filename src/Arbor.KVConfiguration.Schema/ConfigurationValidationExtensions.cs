@@ -5,44 +5,39 @@ using System.Linq;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Core.Metadata;
 using Arbor.KVConfiguration.Schema.Validators;
-using JetBrains.Annotations;
 
-namespace Arbor.KVConfiguration.Schema
+namespace Arbor.KVConfiguration.Schema;
+
+public static class ConfigurationValidationExtensions
 {
-    public static class ConfigurationValidationExtensions
+    public static KeyValueConfigurationValidationSummary Validate(
+        this ImmutableArray<MultipleValuesStringPair> multipleValuesStringPairs,
+        IConfigurationValidator configurationValidator,
+        ImmutableArray<KeyMetadata> metadata)
     {
-        public static KeyValueConfigurationValidationSummary Validate(
-            this ImmutableArray<MultipleValuesStringPair> multipleValuesStringPairs,
-            [NotNull] IConfigurationValidator configurationValidator,
-            ImmutableArray<KeyMetadata> metadata)
+        configurationValidator.ThrowIfNull(nameof(configurationValidator));
+
+        var keyValueConfigurationValidationResults = new List<KeyValueConfigurationValidationResult>();
+
+        foreach (MultipleValuesStringPair multipleValuesStringPair in multipleValuesStringPairs)
         {
-            if (configurationValidator is null)
+            KeyMetadata? metadataItem =
+                metadata.SafeToImmutableArray().SingleOrDefault(
+                    item =>
+                        item.Key.Equals(multipleValuesStringPair.Key, StringComparison.OrdinalIgnoreCase));
+
+            if (metadataItem is {})
             {
-                throw new ArgumentNullException(nameof(configurationValidator));
-            }
+                var validationResult =
+                    configurationValidator.Validate(multipleValuesStringPair, metadataItem);
 
-            var keyValueConfigurationValidationResults = new List<KeyValueConfigurationValidationResult>();
-
-            foreach (MultipleValuesStringPair multipleValuesStringPair in multipleValuesStringPairs)
-            {
-                KeyMetadata? metadataItem =
-                    metadata.SafeToImmutableArray().SingleOrDefault(
-                        item =>
-                            item.Key.Equals(multipleValuesStringPair.Key, StringComparison.OrdinalIgnoreCase));
-
-                if (metadataItem is {})
+                if (!validationResult.IsValid)
                 {
-                    var validationResult =
-                        configurationValidator.Validate(multipleValuesStringPair, metadataItem);
-
-                    if (!validationResult.IsValid)
-                    {
-                        keyValueConfigurationValidationResults.Add(validationResult);
-                    }
+                    keyValueConfigurationValidationResults.Add(validationResult);
                 }
             }
-
-            return new KeyValueConfigurationValidationSummary(keyValueConfigurationValidationResults);
         }
+
+        return new KeyValueConfigurationValidationSummary(keyValueConfigurationValidationResults);
     }
 }

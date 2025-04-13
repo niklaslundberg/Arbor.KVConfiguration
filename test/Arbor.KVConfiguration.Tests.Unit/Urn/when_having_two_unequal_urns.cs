@@ -1,24 +1,22 @@
 using Machine.Specifications;
 
-namespace Arbor.KVConfiguration.Tests.Unit.Urn
-{
+namespace Arbor.KVConfiguration.Tests.Unit.Urn;
 #pragma warning disable 0649
 #pragma warning disable 0169
-    [Subject(typeof(Primitives.Urn))]
-    public class when_having_two_unequal_urns
+[Subject(typeof(Primitives.Urn))]
+public class when_having_two_unequal_urns
+{
+    protected static Primitives.Urn urn1;
+
+    protected static Primitives.Urn urn2;
+
+    private Establish context = () =>
     {
-        protected static Primitives.Urn urn1;
+        urn1 = Primitives.Urn.Parse("urn:abc:123");
+        urn2 = Primitives.Urn.Parse("urn:def:123");
+    };
 
-        protected static Primitives.Urn urn2;
+    private Because of = () => { };
 
-        private Establish context = () =>
-        {
-            urn1 = Primitives.Urn.Parse("urn:abc:123");
-            urn2 = Primitives.Urn.Parse("urn:def:123");
-        };
-
-        private Because of = () => { };
-
-        private Behaves_like<two_unequal_urns> two_unequal_urns;
-    }
+    private Behaves_like<two_unequal_urns> two_unequal_urns;
 }

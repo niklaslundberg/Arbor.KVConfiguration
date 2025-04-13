@@ -2,22 +2,21 @@
 using BenchmarkDotNet.Reports;
 using BenchmarkDotNet.Running;
 
-namespace Arbor.KVConfiguration.Tests.Benchmark
+namespace Arbor.KVConfiguration.Tests.Benchmark;
+
+internal static class Program
 {
-    internal static class Program
+    // ReSharper disable once UnusedParameter.Local
+    private static void Main(string[] args)
     {
-        // ReSharper disable once UnusedParameter.Local
-        private static void Main(string[] args)
-        {
-            Summary summary = BenchmarkRunner.Run<BenchmarkGetItemByKey>();
+        Summary summary = BenchmarkRunner.Run<BenchmarkGetItemByKey>();
 
-            Console.WriteLine(summary);
+        Console.WriteLine(summary);
 
-            Summary summary2 = BenchmarkRunner.Run<BenchmarkBindConfigurationKey>();
+        Summary summary2 = BenchmarkRunner.Run<BenchmarkBindConfigurationKey>();
 
-            Console.WriteLine(summary2);
+        Console.WriteLine(summary2);
 
-            Console.ReadLine();
-        }
+        Console.ReadLine();
     }
 }
