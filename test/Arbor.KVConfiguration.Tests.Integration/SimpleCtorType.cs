@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Arbor.KVConfiguration.Urns;
-using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Tests.Integration;
 
 [Urn("urn:test:simple")]
-[UsedImplicitly]
+
 public class SimpleCtorType
 {
     public SimpleCtorType(string name, int age)

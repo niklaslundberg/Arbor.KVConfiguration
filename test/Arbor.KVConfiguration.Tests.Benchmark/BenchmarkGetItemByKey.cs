@@ -16,5 +16,5 @@ public class BenchmarkGetItemByKey
     }
 
     [Benchmark]
-    public string Value() => _configuration["urn:a:complex:immutable:type:instance1:id"];
+    public string? Value() => _configuration["urn:a:complex:immutable:type:instance1:id"];
 }

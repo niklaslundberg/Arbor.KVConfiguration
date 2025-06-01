@@ -5,7 +5,7 @@ namespace Arbor.KVConfiguration.Core;
 
 public readonly struct StringPair : IEquatable<StringPair>
 {
-    public StringPair(string key, string value)
+    public StringPair(string key, string? value)
     {
         Key = key;
         Value = value;
@@ -13,7 +13,7 @@ public readonly struct StringPair : IEquatable<StringPair>
 
     public string Key { get; }
 
-    public string Value { get; }
+    public string? Value { get; }
 
     public static bool operator ==(StringPair left, StringPair right) => left.Equals(right);
 

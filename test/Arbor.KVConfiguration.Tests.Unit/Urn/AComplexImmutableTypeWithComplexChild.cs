@@ -1,10 +1,8 @@
 using System;
 using Arbor.KVConfiguration.Urns;
-using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Tests.Unit.Urn;
 
-[PublicAPI]
 [Urn("urn:test:a:complex:immutable:type-with-complex-child")]
 public class AComplexImmutableTypeWithComplexChild
 {

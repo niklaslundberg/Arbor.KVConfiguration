@@ -6,5 +6,5 @@ namespace Arbor.KVConfiguration.GlobalTool;
 internal static class Program
 {
     private static Task<int> Main(string[] args) =>
-        App.CreateAndRunAsync(args, EnvironmentVariables.GetEnvironmentVariables().Variables);
+        App.CreateAndRunAsync(args, EnvironmentVariables.System);
 }

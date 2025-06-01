@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Arbor.KVConfiguration.Urns;
-using JetBrains.Annotations;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace Arbor.KVConfiguration.Samples.AspNetCore.Controllers;
@@ -17,7 +17,7 @@ public class HomeController : Controller
 
     public IActionResult Index() => View(new SampleViewModel(_mySampleConfiguration));
 
-    [PublicAPI]
+    
     [Route("~/diagnostics")]
     [HttpGet]
     public object Diagnostics(

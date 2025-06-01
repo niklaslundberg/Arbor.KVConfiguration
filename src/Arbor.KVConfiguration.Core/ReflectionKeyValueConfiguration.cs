@@ -3,11 +3,9 @@ using System.Collections.Specialized;
 using System.Reflection;
 using Arbor.KVConfiguration.Core.Extensions;
 using Arbor.KVConfiguration.Core.Metadata;
-using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core;
 
-[UsedImplicitly]
 public sealed class ReflectionKeyValueConfiguration : IKeyValueConfigurationWithMetadata
 {
     private readonly string? _assemblyName;

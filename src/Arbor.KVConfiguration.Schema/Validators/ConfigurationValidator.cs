@@ -3,7 +3,6 @@ using System.Collections.Immutable;
 using System.Linq;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Core.Metadata;
-using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Schema.Validators;
 
@@ -13,13 +12,10 @@ public class ConfigurationValidator : IConfigurationValidator
 
     public ConfigurationValidator() =>
         _validators = [
-            ..new List<IValueValidator>(10)
-            {
-                new IntValidator(), new UriValidator(), new BoolValidator(), new TimeSpanValidator()
-            }
+            new IntValidator(), new UriValidator(), new BoolValidator(), new TimeSpanValidator()
         ];
 
-    [UsedImplicitly]
+    
     public ConfigurationValidator(ImmutableArray<IValueValidator> validators) =>
         _validators = validators.ThrowIfDefault();
 

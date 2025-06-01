@@ -1,39 +1,47 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Frozen;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 
 namespace Arbor.Primitives;
 
-public class EnvironmentVariables
+public abstract class EnvironmentVariables
 {
-    public EnvironmentVariables(IReadOnlyDictionary<string, string> variables) =>
-        Variables = variables ?? throw new ArgumentNullException(nameof(variables));
+    public abstract IReadOnlyDictionary<string, string> Variables { get; }
 
-    public IReadOnlyDictionary<string, string> Variables { get; }
 
-    private static ImmutableDictionary<string, string> GetAll(StringComparer stringComparer)
+    private static readonly Lazy<SystemEnvironmentVariables> Lazy = new(() => new SystemEnvironmentVariables());
+
+    public static EnvironmentVariables System => Lazy.Value;
+
+    public sealed class SystemEnvironmentVariables: EnvironmentVariables
     {
-        var environmentVariables = Environment.GetEnvironmentVariables();
+        internal SystemEnvironmentVariables(StringComparer? stringComparer = null) => Variables = GetAll(stringComparer ?? DefaultStringComparer);
 
-        return environmentVariables
-            .OfType<DictionaryEntry>()
-            .ToImmutableDictionary(entry => (string)entry.Key,
-                entry => (string?)entry.Value ?? "",
-                stringComparer);
-    }
+        public override IReadOnlyDictionary<string, string> Variables { get; }
 
-    public static readonly StringComparer DefaultStringComparer =
-        Environment.OSVersion.Platform is PlatformID.Unix or PlatformID.MacOSX
-            ? StringComparer.Ordinal
-            : StringComparer.OrdinalIgnoreCase;
+        private static FrozenDictionary<string, string> GetAll(StringComparer stringComparer)
+        {
+            var environmentVariables = Environment.GetEnvironmentVariables();
 
-    public static EnvironmentVariables GetEnvironmentVariables() => new(GetAll(DefaultStringComparer));
-    public static EnvironmentVariables GetEnvironmentVariables(StringComparer stringComparer)
-    {
-        stringComparer.ThrowIfNull();
+            return environmentVariables
+                .OfType<DictionaryEntry>()
+                .ToFrozenDictionary(entry => (string)entry.Key,
+                    entry => (string?)entry.Value ?? "",
+                    stringComparer);
+        }
 
-        return new EnvironmentVariables(GetAll(stringComparer));
+        public static readonly StringComparer DefaultStringComparer =
+            Environment.OSVersion.Platform is PlatformID.Unix or PlatformID.MacOSX
+                ? StringComparer.Ordinal
+                : StringComparer.OrdinalIgnoreCase;
+
+        public static EnvironmentVariables GetEnvironmentVariables(StringComparer stringComparer)
+        {
+            stringComparer.ThrowIfNull();
+
+            return new SystemEnvironmentVariables(stringComparer);
+        }
     }
 }

@@ -2,11 +2,9 @@
 using System.Collections.Immutable;
 using System.Runtime.CompilerServices;
 using Arbor.KVConfiguration.Core.Extensions;
-using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core.Metadata;
 
-[PublicAPI]
 [AttributeUsage(AttributeTargets.Field)]
 public sealed class MetadataAttribute : Attribute
 {

@@ -1,12 +1,10 @@
 ﻿using System.Collections.Immutable;
 using System.Text.Json.Serialization;
-using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Schema.SystemJson;
 
 public class ConfigurationItems(string version, ImmutableArray<KeyValue> keys)
 {
-    [PublicAPI]
     [JsonPropertyOrder(0)]
     [JsonPropertyName(JsonSchemaConstants.VersionPropertyKey)]
     public string Version

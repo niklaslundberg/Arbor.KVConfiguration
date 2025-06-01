@@ -4,7 +4,6 @@ using System.Collections.Immutable;
 using System.Collections.Specialized;
 using System.Linq;
 using Arbor.KVConfiguration.Core.Extensions;
-using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core;
 
@@ -20,7 +19,6 @@ public sealed class InMemoryKeyValueConfiguration : IKeyValueConfiguration, IDis
     {
     }
 
-    [PublicAPI]
     public InMemoryKeyValueConfiguration(NameValueCollection nameValueCollection, string? name)
     {
         nameValueCollection.ThrowIfNull();

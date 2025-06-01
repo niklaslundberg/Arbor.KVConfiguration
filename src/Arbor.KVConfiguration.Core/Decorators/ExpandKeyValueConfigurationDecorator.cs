@@ -14,7 +14,7 @@ public sealed class ExpandKeyValueConfigurationDecorator : IKeyValueConfiguratio
         return keyValueConfiguration.AllKeys;
     }
 
-    public string GetValue(string value) => ExpandValue(value);
+    public string? GetValue(string? value) => ExpandValue(value);
 
     public ImmutableArray<StringPair> GetAllValues(IKeyValueConfiguration keyValueConfiguration)
     {
@@ -34,7 +34,7 @@ public sealed class ExpandKeyValueConfigurationDecorator : IKeyValueConfiguratio
         ];
     }
 
-    private static string ExpandValue(string value)
+    private static string? ExpandValue(string? value)
     {
         if (string.IsNullOrWhiteSpace(value))
         {

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Immutable;
-using JetBrains.Annotations;
+
 using Newtonsoft.Json;
 
 namespace Arbor.KVConfiguration.Schema.Json;
@@ -15,7 +15,7 @@ public class ConfigurationItems
         Keys = keys;
     }
 
-    [PublicAPI]
+    
     [JsonProperty(Order = 0, PropertyName = JsonSchemaConstants.VersionPropertyKey)]
     public string Version
     {

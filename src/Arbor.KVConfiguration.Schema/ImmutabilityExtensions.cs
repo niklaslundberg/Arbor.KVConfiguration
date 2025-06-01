@@ -26,5 +26,5 @@ internal static class ImmutabilityExtensions
         return enumerable?.ToImmutableArray() ?? ImmutableArray<T>.Empty;
     }
 
-    internal static ImmutableArray<T> ValueToImmutableArray<T>(this T item) => [..new[] {item}];
+    internal static ImmutableArray<T> ValueToImmutableArray<T>(this T item) => [item];
 }

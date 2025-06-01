@@ -5,7 +5,6 @@ using System.Linq;
 using Arbor.KVConfiguration.Core.Decorators;
 using Arbor.KVConfiguration.Core.Metadata;
 using Arbor.KVConfiguration.Core.Metadata.Extensions;
-using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core;
 
@@ -34,7 +33,7 @@ public sealed class MultiSourceKeyValueConfiguration : IKeyValueConfigurationWit
                            : ", decorators: " + decorators);
     }
 
-    [PublicAPI]
+    
     public string SourceChain
     {
         get
@@ -112,7 +111,7 @@ public sealed class MultiSourceKeyValueConfiguration : IKeyValueConfigurationWit
     }
 
     public string this[string? key] => DecorateValue(_appSettingsDecoratorBuilder,
-        GetValue(_appSettingsDecoratorBuilder.AppSettingsBuilder, key, _logAction).Item2);
+        GetValue(_appSettingsDecoratorBuilder.AppSettingsBuilder, key, _logAction).Item2) ?? "";
 
     public ImmutableArray<KeyValueConfigurationItem> ConfigurationItems
     {
@@ -185,7 +184,7 @@ public sealed class MultiSourceKeyValueConfiguration : IKeyValueConfigurationWit
         return allKeys;
     }
 
-    private static string DecorateValue(AppSettingsDecoratorBuilder decorator, string value)
+    private static string? DecorateValue(AppSettingsDecoratorBuilder decorator, string? value)
     {
         if (string.IsNullOrWhiteSpace(value))
         {
@@ -202,7 +201,7 @@ public sealed class MultiSourceKeyValueConfiguration : IKeyValueConfigurationWit
         return decorator.Decorator.GetValue(decorated ?? value);
     }
 
-    private static (IKeyValueConfiguration, string) GetValue(
+    private static (IKeyValueConfiguration, string?) GetValue(
         AppSettingsBuilder? appSettingsBuilder,
         string? key,
         Action<string>? logAction)
@@ -230,7 +229,7 @@ public sealed class MultiSourceKeyValueConfiguration : IKeyValueConfigurationWit
         logAction?.Invoke(
             $"The current source {appSettingsBuilder.KeyValueConfiguration.GetType().Name} has a value for key '{key}': '{value}'");
 
-        (IKeyValueConfiguration, string) valueTuple = (appSettingsBuilder.KeyValueConfiguration, value);
+        (IKeyValueConfiguration, string?) valueTuple = (appSettingsBuilder.KeyValueConfiguration, value);
 
         logAction?.Invoke($"For key '{key}', configuration source '{valueTuple.Item1.GetType().Name}' is used");
 
@@ -318,7 +317,7 @@ public sealed class MultiSourceKeyValueConfiguration : IKeyValueConfigurationWit
         return configurationItems;
     }
 
-    [PublicAPI]
+    
     public IKeyValueConfiguration? ConfiguratorFor(string? key, Action<string>? logAction = null)
     {
         if (string.IsNullOrWhiteSpace(key))
@@ -326,7 +325,7 @@ public sealed class MultiSourceKeyValueConfiguration : IKeyValueConfigurationWit
             return null;
         }
 
-        (IKeyValueConfiguration?, string) tuple =
+        (IKeyValueConfiguration?, string?) tuple =
             GetValue(_appSettingsDecoratorBuilder.AppSettingsBuilder, key, logAction);
 
         if (tuple.Item1 is NoConfiguration or null)

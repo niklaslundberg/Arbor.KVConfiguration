@@ -4,12 +4,12 @@ namespace Arbor.KVConfiguration.Core.Decorators;
 
 public interface IKeyValueConfigurationDecorator
 {
-    ImmutableArray<string> GetAllKeys(IKeyValueConfiguration keyValueConfiguration);
+    public ImmutableArray<string> GetAllKeys(IKeyValueConfiguration keyValueConfiguration);
 
-    string GetValue(string value);
+   public  string? GetValue(string? value);
 
-    ImmutableArray<StringPair> GetAllValues(IKeyValueConfiguration keyValueConfiguration);
+    public ImmutableArray<StringPair> GetAllValues(IKeyValueConfiguration keyValueConfiguration);
 
-    ImmutableArray<MultipleValuesStringPair> GetAllWithMultipleValues(
+    public ImmutableArray<MultipleValuesStringPair> GetAllWithMultipleValues(
         IKeyValueConfiguration keyValueConfiguration);
 }

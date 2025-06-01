@@ -22,17 +22,17 @@ public class UrnValidator : BaseValueValidator
     {
         if (value is null)
         {
-            return [..new[] {new ValidationError("Value is null")}];
+            return [new ValidationError("Value is null")];
         }
 
         if (string.IsNullOrWhiteSpace(value))
         {
-            return [..new[] {new ValidationError("Value is not a valid URN, current value only contains white-spaces")}];
+            return [new ValidationError("Value is not a valid URN, current value only contains white-spaces")];
         }
 
         if (!Urn.TryParse(value, out _))
         {
-            return [..new[] {new ValidationError($"'{value}' is not a valid URN")}];
+            return [new ValidationError($"'{value}' is not a valid URN")];
         }
 
         return ImmutableArray<ValidationError>.Empty;

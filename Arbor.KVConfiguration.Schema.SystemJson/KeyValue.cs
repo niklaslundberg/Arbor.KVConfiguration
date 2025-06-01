@@ -1,7 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Core.Metadata;
-using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Schema.SystemJson;
 
@@ -28,6 +27,6 @@ public class KeyValue
 
     [JsonPropertyOrder(1)] public string? Value { get; }
 
-    [UsedImplicitly]
+    
     public bool ShouldSerializeConfigurationMetadata() => ConfigurationMetadata is { };
 }

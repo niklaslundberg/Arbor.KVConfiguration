@@ -24,7 +24,7 @@ public class when_validating_a_non_urn_as_urn
     private Establish context = () =>
     {
         configuration_validator =
-            new ConfigurationValidator([..new IValueValidator[] {new UrnValidator()}]);
+            new ConfigurationValidator([new UrnValidator()]);
 
         var configurationItems = new List<KeyValueConfigurationItem>
         {

@@ -13,7 +13,7 @@ public abstract class DecoratorBase : IKeyValueConfigurationDecorator
         return keyValueConfiguration.AllKeys;
     }
 
-    public abstract string GetValue(string value);
+    public abstract string? GetValue(string? value);
 
     public ImmutableArray<StringPair> GetAllValues(IKeyValueConfiguration keyValueConfiguration)
     {

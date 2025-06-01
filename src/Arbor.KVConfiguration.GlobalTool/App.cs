@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Arbor.KVConfiguration.Schema.Json;
+using Arbor.Primitives;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
@@ -24,7 +25,7 @@ public sealed class App : IAsyncDisposable
         IHost host,
         ILogger logger,
         string[] args,
-        IReadOnlyDictionary<string, string> variables)
+        EnvironmentVariables variables)
     {
         Host = host;
         Logger = logger;
@@ -38,7 +39,7 @@ public sealed class App : IAsyncDisposable
 
     public string[] Args { get; }
 
-    public IReadOnlyDictionary<string, string> Variables { get; }
+    public EnvironmentVariables Variables { get; }
 
     public ValueTask DisposeAsync()
     {
@@ -47,7 +48,7 @@ public sealed class App : IAsyncDisposable
         return default;
     }
 
-    public static async Task<int> CreateAndRunAsync(string[] args, IReadOnlyDictionary<string, string> variables)
+    public static async Task<int> CreateAndRunAsync(string[] args, EnvironmentVariables variables)
     {
         LoggerConfiguration loggerConfiguration = new LoggerConfiguration()
             .WriteTo.Console();
@@ -115,7 +116,7 @@ public sealed class App : IAsyncDisposable
             return 2;
         }
 
-        string file = usedArgs.First();
+        string file = usedArgs[0];
 
         var kvPairs = newPairs.ToList();
 
@@ -201,7 +202,7 @@ public sealed class App : IAsyncDisposable
     }
 
     private static App BuildApp(string[] args,
-        IReadOnlyDictionary<string, string> variables,
+        EnvironmentVariables variables,
         ILogger logger)
     {
         logger.Debug("Creating host");

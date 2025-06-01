@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
 using Arbor.KVConfiguration.Core;
-using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Urns;
 
 public sealed class NamedInstance<T> : INamedInstance<T>, IEquatable<NamedInstance<T>>
 {
-    public NamedInstance([NotNull] T value, string name)
+    public NamedInstance(T value, string name)
     {
         if (string.IsNullOrWhiteSpace(name))
         {
@@ -18,7 +17,6 @@ public sealed class NamedInstance<T> : INamedInstance<T>, IEquatable<NamedInstan
         Name = name;
     }
 
-    [NotNull]
     public T Value { get; }
 
     public string Name { get; }

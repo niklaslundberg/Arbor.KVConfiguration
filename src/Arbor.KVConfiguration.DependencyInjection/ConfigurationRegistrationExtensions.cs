@@ -3,21 +3,20 @@ using System.Collections.Generic;
 using System.Reflection;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Urns;
-using JetBrains.Annotations;
+
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Arbor.KVConfiguration.DependencyInjection;
 
 public static class ConfigurationRegistrationExtensions
 {
-    [PublicAPI]
     public static IServiceCollection AddConfigurationInstancesFromAssemblies(
         this IServiceCollection services,
         IKeyValueConfiguration keyValueConfiguration,
         params Assembly[] assemblies) =>
         AddConfigurationInstancesFromAssemblies(services, keyValueConfiguration, null, assemblies);
 
-    [PublicAPI]
+    
     public static IServiceCollection AddConfigurationInstancesFromAssemblies(
         this IServiceCollection services,
         IKeyValueConfiguration keyValueConfiguration,

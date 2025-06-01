@@ -41,7 +41,7 @@ public class RegistrationsTests
             foreach (var configurationRegistrationError in urnTypeRegistration
                          .ConfigurationRegistrationErrors)
             {
-                output.WriteLine(configurationRegistrationError.ErrorMessage);
+                output.WriteLine(configurationRegistrationError.ErrorMessage!);
             }
         }
 
@@ -66,8 +66,8 @@ public class RegistrationsTests
                          .ConfigurationRegistrationErrors)
             {
                 output.WriteLine("Invalid instance {0}, error message: '{1}'",
-                    configurationRegistrationsUrnTypeRegistration.Instance,
-                    configurationRegistrationError.ErrorMessage);
+                    configurationRegistrationsUrnTypeRegistration.Instance!,
+                    configurationRegistrationError.ErrorMessage!);
             }
         }
 
@@ -93,7 +93,7 @@ public class RegistrationsTests
             foreach (var configurationRegistrationError in configurationRegistrationsUrnTypeRegistration
                          .ConfigurationRegistrationErrors)
             {
-                output.WriteLine("Invalid, error message: '{0}'", configurationRegistrationError.ErrorMessage);
+                output.WriteLine("Invalid, error message: '{0}'", configurationRegistrationError.ErrorMessage!);
             }
         }
 

@@ -2,13 +2,11 @@
 using System.Collections.Immutable;
 using System.Linq;
 using Arbor.KVConfiguration.Core.Extensions;
-using JetBrains.Annotations;
 
 namespace Arbor.KVConfiguration.Core.Metadata.Extensions;
 
 public static class KeyValueConfigurationMetadataExtensions
 {
-    [PublicAPI]
     public static ImmutableArray<KeyValueConfigurationItem> GetKeyValueConfigurationItems(
         this IKeyValueConfigurationWithMetadata keyValueConfiguration)
     {

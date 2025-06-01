@@ -1,6 +1,6 @@
 ﻿using Arbor.KVConfiguration.DependencyInjection;
 using Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns;
-using JetBrains.Annotations;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -32,7 +32,7 @@ public class Startup
         services.AddConfigurationInstancesFromAssemblies(new KeyValueConfigurationAdapter(Configuration));
     }
 
-    [PublicAPI]
+    
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {

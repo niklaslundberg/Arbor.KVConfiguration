@@ -4,7 +4,7 @@ using System.IO;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Core.Decorators;
 using Arbor.KVConfiguration.Urns;
-using JetBrains.Annotations;
+
 using Xunit;
 
 namespace Arbor.KVConfiguration.Tests.Unit;
@@ -51,7 +51,7 @@ public class ExpandingConfigurationTests
 
         string expected = $"{tempPath} hello";
         Assert.Equal(expected, FullPath(multiSourceKeyValueConfiguration["Test"]));
-        Assert.Equal(expected, FullPath(multiSourceKeyValueConfiguration.AllValues[0].Value));
+        Assert.Equal(expected, FullPath(multiSourceKeyValueConfiguration!.AllValues[0].Value!));
         Assert.Equal(expected, FullPath(multiSourceKeyValueConfiguration.AllWithMultipleValues[0].Values[0]));
         Assert.Equal(valueWithPattern, multiSourceKeyValueConfiguration.ConfigurationItems[0].Value);
     }
@@ -89,7 +89,7 @@ public class ExpandingConfigurationTests
     }
 
     [Urn("urn:test:testinstance")]
-    [UsedImplicitly]
+    
     private class TestInstance
     {
         public TestInstance(string test) => Test = test;

@@ -2,12 +2,6 @@
   "version": 1,
   "dependencies": {
     "net9.0": {
-      "JetBrains.Annotations": {
-        "type": "Direct",
-        "requested": "[2024.3.0, )",
-        "resolved": "2024.3.0",
-        "contentHash": "ox5pkeLQXjvJdyAB4b2sBYAlqZGLh3PjSnP1bQNVx72ONuTJ9+34/+Rq91Fc0dG29XG9RgZur9+NcP4riihTug=="
-      },
       "Microsoft.CodeAnalysis.Analyzers": {
         "type": "Direct",
         "requested": "[4.14.0, )",
@@ -92,7 +86,6 @@
       "arbor.kvconfiguration.core": {
         "type": "Project",
         "dependencies": {
-          "JetBrains.Annotations": "[2024.3.0, )",
           "Microsoft.CodeAnalysis.CSharp": "[4.14.0, )",
           "Microsoft.Extensions.Primitives": "[9.0.5, )"
         }
@@ -111,7 +104,6 @@
         "dependencies": {
           "Arbor.KVConfiguration.Core": "[1.0.0, )",
           "Arbor.KVConfiguration.Urns": "[1.0.0, )",
-          "JetBrains.Annotations": "[2024.3.0, )",
           "Microsoft.CodeAnalysis.CSharp": "[4.14.0, )",
           "Microsoft.Extensions.Configuration": "[9.0.5, )",
           "Microsoft.Extensions.Configuration.Abstractions": "[9.0.5, )",
@@ -123,7 +115,6 @@
         "type": "Project",
         "dependencies": {
           "Arbor.KVConfiguration.Core": "[1.0.0, )",
-          "JetBrains.Annotations": "[2024.3.0, )",
           "Microsoft.CodeAnalysis.CSharp": "[4.14.0, )",
           "System.Collections.Immutable": "[9.0.5, )"
         }
@@ -134,7 +125,6 @@
           "Arbor.KVConfiguration.Core": "[1.0.0, )",
           "Arbor.KVConfiguration.Schema": "[1.0.0, )",
           "Arbor.Primitives": "[1.0.0, )",
-          "JetBrains.Annotations": "[2024.3.0, )",
           "Microsoft.CSharp": "[4.7.0, )",
           "Microsoft.CodeAnalysis.CSharp": "[4.14.0, )",
           "Newtonsoft.Json": "[13.0.3, )",

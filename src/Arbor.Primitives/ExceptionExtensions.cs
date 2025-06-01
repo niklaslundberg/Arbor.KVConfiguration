@@ -8,6 +8,7 @@ internal static class ExceptionExtensions
         where T : class
     {
 #if NET6_0_OR_GREATER
+        ArgumentNullException.ThrowIfNull(value, name);
 #else
             throw new ArgumentException("Value cannot be null.", name);
 #endif

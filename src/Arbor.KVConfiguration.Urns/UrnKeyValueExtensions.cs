@@ -10,14 +10,13 @@ using System.Linq;
 using System.Reflection;
 using Arbor.KVConfiguration.Core;
 using Arbor.Primitives;
-using JetBrains.Annotations;
+
 using Newtonsoft.Json;
 
 namespace Arbor.KVConfiguration.Urns;
 
 public static class UrnKeyValueExtensions
 {
-    [PublicAPI]
     public static ImmutableArray<INamedInstance<T>> GetNamedInstances<T>(
         this IKeyValueConfiguration keyValueConfiguration) =>
     [
@@ -26,7 +25,7 @@ public static class UrnKeyValueExtensions
             .Where(item => item is { })
     ]!;
 
-    [PublicAPI]
+
     public static ImmutableArray<INamedInstance<object>> GetNamedInstances(
         this IKeyValueConfiguration keyValueConfiguration,
         Type type)
@@ -48,12 +47,12 @@ public static class UrnKeyValueExtensions
         return objects;
     }
 
-    [PublicAPI]
+
     public static object? GetInstance(
         this IKeyValueConfiguration keyValueConfiguration,
         Type type) => GetInstance(keyValueConfiguration, type, null);
 
-    [PublicAPI]
+
     public static object? GetInstance(
         this IKeyValueConfiguration keyValueConfiguration,
         Type type,
@@ -113,7 +112,7 @@ public static class UrnKeyValueExtensions
             .OfType<T>()
     ];
 
-    [PublicAPI]
+
     public static ImmutableArray<object?> GetInstances(
         this IKeyValueConfiguration keyValueConfiguration,
         Type type) =>

@@ -177,11 +177,11 @@ public readonly struct Urn : IEquatable<Urn>
 
     public string AssignedName => $"urn:{Nid}:{Nss}";
 
-    public static string Scheme => "urn";
+    public const string Scheme = "urn";
 
     public string Nid => _nid.ToString();
 
-    public string Name
+    public string? Name
     {
         get
         {
@@ -399,7 +399,7 @@ public readonly struct Urn : IEquatable<Urn>
     private static bool IsWellFormedUriString(string originalValue) =>
         Uri.IsWellFormedUriString(originalValue, UriKind.Absolute);
 
-    private static bool HasUrnScheme(Uri uri) => uri.Scheme.Equals("urn", StringComparison.OrdinalIgnoreCase);
+    private static bool HasUrnScheme(Uri? uri) => uri is { } && uri.Scheme.Equals("urn", StringComparison.OrdinalIgnoreCase);
 
     private static bool IsUri(string originalValue, [NotNullWhen(true)] out Uri? uri) =>
         Uri.TryCreate(originalValue, UriKind.Absolute, out uri);
