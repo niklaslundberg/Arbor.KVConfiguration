@@ -3,7 +3,7 @@
     <TargetFrameworks>netstandard2.0;net8.0;net9.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Arbor.KVConfiguration.Core.v3.ncrunchproject" />
+    <None Remove="**\*.ncrunchproject" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="4.14.0" Condition="'$(TargetFramework)' == 'netstandard2.0'">

@@ -392,6 +392,7 @@ public readonly struct Urn : IEquatable<Urn>
     }
 
     public bool Equals(Urn other) => Equals(this, other);
+    
     public override bool Equals(object? obj) => obj is Urn urn && Equals(urn);
 
     public override int GetHashCode() => StringComparer.OrdinalIgnoreCase.GetHashCode(OriginalValue);
