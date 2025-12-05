@@ -1,17 +1,15 @@
 ﻿using System.Collections.Immutable;
-using JetBrains.Annotations;
 
-namespace Arbor.KVConfiguration.Core.Decorators
+namespace Arbor.KVConfiguration.Core.Decorators;
+
+public interface IKeyValueConfigurationDecorator
 {
-    public interface IKeyValueConfigurationDecorator
-    {
-        ImmutableArray<string> GetAllKeys(IKeyValueConfiguration keyValueConfiguration);
+    public ImmutableArray<string> GetAllKeys(IKeyValueConfiguration keyValueConfiguration);
 
-        string GetValue([NotNull] string value);
+   public  string? GetValue(string? value);
 
-        ImmutableArray<StringPair> GetAllValues([NotNull] IKeyValueConfiguration keyValueConfiguration);
+    public ImmutableArray<StringPair> GetAllValues(IKeyValueConfiguration keyValueConfiguration);
 
-        ImmutableArray<MultipleValuesStringPair> GetAllWithMultipleValues(
-            [NotNull] IKeyValueConfiguration keyValueConfiguration);
-    }
+    public ImmutableArray<MultipleValuesStringPair> GetAllWithMultipleValues(
+        IKeyValueConfiguration keyValueConfiguration);
 }

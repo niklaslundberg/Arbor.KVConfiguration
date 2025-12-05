@@ -1,32 +1,30 @@
 ﻿using System;
-using JetBrains.Annotations;
 
-namespace Arbor.KVConfiguration.Core
+namespace Arbor.KVConfiguration.Core;
+
+public sealed class AppSettingsBuilder : IDisposable
 {
-    public sealed class AppSettingsBuilder : IDisposable
+    public AppSettingsBuilder(
+        IKeyValueConfiguration keyValueConfiguration,
+        AppSettingsBuilder? previous)
     {
-        public AppSettingsBuilder(
-            [NotNull] IKeyValueConfiguration keyValueConfiguration,
-            AppSettingsBuilder? previous)
+        KeyValueConfiguration = keyValueConfiguration ??
+                                throw new ArgumentNullException(nameof(keyValueConfiguration));
+
+        Previous = previous;
+    }
+
+    public IKeyValueConfiguration KeyValueConfiguration { get; }
+
+    public AppSettingsBuilder? Previous { get; }
+
+    public void Dispose()
+    {
+        Previous?.Dispose();
+
+        if (KeyValueConfiguration is IDisposable disposable)
         {
-            KeyValueConfiguration = keyValueConfiguration ??
-                                    throw new ArgumentNullException(nameof(keyValueConfiguration));
-
-            Previous = previous;
-        }
-
-        public IKeyValueConfiguration KeyValueConfiguration { get; }
-
-        public AppSettingsBuilder? Previous { get; }
-
-        public void Dispose()
-        {
-            Previous?.Dispose();
-
-            if (KeyValueConfiguration is IDisposable disposable)
-            {
-                disposable.Dispose();
-            }
+            disposable.Dispose();
         }
     }
 }

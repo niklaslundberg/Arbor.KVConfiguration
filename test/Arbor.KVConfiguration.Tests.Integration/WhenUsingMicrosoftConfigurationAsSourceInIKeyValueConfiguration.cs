@@ -6,40 +6,39 @@ using Arbor.KVConfiguration.Urns;
 using Microsoft.Extensions.Configuration;
 using Xunit;
 
-namespace Arbor.KVConfiguration.Tests.Integration
+namespace Arbor.KVConfiguration.Tests.Integration;
+
+public class WhenUsingMicrosoftConfigurationAsSourceInIKeyValueConfiguration
 {
-    public class WhenUsingMicrosoftConfigurationAsSourceInIKeyValueConfiguration
+    [Fact]
+    public void ItShouldResolveSingleInstanceFromUrn()
     {
-        [Fact]
-        public void ItShouldResolveSingleInstanceFromUrn()
-        {
-            IConfigurationRoot configurationRoot = new ConfigurationBuilder()
-                .AddInMemoryCollection(new Dictionary<string, string?>
-                {
-                    ["urn:test:simple:instance:name"] = "John", ["urn:test:simple:instance:age"] = "42"
-                }).Build();
+        IConfigurationRoot configurationRoot = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["urn:test:simple:instance:name"] = "John", ["urn:test:simple:instance:age"] = "42"
+            }).Build();
 
-            MultiSourceKeyValueConfiguration multiSourceKeyValueConfiguration = KeyValueConfigurationManager
-                .Add(new KeyValueConfigurationAdapter(configurationRoot)).Build();
+        MultiSourceKeyValueConfiguration multiSourceKeyValueConfiguration = KeyValueConfigurationManager
+            .Add(new KeyValueConfigurationAdapter(configurationRoot)).Build();
 
-            SimpleCtorType actual = multiSourceKeyValueConfiguration.GetInstance<SimpleCtorType>() ?? throw new InvalidOperationException(
-                $"Could not get {nameof(SimpleCtorType)}");
+        SimpleCtorType actual = multiSourceKeyValueConfiguration.GetInstance<SimpleCtorType>() ?? throw new InvalidOperationException(
+            $"Could not get {nameof(SimpleCtorType)}");
 
-            Assert.Equal(new SimpleCtorType("John", 42), actual, SimpleCtorType.NameAgeComparer);
-        }
+        Assert.Equal(new SimpleCtorType("John", 42), actual, SimpleCtorType.NameAgeComparer);
+    }
 
-        [Fact]
-        public void ItShouldUseValuesDefined()
-        {
-            IConfigurationRoot configurationRoot = new ConfigurationBuilder()
-                .AddInMemoryCollection(new Dictionary<string, string?> {["a:b:c"] = "123"}).Build();
+    [Fact]
+    public void ItShouldUseValuesDefined()
+    {
+        IConfigurationRoot configurationRoot = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string?> {["a:b:c"] = "123"}).Build();
 
-            MultiSourceKeyValueConfiguration multiSourceKeyValueConfiguration = KeyValueConfigurationManager
-                .Add(new KeyValueConfigurationAdapter(configurationRoot)).Build();
+        MultiSourceKeyValueConfiguration multiSourceKeyValueConfiguration = KeyValueConfigurationManager
+            .Add(new KeyValueConfigurationAdapter(configurationRoot)).Build();
 
-            string actual = multiSourceKeyValueConfiguration["a:b:c"];
+        string actual = multiSourceKeyValueConfiguration["a:b:c"];
 
-            Assert.Equal("123", actual);
-        }
+        Assert.Equal("123", actual);
     }
 }

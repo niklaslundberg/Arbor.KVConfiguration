@@ -1,7 +1,6 @@
-namespace Arbor.KVConfiguration.Core.Decorators
+namespace Arbor.KVConfiguration.Core.Decorators;
+
+internal class NullDecorator : DecoratorBase
 {
-    internal class NullDecorator : DecoratorBase
-    {
-        public override string GetValue(string value) => value;
-    }
+    public override string? GetValue(string? value) => value;
 }

@@ -1,9 +1,8 @@
-namespace Arbor.KVConfiguration.Core.Decorators
+namespace Arbor.KVConfiguration.Core.Decorators;
+
+internal sealed class DecoratorDelegator : AppSettingsDecoratorBuilder
 {
-    internal sealed class DecoratorDelegator : AppSettingsDecoratorBuilder
+    public DecoratorDelegator(AppSettingsBuilder appSettingsBuild) : base(appSettingsBuild, new NullDecorator())
     {
-        public DecoratorDelegator(AppSettingsBuilder appSettingsBuild) : base(appSettingsBuild, new NullDecorator())
-        {
-        }
     }
 }

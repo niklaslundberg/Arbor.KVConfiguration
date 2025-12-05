@@ -1,23 +1,21 @@
 using System;
-using JetBrains.Annotations;
 
-namespace Arbor.KVConfiguration.Core.Metadata
+namespace Arbor.KVConfiguration.Core.Metadata;
+
+public class KeyMetadata
 {
-    public class KeyMetadata
+    public KeyMetadata(string key, ConfigurationMetadata? configurationMetadata)
     {
-        public KeyMetadata([NotNull] string key, ConfigurationMetadata? configurationMetadata)
+        if (string.IsNullOrWhiteSpace(key))
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentException(KeyValueResources.ArgumentIsNullOrWhitespace, nameof(key));
-            }
-
-            Key = key;
-            ConfigurationMetadata = configurationMetadata;
+            throw new ArgumentException(KeyValueResources.ArgumentIsNullOrWhitespace, nameof(key));
         }
 
-        public string Key { get; }
-
-        public ConfigurationMetadata? ConfigurationMetadata { get; }
+        Key = key;
+        ConfigurationMetadata = configurationMetadata;
     }
+
+    public string Key { get; }
+
+    public ConfigurationMetadata? ConfigurationMetadata { get; }
 }

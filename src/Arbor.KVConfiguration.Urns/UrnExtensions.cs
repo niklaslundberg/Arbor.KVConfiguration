@@ -2,20 +2,19 @@ using System;
 using System.Linq;
 using Arbor.Primitives;
 
-namespace Arbor.KVConfiguration.Urns
-{
-    public static class UrnExtensions
-    {
-        public static int NamespaceParts(this Urn urn)
-        {
-            if (urn.Nid.Length == 0)
-            {
-                throw new ArgumentException(nameof(urn));
-            }
+namespace Arbor.KVConfiguration.Urns;
 
-            return urn.OriginalValue.Count(c => c == Urn.Separator) + 1;
+public static class UrnExtensions
+{
+    public static int NamespaceParts(this Urn urn)
+    {
+        if (urn.Nid.Length == 0)
+        {
+            throw new ArgumentException(nameof(urn));
         }
 
-        public static bool IsUrn(this string value) => Urn.TryParse(value, out _);
+        return urn.OriginalValue.Count(c => c == Urn.Separator) + 1;
     }
+
+    public static bool IsUrn(this string value) => Urn.TryParse(value, out _);
 }

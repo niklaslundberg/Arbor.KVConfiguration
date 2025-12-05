@@ -2,32 +2,27 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Arbor.KVConfiguration.Core;
-using JetBrains.Annotations;
 
-namespace Arbor.KVConfiguration.Tests.Unit
+namespace Arbor.KVConfiguration.Tests.Unit;
+
+internal static class MultipleExtensions
 {
-    internal static class MultipleExtensions
+    public static string Print(this IEnumerable<MultipleValuesStringPair> multipleValuesStringPairs)
     {
-        public static string Print([NotNull] this IEnumerable<MultipleValuesStringPair> multipleValuesStringPairs)
+        ArgumentNullException.ThrowIfNull(multipleValuesStringPairs);
+
+        var builder = new StringBuilder();
+
+        foreach (var multipleValuesStringPair in multipleValuesStringPairs)
         {
-            if (multipleValuesStringPairs is null)
+            builder.AppendLine(multipleValuesStringPair.Key);
+
+            foreach (string value in multipleValuesStringPair.Values)
             {
-                throw new ArgumentNullException(nameof(multipleValuesStringPairs));
+                builder.AppendLine($" {value}");
             }
-
-            var builder = new StringBuilder();
-
-            foreach (var multipleValuesStringPair in multipleValuesStringPairs)
-            {
-                builder.AppendLine(multipleValuesStringPair.Key);
-
-                foreach (string value in multipleValuesStringPair.Values)
-                {
-                    builder.AppendLine($" {value}");
-                }
-            }
-
-            return builder.ToString();
         }
+
+        return builder.ToString();
     }
 }

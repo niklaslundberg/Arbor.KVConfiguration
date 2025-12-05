@@ -5,86 +5,81 @@ using System.Collections.Specialized;
 using System.IO;
 using Arbor.KVConfiguration.Core;
 using Arbor.KVConfiguration.Core.Metadata;
-using JetBrains.Annotations;
 
-namespace Arbor.KVConfiguration.JsonConfiguration
+namespace Arbor.KVConfiguration.JsonConfiguration;
+
+public sealed class JsonKeyValueConfiguration : IKeyValueConfigurationWithMetadata
 {
-    public sealed class JsonKeyValueConfiguration : IKeyValueConfigurationWithMetadata
+    private readonly string? _fileFullPath;
+    private readonly IKeyValueConfiguration _inMemoryKeyValueConfiguration;
+
+    public JsonKeyValueConfiguration(IEnumerable<KeyValueConfigurationItem> keyValueConfigurationItems)
     {
-        private readonly string? _fileFullPath;
-        private readonly IKeyValueConfiguration _inMemoryKeyValueConfiguration;
+        keyValueConfigurationItems.ThrowIfNull(nameof(keyValueConfigurationItems));
 
-        public JsonKeyValueConfiguration([NotNull] IEnumerable<KeyValueConfigurationItem> keyValueConfigurationItems)
+        ImmutableArray<KeyValueConfigurationItem> items = keyValueConfigurationItems.SafeToImmutableArray();
+
+        var nameValueCollection = new NameValueCollection();
+
+        foreach (KeyValueConfigurationItem keyValueConfigurationItem in items)
         {
-            if (keyValueConfigurationItems is null)
-            {
-                throw new ArgumentNullException(nameof(keyValueConfigurationItems));
-            }
-
-            ImmutableArray<KeyValueConfigurationItem> items = keyValueConfigurationItems.SafeToImmutableArray();
-
-            var nameValueCollection = new NameValueCollection();
-
-            foreach (KeyValueConfigurationItem keyValueConfigurationItem in items)
-            {
-                nameValueCollection.Add(keyValueConfigurationItem.Key, keyValueConfigurationItem.Value);
-            }
-
-            _inMemoryKeyValueConfiguration = new InMemoryKeyValueConfiguration(nameValueCollection);
-
-            ConfigurationItems = items;
+            nameValueCollection.Add(keyValueConfigurationItem.Key, keyValueConfigurationItem.Value);
         }
 
-        public JsonKeyValueConfiguration(string fileFullPath, bool throwWhenNotExists = true)
-            : this(ReadJsonFile(fileFullPath, throwWhenNotExists)) =>
-            _fileFullPath = fileFullPath;
+        _inMemoryKeyValueConfiguration = new InMemoryKeyValueConfiguration(nameValueCollection);
 
-        public ImmutableArray<string> AllKeys => _inMemoryKeyValueConfiguration.AllKeys;
+        ConfigurationItems = items;
+    }
 
-        public ImmutableArray<StringPair> AllValues => _inMemoryKeyValueConfiguration.AllValues;
+    public JsonKeyValueConfiguration(string fileFullPath, bool throwWhenNotExists = true)
+        : this(ReadJsonFile(fileFullPath, throwWhenNotExists)) =>
+        _fileFullPath = fileFullPath;
 
-        public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues
-            => _inMemoryKeyValueConfiguration.AllWithMultipleValues;
+    public ImmutableArray<string> AllKeys => _inMemoryKeyValueConfiguration.AllKeys;
 
-        public string this[string? key] => _inMemoryKeyValueConfiguration[key];
+    public ImmutableArray<StringPair> AllValues => _inMemoryKeyValueConfiguration.AllValues;
 
-        public ImmutableArray<KeyValueConfigurationItem> ConfigurationItems { get; }
+    public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues
+        => _inMemoryKeyValueConfiguration.AllWithMultipleValues;
 
-        private static ImmutableArray<KeyValueConfigurationItem> ReadJsonFile(
-            string fileFullPath,
-            bool throwWhenNotExists)
+    public string? this[string? key] => _inMemoryKeyValueConfiguration[key];
+
+    public ImmutableArray<KeyValueConfigurationItem> ConfigurationItems { get; }
+
+    private static ImmutableArray<KeyValueConfigurationItem> ReadJsonFile(
+        string fileFullPath,
+        bool throwWhenNotExists)
+    {
+        if (string.IsNullOrWhiteSpace(fileFullPath))
         {
-            if (string.IsNullOrWhiteSpace(fileFullPath))
-            {
-                throw new ArgumentException(KeyValueResources.ArgumentIsNullOrWhitespace, nameof(fileFullPath));
-            }
-
-            if (!File.Exists(fileFullPath))
-            {
-                if (throwWhenNotExists)
-                {
-                    throw new ArgumentException($"The file '{fileFullPath}' does not exist", nameof(fileFullPath));
-                }
-
-                return ImmutableArray<KeyValueConfigurationItem>.Empty;
-            }
-
-            var jsonFileReader = new JsonFileReader(fileFullPath);
-
-            ImmutableArray<KeyValueConfigurationItem> keyValueConfigurationItems =
-                jsonFileReader.ReadConfiguration();
-
-            return keyValueConfigurationItems;
+            throw new ArgumentException(KeyValueResources.ArgumentIsNullOrWhitespace, nameof(fileFullPath));
         }
 
-        public override string ToString()
+        if (!File.Exists(fileFullPath))
         {
-            if (!string.IsNullOrWhiteSpace(_fileFullPath))
+            if (throwWhenNotExists)
             {
-                return $"{base.ToString()} [json file source: '{_fileFullPath}', exists: {File.Exists(_fileFullPath)}]";
+                throw new ArgumentException($"The file '{fileFullPath}' does not exist", nameof(fileFullPath));
             }
 
-            return $"{base.ToString()} [no json file source]";
+            return ImmutableArray<KeyValueConfigurationItem>.Empty;
         }
+
+        var jsonFileReader = new JsonFileReader(fileFullPath);
+
+        ImmutableArray<KeyValueConfigurationItem> keyValueConfigurationItems =
+            jsonFileReader.ReadConfiguration();
+
+        return keyValueConfigurationItems;
+    }
+
+    public override string ToString()
+    {
+        if (!string.IsNullOrWhiteSpace(_fileFullPath))
+        {
+            return $"{base.ToString()} [json file source: '{_fileFullPath}', exists: {File.Exists(_fileFullPath)}]";
+        }
+
+        return $"{base.ToString()} [no json file source]";
     }
 }

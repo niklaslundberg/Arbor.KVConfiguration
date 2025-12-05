@@ -2,94 +2,74 @@
 using System.Collections.Immutable;
 using System.Linq;
 using System.Reflection;
-using JetBrains.Annotations;
 
-namespace Arbor.KVConfiguration.Core.Extensions
+namespace Arbor.KVConfiguration.Core.Extensions;
+
+internal static class TypeExtensions
 {
-    internal static class TypeExtensions
+    internal static bool IsPublicStaticClass(this Type type)
     {
-        internal static bool IsPublicStaticClass([NotNull] this Type type)
-        {
-            if (type is null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
+        type.ThrowIfNull();
 
-            return type.IsClass && (type.IsPublic || type.IsNestedPublic) && type.IsAbstract && type.IsSealed;
+        return type.IsClass && (type.IsPublic || type.IsNestedPublic) && type.IsAbstract && type.IsSealed;
+    }
+
+    private static bool IsPublicClass(this Type type)
+    {
+        type.ThrowIfNull();
+
+        return type.IsClass && (type.IsPublic || type.IsNestedPublic);
+    }
+
+    private static ImmutableArray<Type> GetLoadableTypes(this Assembly assembly)
+    {
+        assembly.ThrowIfNull();
+
+        try
+        {
+            return [..assembly.GetTypes()];
+        }
+        catch (ReflectionTypeLoadException ex)
+        {
+            return [..ex.Types.Where(type => type is {})];
+        }
+    }
+    internal static ImmutableArray<FieldInfo> GetPublicConstantStringFields(this Assembly assembly)
+    {
+        assembly.ThrowIfNull();
+
+        var fields = assembly.GetLoadableTypes()
+            .Where(IsPublicClass)
+            .SelectMany(type => type.GetFields(BindingFlags.Public | BindingFlags.Static))
+            .Where(field => field.IsPublicConstantStringField())
+            .ToImmutableArray();
+
+        return fields;
+    }
+
+    internal static ImmutableArray<FieldInfo> GetPublicConstantStringFields(this Type type)
+    {
+        type.ThrowIfNull();
+
+        if (!IsPublicStaticClass(type))
+        {
+            return ImmutableArray<FieldInfo>.Empty;
         }
 
-        private static bool IsPublicClass([NotNull] this Type type)
-        {
-            if (type is null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
+        var publicConstantStringFields = type.GetFields()
+            .Where(field => field.IsPublicConstantStringField())
+            .ToImmutableArray();
 
-            return type.IsClass && (type.IsPublic || type.IsNestedPublic);
-        }
+        return publicConstantStringFields;
+    }
 
-        private static ImmutableArray<Type> GetLoadableTypes([NotNull] this Assembly assembly)
-        {
-            if (assembly is null)
-            {
-                throw new ArgumentNullException(nameof(assembly));
-            }
+    private static bool IsPublicConstantStringField(this FieldInfo fieldInfo)
+    {
+        fieldInfo.ThrowIfNull();
 
-            try
-            {
-                return assembly.GetTypes().ToImmutableArray();
-            }
-            catch (ReflectionTypeLoadException ex)
-            {
-                return ex.Types.Where(type => type is {}).ToImmutableArray()!;
-            }
-        }
-        internal static ImmutableArray<FieldInfo> GetPublicConstantStringFields([NotNull] this Assembly assembly)
-        {
-            if (assembly is null)
-            {
-                throw new ArgumentNullException(nameof(assembly));
-            }
-
-            var fields = assembly.GetLoadableTypes()
-                .Where(IsPublicClass)
-                .SelectMany(type => type.GetFields(BindingFlags.Public | BindingFlags.Static))
-                .Where(field => field.IsPublicConstantStringField())
-                .ToImmutableArray();
-
-            return fields;
-        }
-
-        internal static ImmutableArray<FieldInfo> GetPublicConstantStringFields([NotNull] this Type type)
-        {
-            if (type is null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
-
-            if (!IsPublicStaticClass(type))
-            {
-                return ImmutableArray<FieldInfo>.Empty;
-            }
-
-            var publicConstantStringFields = type.GetFields()
-                .Where(field => field.IsPublicConstantStringField())
-                .ToImmutableArray();
-
-            return publicConstantStringFields;
-        }
-
-        private static bool IsPublicConstantStringField([NotNull] this FieldInfo fieldInfo)
-        {
-            if (fieldInfo is null)
-            {
-                throw new ArgumentNullException(nameof(fieldInfo));
-            }
-
-            return fieldInfo.IsPublic &&
-                   fieldInfo.FieldType == typeof(string) &&
-                   fieldInfo.IsLiteral &&
-                   !fieldInfo.IsInitOnly;
-        }
+        return fieldInfo.IsPublic &&
+               fieldInfo.FieldType == typeof(string) &&
+               fieldInfo.IsLiteral &&
+               !fieldInfo.IsInitOnly;
     }
 }

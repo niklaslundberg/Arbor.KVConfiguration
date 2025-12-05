@@ -1,33 +1,28 @@
 using System;
-using JetBrains.Annotations;
 
-namespace Arbor.KVConfiguration.Core.Extensions.StringExtensions
+namespace Arbor.KVConfiguration.Core.Extensions.StringExtensions;
+
+public static class KeyValueConfigurationStringExtensions
 {
-    public static class KeyValueConfigurationStringExtensions
+    public static string? ValueOrDefault(
+        this IKeyValueConfiguration keyValueConfiguration,
+        string key,
+        string? defaultValue = "")
     {
-        public static string? ValueOrDefault(
-            [NotNull] this IKeyValueConfiguration keyValueConfiguration,
-            [NotNull] string key,
-            [CanBeNull] string defaultValue = "")
+        keyValueConfiguration.ThrowIfNull();
+
+        if (string.IsNullOrWhiteSpace(key))
         {
-            if (keyValueConfiguration is null)
-            {
-                throw new ArgumentNullException(nameof(keyValueConfiguration));
-            }
-
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-
-            string value = keyValueConfiguration[key];
-
-            if (string.IsNullOrWhiteSpace(value))
-            {
-                return defaultValue;
-            }
-
-            return value;
+            throw new ArgumentNullException(nameof(key));
         }
+
+        string? value = keyValueConfiguration[key];
+
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return defaultValue;
+        }
+
+        return value;
     }
 }

@@ -5,343 +5,344 @@ using System.Linq;
 using Arbor.KVConfiguration.Core.Decorators;
 using Arbor.KVConfiguration.Core.Metadata;
 using Arbor.KVConfiguration.Core.Metadata.Extensions;
-using JetBrains.Annotations;
 
-namespace Arbor.KVConfiguration.Core
+namespace Arbor.KVConfiguration.Core;
+
+public sealed class MultiSourceKeyValueConfiguration : IKeyValueConfigurationWithMetadata, IDisposable
 {
-    public sealed class MultiSourceKeyValueConfiguration : IKeyValueConfigurationWithMetadata, IDisposable
+    private const string Arrow = "-->";
+    private readonly AppSettingsDecoratorBuilder _appSettingsDecoratorBuilder;
+    private readonly Action<string>? _logAction;
+    private bool _isDisposed;
+    private readonly string _sourceChain;
+
+    public MultiSourceKeyValueConfiguration(
+        AppSettingsDecoratorBuilder appSettingsDecoratorBuilder,
+        Action<string>? logAction = null)
     {
-        private const string Arrow = "-->";
-        private readonly AppSettingsDecoratorBuilder _appSettingsDecoratorBuilder;
-        private readonly Action<string>? _logAction;
-        private bool _isDisposed;
-        private readonly string _sourceChain;
+        _appSettingsDecoratorBuilder = appSettingsDecoratorBuilder ??
+                                       throw new ArgumentNullException(nameof(appSettingsDecoratorBuilder));
 
-        public MultiSourceKeyValueConfiguration(
-            [NotNull] AppSettingsDecoratorBuilder appSettingsDecoratorBuilder,
-            Action<string>? logAction = null)
+        _logAction = logAction;
+
+        string decorators = BuildDecoratorsAsString(_appSettingsDecoratorBuilder);
+
+        _sourceChain = "source chain: " + BuildChainAsString(_appSettingsDecoratorBuilder.AppSettingsBuilder) +
+                       (string.IsNullOrWhiteSpace(decorators)
+                           ? string.Empty
+                           : ", decorators: " + decorators);
+    }
+
+    
+    public string SourceChain
+    {
+        get
         {
-            _appSettingsDecoratorBuilder = appSettingsDecoratorBuilder ??
-                                           throw new ArgumentNullException(nameof(appSettingsDecoratorBuilder));
+            CheckIsDisposed();
 
-            _logAction = logAction;
+            return _sourceChain;
+        }
+    }
 
-            string decorators = BuildDecoratorsAsString(_appSettingsDecoratorBuilder);
-
-            _sourceChain = "source chain: " + BuildChainAsString(_appSettingsDecoratorBuilder.AppSettingsBuilder) +
-                          (string.IsNullOrWhiteSpace(decorators)
-                              ? string.Empty
-                              : ", decorators: " + decorators);
+    public void Dispose()
+    {
+        if (_isDisposed)
+        {
+            return;
         }
 
-        [PublicAPI]
-        public string SourceChain
-        {
-            get
-            {
-                CheckIsDisposed();
+        _isDisposed = true;
+        _appSettingsDecoratorBuilder.Dispose();
+    }
 
-                return _sourceChain;
-            }
+    public ImmutableArray<string> AllKeys
+    {
+        get
+        {
+            CheckIsDisposed();
+
+            return [
+                ..GetAllKeys(_appSettingsDecoratorBuilder.AppSettingsBuilder)
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+            ];
+        }
+    }
+
+    public ImmutableArray<StringPair> AllValues
+    {
+        get
+        {
+            CheckIsDisposed();
+
+            IEnumerable<StringPair> stringPairs = AllKeys.Select(key => new StringPair(key,
+                GetValue(_appSettingsDecoratorBuilder.AppSettingsBuilder, key, _logAction).Item2));
+
+            var immutableArray =
+                stringPairs.Select(pair => new StringPair(pair.Key,
+                    DecorateValue(_appSettingsDecoratorBuilder, pair.Value))).ToImmutableArray();
+
+            return immutableArray;
+        }
+    }
+
+    private void CheckIsDisposed()
+    {
+        if (_isDisposed)
+        {
+            throw new ObjectDisposedException(ToString());
+        }
+    }
+
+    public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues
+    {
+        get
+        {
+            CheckIsDisposed();
+            ImmutableArray<MultipleValuesStringPair> values =
+                GetMultipleValues(_appSettingsDecoratorBuilder.AppSettingsBuilder, AllKeys);
+
+            var multipleValuesStringPairs = values
+                .Select(item => new MultipleValuesStringPair(item.Key,
+                    [..item.Values.Select(value => DecorateValue(_appSettingsDecoratorBuilder, value))]))
+                .ToImmutableArray();
+
+            return multipleValuesStringPairs;
+        }
+    }
+
+    public string this[string? key] => DecorateValue(_appSettingsDecoratorBuilder,
+        GetValue(_appSettingsDecoratorBuilder.AppSettingsBuilder, key, _logAction).Item2) ?? "";
+
+    public ImmutableArray<KeyValueConfigurationItem> ConfigurationItems
+    {
+        get
+        {
+            CheckIsDisposed();
+
+            return [
+                ..GetConfigurationItems(
+                    _appSettingsDecoratorBuilder.AppSettingsBuilder)
+            ];
+        }
+    }
+
+    private string BuildDecoratorsAsString(AppSettingsDecoratorBuilder? appSettingsDecoratorBuilder)
+    {
+        if (appSettingsDecoratorBuilder?.Decorator is null)
+        {
+            return string.Empty;
         }
 
-        public void Dispose()
+        if (appSettingsDecoratorBuilder.Decorator is NullDecorator)
         {
-            if (_isDisposed)
-            {
-                return;
-            }
-
-            _isDisposed = true;
-            _appSettingsDecoratorBuilder.Dispose();
+            return string.Empty;
         }
 
-        public ImmutableArray<string> AllKeys
-        {
-            get
-            {
-                CheckIsDisposed();
+        string result = appSettingsDecoratorBuilder.Decorator.ToString() ?? appSettingsDecoratorBuilder.Decorator.GetType().Name;
 
-                return GetAllKeys(_appSettingsDecoratorBuilder.AppSettingsBuilder)
-                    .Distinct(StringComparer.OrdinalIgnoreCase).ToImmutableArray();
-            }
+        if (appSettingsDecoratorBuilder.Previous is {})
+        {
+            result += Arrow + BuildDecoratorsAsString(appSettingsDecoratorBuilder.Previous);
         }
 
-        public ImmutableArray<StringPair> AllValues
+        return result;
+    }
+
+    private string BuildChainAsString(AppSettingsBuilder? builder)
+    {
+        if (builder?.KeyValueConfiguration is null)
         {
-            get
-            {
-                CheckIsDisposed();
-
-                IEnumerable<StringPair> stringPairs = AllKeys.Select(key => new StringPair(key,
-                    GetValue(_appSettingsDecoratorBuilder.AppSettingsBuilder, key, _logAction).Item2));
-
-                var immutableArray =
-                    stringPairs.Select(pair => new StringPair(pair.Key,
-                        DecorateValue(_appSettingsDecoratorBuilder, pair.Value))).ToImmutableArray();
-
-                return immutableArray;
-            }
+            return string.Empty;
         }
 
-        private void CheckIsDisposed()
+        string result = builder.KeyValueConfiguration.ToString() ?? builder.KeyValueConfiguration.GetType().Name;
+
+        if (builder.Previous is {})
         {
-            if (_isDisposed)
-            {
-                throw new ObjectDisposedException(ToString());
-            }
+            result += Arrow + BuildChainAsString(builder.Previous);
         }
 
-        public ImmutableArray<MultipleValuesStringPair> AllWithMultipleValues
+        return result;
+    }
+
+    private static string[] GetAllKeys(AppSettingsBuilder? appSettingsBuilder)
+    {
+        if (appSettingsBuilder is null)
         {
-            get
-            {
-                CheckIsDisposed();
-                ImmutableArray<MultipleValuesStringPair> values =
-                    GetMultipleValues(_appSettingsDecoratorBuilder.AppSettingsBuilder, AllKeys);
-
-                var multipleValuesStringPairs = values
-                    .Select(item => new MultipleValuesStringPair(item.Key,
-                        item.Values.Select(value => DecorateValue(_appSettingsDecoratorBuilder, value))
-                            .ToImmutableArray()))
-                    .ToImmutableArray();
-
-                return multipleValuesStringPairs;
-            }
+            return [];
         }
 
-        public string this[string? key] => DecorateValue(_appSettingsDecoratorBuilder,
-            GetValue(_appSettingsDecoratorBuilder.AppSettingsBuilder, key, _logAction).Item2);
-
-        public ImmutableArray<KeyValueConfigurationItem> ConfigurationItems
+        if (appSettingsBuilder.Previous is null)
         {
-            get
-            {
-                CheckIsDisposed();
-
-                return GetConfigurationItems(
-                    _appSettingsDecoratorBuilder.AppSettingsBuilder).ToImmutableArray();
-            }
+            return appSettingsBuilder.KeyValueConfiguration.AllKeys.ToArray();
         }
 
-        private string BuildDecoratorsAsString(AppSettingsDecoratorBuilder? appSettingsDecoratorBuilder)
+        string[] allPreviousKeys = GetAllKeys(appSettingsBuilder.Previous);
+
+        string[] allKeys = appSettingsBuilder.KeyValueConfiguration.AllKeys.Concat(allPreviousKeys).ToArray();
+
+        return allKeys;
+    }
+
+    private static string? DecorateValue(AppSettingsDecoratorBuilder decorator, string? value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
         {
-            if (appSettingsDecoratorBuilder?.Decorator is null)
-            {
-                return string.Empty;
-            }
-
-            if (appSettingsDecoratorBuilder.Decorator is NullDecorator)
-            {
-                return string.Empty;
-            }
-
-            string result = appSettingsDecoratorBuilder.Decorator.ToString() ?? appSettingsDecoratorBuilder.Decorator.GetType().Name;
-
-            if (appSettingsDecoratorBuilder.Previous is {})
-            {
-                result += Arrow + BuildDecoratorsAsString(appSettingsDecoratorBuilder.Previous);
-            }
-
-            return result;
+            return "";
         }
 
-        private string BuildChainAsString(AppSettingsBuilder? builder)
+        string? decorated = null;
+
+        if (decorator.Previous is {})
         {
-            if (builder?.KeyValueConfiguration is null)
-            {
-                return string.Empty;
-            }
-
-            string result = builder.KeyValueConfiguration.ToString() ?? builder.KeyValueConfiguration.GetType().Name;
-
-            if (builder.Previous is {})
-            {
-                result += Arrow + BuildChainAsString(builder.Previous);
-            }
-
-            return result;
+            decorated = DecorateValue(decorator.Previous, value);
         }
 
-        private static string[] GetAllKeys(AppSettingsBuilder? appSettingsBuilder)
+        return decorator.Decorator.GetValue(decorated ?? value);
+    }
+
+    private static (IKeyValueConfiguration, string?) GetValue(
+        AppSettingsBuilder? appSettingsBuilder,
+        string? key,
+        Action<string>? logAction)
+    {
+        if (string.IsNullOrWhiteSpace(key))
         {
-            if (appSettingsBuilder is null)
-            {
-                return Array.Empty<string>();
-            }
-
-            if (appSettingsBuilder.Previous is null)
-            {
-                return appSettingsBuilder.KeyValueConfiguration.AllKeys.ToArray();
-            }
-
-            string[] allPreviousKeys = GetAllKeys(appSettingsBuilder.Previous);
-
-            string[] allKeys = appSettingsBuilder.KeyValueConfiguration.AllKeys.Concat(allPreviousKeys).ToArray();
-
-            return allKeys;
+            return new ValueTuple<IKeyValueConfiguration, string>(NoConfiguration.Empty, "");
         }
 
-        private static string DecorateValue(AppSettingsDecoratorBuilder decorator, string value)
+        if (appSettingsBuilder is null)
         {
-            if (string.IsNullOrWhiteSpace(value))
-            {
-                return "";
-            }
-
-            string? decorated = null;
-
-            if (decorator.Previous is {})
-            {
-                decorated = DecorateValue(decorator.Previous, value);
-            }
-
-            return decorator.Decorator.GetValue(decorated ?? value);
+            return new ValueTuple<IKeyValueConfiguration, string>(NoConfiguration.Empty, "");
         }
 
-        private static (IKeyValueConfiguration, string) GetValue(
-            AppSettingsBuilder? appSettingsBuilder,
-            string? key,
-            Action<string>? logAction)
+        string? value = appSettingsBuilder.KeyValueConfiguration[key];
+
+        if (string.IsNullOrWhiteSpace(value))
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                return new ValueTuple<IKeyValueConfiguration, string>(NoConfiguration.Empty, "");
-            }
-
-            if (appSettingsBuilder is null)
-            {
-                return new ValueTuple<IKeyValueConfiguration, string>(NoConfiguration.Empty, "");
-            }
-
-            string value = appSettingsBuilder.KeyValueConfiguration[key];
-
-            if (string.IsNullOrWhiteSpace(value))
-            {
-                logAction?.Invoke(
-                    $"The current source {appSettingsBuilder.KeyValueConfiguration.GetType().Name} does not have a value for key '{key}'");
-
-                return GetValue(appSettingsBuilder.Previous, key, logAction);
-            }
-
             logAction?.Invoke(
-                $"The current source {appSettingsBuilder.KeyValueConfiguration.GetType().Name} has a value for key '{key}': '{value}'");
+                $"The current source {appSettingsBuilder.KeyValueConfiguration.GetType().Name} does not have a value for key '{key}'");
 
-            (IKeyValueConfiguration, string) valueTuple = (appSettingsBuilder.KeyValueConfiguration, value);
-
-            logAction?.Invoke($"For key '{key}', configuration source '{valueTuple.Item1.GetType().Name}' is used");
-
-            return valueTuple;
+            return GetValue(appSettingsBuilder.Previous, key, logAction);
         }
 
-        private IKeyValueConfiguration GetConfiguratorDefining(AppSettingsBuilder? appSettingsBuilder, string key)
+        logAction?.Invoke(
+            $"The current source {appSettingsBuilder.KeyValueConfiguration.GetType().Name} has a value for key '{key}': '{value}'");
+
+        (IKeyValueConfiguration, string?) valueTuple = (appSettingsBuilder.KeyValueConfiguration, value);
+
+        logAction?.Invoke($"For key '{key}', configuration source '{valueTuple.Item1.GetType().Name}' is used");
+
+        return valueTuple;
+    }
+
+    private IKeyValueConfiguration GetConfiguratorDefining(AppSettingsBuilder? appSettingsBuilder, string key)
+    {
+        if (appSettingsBuilder is null)
         {
-            if (appSettingsBuilder is null)
-            {
-                return NoConfiguration.Empty;
-            }
-
-            if (appSettingsBuilder.KeyValueConfiguration.AllKeys.Contains(key, StringComparer.OrdinalIgnoreCase))
-            {
-                return appSettingsBuilder.KeyValueConfiguration;
-            }
-
-            return GetConfiguratorDefining(appSettingsBuilder.Previous, key);
+            return NoConfiguration.Empty;
         }
 
-        private ImmutableArray<MultipleValuesStringPair> GetMultipleValues(
-            AppSettingsBuilder? appSettingsBuilder,
-            ImmutableArray<string> keysLeft)
+        if (appSettingsBuilder.KeyValueConfiguration.AllKeys.Contains(key, StringComparer.OrdinalIgnoreCase))
         {
-            if (appSettingsBuilder is null)
-            {
-                return ImmutableArray<MultipleValuesStringPair>.Empty;
-            }
+            return appSettingsBuilder.KeyValueConfiguration;
+        }
 
-            var values =
-                appSettingsBuilder.KeyValueConfiguration.AllWithMultipleValues
-                    .Where(multipleValuesStringPair => keysLeft.Any(keyLeft =>
-                        keyLeft.Equals(multipleValuesStringPair.Key, StringComparison.OrdinalIgnoreCase)))
-                    .Where(multipleValuesStringPair => multipleValuesStringPair.HasNonEmptyValue)
-                    .ToList();
+        return GetConfiguratorDefining(appSettingsBuilder.Previous, key);
+    }
 
-            if (values.Count == 0)
-            {
-                _logAction?.Invoke(
-                    $"The current source {appSettingsBuilder.KeyValueConfiguration.GetType().Name} does not have any values for multiple values");
+    private ImmutableArray<MultipleValuesStringPair> GetMultipleValues(
+        AppSettingsBuilder? appSettingsBuilder,
+        ImmutableArray<string> keysLeft)
+    {
+        if (appSettingsBuilder is null)
+        {
+            return ImmutableArray<MultipleValuesStringPair>.Empty;
+        }
 
-                return GetMultipleValues(appSettingsBuilder.Previous, keysLeft);
-            }
+        var values =
+            appSettingsBuilder.KeyValueConfiguration.AllWithMultipleValues
+                .Where(multipleValuesStringPair => keysLeft.Any(keyLeft =>
+                    keyLeft.Equals(multipleValuesStringPair.Key, StringComparison.OrdinalIgnoreCase)))
+                .Where(multipleValuesStringPair => multipleValuesStringPair.HasNonEmptyValue)
+                .ToList();
 
-            var keysLeftAfterValues = keysLeft.Except(values.Select(t => t.Key)).ToImmutableArray();
-
-            if (keysLeftAfterValues.Any())
-            {
-                values.AddRange(GetMultipleValues(appSettingsBuilder.Previous, keysLeftAfterValues));
-            }
-
-            static string FormatValue(MultipleValuesStringPair pair)
-            {
-                return $"\'{pair.Key}\': [{string.Join("; ", pair.Values.Select(theValue => $"'{theValue}'"))}]";
-            }
-
-            string join = string.Join(", ", values.Select(FormatValue));
-
+        if (values.Count == 0)
+        {
             _logAction?.Invoke(
-                $"The current source {appSettingsBuilder.KeyValueConfiguration.GetType().Name} has values: {join}");
+                $"The current source {appSettingsBuilder.KeyValueConfiguration.GetType().Name} does not have any values for multiple values");
 
-            return values.ToImmutableArray();
+            return GetMultipleValues(appSettingsBuilder.Previous, keysLeft);
         }
 
-        private List<KeyValueConfigurationItem> GetConfigurationItems(AppSettingsBuilder appSettingsBuilder)
+        var keysLeftAfterValues = keysLeft.Except(values.Select(t => t.Key)).ToImmutableArray();
+
+        if (keysLeftAfterValues.Any())
         {
-            var configurationItems = new List<KeyValueConfigurationItem>();
-
-            if (appSettingsBuilder.Previous is {})
-            {
-                configurationItems.AddRange(GetConfigurationItems(appSettingsBuilder.Previous));
-            }
-
-            if (appSettingsBuilder.KeyValueConfiguration is IKeyValueConfigurationWithMetadata
-                keyValueConfigurationWithMetadata)
-            {
-                configurationItems.AddRange(keyValueConfigurationWithMetadata.ConfigurationItems);
-            }
-            else
-            {
-                configurationItems.AddRange(appSettingsBuilder.KeyValueConfiguration.GetKeyValueConfigurationItems());
-            }
-
-            return configurationItems;
+            values.AddRange(GetMultipleValues(appSettingsBuilder.Previous, keysLeftAfterValues));
         }
 
-        [PublicAPI]
-        public IKeyValueConfiguration? ConfiguratorFor(string? key, Action<string>? logAction = null)
+        static string FormatValue(MultipleValuesStringPair pair)
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                return null;
-            }
-
-            (IKeyValueConfiguration?, string) tuple =
-                GetValue(_appSettingsDecoratorBuilder.AppSettingsBuilder, key, logAction);
-
-            if (tuple.Item1 is NoConfiguration or null)
-            {
-                return GetConfiguratorDefining(_appSettingsDecoratorBuilder.AppSettingsBuilder, key!);
-            }
-
-            return tuple.Item1;
+            return $"\'{pair.Key}\': [{string.Join("; ", pair.Values.Select(theValue => $"'{theValue}'"))}]";
         }
 
-        public override string ToString()
+        string join = string.Join(", ", values.Select(FormatValue));
+
+        _logAction?.Invoke(
+            $"The current source {appSettingsBuilder.KeyValueConfiguration.GetType().Name} has values: {join}");
+
+        return [..values];
+    }
+
+    private List<KeyValueConfigurationItem> GetConfigurationItems(AppSettingsBuilder appSettingsBuilder)
+    {
+        var configurationItems = new List<KeyValueConfigurationItem>();
+
+        if (appSettingsBuilder.Previous is {})
         {
-            if (_isDisposed)
-            {
-                return nameof(MultiSourceKeyValueConfiguration) + "[DISPOSED]";
-            }
-
-            return $"{base.ToString()} [{SourceChain}]";
+            configurationItems.AddRange(GetConfigurationItems(appSettingsBuilder.Previous));
         }
+
+        if (appSettingsBuilder.KeyValueConfiguration is IKeyValueConfigurationWithMetadata
+            keyValueConfigurationWithMetadata)
+        {
+            configurationItems.AddRange(keyValueConfigurationWithMetadata.ConfigurationItems);
+        }
+        else
+        {
+            configurationItems.AddRange(appSettingsBuilder.KeyValueConfiguration.GetKeyValueConfigurationItems());
+        }
+
+        return configurationItems;
+    }
+
+    
+    public IKeyValueConfiguration? ConfiguratorFor(string? key, Action<string>? logAction = null)
+    {
+        if (string.IsNullOrWhiteSpace(key))
+        {
+            return null;
+        }
+
+        (IKeyValueConfiguration?, string?) tuple =
+            GetValue(_appSettingsDecoratorBuilder.AppSettingsBuilder, key, logAction);
+
+        if (tuple.Item1 is NoConfiguration or null)
+        {
+            return GetConfiguratorDefining(_appSettingsDecoratorBuilder.AppSettingsBuilder, key!);
+        }
+
+        return tuple.Item1;
+    }
+
+    public override string ToString()
+    {
+        if (_isDisposed)
+        {
+            return nameof(MultiSourceKeyValueConfiguration) + "[DISPOSED]";
+        }
+
+        return $"{base.ToString()} [{SourceChain}]";
     }
 }

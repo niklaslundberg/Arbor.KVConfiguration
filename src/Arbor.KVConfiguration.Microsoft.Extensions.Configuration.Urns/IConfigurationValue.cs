@@ -1,11 +1,10 @@
-﻿namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns
+﻿namespace Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns;
+
+/// <summary>
+///     Configuration value holder
+/// </summary>
+/// <typeparam name="TOptions"></typeparam>
+public interface IConfigurationValue<out TOptions> where TOptions : class
 {
-    /// <summary>
-    ///     Configuration value holder
-    /// </summary>
-    /// <typeparam name="TOptions"></typeparam>
-    public interface IConfigurationValue<out TOptions> where TOptions : class
-    {
-        TOptions Value { get; }
-    }
+    TOptions Value { get; }
 }

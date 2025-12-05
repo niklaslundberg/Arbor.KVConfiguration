@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+
+<package>
+    <metadata>
+        <id>Arbor.KVConfiguration.Schema.Json</id>
+        <version>0.0.1</version>
+        <title>Arbor.KVConfiguration.Schema.Json</title>
+        <authors>Niklas Lundberg</authors>
+        <owners></owners>
+        <description>
+            Key value configuration core library
+        </description>
+        <releaseNotes>
+        </releaseNotes>
+        <summary>
+            Arbor.KVConfiguration.Schema.Json
+        </summary>
+        <language>en-US</language>
+        <projectUrl>https://github.com/niklaslundberg/Arbor.KVConfiguration</projectUrl>
+        <iconUrl>https://nuget.org/Content/Images/packageDefaultIcon-50x50.png</iconUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <license type="expression">MIT</license>
+        <copyright>Copyright Niklas Lundberg 2016 - 2025</copyright>
+        <dependencies>
+          <group targetFramework="netstandard2.0">
+            <dependency id="Arbor.KVConfiguration.Core" version="[2.0.0,4.0.0)" />
+            <dependency id="System.Text.Json" version="[9.0.0,)" />
+          </group>
+          <group targetFramework="net10.0">
+            <dependency id="Arbor.KVConfiguration.Core" version="[3.0.0,4.0.0)" />
+            <dependency id="System.Text.Json" version="[10.0.0,)" />
+          </group>
+        </dependencies>
+        <references></references>
+        <tags></tags>
+    </metadata>
+    <files>
+        <file src="bin\$configuration$\netstandard2.0\Arbor.KVConfiguration.Schema.SystemJson.dll" target="lib\netstandard2.0" />
+        <file src="bin\$configuration$\net10.0\Arbor.KVConfiguration.Schema.SystemJson.dll" target="lib\net10.0" />
+    </files>
+</package>

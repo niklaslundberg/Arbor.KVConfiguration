@@ -1,25 +1,33 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Frozen;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 
-namespace Arbor.Primitives
+namespace Arbor.Primitives;
+
+public abstract class EnvironmentVariables
 {
-    public class EnvironmentVariables
+    public abstract IReadOnlyDictionary<string, string> Variables { get; }
+
+
+    private static readonly Lazy<SystemEnvironmentVariables> Lazy = new(() => new SystemEnvironmentVariables());
+
+    public static EnvironmentVariables System => Lazy.Value;
+
+    public sealed class SystemEnvironmentVariables: EnvironmentVariables
     {
-        public EnvironmentVariables(IReadOnlyDictionary<string, string> variables) =>
-            Variables = variables ?? throw new ArgumentNullException(nameof(variables));
+        internal SystemEnvironmentVariables(StringComparer? stringComparer = null) => Variables = GetAll(stringComparer ?? DefaultStringComparer);
 
-        public IReadOnlyDictionary<string, string> Variables { get; }
+        public override IReadOnlyDictionary<string, string> Variables { get; }
 
-        private static ImmutableDictionary<string, string> GetAll(StringComparer stringComparer)
+        private static FrozenDictionary<string, string> GetAll(StringComparer stringComparer)
         {
             var environmentVariables = Environment.GetEnvironmentVariables();
 
             return environmentVariables
                 .OfType<DictionaryEntry>()
-                     .ToImmutableDictionary(entry => (string)entry.Key,
+                .ToFrozenDictionary(entry => (string)entry.Key,
                     entry => (string?)entry.Value ?? "",
                     stringComparer);
         }
@@ -29,15 +37,11 @@ namespace Arbor.Primitives
                 ? StringComparer.Ordinal
                 : StringComparer.OrdinalIgnoreCase;
 
-        public static EnvironmentVariables GetEnvironmentVariables() => new(GetAll(DefaultStringComparer));
         public static EnvironmentVariables GetEnvironmentVariables(StringComparer stringComparer)
         {
-            if (stringComparer is null)
-            {
-                throw new ArgumentNullException(nameof(stringComparer));
-            }
+            stringComparer.ThrowIfNull();
 
-            return new EnvironmentVariables(GetAll(stringComparer));
+            return new SystemEnvironmentVariables(stringComparer);
         }
     }
 }

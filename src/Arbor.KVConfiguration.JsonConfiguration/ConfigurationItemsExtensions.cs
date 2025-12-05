@@ -1,30 +1,24 @@
-﻿using System;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using System.Linq;
 using Arbor.KVConfiguration.Core.Metadata;
 using Arbor.KVConfiguration.Schema.Json;
-using JetBrains.Annotations;
 
-namespace Arbor.KVConfiguration.JsonConfiguration
+namespace Arbor.KVConfiguration.JsonConfiguration;
+
+internal static class ConfigurationItemsExtensions
 {
-    internal static class ConfigurationItemsExtensions
+    internal static ImmutableArray<KeyValueConfigurationItem> ReadConfiguration(
+        this ConfigurationItems configurationItems)
     {
-        internal static ImmutableArray<KeyValueConfigurationItem> ReadConfiguration(
-            [NotNull] this ConfigurationItems configurationItems)
-        {
-            if (configurationItems is null)
-            {
-                throw new ArgumentNullException(nameof(configurationItems));
-            }
+        configurationItems.ThrowIfNull(nameof(configurationItems));
 
-            var keyValueConfigurationItems = configurationItems.Keys
-                .Select(
-                    keyValue => new KeyValueConfigurationItem(keyValue.Key,
-                        keyValue.Value,
-                        keyValue.ConfigurationMetadata))
-                .ToImmutableArray();
+        var keyValueConfigurationItems = configurationItems.Keys
+            .Select(
+                keyValue => new KeyValueConfigurationItem(keyValue.Key,
+                    keyValue.Value,
+                    keyValue.ConfigurationMetadata))
+            .ToImmutableArray();
 
-            return keyValueConfigurationItems;
-        }
+        return keyValueConfigurationItems;
     }
 }

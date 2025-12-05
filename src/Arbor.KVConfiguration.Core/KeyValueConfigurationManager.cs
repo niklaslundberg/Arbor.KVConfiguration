@@ -1,132 +1,101 @@
 ﻿using System;
 using Arbor.KVConfiguration.Core.Decorators;
-using JetBrains.Annotations;
+using Arbor.KVConfiguration.Core.Extensions;
 
-namespace Arbor.KVConfiguration.Core
+namespace Arbor.KVConfiguration.Core;
+
+public static class KeyValueConfigurationManager
 {
-    public static class KeyValueConfigurationManager
+    public static MultiSourceKeyValueConfiguration Build(
+        this AppSettingsBuilder appSettingsBuild,
+        Action<string>? logAction = null)
     {
-        public static MultiSourceKeyValueConfiguration Build(
-            [NotNull] this AppSettingsBuilder appSettingsBuild,
-            Action<string>? logAction = null)
+        appSettingsBuild.ThrowIfNull();
+
+        var multiSourceKeyValueConfiguration =
+            new MultiSourceKeyValueConfiguration(new DecoratorDelegator(appSettingsBuild), logAction);
+
+        return Initialize(multiSourceKeyValueConfiguration, logAction);
+    }
+
+    public static MultiSourceKeyValueConfiguration Build(
+        this AppSettingsDecoratorBuilder appSettingsBuild,
+        Action<string>? logAction = null)
+    {
+        appSettingsBuild.ThrowIfNull();
+
+        var multiSourceKeyValueConfiguration = new MultiSourceKeyValueConfiguration(appSettingsBuild, logAction);
+
+        return Initialize(multiSourceKeyValueConfiguration);
+    }
+
+    /// <summary>
+    ///     Add new configuration, last one wins
+    /// </summary>
+    /// <param name="keyValueConfiguration"></param>
+    /// <returns></returns>
+    public static AppSettingsBuilder Add(IKeyValueConfiguration keyValueConfiguration)
+    {
+        keyValueConfiguration.ThrowIfNull();
+
+        return new AppSettingsBuilder(keyValueConfiguration, null);
+    }
+
+    /// <summary>
+    ///     Add new configuration, last one wins
+    /// </summary>
+    /// <param name="appSettingsBuilder"></param>
+    /// <param name="keyValueConfiguration"></param>
+    /// <returns></returns>
+    public static AppSettingsBuilder Add(
+        this AppSettingsBuilder appSettingsBuilder,
+        IKeyValueConfiguration keyValueConfiguration)
+    {
+        appSettingsBuilder.ThrowIfNull();
+
+        keyValueConfiguration.ThrowIfNull();
+
+        return new AppSettingsBuilder(keyValueConfiguration, appSettingsBuilder);
+    }
+
+    public static AppSettingsDecoratorBuilder DecorateWith(
+        this AppSettingsBuilder builder,
+        IKeyValueConfigurationDecorator decorator)
+    {
+        builder.ThrowIfNull();
+
+        decorator.ThrowIfNull();
+
+        return new AppSettingsDecoratorBuilder(builder, decorator);
+    }
+
+    public static AppSettingsDecoratorBuilder DecorateWith(
+        this AppSettingsDecoratorBuilder builder,
+        IKeyValueConfigurationDecorator decorator)
+    {
+        builder.ThrowIfNull();
+
+        decorator.ThrowIfNull();
+
+        return new AppSettingsDecoratorBuilder(builder, decorator);
+    }
+
+    private static MultiSourceKeyValueConfiguration Initialize(
+        IKeyValueConfiguration keyValueConfiguration,
+        Action<string>? logAction = null)
+    {
+        keyValueConfiguration.ThrowIfNull();
+
+        logAction ??= s => { };
+
+        if (keyValueConfiguration is MultiSourceKeyValueConfiguration multiSourceKeyValueConfiguration)
         {
-            if (appSettingsBuild is null)
-            {
-                throw new ArgumentNullException(nameof(appSettingsBuild));
-            }
-
-            var multiSourceKeyValueConfiguration =
-                new MultiSourceKeyValueConfiguration(new DecoratorDelegator(appSettingsBuild), logAction);
-
-            return Initialize(multiSourceKeyValueConfiguration, logAction);
+            return multiSourceKeyValueConfiguration;
         }
 
-        public static MultiSourceKeyValueConfiguration Build(
-            [NotNull] this AppSettingsDecoratorBuilder appSettingsBuild,
-            Action<string>? logAction = null)
-        {
-            if (appSettingsBuild is null)
-            {
-                throw new ArgumentNullException(nameof(appSettingsBuild));
-            }
-
-            var multiSourceKeyValueConfiguration = new MultiSourceKeyValueConfiguration(appSettingsBuild, logAction);
-
-            return Initialize(multiSourceKeyValueConfiguration);
-        }
-
-        /// <summary>
-        ///     Add new configuration, last one wins
-        /// </summary>
-        /// <param name="keyValueConfiguration"></param>
-        /// <returns></returns>
-        public static AppSettingsBuilder Add([NotNull] IKeyValueConfiguration keyValueConfiguration)
-        {
-            if (keyValueConfiguration is null)
-            {
-                throw new ArgumentNullException(nameof(keyValueConfiguration));
-            }
-
-            return new AppSettingsBuilder(keyValueConfiguration, null);
-        }
-
-        /// <summary>
-        ///     Add new configuration, last one wins
-        /// </summary>
-        /// <param name="appSettingsBuilder"></param>
-        /// <param name="keyValueConfiguration"></param>
-        /// <returns></returns>
-        public static AppSettingsBuilder Add(
-            [NotNull] this AppSettingsBuilder appSettingsBuilder,
-            [NotNull] IKeyValueConfiguration keyValueConfiguration)
-        {
-            if (appSettingsBuilder is null)
-            {
-                throw new ArgumentNullException(nameof(appSettingsBuilder));
-            }
-
-            if (keyValueConfiguration is null)
-            {
-                throw new ArgumentNullException(nameof(keyValueConfiguration));
-            }
-
-            return new AppSettingsBuilder(keyValueConfiguration, appSettingsBuilder);
-        }
-
-        public static AppSettingsDecoratorBuilder DecorateWith(
-            [NotNull] this AppSettingsBuilder builder,
-            [NotNull] IKeyValueConfigurationDecorator decorator)
-        {
-            if (builder is null)
-            {
-                throw new ArgumentNullException(nameof(builder));
-            }
-
-            if (decorator is null)
-            {
-                throw new ArgumentNullException(nameof(decorator));
-            }
-
-            return new AppSettingsDecoratorBuilder(builder, decorator);
-        }
-
-        public static AppSettingsDecoratorBuilder DecorateWith(
-            [NotNull] this AppSettingsDecoratorBuilder builder,
-            [NotNull] IKeyValueConfigurationDecorator decorator)
-        {
-            if (builder is null)
-            {
-                throw new ArgumentNullException(nameof(builder));
-            }
-
-            if (decorator is null)
-            {
-                throw new ArgumentNullException(nameof(decorator));
-            }
-
-            return new AppSettingsDecoratorBuilder(builder, decorator);
-        }
-
-        private static MultiSourceKeyValueConfiguration Initialize(
-            [NotNull] IKeyValueConfiguration keyValueConfiguration,
-            Action<string>? logAction = null)
-        {
-            if (keyValueConfiguration is null)
-            {
-                throw new ArgumentNullException(nameof(keyValueConfiguration));
-            }
-
-            logAction ??= s => { };
-
-            if (keyValueConfiguration is MultiSourceKeyValueConfiguration multiSourceKeyValueConfiguration)
-            {
-                return multiSourceKeyValueConfiguration;
-            }
-
-            return
-                new MultiSourceKeyValueConfiguration(
-                    new DecoratorDelegator(new AppSettingsBuilder(keyValueConfiguration, null)),
-                    logAction);
-        }
+        return
+            new MultiSourceKeyValueConfiguration(
+                new DecoratorDelegator(new AppSettingsBuilder(keyValueConfiguration, null)),
+                logAction);
     }
 }

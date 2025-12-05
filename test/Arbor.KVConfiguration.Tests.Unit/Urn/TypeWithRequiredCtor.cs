@@ -1,24 +1,21 @@
 using System;
 using Arbor.KVConfiguration.Urns;
-using JetBrains.Annotations;
 
-namespace Arbor.KVConfiguration.Tests.Unit.Urn
+namespace Arbor.KVConfiguration.Tests.Unit.Urn;
+
+[Urn("urn:type:with:required:ctor")]
+internal class TypeWithRequiredCtor
 {
-    [PublicAPI]
-    [Urn("urn:type:with:required:ctor")]
-    internal class TypeWithRequiredCtor
+    public TypeWithRequiredCtor(string key)
     {
-        public TypeWithRequiredCtor([NotNull] string key)
+        if (string.IsNullOrWhiteSpace(key))
         {
-            if (string.IsNullOrWhiteSpace(key))
-            {
-                throw new ArgumentException(
-                    $"Value cannot be null or whitespace from type {nameof(TypeWithRequiredCtor)}", nameof(key));
-            }
-
-            Key = key;
+            throw new ArgumentException(
+                $"Value cannot be null or whitespace from type {nameof(TypeWithRequiredCtor)}", nameof(key));
         }
 
-        public string Key { get; }
+        Key = key;
     }
+
+    public string Key { get; }
 }

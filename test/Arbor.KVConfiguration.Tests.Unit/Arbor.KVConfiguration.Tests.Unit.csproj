@@ -1,52 +1,48 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>net9.0;net481</TargetFrameworks>
-  </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="Metadata\**" />
-    <Compile Remove="Validation\**" />
-    <EmbeddedResource Remove="Metadata\**" />
-    <EmbeddedResource Remove="Validation\**" />
-    <None Remove="Metadata\**" />
-    <None Remove="Validation\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2024.3.0" />
-    <PackageReference Include="Machine.Specifications" Version="1.1.2" />
-    <PackageReference Include="Machine.Specifications.Runner.VisualStudio" Version="2.10.2" />
-    <PackageReference Include="Machine.Specifications.Should" Version="1.0.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.11.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="System.Collections.Immutable" Version="9.0.0" />
-    <PackageReference Include="System.Net.Http" Version="4.3.4" />
-    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
-    <PackageReference Include="xunit" Version="2.9.2" />
-    <PackageReference Include="xunit.runner.console" Version="2.9.2">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Arbor.KVConfiguration.Core\Arbor.KVConfiguration.Core.csproj" />
-    <ProjectReference Include="..\..\src\Arbor.KVConfiguration.DependencyInjection\Arbor.KVConfiguration.DependencyInjection.csproj" />
-    <ProjectReference Include="..\..\src\Arbor.KVConfiguration.JsonConfiguration\Arbor.KVConfiguration.JsonConfiguration.csproj" />
-    <ProjectReference Include="..\..\src\Arbor.KVConfiguration.Schema.Json\Arbor.KVConfiguration.Schema.Json.csproj" />
-    <ProjectReference Include="..\..\src\Arbor.KVConfiguration.Schema\Arbor.KVConfiguration.Schema.csproj" />
-    <ProjectReference Include="..\..\src\Arbor.KVConfiguration.Urns\Arbor.KVConfiguration.Urns.csproj" />
-    <ProjectReference Include="..\..\src\Arbor.KVConfiguration.UserConfiguration\Arbor.KVConfiguration.UserConfiguration.csproj" />
-    <ProjectReference Include="..\..\src\Arbor.Primitives\Arbor.Primitives.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net10.0</TargetFrameworks>
+		<OutputType>Exe</OutputType>
+	</PropertyGroup>
+	<ItemGroup>
+		<Compile Remove="Metadata\**" />
+		<Compile Remove="Validation\**" />
+		<EmbeddedResource Remove="Metadata\**" />
+		<EmbeddedResource Remove="Validation\**" />
+		<None Remove="Metadata\**" />
+		<None Remove="Validation\**" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Machine.Specifications" Version="1.1.3" />
+		<PackageReference Include="Machine.Specifications.Runner.VisualStudio" Version="2.10.2" />
+		<PackageReference Include="Machine.Specifications.Should" Version="1.0.0" />
+		<PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="4.14.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="5.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+		<PackageReference Include="System.Collections.Immutable" Version="10.0.0" />
+		<PackageReference Include="System.Net.Http" Version="4.3.4" />
+		<PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
+		<PackageReference Include="xunit.v3" Version="3.2.1" />
+		<PackageReference Include="xunit.runner.visualstudio" Version="3.1.5">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\src\Arbor.KVConfiguration.Core\Arbor.KVConfiguration.Core.csproj" />
+		<ProjectReference Include="..\..\src\Arbor.KVConfiguration.DependencyInjection\Arbor.KVConfiguration.DependencyInjection.csproj" />
+		<ProjectReference Include="..\..\src\Arbor.KVConfiguration.JsonConfiguration\Arbor.KVConfiguration.JsonConfiguration.csproj" />
+		<ProjectReference Include="..\..\src\Arbor.KVConfiguration.Schema.Json\Arbor.KVConfiguration.Schema.Json.csproj" />
+		<ProjectReference Include="..\..\src\Arbor.KVConfiguration.Schema\Arbor.KVConfiguration.Schema.csproj" />
+		<ProjectReference Include="..\..\src\Arbor.KVConfiguration.Urns\Arbor.KVConfiguration.Urns.csproj" />
+		<ProjectReference Include="..\..\src\Arbor.KVConfiguration.UserConfiguration\Arbor.KVConfiguration.UserConfiguration.csproj" />
+		<ProjectReference Include="..\..\src\Arbor.Primitives\Arbor.Primitives.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="Properties\" />
+	</ItemGroup>
 </Project>

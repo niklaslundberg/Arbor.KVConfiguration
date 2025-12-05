@@ -64,6 +64,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arbor.KVConfiguration.Tests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Arbor.KVConfiguration.Tests.Benchmark", "test\Arbor.KVConfiguration.Tests.Benchmark\Arbor.KVConfiguration.Tests.Benchmark.csproj", "{E3611595-7BB7-41A5-862C-5CE8B24AC7A3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Arbor.KVConfiguration.Schema.SystemJson", "Arbor.KVConfiguration.Schema.SystemJson\Arbor.KVConfiguration.Schema.SystemJson.csproj", "{2E588467-3A0C-4822-AFDB-3F2751271765}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -134,6 +136,10 @@ Global
 		{E3611595-7BB7-41A5-862C-5CE8B24AC7A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3611595-7BB7-41A5-862C-5CE8B24AC7A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3611595-7BB7-41A5-862C-5CE8B24AC7A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E588467-3A0C-4822-AFDB-3F2751271765}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E588467-3A0C-4822-AFDB-3F2751271765}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E588467-3A0C-4822-AFDB-3F2751271765}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E588467-3A0C-4822-AFDB-3F2751271765}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -155,6 +161,7 @@ Global
 		{582814BB-7ABB-48C8-B17C-EF039D9B8AD4} = {615EC7DF-A967-463D-A633-A7CEB29F1502}
 		{7D6252CE-6818-43C6-B87B-FBE764541EAB} = {615EC7DF-A967-463D-A633-A7CEB29F1502}
 		{E3611595-7BB7-41A5-862C-5CE8B24AC7A3} = {615EC7DF-A967-463D-A633-A7CEB29F1502}
+		{2E588467-3A0C-4822-AFDB-3F2751271765} = {B6593404-264C-4DCA-8E3B-BAA7A13F1489}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A402AF7E-9579-4861-92CB-6C4E5C33D4CF}

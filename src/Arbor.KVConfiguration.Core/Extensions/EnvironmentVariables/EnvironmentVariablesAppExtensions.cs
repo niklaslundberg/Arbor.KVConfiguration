@@ -1,22 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 
-namespace Arbor.KVConfiguration.Core.Extensions.EnvironmentVariables
+namespace Arbor.KVConfiguration.Core.Extensions.EnvironmentVariables;
+
+public static class EnvironmentVariablesAppExtensions
 {
-    public static class EnvironmentVariablesAppExtensions
+    public static AppSettingsBuilder AddEnvironmentVariables(
+        this AppSettingsBuilder builder,
+        IReadOnlyDictionary<string, string> environmentVariables)
     {
-        public static AppSettingsBuilder AddEnvironmentVariables(
-            this AppSettingsBuilder builder,
-            IReadOnlyDictionary<string, string> environmentVariables)
+        var nameValueCollection = new NameValueCollection();
+
+        foreach (var environmentVariable in environmentVariables)
         {
-            var nameValueCollection = new NameValueCollection();
-
-            foreach (var environmentVariable in environmentVariables)
-            {
-                nameValueCollection.Add(environmentVariable.Key, environmentVariable.Value);
-            }
-
-            return builder.Add(new InMemoryKeyValueConfiguration(nameValueCollection));
+            nameValueCollection.Add(environmentVariable.Key, environmentVariable.Value);
         }
+
+        return builder.Add(new InMemoryKeyValueConfiguration(nameValueCollection));
     }
 }

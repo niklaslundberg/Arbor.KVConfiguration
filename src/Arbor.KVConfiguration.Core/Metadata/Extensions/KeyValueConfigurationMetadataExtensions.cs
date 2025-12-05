@@ -1,55 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using JetBrains.Annotations;
+using Arbor.KVConfiguration.Core.Extensions;
 
-namespace Arbor.KVConfiguration.Core.Metadata.Extensions
+namespace Arbor.KVConfiguration.Core.Metadata.Extensions;
+
+public static class KeyValueConfigurationMetadataExtensions
 {
-    public static class KeyValueConfigurationMetadataExtensions
+    public static ImmutableArray<KeyValueConfigurationItem> GetKeyValueConfigurationItems(
+        this IKeyValueConfigurationWithMetadata keyValueConfiguration)
     {
-        [PublicAPI]
-        public static ImmutableArray<KeyValueConfigurationItem> GetKeyValueConfigurationItems(
-            [NotNull] this IKeyValueConfigurationWithMetadata keyValueConfiguration)
-        {
-            if (keyValueConfiguration is null)
-            {
-                throw new ArgumentNullException(nameof(keyValueConfiguration));
-            }
+        keyValueConfiguration.ThrowIfNull();
 
-            return keyValueConfiguration.ConfigurationItems;
+        return keyValueConfiguration.ConfigurationItems;
+    }
+
+    public static ImmutableArray<KeyValueConfigurationItem> GetKeyValueConfigurationItems(
+        this IKeyValueConfiguration keyValueConfiguration)
+    {
+        keyValueConfiguration.ThrowIfNull();
+
+        if (keyValueConfiguration is IKeyValueConfigurationWithMetadata keyValueConfigurationWithMetadata)
+        {
+            return keyValueConfigurationWithMetadata.GetKeyValueConfigurationItems();
         }
 
-        public static ImmutableArray<KeyValueConfigurationItem> GetKeyValueConfigurationItems(
-            [NotNull] this IKeyValueConfiguration keyValueConfiguration)
-        {
-            if (keyValueConfiguration is null)
+        var keyValueConfigurationItems = keyValueConfiguration
+            .AllWithMultipleValues.Select(item =>
             {
-                throw new ArgumentNullException(nameof(keyValueConfiguration));
-            }
+                var configurationItems = new List<KeyValueConfigurationItem>();
 
-            if (keyValueConfiguration is IKeyValueConfigurationWithMetadata keyValueConfigurationWithMetadata)
-            {
-                return keyValueConfigurationWithMetadata.GetKeyValueConfigurationItems();
-            }
-
-            var keyValueConfigurationItems = keyValueConfiguration
-                .AllWithMultipleValues.Select(item =>
+                foreach (string value in item.Values)
                 {
-                    var configurationItems = new List<KeyValueConfigurationItem>();
+                    configurationItems.Add(
+                        new KeyValueConfigurationItem(item.Key, value, null));
+                }
 
-                    foreach (string value in item.Values)
-                    {
-                        configurationItems.Add(
-                            new KeyValueConfigurationItem(item.Key, value, null));
-                    }
+                return configurationItems;
+            })
+            .SelectMany(_ => _)
+            .ToImmutableArray();
 
-                    return configurationItems;
-                })
-                .SelectMany(_ => _)
-                .ToImmutableArray();
-
-            return keyValueConfigurationItems;
-        }
+        return keyValueConfigurationItems;
     }
 }

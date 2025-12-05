@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using System;
 
-namespace Arbor.KVConfiguration.GlobalTool
+namespace Arbor.KVConfiguration.GlobalTool;
+
+public class ArgParser
 {
-    public class ArgParser
-    {
-        public ImmutableArray<KeyValuePair<string, string>> Parse(IEnumerable<string> parameters) => parameters
+    public ImmutableArray<KeyValuePair<string, string>> Parse(IEnumerable<string> parameters) => [
+        ..parameters
             .Where(parameter => !string.IsNullOrWhiteSpace(parameter)
                                 && parameter.Contains("=")
                                 && !parameter.StartsWith("--"))
@@ -33,6 +33,5 @@ namespace Arbor.KVConfiguration.GlobalTool
                 return new KeyValuePair<string, string>(parts[0], parts[1]);
             })
             .Where(pair => pair.Key is { })
-            .ToImmutableArray();
-    }
+    ];
 }

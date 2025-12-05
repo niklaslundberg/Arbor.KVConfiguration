@@ -2,29 +2,28 @@
 using Arbor.KVConfiguration.Core.Extensions.CommandLine;
 using Xunit;
 
-namespace Arbor.KVConfiguration.Tests.Unit.CommandLine
+namespace Arbor.KVConfiguration.Tests.Unit.CommandLine;
+
+public class CommandLineArgsTests
 {
-    public class CommandLineArgsTests
+    [Fact]
+    public void WhenParsingMultipleSimpleValueWithSameKeyItShouldBeResolvableInConfiguration()
     {
-        [Fact]
-        public void WhenParsingMultipleSimpleValueWithSameKeyItShouldBeResolvableInConfiguration()
-        {
-            string[] args = {"abc=123", "abc=123"};
+        string[] args = ["abc=123", "abc=123"];
 
-            var keyValueConfiguration = args.ToKeyValueConfiguration();
+        var keyValueConfiguration = args.ToKeyValueConfiguration();
 
-            string[] actualStrings = keyValueConfiguration.AllWithMultipleValues[0].Values.ToArray();
-            Assert.Equal(new[] {"123", "123"}, actualStrings);
-        }
+        string[] actualStrings = keyValueConfiguration.AllWithMultipleValues[0].Values.ToArray();
+        Assert.Equal(new[] {"123", "123"}, actualStrings);
+    }
 
-        [Fact]
-        public void WhenParsingSimpleValueItShouldBeResolvableInConfiguration()
-        {
-            string[] args = {"abc=123"};
+    [Fact]
+    public void WhenParsingSimpleValueItShouldBeResolvableInConfiguration()
+    {
+        string[] args = ["abc=123"];
 
-            var keyValueConfiguration = args.ToKeyValueConfiguration();
+        var keyValueConfiguration = args.ToKeyValueConfiguration();
 
-            Assert.Equal("123", keyValueConfiguration["abc"]);
-        }
+        Assert.Equal("123", keyValueConfiguration["abc"]);
     }
 }
