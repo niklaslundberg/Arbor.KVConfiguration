@@ -4,32 +4,32 @@
     "net10.0": {
       "Microsoft.CodeAnalysis.Analyzers": {
         "type": "Direct",
-        "requested": "[4.14.0, )",
-        "resolved": "4.14.0",
-        "contentHash": "fCj+MzjJxN/4iYAz7JPLONGKeTomaZNzx4UgGA0AerTrx4Ou6Rw2J5YF4V51vWW+aSQSCv1nnAkCZUw5Z9+3zw=="
+        "requested": "[5.3.0, )",
+        "resolved": "5.3.0",
+        "contentHash": "KuLhbZwB0L8JikL86AE5VWEp3RLNjIcp+j8yz9EJ/UBgRz4+qDEjHg/tluRFbpYpD/e37BqaaNFbQ0vqawBwWQ=="
       },
       "Microsoft.CodeAnalysis.CSharp": {
         "type": "Direct",
-        "requested": "[5.0.0, )",
-        "resolved": "5.0.0",
-        "contentHash": "5DSyJ9bk+ATuDy7fp2Zt0mJStDVKbBoiz1DyfAwSa+k4H4IwykAUcV3URelw5b8/iVbfSaOwkwmPUZH6opZKCw==",
+        "requested": "[5.3.0, )",
+        "resolved": "5.3.0",
+        "contentHash": "SQFNGQF4f7UfDXKxMzzGNMr3fjrPDIjLfmRvvVgDCw+dyvEHDaRfHuKA5q0Pr0/JW0Gcw89TxrxrS/MjwBvluQ==",
         "dependencies": {
-          "Microsoft.CodeAnalysis.Analyzers": "3.11.0",
-          "Microsoft.CodeAnalysis.Common": "[5.0.0]"
+          "Microsoft.CodeAnalysis.Analyzers": "5.3.0-2.25625.1",
+          "Microsoft.CodeAnalysis.Common": "[5.3.0]"
         }
       },
       "Microsoft.Extensions.Configuration": {
         "type": "Direct",
-        "requested": "[10.0.0, )",
-        "resolved": "10.0.0",
-        "contentHash": "H4SWETCh/cC5L1WtWchHR6LntGk3rDTTznZMssr4cL8IbDmMWBxY+MOGDc/ASnqNolLKPIWHWeuC1ddiL/iNPw=="
+        "requested": "[10.0.6, )",
+        "resolved": "10.0.6",
+        "contentHash": "lYQ9S1FGXIWIU7243RimdAXQYsFDeLhSSZvbSDwbeI/kCzZ4MIYXpp3kMQ+bDJXwl9pzMRIYkd4f9zGqcYxfAQ=="
       },
       "Microsoft.CodeAnalysis.Common": {
         "type": "Transitive",
-        "resolved": "5.0.0",
-        "contentHash": "ZXRAdvH6GiDeHRyd3q/km8Z44RoM6FBWHd+gen/la81mVnAdHTEsEkO5J0TCNXBymAcx5UYKt5TvgKBhaLJEow==",
+        "resolved": "5.3.0",
+        "contentHash": "uC0qk3jzTQY7i90ehfnCqaOZpBUGJyPMiHJ3c0jOb8yaPBjWzIhVdNxPbeVzI74DB0C+YgBKPLqUkgFZzua5Mg==",
         "dependencies": {
-          "Microsoft.CodeAnalysis.Analyzers": "3.11.0"
+          "Microsoft.CodeAnalysis.Analyzers": "5.3.0-2.25625.1"
         }
       },
       "Newtonsoft.Json": {
@@ -45,7 +45,7 @@
       "arbor.kvconfiguration.core": {
         "type": "Project",
         "dependencies": {
-          "Microsoft.CodeAnalysis.CSharp": "[5.0.0, )"
+          "Microsoft.CodeAnalysis.CSharp": "[5.3.0, )"
         }
       },
       "arbor.kvconfiguration.dependencyinjection": {
@@ -53,7 +53,7 @@
         "dependencies": {
           "Arbor.KVConfiguration.Core": "[1.0.0, )",
           "Arbor.KVConfiguration.Urns": "[1.0.0, )",
-          "Microsoft.CodeAnalysis.CSharp": "[5.0.0, )"
+          "Microsoft.CodeAnalysis.CSharp": "[5.3.0, )"
         }
       },
       "arbor.kvconfiguration.microsoft.extensions.configuration.urns": {
@@ -61,14 +61,14 @@
         "dependencies": {
           "Arbor.KVConfiguration.Core": "[1.0.0, )",
           "Arbor.KVConfiguration.Urns": "[1.0.0, )",
-          "Microsoft.CodeAnalysis.CSharp": "[5.0.0, )"
+          "Microsoft.CodeAnalysis.CSharp": "[5.3.0, )"
         }
       },
       "arbor.kvconfiguration.schema": {
         "type": "Project",
         "dependencies": {
           "Arbor.KVConfiguration.Core": "[1.0.0, )",
-          "Microsoft.CodeAnalysis.CSharp": "[5.0.0, )"
+          "Microsoft.CodeAnalysis.CSharp": "[5.3.0, )"
         }
       },
       "arbor.kvconfiguration.urns": {
@@ -77,7 +77,7 @@
           "Arbor.KVConfiguration.Core": "[1.0.0, )",
           "Arbor.KVConfiguration.Schema": "[1.0.0, )",
           "Arbor.Primitives": "[1.0.0, )",
-          "Microsoft.CodeAnalysis.CSharp": "[5.0.0, )",
+          "Microsoft.CodeAnalysis.CSharp": "[5.3.0, )",
           "Newtonsoft.Json": "[13.0.4, )",
           "System.ComponentModel.Annotations": "[5.0.0, )"
         }
@@ -85,7 +85,7 @@
       "arbor.primitives": {
         "type": "Project",
         "dependencies": {
-          "Microsoft.CodeAnalysis.CSharp": "[5.0.0, )"
+          "Microsoft.CodeAnalysis.CSharp": "[5.3.0, )"
         }
       }
     }
