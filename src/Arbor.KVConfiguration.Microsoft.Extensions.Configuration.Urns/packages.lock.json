@@ -66,9 +66,9 @@
       },
       "System.Collections.Immutable": {
         "type": "Direct",
-        "requested": "[10.0.6, )",
-        "resolved": "10.0.6",
-        "contentHash": "g5J8W/ovAraH1IDCvRZlXmpFc2v9yr1caYbVLIye2kzNtsWjJXD6TzV8vNdXni2b7wASoUeY2pnCBHxWrstXGQ==",
+        "requested": "[10.0.7, )",
+        "resolved": "10.0.7",
+        "contentHash": "0Ti4Jv1ga3eurH5HaCVsPybcBl+08YfzM9smqAJzHvqV494xK+0pSbytGrMTWhph+zsyKIaoGNiR5u3by5bj+A==",
         "dependencies": {
           "System.Memory": "4.6.3",
           "System.Runtime.CompilerServices.Unsafe": "6.1.2"
@@ -182,7 +182,8 @@
         "type": "Project",
         "dependencies": {
           "Microsoft.CodeAnalysis.CSharp": "[5.3.0, )",
-          "Microsoft.Extensions.Primitives": "[10.0.6, )"
+          "Microsoft.Extensions.Primitives": "[10.0.6, )",
+          "System.Collections.Immutable": "[10.0.7, )"
         }
       },
       "arbor.kvconfiguration.schema": {
@@ -190,7 +191,7 @@
         "dependencies": {
           "Arbor.KVConfiguration.Core": "[1.0.0, )",
           "Microsoft.CodeAnalysis.CSharp": "[5.3.0, )",
-          "System.Collections.Immutable": "[10.0.6, )"
+          "System.Collections.Immutable": "[10.0.7, )"
         }
       },
       "arbor.kvconfiguration.urns": {
@@ -202,14 +203,15 @@
           "Microsoft.CSharp": "[4.7.0, )",
           "Microsoft.CodeAnalysis.CSharp": "[5.3.0, )",
           "Newtonsoft.Json": "[13.0.4, )",
-          "System.Collections.Immutable": "[10.0.6, )",
+          "System.Collections.Immutable": "[10.0.7, )",
           "System.ComponentModel.Annotations": "[5.0.0, )"
         }
       },
       "arbor.primitives": {
         "type": "Project",
         "dependencies": {
-          "Microsoft.CodeAnalysis.CSharp": "[5.3.0, )"
+          "Microsoft.CodeAnalysis.CSharp": "[5.3.0, )",
+          "System.Collections.Immutable": "[10.0.7, )"
         }
       }
     },
@@ -257,9 +259,9 @@
       },
       "System.Collections.Immutable": {
         "type": "Direct",
-        "requested": "[10.0.6, )",
-        "resolved": "10.0.6",
-        "contentHash": "g5J8W/ovAraH1IDCvRZlXmpFc2v9yr1caYbVLIye2kzNtsWjJXD6TzV8vNdXni2b7wASoUeY2pnCBHxWrstXGQ=="
+        "requested": "[10.0.7, )",
+        "resolved": "10.0.7",
+        "contentHash": "0Ti4Jv1ga3eurH5HaCVsPybcBl+08YfzM9smqAJzHvqV494xK+0pSbytGrMTWhph+zsyKIaoGNiR5u3by5bj+A=="
       },
       "Microsoft.CodeAnalysis.Common": {
         "type": "Transitive",
