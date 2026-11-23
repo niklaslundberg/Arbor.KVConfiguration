@@ -14,12 +14,9 @@ jobs:
     - uses: actions/setup-dotnet@v4
       with:
         dotnet-version: |
-            8.0.x
-    - uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 9.0.x
-        cache: true
-        cache-dependency-path: test/Arbor.KVConfiguration.Tests.Integration
+            10.0.x
+            11.0.x
+        dotnet-quality: preview
     - name: install-tools
       run: |
         dotnet tool install --global Arbor.Tooler.GlobalTool --version "*-*"
