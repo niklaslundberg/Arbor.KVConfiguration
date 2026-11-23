@@ -33,7 +33,9 @@ public class ExpandingConfigurationTests
     {
         string tempPath = Path.GetTempPath();
 
-        const string pattern = "%temp%\\";
+        Environment.SetEnvironmentVariable("arbortesttemp", tempPath.TrimEnd(Path.DirectorySeparatorChar));
+
+        string pattern = $"%arbortesttemp%{Path.DirectorySeparatorChar}";
 
         string valueWithPattern = $"{pattern} hello";
 
@@ -66,7 +68,9 @@ public class ExpandingConfigurationTests
 
         string tempPath = Path.GetTempPath();
 
-        const string pattern = "%temp%\\";
+        Environment.SetEnvironmentVariable("arbortesttemp", tempPath.TrimEnd(Path.DirectorySeparatorChar));
+
+        string pattern = $"%arbortesttemp%{Path.DirectorySeparatorChar}";
 
         string valueWithPattern = $"{pattern} hello";
 
