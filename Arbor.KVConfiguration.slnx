@@ -1,0 +1,42 @@
+<Solution>
+  <Folder Name="/Build/">
+    <File Path=".github/dependabot.yml" />
+    <File Path=".github/workflows/ci.yml" />
+    <File Path="build/build.bat" />
+  </Folder>
+  <Folder Name="/Core/">
+    <Project Path="Arbor.KVConfiguration.Schema.SystemJson/Arbor.KVConfiguration.Schema.SystemJson.csproj" />
+    <Project Path="src/Arbor.KVConfiguration.Core/Arbor.KVConfiguration.Core.csproj" />
+    <Project Path="src/Arbor.KVConfiguration.DependencyInjection/Arbor.KVConfiguration.DependencyInjection.csproj" />
+    <Project Path="src/Arbor.KVConfiguration.GlobalTool/Arbor.KVConfiguration.GlobalTool.csproj" />
+    <Project Path="src/Arbor.KVConfiguration.JsonConfiguration/Arbor.KVConfiguration.JsonConfiguration.csproj" />
+    <Project Path="src/Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns/Arbor.KVConfiguration.Microsoft.Extensions.Configuration.Urns.csproj" />
+    <Project Path="src/Arbor.KVConfiguration.Schema.Json/Arbor.KVConfiguration.Schema.Json.csproj" />
+    <Project Path="src/Arbor.KVConfiguration.Schema/Arbor.KVConfiguration.Schema.csproj" />
+    <Project Path="src/Arbor.KVConfiguration.Urns/Arbor.KVConfiguration.Urns.csproj" />
+    <Project Path="src/Arbor.KVConfiguration.UserConfiguration/Arbor.KVConfiguration.UserConfiguration.csproj" />
+    <Project Path="src/Arbor.Primitives/Arbor.Primitives.csproj" />
+  </Folder>
+  <Folder Name="/Samples/">
+    <Project Path="samples/Arbor.KVConfiguration.Samples.AspNetCore/Arbor.KVConfiguration.Samples.AspNetCore.csproj" />
+    <Project Path="samples/Arbor.KVConfiguration.Samples.ConsoleApp/Arbor.KVConfiguration.Samples.ConsoleApp.csproj" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <File Path="test/.editorconfig" />
+    <Project Path="test/Arbor.KVConfiguration.Tests.Benchmark/Arbor.KVConfiguration.Tests.Benchmark.csproj" />
+    <Project Path="test/Arbor.KVConfiguration.Tests.Integration.MSpec/Arbor.KVConfiguration.Tests.Integration.MSpec.csproj" />
+    <Project Path="test/Arbor.KVConfiguration.Tests.Integration/Arbor.KVConfiguration.Tests.Integration.csproj" />
+    <Project Path="test/Arbor.KVConfiguration.Tests.Unit/Arbor.KVConfiguration.Tests.Unit.csproj" />
+  </Folder>
+  <Folder Name="/_Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitattributes" />
+    <File Path=".gitignore" />
+    <File Path="Directory.Build.props" />
+    <File Path="global.json" />
+    <File Path="LICENSE.txt" />
+    <File Path="nuget.config" />
+    <File Path="README.md" />
+    <File Path="version.json" />
+  </Folder>
+</Solution>
